@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { useTabs } from "hooks/useTabs";
+import { useTabs } from "hooks/usetabs";
 
 const { setTab } = useTabs();
 
