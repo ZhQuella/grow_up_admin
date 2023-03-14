@@ -29,9 +29,6 @@ jobs:
           REPO_USERNAME: "ZhQuella"
           DIST_REPO: "grow_admin"
           GITHUB_TOKEN: ${{ secrets.PROJECT_ACCESS_TOKEN }}
-        run: |
-          git config --global user.email "827265905@qq.com"
-          git config --global user.name "ZhQuella"
-          cd dist && git init && git add .
-          git commit -m "GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S')"
-          git push --force --set-upstream --quiet "https://$GITHUB_TOKEN@github.com/$REPO_USERNAME/$DIST_REPO.git" main
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
