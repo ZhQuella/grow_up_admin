@@ -11,6 +11,13 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "16.x"
+      - name: Cache
+        id: cache-dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            **/node_modules
+          key: ${{runner.OS}}-${{hashFiles('**/yarn.lock')}}
       - name: Installing Dependencies
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: yarn install
@@ -27,4 +34,4 @@ jobs:
           git config --global user.name "ZhQuella"
           cd dist && git init && git add .
           git commit -m "GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S')"
-          git push --force --quiet "https://$GITHUB_TOKEN@github.com:$REPO_USERNAME/$DIST_REPO.git" main:main
+          git push --force --quiet "https://$GITHUB_TOKEN@github.com/$REPO_USERNAME/$DIST_REPO.git" main:main
