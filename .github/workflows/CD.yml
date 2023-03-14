@@ -14,16 +14,17 @@ jobs:
         with:
           node-version: "16.x"
       # 安装依赖
+        - name: add yarn
+          run: npm install yarn -g
+      # 安装依赖
       - name: Installing Dependencies
         # 如果缓存标志位没命中，则执行该step。否则就跳过该step
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: yarn install
-        uses: actions/create-release@v1
       # 打包
       - name: Building
         run: |
           yarn build
-        uses: actions/create-release@v1
       # 更新到存储库
       - name: Update dist folder to repository
         env:
