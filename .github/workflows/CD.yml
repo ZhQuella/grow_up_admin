@@ -19,7 +19,7 @@ jobs:
         run: |
           yarn build
       - name: Update dist folder to repository
-        uses: actions/create-release@v4
+        uses: actions/create-release@v2
         env:
           REPO_USERNAME: "ZhQuella"
           DIST_REPO: "grow_admin"
