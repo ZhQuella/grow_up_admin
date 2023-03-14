@@ -1,0 +1,33 @@
+name: CD
+on: 
+  push: 
+    branches: main
+jobs:
+  CD:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      # 下载Node
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16.x"
+      # 安装依赖
+      - name: Installing Dependencies
+        # 如果缓存标志位没命中，则执行该step。否则就跳过该step
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        run: yarn install
+      # 打包
+      - name: Building
+        run: |
+          yarn build
+      # 更新到存储库
+      - name: Update dist folder to repository
+        env:
+          # 仓库用户名
+          REPO_USERNAME: "ZhQuella"
+          # GitHub Pages仓库名
+          DIST_REPO: "grow_admin"
+          # GitHub Token
+          GITHUB_TOKEN: ${{ secrets.PROJECT_ACCESS_TOKEN }}
