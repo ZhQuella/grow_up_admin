@@ -24,11 +24,6 @@ jobs:
       - name: Building
         run: |
           yarn build
-      - name: Update dist folder to repository
-        env:
-          REPO_USERNAME: "ZhQuella"
-          DIST_REPO: "grow_admin"
-          GITHUB_TOKEN: ${{ secrets.PROJECT_ACCESS_TOKEN }}
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
