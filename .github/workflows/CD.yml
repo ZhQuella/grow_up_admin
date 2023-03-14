@@ -7,9 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: 
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: 
         with:
           node-version: "16.x"
       - name: Installing Dependencies
@@ -19,7 +19,7 @@ jobs:
         run: |
           yarn build
       - name: Update dist folder to repository
-        uses: actions/create-release@v2
+        uses: 
         env:
           REPO_USERNAME: "ZhQuella"
           DIST_REPO: "grow_admin"
