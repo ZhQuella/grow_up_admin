@@ -19,8 +19,8 @@ jobs:
         run: |
           yarn build
       - name: Update dist folder to repository
+        uses: actions/create-release@v1
         env:
-          uses: actions/create-release@v1
           REPO_USERNAME: "ZhQuella"
           DIST_REPO: "grow_admin"
           GITHUB_TOKEN: ${{ secrets.PROJECT_ACCESS_TOKEN }}
