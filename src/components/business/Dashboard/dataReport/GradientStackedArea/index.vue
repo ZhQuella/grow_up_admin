@@ -6,7 +6,7 @@
 import type { PropType, Ref } from "vue";
 import { ref, watch } from "vue";
 import { useEcharts } from 'hooks/useEcharts/index';
-import echarts from 'util/ECharts/index';
+import echarts from 'util/Echarts/index';
 const chartRef = ref<HTMLDivElement | null>(null);
 const { setOptions } = useEcharts(chartRef as Ref<HTMLDivElement>);
 
