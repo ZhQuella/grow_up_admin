@@ -54,7 +54,7 @@
     "yorkie": "^2.0.0"
   },
   "gitHooks": {
-    "commit-msg": "node scripts/commitMessage.js"
+    "commit-msg": "node build/scripts/commitMessage.js"
   },
   "resolutions": {
     "bin-wrapper": "npm:bin-wrapper-china"

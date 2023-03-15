@@ -3,12 +3,14 @@
  * @Author: Aaron
  * @Date: 2022-12-16 14:48:02
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-12-16 14:48:02
+ * @LastEditTime: 2023-03-15 21:47:16
  */
 
-const chalk = require('chalk');
+// const chalk = require('chalk');
+import chalk from "chalk";
 const msgPath = process.env.GIT_PARAMS;
-const msg = require('fs').readFileSync(msgPath, 'utf-8').trim();
+import fs from "fs";
+const msg = fs.readFileSync(msgPath, 'utf-8').trim();
 
 const commitRE = /^(revert: )?(feat|fix|docs|dx|style|refactor|perf|test|workflow|build|ci|chore|types|wip|release)(\(.+\))?(.{1,10})?: .{1,50}/;
 const mergeRe = /^(Merge pull request|Merge branch)/;
