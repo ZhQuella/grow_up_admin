@@ -38,7 +38,10 @@
       <div class="h-[40px] bg-BG_COLOR2 px-[10px] border-b-[1px] border-BORDER_COLOR2 border-solid box-border -enter-y">
         <slot name="tab"></slot>
       </div>
-      <div class="flex-1 relative overflow-hidden bg-BG_COLOR enter-y" style="height: calc(100% - 90px);">
+      <div class="flex-1 relative overflow-hidden bg-BG_COLOR enter-y" 
+          :style="{
+            height: `calc(100% - ${!isFullScreen?90:40}px)`
+          }">
         <WerterMark class="absolute top-0 left-0 right-0 bottom-0 z-[3000] pointer-events-none"/>
         <slot name="view"></slot>
       </div>

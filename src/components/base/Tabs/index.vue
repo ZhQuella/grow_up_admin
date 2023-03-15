@@ -26,7 +26,7 @@
       </el-tab-pane>
     </el-tabs>
   </div>
-  <div class="flex">
+  <div class="flex w-[120px] justify-between">
     <div class="w-[30px] h-[30px] text-center leading-[36px] text-MAIN_TEXT hover:text-PUBLIC_MAIN_COLOR cursor-pointer transition-all duration-350">
       <el-button :icon="ReloadOutlined" 
                 size="large" 

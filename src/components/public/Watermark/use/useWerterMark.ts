@@ -1,10 +1,15 @@
 import { ref, onMounted, computed, watch } from "vue";
+import { useThemeStore } from "store/modules/theme";
 
 export const useWerterMark = () => { 
   const werterMarkRef = ref();
-
+  const themeStore = useThemeStore();
   const mackValue = computed(() => {
     return "人力资源二部 李二狗"
+  });
+
+  const themeType = computed(() => {
+    return themeStore.getTheme;
   });
 
   const initWerterImage = ():string => {
@@ -13,7 +18,8 @@ export const useWerterMark = () => {
     oCanvasDom.height = 150;
     const context = oCanvasDom.getContext("2d");
     context.rotate((-15 * Math.PI) / 180);
-    context.fillStyle = "rgba(200, 200, 200, 0.25)";
+    const colorRgba = themeType.value === "dark"?"0, 0, 0, 0.3":"200, 200, 200, 0.2";
+    context.fillStyle = `rgba(${colorRgba})`;
     context.textAlign = "left";
     context.font = "14px Verdana";
     context.fillText(mackValue.value, 75, 75);
@@ -31,6 +37,7 @@ export const useWerterMark = () => {
   };
 
   watch(() => mackValue.value, drawWerter);
+  watch(() => themeType.value, drawWerter);
 
   onMounted(() => {
     drawWerter();

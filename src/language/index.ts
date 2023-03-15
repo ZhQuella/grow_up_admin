@@ -11,6 +11,12 @@ import { Storage } from 'util/Storage';
 import ch from "./ch";
 import en from "./en";
 
+declare module '@vue/runtime-core' {
+  interface ComponentCustomProperties {
+    $t: Fn
+  }
+}
+
 const i18n: I18n = createI18n({
   locale: Storage.get(LOCALE_KEY, 'ch'),
   legacy:false,
