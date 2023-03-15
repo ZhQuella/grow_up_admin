@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     AppSearch: typeof import('./src/components/base/AppSearch/index.vue')['default']
     ContextMenu: typeof import('./src/components/base/ContextMenu/index.vue')['default']
     Describe: typeof import('./src/components/business/Index/Describe/index.vue')['default']
+    Dynamic: typeof import('./src/components/business/Dashboard/workbench/Dynamic/index.vue')['default']
     EffectScatter: typeof import('./src/components/business/Dashboard/dataReport/EffectScatter/index.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBadge: typeof import('element-plus/es')['ElBadge']
@@ -57,7 +58,9 @@ declare module '@vue/runtime-core' {
     MobilePhone: typeof import('./src/components/business/Login/MobilePhone/index.vue')['default']
     NavigationPath: typeof import('./src/components/base/NavigationPath/index.vue')['default']
     Options: typeof import('./src/components/business/Home/Options/index.vue')['default']
+    Project: typeof import('./src/components/business/Dashboard/workbench/Project/index.vue')['default']
     QrCodeLogin: typeof import('./src/components/business/Login/QrCodeLogin/index.vue')['default']
+    QuickNav: typeof import('./src/components/business/Dashboard/workbench/QuickNav/index.vue')['default']
     RenderView: typeof import('./src/components/public/RenderView/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
@@ -74,6 +77,7 @@ declare module '@vue/runtime-core' {
     VisitAnalysisBar: typeof import('./src/components/business/Dashboard/Analysis/VisitAnalysisBar/index.vue')['default']
     VisitRadar: typeof import('./src/components/business/Dashboard/Analysis/VisitRadar/index.vue')['default']
     VisitSource: typeof import('./src/components/business/Dashboard/Analysis/VisitSource/index.vue')['default']
+    Watermark: typeof import('./src/components/public/Watermark/index.vue')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']

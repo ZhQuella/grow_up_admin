@@ -6,7 +6,7 @@
                   src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
       </div>
       <div class="py-[20px] pl-[20px]">
-        <h5 class="text-[22px] text-TEXT_LIGHT2 leading-[34px]">早安, Vben Admin, 开始您一天的工作吧！</h5>
+        <h5 class="text-[22px] text-TEXT_LIGHT2 leading-[34px]">早安, Mr.G Admin, 开始您一天的工作吧！</h5>
         <p class="text-[14px] text-TEXT_LIGHT2">今日晴，20℃ - 32℃！</p>
       </div>
     </div>
