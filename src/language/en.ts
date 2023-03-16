@@ -3,7 +3,9 @@ export default {
   PUBLIC: {
     BACK_TEXT: "Go back",
     RESET_TEXT: "Reset",
-    SYSTEM_LOADING: "The system is loading frantically..."
+    SEARCH_TEXT: "Search",
+    SYSTEM_LOADING: "The system is loading frantically...",
+    NOT_DATA_TEXT: "No data yet"
   },
   INDEX_SYETEM_DESCRIBE: {
     DESCRIBE_1: "A framework that will grow",
@@ -81,5 +83,10 @@ export default {
     NOT_SEARCH_DATA: "No search result is available!",
     USER_DATA: "User data",
     LOG_OUT: "Log out"
+  },
+  SEARCH_BAR: {
+    SEARCH_TYPE_PLACEHOLDER: "Select a query type",
+    ADD_SEARCH: "Add condition",
+    RESET_SYETEM: "System default"
   }
 }

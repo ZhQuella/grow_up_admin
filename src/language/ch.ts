@@ -3,7 +3,9 @@ export default {
   PUBLIC: {
     BACK_TEXT: "返回",
     RESET_TEXT: "重置",
-    SYSTEM_LOADING: "系统疯狂加载中..."
+    SEARCH_TEXT: "查询",
+    SYSTEM_LOADING: "系统疯狂加载中...",
+    NOT_DATA_TEXT: "暂无数据"
   },
   INDEX_SYETEM_DESCRIBE: {
     DESCRIBE_1: "一个会成长的框架",
@@ -81,5 +83,10 @@ export default {
     NOT_SEARCH_DATA: "暂无搜索结果",
     USER_DATA: "用户资料",
     LOG_OUT: "退出登录"
+  },
+  SEARCH_BAR: {
+    SEARCH_TYPE_PLACEHOLDER: "请选择查询类型",
+    ADD_SEARCH: "添加条件",
+    RESET_SYETEM: "系统默认"
   }
 }

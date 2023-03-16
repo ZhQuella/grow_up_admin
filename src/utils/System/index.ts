@@ -87,4 +87,38 @@ export const findIndex = <T = Recordable>(ary: Array<T>, fn: Fn): number => {
     }
   });
   return index;
+};
+
+export function formatConversion(target: any) {
+  let output = {};
+  for (let quantityKey in target) {
+    let keySplits = quantityKey.split(".");
+    let current:any = output;
+    let value = target[quantityKey];
+    let lastKey = keySplits[keySplits.length - 1];
+    let reg = /\[[a-zA-Z\d_]+\]/g;
+    for(let j = 0; j < keySplits.length; j++){
+      let key = keySplits[j];
+      let isArray = reg.test(key);
+      if (!current[key]) {
+        current[key] = {};
+      };
+      if (key === lastKey) {
+        if (Array.isArray(value)) {
+          const [item] = value;
+          const itemType = getElType(item);
+          if (["Array"].includes(itemType)) {
+            value = value.map(el => el[el.length - 1])
+          };
+        }
+        !isArray && (current[lastKey] = value);
+      };
+      current = current[key];
+    };
+  };
+  return output;
+}
+
+export const getElType = (arg: any) => {
+  return Object.prototype.toString.call(arg).slice(8,-1);
 }

@@ -1,5 +1,5 @@
 import type { MenuType, } from "types/menu";
-import { h, Component, unref, ComputedRef } from 'vue';
+import { h, Component, unref, ComputedRef, getCurrentInstance } from 'vue';
 import { ElIcon } from 'element-plus';
 import { computed } from "vue";
 import { sizeEnum, screenEnum } from "@/assets/enums/breakpointEnum";
@@ -21,7 +21,7 @@ export const useNaiveUI = () => {
       screenEnum,
       realWidthRef: globalRealWidthRef,
     };
-  }
+  };
 
   return {
     renderIcon,

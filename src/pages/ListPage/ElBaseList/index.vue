@@ -2,7 +2,13 @@
   <div class="p-[10px]">
     <pageLayout>
       <template #header>
-
+        <div class="flex justify-between">
+          <div></div>
+          <div class="pt-[3px]">
+            <SearchBar :search="searchList"
+                      @search="onTableSeach"/>
+          </div>
+        </div>
       </template>
       <template v-slot:main="{ height }">
         <el-table :height="height" 
@@ -43,6 +49,7 @@
 <script setup lang="ts">
 import { useTable } from "hooks/useTable";
 import { Delete, DataViewAlt } from "@vicons/carbon";
+import SearchBar from "components/public/SearchBar/index.vue";
 
 const { 
   pageSizes,
@@ -51,6 +58,49 @@ const {
   layout,
   total
 } = useTable();
+
+const onTableSeach = (data: any) => { 
+  console.log(data);
+};
+
+const searchList = [{
+  "elType": "el-input",
+  "labelText": "导入文件ID",
+  "model": "fileId",
+  "placeholder": "请输入文件ID"
+},{
+  "elType": "el-date-picker",
+  "labelText": "日期区间",
+  "model": "seles.create.date",
+  "type": "daterange",
+  "start-placeholder": "开始日期",
+  "end-placeholder": "结束日期",
+  "value-format": "YYYY-MM-DD"
+}, {
+  "collapseTags": true,
+  "requestConfig": {
+    "method": "get",
+    "url": "/system/dict/data/type/sys_yes_no_number"
+  },
+  "elType": "el-select",
+  "labelText": "是否清洗",
+  "multiple": true,
+  "model": "cleanSignList",
+  "label": "dictLabel",
+  "placeholder": "请选择是否清洗",
+  "value": "dictValue",
+  "noDataText": "暂无数据",
+  "options": [
+    {
+      "dictLabel": "是",
+      "dictValue": "1",
+    },
+    {
+      "dictLabel": "否",
+      "dictValue": "0",
+    }
+  ]
+}];
 
 const data = [
   {

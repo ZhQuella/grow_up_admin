@@ -5,7 +5,8 @@
 
       </template>
       <template v-slot:main="{ height, width }">
-        <el-table-v2 :columns="columns"
+        <el-table-v2 ref="tableRef"
+                    :columns="columns"
                     :data="data"
                     :width="width"
                     :height="height"
@@ -27,7 +28,13 @@
 </template>
 
 <script setup lang="ts">
+import { reactive, ref, onActivated, nextTick } from "vue";
 import { useTable } from "hooks/useTable";
+
+interface ScrollParams { 
+  scrollTop: number;
+  scrollLeft: number;
+};
 
 const { 
   pageSizes,
@@ -36,6 +43,8 @@ const {
   layout,
   total
 } = useTable();
+
+const tableRef = ref();
 
 const generateColumns = (length = 10, prefix = 'column-', props?: any) =>
   Array.from({ length }).map((_, columnIndex) => ({
@@ -65,8 +74,13 @@ const generateData = (
     )
   })
 
-const columns = generateColumns(20)
-const data = generateData(columns, 1000)
+const columns = generateColumns(20);
+const data = generateData(columns, 1000);
+
+onActivated(async () => {
+  await nextTick();
+  tableRef.value.scrollTo({scrollTop: 0, scrollLeft: 0});
+});
 </script>
 
 <script lang="ts">

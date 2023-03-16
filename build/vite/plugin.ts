@@ -4,9 +4,6 @@ import { resolve } from 'path';
 import vue from "@vitejs/plugin-vue";
 
 import viteCompression from 'vite-plugin-compression';
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
-import AutoImport from 'unplugin-auto-import/vite';
-import Components from 'unplugin-vue-components/vite';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { terser } from "rollup-plugin-terser";
 import viteImagemin from "vite-plugin-imagemin";
@@ -50,13 +47,13 @@ export const createPlugin = ({ command, mode }: ConfigEnv): Plugin[] => {
     ext: '.gz',
   }));
 
-  vitePlugins.push(AutoImport({
-    resolvers: [ElementPlusResolver()],
-  }));
+  // vitePlugins.push(AutoImport({
+  //   resolvers: [ElementPlusResolver()],
+  // }));
 
-  vitePlugins.push(Components({
-    resolvers: [ElementPlusResolver()],
-  }));
+  // vitePlugins.push(Components({
+  //   resolvers: [ElementPlusResolver()],
+  // }));
 
   vitePlugins.push(visualizer());
 

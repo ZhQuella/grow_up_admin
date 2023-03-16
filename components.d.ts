@@ -9,6 +9,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AbstractEle: typeof import('./src/components/public/AbstractEle/index.vue')['default']
     AppSearch: typeof import('./src/components/base/AppSearch/index.vue')['default']
     ContextMenu: typeof import('./src/components/base/ContextMenu/index.vue')['default']
     Describe: typeof import('./src/components/business/Index/Describe/index.vue')['default']
@@ -24,6 +25,7 @@ declare module '@vue/runtime-core' {
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElContainer: typeof import('element-plus/es')['ElContainer']
+    ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDivider: typeof import('element-plus/es')['ElDivider']
     ElDrawer: typeof import('element-plus/es')['ElDrawer']
@@ -40,10 +42,12 @@ declare module '@vue/runtime-core' {
     ElMain: typeof import('element-plus/es')['ElMain']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
+    ElOption: typeof import('element-plus/es')['ElOption']
     ElPagination: typeof import('element-plus/es')['ElPagination']
     ElPopover: typeof import('element-plus/es')['ElPopover']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
+    ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElTable: typeof import('element-plus/es')['ElTable']
@@ -76,6 +80,7 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     SalesProductPie: typeof import('./src/components/business/Dashboard/Analysis/SalesProductPie/index.vue')['default']
     SayHello: typeof import('./src/components/business/Dashboard/workbench/SayHello/index.vue')['default']
+    SearchBar: typeof import('./src/components/public/SearchBar/index.vue')['default']
     SearchContainer: typeof import('./src/components/base/AppSearch/SearchContainer.vue')['default']
     SettingContent: typeof import('./src/components/business/Home/SettingContent/index.vue')['default']
     SwitchLanguage: typeof import('./src/components/base/SwitchLanguage/index.vue')['default']
