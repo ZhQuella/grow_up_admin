@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-end p-[10px] border-b-[1px] border-gray-300 border-solid">
+  <div class="flex justify-end p-[10px] border-b-[1px] border-[var(--el-border-color)] border-solid">
     <div class="grow-0 shrink-0 h-[30px]">
       <el-button link 
                 :icon="AddComment" 

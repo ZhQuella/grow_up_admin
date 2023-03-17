@@ -10,7 +10,7 @@
       <SearchContainer :search="search" 
                         ref="container"/>
     </el-scrollbar>
-    <div class="flex p-[10px] justify-between border-t-[1px] border-gray-300 border-solid">
+    <div class="flex p-[10px] justify-between border-t-[1px] border-[var(--el-border-color)] border-solid">
       <div>
         <slot name="option"></slot>
       </div>
