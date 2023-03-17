@@ -41,7 +41,6 @@ export const useInitColumns = ({
 
   const allColumns = computed(() => {
     return state.columns.filter(el => { 
-      console.log(el.visible);
       return !['serial','operate'].includes(el.field) && el.visible !== false
     })
   });
