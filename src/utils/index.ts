@@ -25,3 +25,17 @@ export const debounce = (wait: number, immediate: boolean = false) => {
   };
   return debounced;
 };
+
+export const deepCopy = (source: any) => {
+  if (typeof source != "object") {
+    return source;
+  }
+  if (source == null) {
+    return source;
+  }
+  var newObj = Array.isArray(source) ? [] : {};
+  for (var i in source) {
+    Reflect.set(newObj, i, deepCopy(source[i]))
+  }
+  return newObj;
+};

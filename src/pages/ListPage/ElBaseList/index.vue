@@ -7,30 +7,16 @@
           <div class="pt-[3px]">
             <SearchBar :search="searchList"
                       @search="onTableSeach"/>
+            <ColumnBar :columns="columns"
+                      @confirm="onColumnsBarConfirm"/>
           </div>
         </div>
       </template>
       <template v-slot:main="{ height }">
-        <el-table :height="height" 
-                  border 
-                  :data="[...data,...data]">
-          <el-table-column fixed prop="date" label="日期" width="240" />
-          <el-table-column prop="name" label="名称" width="260" />
-          <el-table-column prop="state" label="状态" width="360" />
-          <el-table-column prop="city" label="城市" width="320" />
-          <el-table-column prop="address" label="地址" width="400" />
-          <el-table-column prop="zip" label="Zip" width="120"/>
-          <el-table-column fixed="right" label="操作" width="80">
-            <template #default>
-              <el-button link
-                        type="primary"
-                        :icon="DataViewAlt"></el-button>
-              <el-button link
-                        type="danger"
-                        :icon="Delete"></el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+        <PerfectTable :height="height"
+                      :columns="columns"
+                      :data="data"
+                      ref="tableRef"/>
       </template>
       <template #footer>
         <div :span="12" class="flex justify-end pt-[10px]">
@@ -47,9 +33,15 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import { useTable } from "hooks/useTable";
+import ColumnBar from "components/public/ColumnBar/index.vue";
 import { Delete, DataViewAlt } from "@vicons/carbon";
 import SearchBar from "components/public/SearchBar/index.vue";
+import PerfectTable from "components/public/PerfectTable/index.vue";
+
+
+const tableRef = ref();
 
 const { 
   pageSizes,
@@ -65,9 +57,39 @@ const onTableSeach = (data: any) => {
 
 const searchList = [{
   "elType": "el-input",
+  "labelText": "导入文件ID1",
+  "model": "fileId1",
+  "placeholder": "请输入文件ID1"
+},{
+  "elType": "el-input",
+  "labelText": "导入文件ID2",
+  "model": "fileId2",
+  "placeholder": "请输入文件ID2"
+},{
+  "elType": "el-input",
+  "labelText": "导入文件ID3",
+  "model": "fileId3",
+  "placeholder": "请输入文件ID3"
+},{
+  "elType": "el-input",
+  "labelText": "导入文件ID4",
+  "model": "fileId4",
+  "placeholder": "请输入文件ID4"
+},{
+  "elType": "el-input",
+  "labelText": "导入文件ID5",
+  "model": "fileId5",
+  "placeholder": "请输入文件ID5"
+},{
+  "elType": "el-input",
   "labelText": "导入文件ID",
   "model": "fileId",
   "placeholder": "请输入文件ID"
+},{
+  "elType": "el-input",
+  "labelText": "导入文件ID6",
+  "model": "fileId6",
+  "placeholder": "请输入文件ID6"
 },{
   "elType": "el-date-picker",
   "labelText": "日期区间",
@@ -102,8 +124,36 @@ const searchList = [{
   ]
 }];
 
+const columns = [{
+  field: "serial",
+  title: "序号"
+},{
+  field: "date",
+  title: "日期"
+},{
+  field: "name",
+  title: "名称"
+},{
+  field: "state",
+  title: "状态"
+},{
+  field: "city",
+  title: "城市"
+},{
+  field: "address",
+  title: "地址",
+  "show-overflow-tooltip": true
+},{
+  field: "zip",
+  title: "编号"
+}, {
+  field: "operate",
+  title: "操作"
+}];
+
 const data = [
   {
+    id: 1,
     date: '2016-05-01',
     name: 'Tom',
     state: 'California',
@@ -112,6 +162,7 @@ const data = [
     zip: 'CA 90036',
   },
   {
+    id: 2,
     date: '2016-05-02',
     name: 'Tom',
     state: 'California',
@@ -120,6 +171,7 @@ const data = [
     zip: 'CA 90036',
   },
   {
+    id: 3,
     date: '2016-05-03',
     name: 'Tom',
     state: 'California',
@@ -128,6 +180,7 @@ const data = [
     zip: 'CA 90036',
   },
   {
+    id: 4,
     date: '2016-05-01',
     name: 'Tom',
     state: 'California',
@@ -136,6 +189,7 @@ const data = [
     zip: 'CA 90036',
   },
   {
+    id: 5,
     date: '2016-05-02',
     name: 'Tom',
     state: 'California',
@@ -144,6 +198,7 @@ const data = [
     zip: 'CA 90036',
   },
   {
+    id: 6,
     date: '2016-05-03',
     name: 'Tom',
     state: 'California',
@@ -152,6 +207,7 @@ const data = [
     zip: 'CA 90036',
   },
   {
+    id: 7,
     date: '2016-05-01',
     name: 'Tom',
     state: 'California',
@@ -160,6 +216,7 @@ const data = [
     zip: 'CA 90036',
   },
   {
+    id: 8,
     date: '2016-05-02',
     name: 'Tom',
     state: 'California',
@@ -168,6 +225,7 @@ const data = [
     zip: 'CA 90036',
   },
   {
+    id: 9,
     date: '2016-05-03',
     name: 'Tom',
     state: 'California',
@@ -176,6 +234,7 @@ const data = [
     zip: 'CA 90036',
   },
   {
+    id: 10,
     date: '2016-05-01',
     name: 'Tom',
     state: 'California',
@@ -184,6 +243,10 @@ const data = [
     zip: 'CA 90036',
   }
 ];
+
+const onColumnsBarConfirm = (columns: any[]) => { 
+  tableRef.value.setColumns(columns);
+};
 
 </script>
 

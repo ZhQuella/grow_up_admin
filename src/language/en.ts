@@ -5,7 +5,9 @@ export default {
     RESET_TEXT: "Reset",
     SEARCH_TEXT: "Search",
     SYSTEM_LOADING: "The system is loading frantically...",
-    NOT_DATA_TEXT: "No data yet"
+    NOT_DATA_TEXT: "No data yet",
+    CANCEL_TEXT: "Cancel",
+    CONFIRM_TEXT: "Confirm"
   },
   INDEX_SYETEM_DESCRIBE: {
     DESCRIBE_1: "A framework that will grow",
@@ -88,5 +90,8 @@ export default {
     SEARCH_TYPE_PLACEHOLDER: "Select a query type",
     ADD_SEARCH: "Add condition",
     RESET_SYETEM: "System default"
+  },
+  TABLE: {
+    SERIAL: "NO."
   }
 }

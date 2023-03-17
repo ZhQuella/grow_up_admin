@@ -18,6 +18,16 @@ $sode-deg : 5deg;
     padding: 0px !important;
   }
 }
+.el-table__row {
+  &.tr-selected {
+    background-color: rgba(245, 154, 35, 0.3) !important;
+    &:hover {
+      td.el-table__cell {
+        background-color: rgba(245, 154, 35, 0) !important;
+      }
+    }
+  }
+}
 .syetem-tabs-warp {
   padding-top: 4px;
   .el-tabs__nav-wrap {

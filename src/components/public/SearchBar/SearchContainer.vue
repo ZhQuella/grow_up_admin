@@ -10,45 +10,49 @@
                 @click="onAddSearchList">{{ $t('SEARCH_BAR.ADD_SEARCH') }}</el-button>
     </div>
   </div>
-  <ul class="p-[10px]" v-if="state.currentSelect.length">
-    <li class="flex pb-[10px]" 
-        v-for="(item, index) of state.currentSelect"
-        :key="item.model">
-      <div class="w-[260px] grow-0 shrink-0 pr-[10px]">
-        <el-select class="w-full"
-                  :modelValue="item.labelText"
-                  :disabled="state.notDeleteModels.includes(item.model)"
-                  filterable
-                  clearable
-                  :placeholder="$t('SEARCH_BAR.SEARCH_TYPE_PLACEHOLDER')"
-                  @change="onSelectListTypeChange($event, index)"
-                  @clear="onSearchListTypeClear(index)">
-          <el-option v-for="(searchInfo,i) of selectOptions"
-                    :key="i"
-                    :label="searchInfo.labelText"
-                    :value="searchInfo.model"
-                    class="block"></el-option>
-        </el-select>
-      </div>
-      <div class="flex-1">
-        <AbstractEle v-if="item.elType"
-                    :searchData="state.searchData"
-                    :config="item"/>
-      </div>
-      <div class="grow-0 shrink-0 w-[30px]">
-        <el-button :icon="Delete" 
-                    type="danger" 
-                    link
-                    class="block w-full h-full"
+  <el-scrollbar height="350px" class="overflow-visible">
+    <ul class="p-[10px]" v-if="state.currentSelect.length">
+      <li class="flex pb-[10px] -enter-x" 
+          v-for="(item, index) of state.currentSelect"
+          :key="item.model">
+        <div class="w-[260px] grow-0 shrink-0 pr-[10px]">
+          <el-select class="w-full"
+                    :modelValue="item.labelText"
                     :disabled="state.notDeleteModels.includes(item.model)"
-                    @click="onDeleteCurrent(index)"></el-button>
-      </div>
-    </li>
-  </ul>
-  <div v-else class="h-full w-full">
-    <el-empty :image-size="200"
-              :description="$t('PUBLIC.NOT_DATA_TEXT')"/>
-  </div>
+                    filterable
+                    clearable
+                    :teleported="false"
+                    :placeholder="$t('SEARCH_BAR.SEARCH_TYPE_PLACEHOLDER')"
+                    @change="onSelectListTypeChange($event, index)"
+                    @clear="onSearchListTypeClear(index)">
+            <el-option v-for="(searchInfo,i) of selectOptions"
+                      :key="i"
+                      :label="searchInfo.labelText"
+                      :value="searchInfo.model"
+                      class="block"></el-option>
+          </el-select>
+        </div>
+        
+        <div class="flex-1">
+          <AbstractEle v-if="item.elType"
+                      :searchData="state.searchData"
+                      :config="item"/>
+        </div>
+        <div class="grow-0 shrink-0 w-[30px]">
+          <el-button :icon="Delete" 
+                      type="danger" 
+                      link
+                      class="block w-full h-full"
+                      :disabled="state.notDeleteModels.includes(item.model)"
+                      @click="onDeleteCurrent(index)"></el-button>
+        </div>
+      </li>
+    </ul>
+    <div v-else class="h-full w-full">
+      <el-empty :image-size="200"
+                :description="$t('PUBLIC.NOT_DATA_TEXT')"/>
+    </div>
+  </el-scrollbar>
 </template>
 
 <script setup lang="ts">

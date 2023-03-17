@@ -1,0 +1,101 @@
+import { computed, ref, onMounted, reactive, watch } from "vue";
+import { deepCopy } from "util/index";
+
+interface initProps { 
+  columns: any[]
+};
+
+export const useInitTree = ({ 
+  columns
+}: initProps) => {
+
+  const treeRef = ref();
+  const state = reactive({
+    catchTreeCheckedKeys: [],
+    catchVisible: {},
+    treeData: []
+  });
+
+  watch(() => columns, (newValue: any) => {
+    state.treeData = deepCopy(newValue);
+  }, {
+    immediate: true
+  });
+
+  const allChild = computed(() => {
+    const allChild = [...state.treeData];
+    let result = [];
+    for (let item of allChild) { 
+      const { children } = item;
+      if (children) {
+        allChild.push(...children);
+      } else { 
+        result.push(item);
+      };
+    };
+    return result;
+  });
+
+  const getAllChild = (columns: any[]) => { 
+    let arr = [...columns];
+    for (let item of arr) {
+      if (item.children) { 
+        arr.push(...item.children);
+      }
+    }
+    return arr;
+  };
+
+  const renderLabel = (data: any) => { 
+    return data.title;
+  };
+
+  const setTreeNodeSelect = () => { 
+    const allChild = getAllChild(state.treeData);
+    const visibles = allChild.filter((el) => el.visible !== false && el.field).map(el => el.field);
+    treeRef.value && treeRef.value.setCheckedKeys(visibles);
+  };
+
+  const setDisabled = () => {
+    const allColumns = getAllChild(state.treeData);
+    for (let item of allColumns) {
+      if (['operate', 'serial'].includes(item.field)) {
+        Reflect.set(item, "disabled", true);
+      }
+    }
+  };
+
+  const catchCheckedKeys = () => {
+    const keys = treeRef.value.getCheckedKeys();
+    state.catchTreeCheckedKeys = keys.filter((el: string) => el);
+  };
+
+  const catchInitVisible = () => { 
+    for (let item of allChild.value) { 
+      const value = item.visible !== false;
+      Reflect.set(state.catchVisible, item.field, value)
+    };
+  };
+
+  const isAllChecked = computed(() => {
+    return state.catchTreeCheckedKeys.length === allChild.value.length;
+  });
+
+  onMounted(() => {
+    setTreeNodeSelect();
+    setDisabled();
+    catchCheckedKeys();
+    catchInitVisible();
+  });
+  
+
+  return {
+    catchCheckedKeys,
+    renderLabel,
+    treeRef,
+    state,
+    allChild,
+    isAllChecked,
+    getAllChild
+  };
+};

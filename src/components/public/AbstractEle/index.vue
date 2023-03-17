@@ -3,7 +3,8 @@
             class="w-full"
             v-model="searchData[config.model]"
             v-bind="config"
-            size="default">
+            size="default"
+            :teleported="false">
     <template v-if="['el-select'].includes(config.elType)">
       <el-option v-for="(item, index) in config.options" 
                 :key="index"

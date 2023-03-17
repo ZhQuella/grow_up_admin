@@ -1,15 +1,14 @@
 <template>
   <el-popover width="650px"
-              :visible="visible">
+              v-model:visible="visible"
+              placement="top-end"
+              trigger="click">
     <template #reference>
       <el-button :icon="Search" 
-                circle
-                @click="onShowPopover"></el-button>
+                circle></el-button>
     </template>
-    <el-scrollbar height="400px">
-      <SearchContainer :search="search" 
+    <SearchContainer :search="search" 
                         ref="container"/>
-    </el-scrollbar>
     <div class="flex p-[10px] justify-between border-t-[1px] border-[var(--el-border-color)] border-solid">
       <div>
         <slot name="option"></slot>
@@ -37,10 +36,6 @@ const visible = ref(false);
 const container = ref();
 
 const emit = defineEmits(['search'])
-
-const onShowPopover = () => { 
-  visible.value = !visible.value;
-};
 
 const onSearch = () => { 
   const searchData = container.value.getSearchData();

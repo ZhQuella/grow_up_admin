@@ -5,7 +5,9 @@ export default {
     RESET_TEXT: "重置",
     SEARCH_TEXT: "查询",
     SYSTEM_LOADING: "系统疯狂加载中...",
-    NOT_DATA_TEXT: "暂无数据"
+    NOT_DATA_TEXT: "暂无数据",
+    CANCEL_TEXT: "取消",
+    CONFIRM_TEXT: "确认"
   },
   INDEX_SYETEM_DESCRIBE: {
     DESCRIBE_1: "一个会成长的框架",
@@ -88,5 +90,8 @@ export default {
     SEARCH_TYPE_PLACEHOLDER: "请选择查询类型",
     ADD_SEARCH: "添加条件",
     RESET_SYETEM: "系统默认"
+  },
+  TABLE: {
+    SERIAL: "序号"
   }
 }
