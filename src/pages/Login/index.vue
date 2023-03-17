@@ -78,6 +78,7 @@
 </template>
 
 <script setup lang="ts">
+import GLogo from "components/base/GLogo/index.vue";
 import ThirdParty from "components/business/Login/ThirdParty/index.vue";
 import LoginFrom from "components/business/Login/Form/index.vue";
 import ForgetPassword from "components/business/Login/ForgetPassword/index.vue";
