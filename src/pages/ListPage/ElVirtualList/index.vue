@@ -2,16 +2,22 @@
   <div class="p-[10px]">
     <pageLayout>
       <template #header>
-
+        <div class="flex justify-between">
+          <div></div>
+          <div class="pt-[3px]">
+            <SearchBar />
+            <ColumnBar :columns="columns" 
+                        nodeKey="dataKey"
+                        @confirm="onColumnsBarConfirm"/>
+          </div>
+        </div>
       </template>
       <template v-slot:main="{ height, width }">
-        <el-table-v2 ref="tableRef"
-                    :columns="columns"
-                    :data="data"
+        <IntactTable :height="height" 
                     :width="width"
-                    :height="height"
-                    fixed
-                    border/>
+                    :columns="columns"
+                    ref="tableRef"
+                    :data="data"/>
       </template>
       <template #footer>
         <div :span="12" class="flex justify-end pt-[10px]">
@@ -30,6 +36,11 @@
 <script setup lang="ts">
 import { reactive, ref, onActivated, nextTick } from "vue";
 import { useTable } from "hooks/useTable";
+import ColumnBar from "components/public/ColumnBar/index.vue";
+import SearchBar from "components/public/SearchBar/index.vue";
+import IntactTable from "components/public/IntactTable/index.vue";
+
+const tableRef = ref();
 
 interface ScrollParams { 
   scrollTop: number;
@@ -44,16 +55,13 @@ const {
   total
 } = useTable();
 
-const tableRef = ref();
-
 const generateColumns = (length = 10, prefix = 'column-', props?: any) =>
   Array.from({ length }).map((_, columnIndex) => ({
     ...props,
-    fixed: !columnIndex,
-    key: `${prefix}${columnIndex}`,
+    fixed: false,
     dataKey: `${prefix}${columnIndex}`,
     title: `Column ${columnIndex + 1}`,
-    width: Math.max(parseInt(`${Math.random() * 300}`), 160)
+    width: 300
   }))
 
 const generateData = (
@@ -77,10 +85,9 @@ const generateData = (
 const columns = generateColumns(20);
 const data = generateData(columns, 1000);
 
-onActivated(async () => {
-  await nextTick();
-  tableRef.value.scrollTo({scrollTop: 0, scrollLeft: 0});
-});
+const onColumnsBarConfirm = (columns: any[]) => { 
+  tableRef.value.setColumns(columns);
+};
 </script>
 
 <script lang="ts">

@@ -9,6 +9,7 @@ import { terser } from "rollup-plugin-terser";
 import viteImagemin from "vite-plugin-imagemin";
 import commonjs from '@rollup/plugin-commonjs';
 import { viteMockServe } from 'vite-plugin-mock';
+import vueJsx from "@vitejs/plugin-vue-jsx";
 
 const root = process.cwd();
 
@@ -26,6 +27,8 @@ export const createPlugin = ({ command, mode }: ConfigEnv): Plugin[] => {
   vitePlugins.push(commonjs());
 
   vitePlugins.push(vue());
+
+  vitePlugins.push(vueJsx());
 
   vitePlugins.push(viteMockServe({
     ignore: /^\_/,

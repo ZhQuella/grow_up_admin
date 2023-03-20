@@ -7,7 +7,8 @@ interface propsArg {
   state: any,
   getAllChild: Fn,
   emit: Fn,
-  visible: Ref<boolean>
+  visible: Ref<boolean>,
+  nodeKey: string
 };
 
 export const useEvent = ({ 
@@ -17,7 +18,8 @@ export const useEvent = ({
   state,
   getAllChild,
   emit,
-  visible
+  visible,
+  nodeKey
 }: propsArg) => { 
 
 
@@ -27,12 +29,12 @@ export const useEvent = ({
 
   const onAllSelectChange = (value: boolean) => { 
     if (value) {
-      const keys = allChild.map(el => el.field);
+      const keys = allChild.map(el => el[nodeKey]);
       treeRef.value.setCheckedKeys(keys);
       state.catchTreeCheckedKeys = keys;
     }
     else { 
-      const keys = allChild.filter(el => el.disabled).map(el => el.field);
+      const keys = allChild.filter(el => el.disabled).map(el => el[nodeKey]);
       treeRef.value.setCheckedKeys(keys);
       state.catchTreeCheckedKeys = keys;
     }
@@ -40,18 +42,19 @@ export const useEvent = ({
 
   const onSetColumns = () => { 
     const { treeData } = state;
-    const keys = treeRef.value.getCheckedKeys();
+    const indeterminates = treeRef.value.getHalfCheckedKeys();
+    const keys = treeRef.value.getCheckedKeys(false);
     const allChild = getAllChild(treeData);
-    setVisabled(keys, allChild);
+    setVisabled([...indeterminates, ...keys], allChild);
   };
 
   const setVisabled = (keys: string[], allChild: any[]) => { 
-    const columns = allChild.filter(el => el.field);
+    const columns = allChild.filter(el => el[nodeKey]);
     for (let column of columns) { 
-      const isIn = keys.includes(column.field);
+      const isIn = keys.includes(column[nodeKey]);
       Reflect.set(column, "visible", isIn);
     };
-    emit("confirm", [...columns]);
+    emit("confirm", [...state.treeData]);
     visible.value = false;
   };
 

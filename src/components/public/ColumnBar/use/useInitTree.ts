@@ -2,11 +2,13 @@ import { computed, ref, onMounted, reactive, watch } from "vue";
 import { deepCopy } from "util/index";
 
 interface initProps { 
-  columns: any[]
+  columns: any[];
+  nodeKey: string;
 };
 
 export const useInitTree = ({ 
-  columns
+  columns,
+  nodeKey
 }: initProps) => {
 
   const treeRef = ref();
@@ -52,14 +54,14 @@ export const useInitTree = ({
 
   const setTreeNodeSelect = () => { 
     const allChild = getAllChild(state.treeData);
-    const visibles = allChild.filter((el) => el.visible !== false && el.field).map(el => el.field);
+    const visibles = allChild.filter((el) => el.visible !== false && el[nodeKey]).map(el => el[nodeKey]);
     treeRef.value && treeRef.value.setCheckedKeys(visibles);
   };
 
   const setDisabled = () => {
     const allColumns = getAllChild(state.treeData);
     for (let item of allColumns) {
-      if (['operate', 'serial'].includes(item.field)) {
+      if (['operate', 'serial'].includes(item[nodeKey])) {
         Reflect.set(item, "disabled", true);
       }
     }
@@ -73,7 +75,7 @@ export const useInitTree = ({
   const catchInitVisible = () => { 
     for (let item of allChild.value) { 
       const value = item.visible !== false;
-      Reflect.set(state.catchVisible, item.field, value)
+      Reflect.set(state.catchVisible, item[nodeKey], value)
     };
   };
 

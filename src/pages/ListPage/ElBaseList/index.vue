@@ -196,7 +196,20 @@ const columns = [{
 },{
   field: "name",
   title: "名称",
-  "show-overflow-tooltip": true
+  "show-overflow-tooltip": true,
+  children: [{
+    field: "name1",
+    title: "名称1",
+    "show-overflow-tooltip": true,
+  },{
+    field: "name2",
+    title: "名称2",
+    "show-overflow-tooltip": true,
+  },{
+    field: "name3",
+    title: "名称3",
+    "show-overflow-tooltip": true,
+  }]
 },{
   field: "state",
   title: "状态",
@@ -269,7 +282,7 @@ const data = [
   {
     id: 6,
     date: '2016-05-03',
-    name: 'Tom',
+    name3: 'Tom',
     state: 'California',
     city: 'Los Angeles',
     address: 'No. 189, Grove St, Los Angeles',
@@ -278,7 +291,7 @@ const data = [
   {
     id: 7,
     date: '2016-05-01',
-    name: 'Tom',
+    name2: 'Tom',
     state: 'California',
     city: 'Los Angeles',
     address: 'No. 189, Grove St, Los Angeles',
@@ -287,7 +300,7 @@ const data = [
   {
     id: 8,
     date: '2016-05-02',
-    name: 'Tom',
+    name1: 'Tom',
     state: 'California',
     city: 'Los Angeles',
     address: 'No. 189, Grove St, Los Angeles',

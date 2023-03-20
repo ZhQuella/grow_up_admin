@@ -19,14 +19,8 @@
       </template>
     </el-table-column>
 
-    <el-table-column v-for="(item,index) of allColumns"
-                    :key="index"
-                    :prop="item.field" 
-                    :label="item.title" 
-                    :width="item.width"
-                    :fixed="item.fixed"
-                    v-bind="item"></el-table-column>
-
+    <Column :children="allColumns"/>
+    
     <el-table-column v-if="isOperate"
                     :label="operateColumn.title" 
                     v-bind="operateColumn">
@@ -39,6 +33,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import Column from "./Column.vue";
 import { useEvent } from "./use/useEvent";
 import { useInitColumns } from "./use/useInitColumns";
 
@@ -77,7 +72,7 @@ const {
 } = useInitColumns({
   props
 });
-
+console.log(allColumns);
 const {
   mouseKey,
   selectOnlyKeys,

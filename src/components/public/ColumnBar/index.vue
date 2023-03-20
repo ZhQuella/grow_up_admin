@@ -15,13 +15,14 @@
                     @change="onAllSelectChange">全选</el-checkbox>
       </div>
       <el-scrollbar height="400px">
-        <el-tree node-key="field"
+        <el-tree :node-key="nodeKey"
                 :data="state.treeData"
                 :props="{
                   label: renderLabel
                 }"
                 show-checkbox
                 ref="treeRef"
+                default-expand-all
                 @check="onTreeChange"/>
       </el-scrollbar>
       <div class="border-t-[1px] border-[var(--el-border-color)] border-solid p-[10px] flex justify-end">
@@ -49,6 +50,10 @@ const props = defineProps({
   columns: {
     type: Array,
     default: () => []
+  },
+  nodeKey: {
+    type: String,
+    default: "field"
   }
 });
 
@@ -63,7 +68,8 @@ const {
   isAllChecked,
   getAllChild
 } = useInitTree({
-  columns: props.columns
+  columns: props.columns,
+  nodeKey: props.nodeKey
 });
 
 const {
@@ -78,7 +84,8 @@ const {
   allChild: allChild.value,
   getAllChild,
   emit,
-  visible
+  visible,
+  nodeKey: props.nodeKey
 });
 </script>
 
