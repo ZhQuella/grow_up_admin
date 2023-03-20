@@ -3,7 +3,9 @@
     <pageLayout>
       <template #header>
         <div class="flex justify-between">
-          <div></div>
+          <div class="pt-[8px]">
+            <ButtonGroup :button-group="optionGroup" :max="5" showText/>
+          </div>
           <div class="pt-[3px]">
             <SearchBar :search="searchList"
                       @search="onTableSeach"/>
@@ -16,7 +18,12 @@
         <PerfectTable :height="height"
                       :columns="columns"
                       :data="data"
-                      ref="tableRef"/>
+                      ref="tableRef"
+                      @select="onPerfectTableSelect">
+          <template #btnOption="data">
+            <ButtonGroup :button-group="buttonGroup" :max="4" :data="data"/>
+          </template>
+        </PerfectTable>
       </template>
       <template #footer>
         <div :span="12" class="flex justify-end pt-[10px]">
@@ -33,15 +40,72 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed, reactive } from "vue";
 import { useTable } from "hooks/useTable";
 import ColumnBar from "components/public/ColumnBar/index.vue";
 import { Delete, DataViewAlt } from "@vicons/carbon";
 import SearchBar from "components/public/SearchBar/index.vue";
 import PerfectTable from "components/public/PerfectTable/index.vue";
-
+import ButtonGroup from "components/public/ButtonGroup/index.vue";
 
 const tableRef = ref();
+const state = reactive({
+  selectList: []
+});
+
+// ~ 表格操作配置
+const buttonGroup = computed(() => [{
+  title: "详情",
+  type: "primary",
+  icon: "DataViewAlt",
+  func: (row: any) => { 
+    console.log(row,1);
+  },
+  authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
+}, {
+  title: "删除",
+  type: "danger",
+  icon: "Delete",
+  func: (row: any) => { 
+    console.log(row, 2);
+  },
+  authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
+}, {
+  title: "报表",
+  type: "success",
+  icon: "ChartEvaluation",
+  func: (row: any) => { 
+    console.log(row, 3);
+  },
+  color: "#626aef",
+  authority: "LIST_PAGE:EL_BASE_LIST:REPORT"
+}, {
+  title: "其他",
+  type: "warning",
+  icon: "WarningOther",
+  func: (row: any) => { 
+    console.log(row, 4);
+  },
+  color: "#626aef",
+  authority: "LIST_PAGE:EL_BASE_LIST:REPORT",
+  disabled: () => { 
+    return true;
+  }
+}]);
+
+// ~ 表格批量操作配置
+const optionGroup = computed(() => [ {
+  title: "批量删除",
+  type: "danger",
+  icon: "Delete",
+  func: (row: any) => { 
+    console.log(tableRef.value, 2);
+  },
+  authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
+  disabled: () => { 
+    return !state.selectList.length;
+  }
+}]);
 
 const { 
   pageSizes,
@@ -51,10 +115,7 @@ const {
   total
 } = useTable();
 
-const onTableSeach = (data: any) => { 
-  console.log(data);
-};
-
+// ~ 查询条件配置
 const searchList = [{
   "elType": "el-input",
   "labelText": "导入文件ID1",
@@ -124,31 +185,39 @@ const searchList = [{
   ]
 }];
 
+// ~ 表头配置
 const columns = [{
   field: "serial",
   title: "序号"
 },{
   field: "date",
-  title: "日期"
+  title: "日期",
+  "show-overflow-tooltip": true
 },{
   field: "name",
-  title: "名称"
+  title: "名称",
+  "show-overflow-tooltip": true
 },{
   field: "state",
-  title: "状态"
+  title: "状态",
+  "show-overflow-tooltip": true
 },{
   field: "city",
-  title: "城市"
+  title: "城市",
+  "show-overflow-tooltip": true
 },{
   field: "address",
   title: "地址",
   "show-overflow-tooltip": true
 },{
   field: "zip",
-  title: "编号"
+  title: "编号",
+  "show-overflow-tooltip": true
 }, {
   field: "operate",
-  title: "操作"
+  title: "操作",
+  fixed: "right",
+  width: "160px"
 }];
 
 const data = [
@@ -244,10 +313,17 @@ const data = [
   }
 ];
 
+const onTableSeach = (data: any) => { 
+  console.log(data);
+};
+
+const onPerfectTableSelect = (data: any[]) => { 
+  state.selectList = data;
+};
+
 const onColumnsBarConfirm = (columns: any[]) => { 
   tableRef.value.setColumns(columns);
 };
-
 </script>
 
 <script lang="ts">

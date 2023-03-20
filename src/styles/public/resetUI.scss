@@ -18,6 +18,11 @@ $sode-deg : 5deg;
     padding: 0px !important;
   }
 }
+.middle-btn {
+  .el-icon, span {
+    vertical-align: middle;
+  }
+}
 .el-table__row {
   &.tr-selected {
     background-color: rgba(245, 154, 35, 0.3) !important;

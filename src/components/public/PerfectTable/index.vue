@@ -31,7 +31,7 @@
                     :label="operateColumn.title" 
                     v-bind="operateColumn">
       <template #default="scope">
-        <ButtonGroup :data="scope"/>
+        <slot name="btnOption" v-bind="scope"></slot>
       </template>
     </el-table-column>
   </el-table>
@@ -39,7 +39,6 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import ButtonGroup from "components/public/ButtonGroup/index.vue";
 import { useEvent } from "./use/useEvent";
 import { useInitColumns } from "./use/useInitColumns";
 

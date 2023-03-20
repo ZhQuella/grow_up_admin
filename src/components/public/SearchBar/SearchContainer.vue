@@ -12,7 +12,7 @@
   </div>
   <el-scrollbar height="350px" class="overflow-visible">
     <ul class="p-[10px]" v-if="state.currentSelect.length">
-      <li class="flex pb-[10px] -enter-x" 
+      <li class="flex pb-[10px]" 
           v-for="(item, index) of state.currentSelect"
           :key="item.model">
         <div class="w-[260px] grow-0 shrink-0 pr-[10px]">
