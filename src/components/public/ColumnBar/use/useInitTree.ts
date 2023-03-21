@@ -31,10 +31,10 @@ export const useInitTree = ({
       const { children } = item;
       if (children) {
         allChild.push(...children);
-      } else { 
-        result.push(item);
-      };
+      } 
+      result.push(item);
     };
+    console.log(result);
     return result;
   });
 
