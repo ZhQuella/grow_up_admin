@@ -1,6 +1,5 @@
 <template>
   <el-menu :default-active="menuActiveKey"
-          router
           size="samll"
           :mode="menuMode"
           :collapse="collapsed"
@@ -10,24 +9,26 @@
             'border-none': isRoof
           }"
           :unique-opened="true"
-          v-if="menuList.length">
+          v-if="menuList.length"
+          @select="onSelectMenu">
     <template v-for="(item) of menuList"
-    :key="item.name">
-      <ElMenuItem v-if="!item.children" :index="item.name">
+              :key="item.name">
+      <ElMenuItem v-if="!item.children" 
+                  :index="item.name">
+        <el-icon>
+          <component :is="item.icon"/>
+        </el-icon>
+        <span>{{ item.label }}</span>
+      </ElMenuItem>
+      <el-sub-menu v-else :index="item.label">
+        <template #title>
           <el-icon>
             <component :is="item.icon"/>
           </el-icon>
           <span>{{ item.label }}</span>
-        </ElMenuItem>
-        <el-sub-menu v-else :index="item.label">
-          <template #title>
-            <el-icon>
-              <component :is="item.icon"/>
-            </el-icon>
-            <span>{{ item.label }}</span>
-          </template>
-          <MenuItem :menuList="item.children" collapsed/>
-        </el-sub-menu>
+        </template>
+        <MenuItem :menuList="item.children" collapsed/>
+      </el-sub-menu>
     </template>
   </el-menu>
 </template>
@@ -39,7 +40,8 @@ import { useOptions } from "./use/useOptions";
 
 const {
   menuList,
-  menuActiveKey
+  menuActiveKey,
+  onSelectMenu
 } = useOptions();
 
 const {

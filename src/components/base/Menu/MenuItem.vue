@@ -20,16 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { h } from "vue";
-import iconMap from "@/assets/icon";
-import { useNaiveUI } from "hooks/useGrow";
-
-const { renderIcon } = useNaiveUI();
-
-const getIcon = (icon: string) => {
-  return Reflect.get(iconMap, icon);
-};
-
 interface props { 
   menuList: any[],
   collapsed: boolean;

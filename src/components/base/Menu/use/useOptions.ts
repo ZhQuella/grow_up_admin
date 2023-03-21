@@ -1,6 +1,6 @@
 import type { MenuType } from "types/menu";
-import { computed, h, watch, unref, nextTick } from "vue";
-import { useRouter, RouterLink } from "vue-router";
+import { computed, watch, unref, nextTick } from "vue";
+import { useRouter } from "vue-router";
 import { useMenuStore } from "store/modules/menu";
 import { useMultipleTab, resetWhiteNameList } from "store/modules/multipleTab";
 
@@ -17,17 +17,15 @@ export const useOptions = () => {
     return multipleTableStore.getVisitedViews
   })
 
-  const { currentRoute } = useRouter();
+  const { currentRoute, push } = useRouter();
+
+  const urlReg = /^(((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?/;
 
   const resetMenuOption = (menuList: MenuType[]): any[] => {
     return [...menuList].map((el): any => { 
       const { label, name, icon, children, path } = el;
-      const toPaht = `/home/${path}`;
-      const renderLabel = path ? () => h(RouterLink, {
-        to: {
-          path: toPaht
-        }
-      }, { default: () => label }) : label;
+      const isDomain = urlReg.test(path);
+      const toPaht = isDomain?path:`/home/${path}`;
       const menu = {
         label,
         name: path?toPaht: name,
@@ -71,9 +69,22 @@ export const useOptions = () => {
     moveToCurrentTag();
   });
 
+  const onSelectMenu = (key: string, path: string[], item: any) => {
+    const isDomain = urlReg.test(key);
+    if (isDomain) {
+      const oA = document.createElement("a");
+      oA.setAttribute("href", key);
+      oA.setAttribute("target", key);
+      oA.click();
+    } else { 
+      push({ path: key });
+    };
+  };
+
   return {
     menuList,
-    menuActiveKey
+    menuActiveKey,
+    onSelectMenu
   }
 
 };
