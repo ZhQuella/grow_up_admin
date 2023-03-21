@@ -1,4 +1,4 @@
-import * as echarts from 'echarts/core';
+import * as echarts from "echarts/core";
 
 import {
   BarChart,
@@ -9,8 +9,8 @@ import {
   RadarChart,
   ScatterChart,
   ThemeRiverChart,
-  EffectScatterChart
-} from 'echarts/charts';
+  EffectScatterChart,
+} from "echarts/charts";
 
 import {
   TitleComponent,
@@ -27,10 +27,10 @@ import {
   TimelineComponent,
   CalendarComponent,
   GraphicComponent,
-  SingleAxisComponent
-} from 'echarts/components';
+  SingleAxisComponent,
+} from "echarts/components";
 
-import { SVGRenderer } from 'echarts/renderers';
+import { SVGRenderer } from "echarts/renderers";
 
 echarts.use([
   LegendComponent,
@@ -57,7 +57,7 @@ echarts.use([
   ScatterChart,
   ThemeRiverChart,
   SingleAxisComponent,
-  EffectScatterChart
+  EffectScatterChart,
 ]);
 
 export default echarts;

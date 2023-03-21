@@ -1,7 +1,9 @@
 <template>
   <el-breadcrumb>
-    <el-breadcrumb-item v-for="(item) of state.breadcrumbMap"
-                      :key="item.name">
+    <el-breadcrumb-item
+      v-for="item of state.breadcrumbMap"
+      :key="item.name"
+    >
       {{ item.label }}
     </el-breadcrumb-item>
   </el-breadcrumb>
@@ -20,7 +22,7 @@ const multipleTab = useMultipleTab();
 const { currentRoute } = useRouter();
 
 const state = reactive<any>({
-  breadcrumbMap: []
+  breadcrumbMap: [],
 });
 
 const visitedViews = computed(() => {
@@ -28,30 +30,33 @@ const visitedViews = computed(() => {
 });
 
 const resetMenuOption = (menuList: MenuType[]): any[] => {
-  return [...menuList].map((el): any => { 
+  return [...menuList].map((el): any => {
     const { label, name, children } = el;
     const menu = {
       label,
-      name
+      name,
     };
-    if (children) { 
+    if (children) {
       const childs = resetMenuOption(children) as never[];
       Reflect.set(menu, "children", childs);
-    };
+    }
     return menu;
   });
 };
 
-const getPathById = (tree: any[], target: RouteLocationNormalizedLoaded):any[]  => {
-  if (!tree.length) { 
+const getPathById = (
+  tree: any[],
+  target: RouteLocationNormalizedLoaded
+): any[] => {
+  if (!tree.length) {
     return [];
-  };
-  const targetData:any = {};
-  const loops = (data:any[] = [], parent?: any) => {
+  }
+  const targetData: any = {};
+  const loops = (data: any[] = [], parent?: any) => {
     return data.map((item: any) => {
       const node: any = {
         item,
-        parent
+        parent,
       };
       targetData[item.name] = node;
       node.children = loops(item.children, node);
@@ -61,14 +66,14 @@ const getPathById = (tree: any[], target: RouteLocationNormalizedLoaded):any[]  
 
   const getNode = (target: any): any => {
     let node: any = [];
-    let currentNode = targetData[target.name];
+    const currentNode = targetData[target.name];
     if (!currentNode) return node;
     node.push(currentNode.item);
     if (currentNode.parent) {
       node = [...getNode(currentNode.parent.item), ...node];
     }
     return node;
-  }
+  };
   loops(tree as any);
   const result = getNode(target);
   return result;
@@ -78,29 +83,33 @@ const allMenuList = computed(() => {
   return resetMenuOption(menuStore.allMenuList);
 });
 
-watch(() => unref(currentRoute), async (newValue) => {
-  const allMenu = unref(allMenuList);
-  const result = getPathById(allMenu, newValue);
-  await nextTick();
-  if (!result.length) { 
-    let catchList = unref(visitedViews);
-    const tabItem = catchList.find(el => el.fullPath === newValue.fullPath);
-    if (tabItem) { 
-      result.push({
-        label: tabItem?.meta?.label,
-        name: tabItem?.meta?.componentName,
-      });
+watch(
+  () => unref(currentRoute),
+  async (newValue) => {
+    const allMenu = unref(allMenuList);
+    const result = getPathById(allMenu, newValue);
+    await nextTick();
+    if (!result.length) {
+      const catchList = unref(visitedViews);
+      const tabItem = catchList.find((el) => el.fullPath === newValue.fullPath);
+      if (tabItem) {
+        result.push({
+          label: tabItem?.meta?.label,
+          name: tabItem?.meta?.componentName,
+        });
+      }
     }
-  };
-  state.breadcrumbMap = result;
-}, {
-  immediate: true
-});
+    state.breadcrumbMap = result;
+  },
+  {
+    immediate: true,
+  }
+);
 </script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "NavigationPath"
+  name: "NavigationPath",
 });
 </script>

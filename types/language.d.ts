@@ -6,14 +6,13 @@ declare global {
   };
 }
 
-export type LanguageType = 'ch' | 'en';
+export type LanguageType = "ch" | "en";
 
 export interface LanguageItem {
-  key: LanguageType,
-  label: string
+  key: LanguageType;
+  label: string;
 }
 
 export interface LanguageState {
   locale: LanguageType;
 }
-

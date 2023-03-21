@@ -10,6 +10,8 @@
     "dev": "vite --mode development",
     "release": "vite --mode release",
     "build": "vue-tsc && vite build --mode production",
+    "lint": "eslint --ext src/**/*.{ts,vue} --no-error-on-unmatched-pattern",
+    "bea": "npx prettier -w -u .",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -35,13 +37,22 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.0.1",
     "@types/nprogress": "^0.2.0",
+    "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "@typescript-eslint/parser": "^5.56.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
+    "@vue/eslint-config-prettier": "^7.1.0",
+    "@vue/eslint-config-typescript": "^11.0.2",
     "autoprefixer": "^10.4.13",
     "chalk": "^5.2.0",
+    "eslint": "^8.36.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.9.0",
     "install": "^0.13.0",
+    "lint-staged": "^13.2.0",
     "mockjs": "^1.1.0",
     "postcss": "^8.4.21",
+    "prettier": "^2.8.5",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-visualizer": "^5.9.0",
     "sass": "^1.58.3",
@@ -56,7 +67,11 @@
     "yorkie": "^2.0.0"
   },
   "gitHooks": {
-    "commit-msg": "node build/scripts/commitMessage.js"
+    "commit-msg": "node build/scripts/commitMessage.js",
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{ts,vue}": "eslint --fix"
   },
   "resolutions": {
     "bin-wrapper": "npm:bin-wrapper-china"

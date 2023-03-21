@@ -1,6 +1,6 @@
 name: CD
-on: 
-  push: 
+on:
+  push:
     branches: main
 jobs:
   CD:
@@ -34,5 +34,5 @@ jobs:
           user: ${{ secrets.USER_NAME }}
           pass: ${{ secrets.USER_PASS }}
           connect_timeout: 10s
-          local: './dist/*'
+          local: "./dist/*"
           remote: /home/www/dist

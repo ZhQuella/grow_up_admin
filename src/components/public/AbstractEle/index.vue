@@ -1,15 +1,19 @@
 <template>
-  <component :is="config.elType"
-            class="w-full"
-            v-model="searchData[config.model]"
-            v-bind="config"
-            size="default"
-            :teleported="false">
+  <component
+    :is="config.elType"
+    v-model="searchData[config.model]"
+    class="w-full"
+    v-bind="config"
+    size="default"
+    :teleported="false"
+  >
     <template v-if="['el-select'].includes(config.elType)">
-      <el-option v-for="(item, index) in config.options" 
-                :key="index"
-                :label="item[config.label]"
-                :value="item[config.value]" />
+      <el-option
+        v-for="(item, index) in config.options"
+        :key="index"
+        :label="item[config.label]"
+        :value="item[config.value]"
+      />
     </template>
   </component>
 </template>
@@ -20,19 +24,18 @@ import { toRefs } from "vue";
 const props = defineProps({
   searchData: {
     type: Object,
-    default: () => ({})
+    default: () => ({}),
   },
   config: {
     type: Object,
-    default: () => ({})
-  }
+    default: () => ({}),
+  },
 });
-
 </script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "AbstractEle"
+  name: "AbstractEle",
 });
 </script>

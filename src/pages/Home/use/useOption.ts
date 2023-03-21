@@ -1,36 +1,34 @@
 import { computed } from "vue";
 import { useAppStore } from "store/modules/app";
 
-export const useOption = () => { 
-
+export const useOption = () => {
   const appStore = useAppStore();
 
   const settingActive = computed({
-    get() { 
+    get() {
       return appStore.settingActive;
     },
-    set() { 
+    set() {
       return appStore.setSettingActive(false);
-    }
+    },
   });
 
   const searchActive = computed({
-    get() { 
+    get() {
       return appStore.searchActive;
     },
-    set() { 
+    set() {
       return appStore.setSearchActive(false);
-    }
+    },
   });
 
-  const onAppSearchSelect = () => { 
+  const onAppSearchSelect = () => {
     appStore.setSearchActive(false);
   };
-  
 
   return {
     settingActive,
     searchActive,
-    onAppSearchSelect
+    onAppSearchSelect,
   };
 };

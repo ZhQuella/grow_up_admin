@@ -11,20 +11,18 @@
 </template>
 
 <script setup lang="ts">
-
-interface Props { 
-  emjo: string;  
-  title: string;  
-  detail: string; 
-};
+interface Props {
+  emjo: string;
+  title: string;
+  detail: string;
+}
 
 defineProps<Props>();
-
 </script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "Describe"
+  name: "DescribeComponent",
 });
 </script>

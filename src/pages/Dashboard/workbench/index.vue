@@ -1,9 +1,12 @@
 <template>
   <el-scrollbar class="h-full">
-    <SayHello/>
+    <SayHello />
     <div class="p-[10px]">
       <el-row :gutter="10">
-        <el-col :span="16" class="enter-y">
+        <el-col
+          :span="16"
+          class="enter-y"
+        >
           <el-card shadow="never">
             <template #header>
               <span>项目</span>
@@ -11,7 +14,10 @@
             <Project />
           </el-card>
 
-          <el-card shadow="never" class="mt-[10px]">
+          <el-card
+            shadow="never"
+            class="mt-[10px]"
+          >
             <template #header>
               <span>动态</span>
             </template>
@@ -35,9 +41,12 @@
             </el-scrollbar>
           </el-card>
 
-          <el-card shadow="never" class="mt-[10px]">
+          <el-card
+            shadow="never"
+            class="mt-[10px]"
+          >
             <div>
-              <img :src="getImageUrl('login_illustration.png')"/>
+              <img :src="getImageUrl('login_illustration.png')">
             </div>
           </el-card>
         </el-col>
@@ -52,13 +61,11 @@ import Project from "components/business/Dashboard/workbench/Project/index.vue";
 import QuickNav from "components/business/Dashboard/workbench/QuickNav/index.vue";
 import Dynamic from "components/business/Dashboard/workbench/Dynamic/index.vue";
 import { getImageUrl } from "util/System";
-
 </script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "workbench"
+  name: "WorkbenchPage",
 });
 </script>
-

@@ -1,4 +1,4 @@
-$sode-deg : 5deg;
+$sode-deg: 5deg;
 
 *:focus {
   outline: none;
@@ -19,7 +19,8 @@ $sode-deg : 5deg;
   }
 }
 .middle-btn {
-  .el-icon, span {
+  .el-icon,
+  span {
     vertical-align: middle;
   }
 }
@@ -47,7 +48,7 @@ $sode-deg : 5deg;
       padding: 0px !important;
       border-radius: 4px;
       > * {
-        transition: all .35s;
+        transition: all 0.35s;
       }
       &:hover {
         background-color: var(--el-color-primary-light-9);
@@ -62,11 +63,12 @@ $sode-deg : 5deg;
         }
       }
     }
-  } 
+  }
   .el-tabs__active-bar {
     display: none;
   }
-  .el-tabs__nav-next, .el-tabs__nav-prev {
+  .el-tabs__nav-next,
+  .el-tabs__nav-prev {
     line-height: 40px;
     &:hover {
       color: rbg(var(--public-main-color));
@@ -77,11 +79,12 @@ $sode-deg : 5deg;
   margin-bottom: 0px !important;
   padding-bottom: 10px !important;
 }
-.el-popper, .el-drawer__body {
+.el-popper,
+.el-drawer__body {
   padding: 0px !important;
 }
 .message-tabs-wrap {
-  .el-tabs__nav{
+  .el-tabs__nav {
     width: 100%;
     display: flex;
   }
@@ -98,49 +101,50 @@ $sode-deg : 5deg;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  &::after,&::before {
+  &::after,
+  &::before {
     content: "";
     display: block;
     height: 50%;
     width: 100%;
     position: absolute;
     border-radius: 3px;
-    transition: all .35s;
-    background-color: rgba(var(--main-text), .3);
+    transition: all 0.35s;
+    background-color: rgba(var(--main-text), 0.3);
   }
   &::after {
     top: 0px;
     transform-origin: bottom center;
     border-radius: 3px 3px 0px 0px;
-  };
+  }
   &::before {
     bottom: 0px;
     transform-origin: top center;
     border-radius: 0px 0px 3px 3px;
-  };
+  }
   &.min {
     &:hover {
       &:hover {
-        &::after { 
-          transform: rotate(-$sode-deg)
+        &::after {
+          transform: rotate(-$sode-deg);
         }
-        &::before { 
-          transform: rotate($sode-deg)
+        &::before {
+          transform: rotate($sode-deg);
         }
       }
     }
   }
   &.max {
     &:hover {
-      &::after { 
-        transform: rotate($sode-deg)
+      &::after {
+        transform: rotate($sode-deg);
       }
-      &::before { 
-        transform: rotate(-$sode-deg)
+      &::before {
+        transform: rotate(-$sode-deg);
       }
     }
   }
-};
+}
 .vue-grid-item.vue-grid-placeholder {
   background-color: rgb(var(--public-main-color)) !important;
 }

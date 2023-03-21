@@ -1,48 +1,49 @@
 import { computed, reactive, watch } from "vue";
 import { deepCopy } from "util/index";
 
-interface argProp { 
-  props: any
-};
+interface argProp {
+  props: any;
+}
 
-export const useInitColumns = ({ 
-  props
-}: argProp) => { 
-
+export const useInitColumns = ({ props }: argProp) => {
   const state = reactive({
-    columns: []
+    columns: [],
   });
 
-  watch(() => props.columns, (newValue) => {
-    state.columns = deepCopy(newValue);
-  }, {
-    immediate: true
-  });
+  watch(
+    () => props.columns,
+    (newValue) => {
+      state.columns = deepCopy(newValue);
+    },
+    {
+      immediate: true,
+    }
+  );
 
-  const currentColumns = computed(() => { 
+  const currentColumns = computed(() => {
     return state.columns;
-  })
+  });
 
   const isSerial = computed(() => {
-    return state.columns.map(el => el.field).includes("serial");
+    return state.columns.map((el) => el.field).includes("serial");
   });
 
   const isOperate = computed(() => {
-    return state.columns.map(el => el.field).includes("serial");
+    return state.columns.map((el) => el.field).includes("serial");
   });
 
-  const serialColumn = computed(() => { 
-    return state.columns.find(el => el.field === "serial") || {};
+  const serialColumn = computed(() => {
+    return state.columns.find((el) => el.field === "serial") || {};
   });
 
-  const operateColumn = computed(() => { 
-    return state.columns.find(el => el.field === "operate") || {};
+  const operateColumn = computed(() => {
+    return state.columns.find((el) => el.field === "operate") || {};
   });
 
   const allColumns = computed(() => {
-    return state.columns.filter(el => { 
-      return !['serial','operate'].includes(el.field) && el.visible !== false
-    })
+    return state.columns.filter((el) => {
+      return !["serial", "operate"].includes(el.field) && el.visible !== false;
+    });
   });
 
   return {
@@ -52,6 +53,6 @@ export const useInitColumns = ({
     isOperate,
     operateColumn,
     currentColumns,
-    state
-  }
+    state,
+  };
 };

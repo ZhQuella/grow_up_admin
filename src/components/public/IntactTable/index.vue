@@ -1,12 +1,12 @@
 <template>
-  <el-table-v2 :height="height"
-              :width="width"
-              fixed
-              :columns="allColumns"
-              :data="data"
-              ref="tableRef">
-
-  </el-table-v2>
+  <el-table-v2
+    ref="tableRef"
+    :height="height"
+    :width="width"
+    fixed
+    :columns="allColumns"
+    :data="data"
+  />
 </template>
 
 <script setup lang="ts">
@@ -19,52 +19,47 @@ const tableRef = ref();
 const props = defineProps({
   height: {
     type: Number,
-    default: 0
+    default: 0,
   },
   width: {
     type: Number,
-    default: 0
+    default: 0,
   },
   columns: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   data: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   onlyKey: {
     type: String,
-    default: "id"
-  }
+    default: "id",
+  },
 });
 
-const { 
+const { state, allColumns } = useInitColumns({
+  columns: props.columns,
+});
+
+const { setColumns } = useEvent({
   state,
-  allColumns
-} = useInitColumns({
-  columns: props.columns
-});
-
-const { 
-  setColumns
-} = useEvent({
-  state
 });
 
 defineExpose({
-  setColumns
+  setColumns,
 });
 
 onActivated(async () => {
   await nextTick();
-  tableRef.value.scrollTo({scrollTop: 0, scrollLeft: 0});
+  tableRef.value.scrollTo({ scrollTop: 0, scrollLeft: 0 });
 });
 </script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "IntactTable"
+  name: "IntactTable",
 });
 </script>

@@ -1,20 +1,23 @@
 <template>
-  <div ref="chartRef" :style="{ width, height }"></div>
+  <div
+    ref="chartRef"
+    :style="{ width, height }"
+  />
 </template>
 <script lang="ts" setup>
 import type { PropType } from "vue";
-import { Ref, ref, watch } from 'vue';
-import { useEcharts } from 'hooks/useEcharts';
+import { Ref, ref, watch } from "vue";
+import { useEcharts } from "hooks/useEcharts";
 
 const props = defineProps({
   loading: Boolean,
   width: {
     type: String as PropType<string>,
-    default: '100%',
+    default: "100%",
   },
   height: {
     type: String as PropType<string>,
-    default: '300px',
+    default: "300px",
   },
 });
 
@@ -29,27 +32,27 @@ watch(
     }
     setOptions({
       tooltip: {
-        trigger: 'item',
+        trigger: "item",
       },
 
       series: [
         {
-          name: '访问来源',
-          type: 'pie',
-          radius: '80%',
-          center: ['50%', '50%'],
-          color: ['#5ab1ef', '#b6a2de', '#67e0e3', '#2ec7c9'],
+          name: "访问来源",
+          type: "pie",
+          radius: "80%",
+          center: ["50%", "50%"],
+          color: ["#5ab1ef", "#b6a2de", "#67e0e3", "#2ec7c9"],
           data: [
-            { value: 500, name: '电子产品' },
-            { value: 310, name: '服装' },
-            { value: 274, name: '化妆品' },
-            { value: 400, name: '家居' },
+            { value: 500, name: "电子产品" },
+            { value: 310, name: "服装" },
+            { value: 274, name: "化妆品" },
+            { value: 400, name: "家居" },
           ].sort(function (a, b) {
             return a.value - b.value;
           }),
-          roseType: 'radius',
-          animationType: 'scale',
-          animationEasing: 'exponentialInOut',
+          roseType: "radius",
+          animationType: "scale",
+          animationEasing: "exponentialInOut",
           animationDelay: function () {
             return Math.random() * 400;
           },
@@ -57,13 +60,13 @@ watch(
       ],
     });
   },
-  { immediate: true },
+  { immediate: true }
 );
 </script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "SalesProductPie"
+  name: "SalesProductPie",
 });
 </script>

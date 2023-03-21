@@ -1,11 +1,10 @@
+const type = "primary" | "success" | "warning" | "danger" | "info";
 
-const type = 'primary' | 'success' | 'warning' | 'danger' | 'info';
-
-export interface GroupBtn { 
-  func: Fn,
+export interface GroupBtn {
+  func: Fn;
   icon: string;
-  type,
-  authority: string,
+  type;
+  authority: string;
   title: string;
-  disabled?: Fn
-};
+  disabled?: Fn;
+}

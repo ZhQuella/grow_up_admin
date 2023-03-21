@@ -1,26 +1,26 @@
-import type { App } from 'vue';
-import type { I18n } from 'vue-i18n';
-import { createI18n } from 'vue-i18n';
-import ElementPlus from 'element-plus'
-import elzhCn from 'element-plus/dist/locale/zh-cn.mjs';
-import elEn from 'element-plus/dist/locale/en.mjs';
+import type { App } from "vue";
+import type { I18n } from "vue-i18n";
+import { createI18n } from "vue-i18n";
+import ElementPlus from "element-plus";
+import elzhCn from "element-plus/dist/locale/zh-cn.mjs";
+import elEn from "element-plus/dist/locale/en.mjs";
 
 import { LOCALE_KEY } from "@/assets/enums/cacheEnum";
-import { Storage } from 'util/Storage';
+import { Storage } from "util/Storage";
 
 import ch from "./ch";
 import en from "./en";
 
-declare module '@vue/runtime-core' {
+declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {
-    $t: any
+    $t: any;
   }
 }
 
 const i18n: I18n = createI18n({
-  locale: Storage.get(LOCALE_KEY, 'ch'),
-  legacy:false,
-  messages: { ch, en }
+  locale: Storage.get(LOCALE_KEY, "ch"),
+  legacy: false,
+  messages: { ch, en },
 });
 
 export default (app: App) => {
@@ -31,5 +31,4 @@ export default (app: App) => {
   app.use(ElementPlus, {
     locale: elEn,
   });
-}; 
-
+};

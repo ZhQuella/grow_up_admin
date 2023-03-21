@@ -6,26 +6,23 @@ import { useRouter } from "vue-router";
 import sortable from "sortablejs";
 
 export const useTabDropdown = () => {
-
-
   const tabsViewStore = useMultipleTab();
-  
+
   const state = reactive({
-    catchTab: <any>null
+    catchTab: <any>null,
   });
 
   const { currentRoute, push, replace, getRoutes } = useRouter();
 
   const currentName = computed(() => {
-    return tabsViewStore.activeKey
+    return tabsViewStore.activeKey;
   });
 
   const curRoute = computed(() => {
     return state.catchTab || unref(currentRoute);
   });
 
-
-  const addDrag = () => { 
+  const addDrag = () => {
     const wrap = document.querySelector(".app-tab-warp .n-tabs-wrapper");
     sortable.create(wrap, {
       animation: 200,
@@ -36,16 +33,16 @@ export const useTabDropdown = () => {
         const currRow = _visitedViews.splice(oldIndex - 1, 1)[0];
         _visitedViews.splice(newIndex - 1, 0, currRow);
         tabsViewStore.saveVisitedViews(_visitedViews);
-      }
+      },
     });
-  }
+  };
 
-  const onHandleContextMenu = (visible: boolean, item: contextMenuType) => { 
-    if (visible) { 
+  const onHandleContextMenu = (visible: boolean, item: contextMenuType) => {
+    if (visible) {
       state.catchTab = item;
-    } else { 
+    } else {
       state.catchTab = null;
-    };
+    }
   };
 
   const tabsList = computed(() => {
@@ -57,36 +54,36 @@ export const useTabDropdown = () => {
   };
 
   const redload = async (view: RouteLocationNormalizedLoaded) => {
-    if (!view) return
+    if (!view) return;
     tabsViewStore.delCachedView();
     const { path, query } = view;
     await nextTick();
     replace({
-      name: 'Redirect',
+      name: "Redirect",
       params: {
-        path
+        path,
       },
-      query
+      query,
     });
   };
 
   const closeTag = (view: RouteLocationNormalizedLoaded) => {
     tabsViewStore.delView(view);
     if (isActive(view)) {
-      toLastView()
+      toLastView();
     }
   };
 
   const isActive = (route: RouteLocationNormalizedLoaded): boolean => {
-    return route.path === unref(currentRoute).path
+    return route.path === unref(currentRoute).path;
   };
-  
+
   const toLastView = () => {
-    const visitedViews = tabsViewStore.getVisitedViews
-    const latestView = visitedViews.slice(-1)[0]
+    const visitedViews = tabsViewStore.getVisitedViews;
+    const latestView = visitedViews.slice(-1)[0];
     if (latestView) {
-      push(latestView)
-    };
+      push(latestView);
+    }
   };
 
   // 关闭右侧
@@ -120,7 +117,7 @@ export const useTabDropdown = () => {
       closeRightTag: closeRightTags,
       closeOtherTag: closeOthersTags,
       closeAllTag: closeAllTags,
-      addTag: () => {}
+      addTag: tabsViewStore.addTabs,
     };
     methods[value](state.catchTab || unref(currentRoute));
     state.catchTab = null;
@@ -139,7 +136,6 @@ export const useTabDropdown = () => {
     onClickoutside,
     onDropdownSelect,
     onRedload,
-    curRoute
+    curRoute,
   };
-
 };

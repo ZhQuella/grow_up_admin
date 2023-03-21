@@ -1,15 +1,14 @@
-
 type _menuType = "JumpTo" | "ScrollTo";
 
-export interface MenuItem { 
+export interface MenuItem {
   label: string;
   addition: string;
   key: string;
   type: _menuType;
   path: string;
-};
+}
 
-export interface MenuType { 
+export interface MenuType {
   label: string;
   name: string;
   icon: string;

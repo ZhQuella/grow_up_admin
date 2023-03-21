@@ -2,38 +2,38 @@ import { defineStore } from "pinia";
 
 export const useAppStore = defineStore({
   id: "app",
-  state: () => ({ 
+  state: () => ({
     webFullScreen: false,
     settingActive: false,
     searchActive: false,
-    isPutAway: false
+    isPutAway: false,
   }),
   getters: {
-    getWebFullScreen():boolean {
+    getWebFullScreen(): boolean {
       return this.webFullScreen;
     },
-    getSettingActive():boolean { 
+    getSettingActive(): boolean {
       return this.settingActive;
     },
-    getSearchActive(): boolean { 
-      return this.searchActive
+    getSearchActive(): boolean {
+      return this.searchActive;
     },
-    getIsPutAway(): boolean { 
+    getIsPutAway(): boolean {
       return this.isPutAway;
-    }
+    },
   },
   actions: {
     setWebFullScreen(isFullScreen: boolean) {
       this.webFullScreen = isFullScreen;
     },
-    setSettingActive(isActive: boolean) { 
+    setSettingActive(isActive: boolean) {
       this.settingActive = isActive;
     },
-    setSearchActive(isActive: boolean) { 
+    setSearchActive(isActive: boolean) {
       this.searchActive = isActive;
     },
-    setIsPutAway(isPutAway: boolean) { 
+    setIsPutAway(isPutAway: boolean) {
       this.isPutAway = isPutAway;
-    }
+    },
   },
 });

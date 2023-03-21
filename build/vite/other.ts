@@ -1,78 +1,76 @@
-
-
 export const createCss = () => {
   return {
-		preprocessorOptions: {
-			scss: {
-        additionalData: '@import "style/base/_var.scss";'
-			}
-		}
-	}
-}
+    preprocessorOptions: {
+      scss: {
+        additionalData: '@import "style/base/_var.scss";',
+      },
+    },
+  };
+};
 
 export const createResolve = () => {
   return {
     alias: [
       {
         find: "@",
-        replacement: "/src"
+        replacement: "/src",
       },
       {
         find: "pages",
-        replacement: "/src/pages"
+        replacement: "/src/pages",
       },
       {
         find: "components",
-        replacement: "/src/components"
+        replacement: "/src/components",
       },
       {
         find: "api",
-        replacement: "/src/apis"
+        replacement: "/src/apis",
       },
       {
         find: "util",
-        replacement: "/src/utils"
+        replacement: "/src/utils",
       },
       {
         find: "hooks",
-        replacement: "/src/hooks"
+        replacement: "/src/hooks",
       },
       {
         find: "types",
-        replacement: "/types"
+        replacement: "/types",
       },
       {
         find: "plugin",
-        replacement: "/src/plugins"
+        replacement: "/src/plugins",
       },
       {
         find: "style",
-        replacement: "/src/styles"
+        replacement: "/src/styles",
       },
       {
         find: "store",
-        replacement: "/src/stores"
+        replacement: "/src/stores",
       },
       {
         find: "setting",
-        replacement: "/src/settings"
+        replacement: "/src/settings",
       },
       {
         find: "router",
-        replacement: "/src/routers"
+        replacement: "/src/routers",
       },
       {
         find: "language",
-        replacement: "/src/language"
+        replacement: "/src/language",
       },
       {
         find: "/image",
-        replacement: "/src/assets/images"
+        replacement: "/src/assets/images",
       },
       {
         find: "image",
-        replacement: "/src/assets/images"
-      }
-    ]
-  }
-}
+        replacement: "/src/assets/images",
+      },
+    ],
+  };
+};

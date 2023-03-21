@@ -1,10 +1,12 @@
-import type { CSSProperties } from 'vue';
+import type { CSSProperties } from "vue";
 
-declare global { 
-
+declare global {
   declare interface Fn<T = any> {
-    (...arg: T[]): T
+    (...arg: T[]): T;
   }
 
-  declare type Recordable<T = any, K = string> = Record<K extends null | undefined ? string : K, T>
+  declare type Recordable<T = any, K = string> = Record<
+    K extends null | undefined ? string : K,
+    T
+  >;
 }

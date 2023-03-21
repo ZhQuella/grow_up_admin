@@ -1,10 +1,14 @@
 <template>
-  <div class="h-full"
-        v-loading="loading">
-    <iframe :src="iframeSrc"
-            class="w-full h-full"
-            ref="iframeRef"
-            @load="onIframeLoad"/>
+  <div
+    v-loading="loading"
+    class="h-full"
+  >
+    <iframe
+      ref="iframeRef"
+      :src="iframeSrc"
+      class="w-full h-full"
+      @load="onIframeLoad"
+    />
   </div>
 </template>
 
@@ -17,7 +21,7 @@ const route = useRoute();
 const iframeRef: Ref<HTMLElement> = ref();
 const loading = ref(true);
 
-const iframeSrc:ComputedRef<string> = computed(() => {
+const iframeSrc: ComputedRef<string> = computed(() => {
   return route.meta?.iframeSrc as string;
 });
 
@@ -29,6 +33,6 @@ const onIframeLoad = () => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "EmbedPage"
+  name: "EmbedPage",
 });
 </script>

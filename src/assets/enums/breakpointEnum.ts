@@ -1,10 +1,10 @@
 export enum sizeEnum {
-  XS = 'XS',
-  SM = 'SM',
-  MD = 'MD',
-  LG = 'LG',
-  XL = 'XL',
-  XXL = 'XXL',
+  XS = "XS",
+  SM = "SM",
+  MD = "MD",
+  LG = "LG",
+  XL = "XL",
+  XXL = "XXL",
 }
 
 export enum screenEnum {

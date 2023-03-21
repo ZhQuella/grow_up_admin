@@ -2,13 +2,12 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-
-@layer base { 
+@layer base {
   .theme-public {
     --public-main-color: 64, 158, 255;
     --public-main-dark-color: 51, 126, 204;
   }
-  .theme-light { 
+  .theme-light {
     --bg-color: 250, 250, 252;
     --bg-color2: 245, 245, 246;
     --bg-color3: 255, 255, 255;
@@ -19,7 +18,7 @@
     --border-color: 220, 223, 230;
     --border-color2: 238, 238, 238;
   }
-  .theme-dark { 
+  .theme-dark {
     --bg-color: 17, 24, 39;
     --bg-color2: 22, 31, 50;
     --bg-color3: 33, 33, 33;

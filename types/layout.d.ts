@@ -1,6 +1,5 @@
-
-export type layoutType = "roof" | "side";
+export type LayoutTypes = "roof" | "side";
 
 export interface LayoutState {
-  layout: layoutType;
+  layout: LayoutTypes;
 }

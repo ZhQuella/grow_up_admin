@@ -1,44 +1,68 @@
 <template>
   <div class="flex w-[265px] grow-0 shrink-0">
     <div class="pt-[5px]">
-      <el-button :icon="Search" 
-                  size="large" 
-                  circle 
-                  text 
-                  class="text-[18px]" 
-                  @click="onSearchHeadler"/>
-      <el-button :icon="!isFullscreen?FullscreenOutlined:FullscreenExitOutlined" 
-                  size="large" 
-                  circle 
-                  text 
-                  class="text-[18px] ml-[5px]"
-                  @click="toggle"/>
-      <el-popover v-model="messageActive" 
-                  trigger="click"
-                  width="340px">
+      <el-button
+        :icon="Search"
+        size="large"
+        circle
+        text
+        class="text-[18px]"
+        @click="onSearchHeadler"
+      />
+      <el-button
+        :icon="!isFullscreen ? FullscreenOutlined : FullscreenExitOutlined"
+        size="large"
+        circle
+        text
+        class="text-[18px] ml-[5px]"
+        @click="toggle"
+      />
+      <el-popover
+        v-model="messageActive"
+        trigger="click"
+        width="340px"
+      >
         <template #reference>
-          <el-button :icon="Notification" size="large" circle text class="text-[18px] ml-[5px]"/>
+          <el-button
+            :icon="Notification"
+            size="large"
+            circle
+            text
+            class="text-[18px] ml-[5px]"
+          />
         </template>
         <MessageList />
       </el-popover>
-      <el-button :icon="Settings" 
-                  size="large" 
-                  circle 
-                  text 
-                  class="text-[18px] ml-[5px]"
-                  @click="onSettingHadnler"/>
-      <el-button :icon="Help" size="large" circle text class="text-[18px] ml-[5px]"/>
+      <el-button
+        :icon="Settings"
+        size="large"
+        circle
+        text
+        class="text-[18px] ml-[5px]"
+        @click="onSettingHadnler"
+      />
+      <el-button
+        :icon="Help"
+        size="large"
+        circle
+        text
+        class="text-[18px] ml-[5px]"
+      />
     </div>
     <div class="pt-[5px] ml-[5px]">
       <el-dropdown>
-        <el-avatar :size="40" 
-                  src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>
+        <el-avatar
+          :size="40"
+          src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        />
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item v-for="(item,index) of options"
-                            :key="index">
+            <el-dropdown-item
+              v-for="(item, index) of options"
+              :key="index"
+            >
               <el-icon>
-                <component :is="item.icon"/>
+                <component :is="item.icon" />
               </el-icon>
               <span>{{ item.label }}</span>
             </el-dropdown-item>
@@ -60,34 +84,34 @@ import { getImageUrl } from "util/System";
 
 const i18n = useI18n();
 
-const { 
+const {
   settingActive,
   isFullscreen,
   toggle,
   onSettingHadnler,
   onSearchHeadler,
-  messageActive
+  messageActive,
 } = useEvent();
 
-const options = computed(() => { 
+const options = computed(() => {
   return [
     {
       label: i18n.t("APP_SEARCH.USER_DATA"),
-      key: 'profile',
-      icon: "User"
+      key: "profile",
+      icon: "User",
     },
     {
       label: i18n.t("APP_SEARCH.LOG_OUT"),
-      key: 'logout',
-      icon: "Logout"
-    }
-  ]
+      key: "logout",
+      icon: "Logout",
+    },
+  ];
 });
 </script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "Options"
+  name: "OptionsComponent",
 });
 </script>

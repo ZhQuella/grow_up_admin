@@ -4,16 +4,16 @@ import * as carbon from "@vicons/carbon";
 
 const withe = ["Label"];
 
-export default (app: App) => { 
+export default (app: App) => {
   const iconMap = {
     ...antd,
-    ...carbon
+    ...carbon,
   };
 
-  for (let name in iconMap) { 
-    if (withe.includes(name)) { 
+  for (let name in iconMap) {
+    if (withe.includes(name)) {
       name = `Icon${name}`;
-    };
+    }
     app.component(name, Reflect.get(iconMap, name));
-  };
+  }
 };

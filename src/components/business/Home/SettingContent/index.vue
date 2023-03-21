@@ -27,12 +27,11 @@
 import SwitchLanguage from "components/base/SwitchLanguage/index.vue";
 import SwitchTheme from "components/base/SwitchTheme/index.vue";
 import LayoutSelect from "components/base/LayoutSelect/index.vue";
-
 </script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "SettingContent"
+  name: "SettingContent",
 });
 </script>

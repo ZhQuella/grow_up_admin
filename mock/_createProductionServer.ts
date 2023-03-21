@@ -1,18 +1,18 @@
-import { createProdMockServer } from 'vite-plugin-mock/es/createProdMockServer'
+import { createProdMockServer } from "vite-plugin-mock/es/createProdMockServer";
 
-const modules = import.meta.glob('./**/*.ts', {
-  import: 'default',
-  eager: true
-})
+const modules = import.meta.glob("./**/*.ts", {
+  import: "default",
+  eager: true,
+});
 
-const mockModules: any[] = []
+const mockModules: any[] = [];
 Object.keys(modules).forEach(async (key) => {
-  if (key.includes('_')) {
-    return
+  if (key.includes("_")) {
+    return;
   }
-  mockModules.push(...(modules[key] as any))
-})
+  mockModules.push(...(modules[key] as any));
+});
 
 export function setupProdMockServer() {
-  createProdMockServer(mockModules)
+  createProdMockServer(mockModules);
 }

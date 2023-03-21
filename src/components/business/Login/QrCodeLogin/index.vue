@@ -1,10 +1,14 @@
 <template>
   <div>
     <div class="h-[300px] enter-x">
-      <div class="h-full w-[300px] mx-auto bg-slate-300"></div>
+      <div class="h-full w-[300px] mx-auto bg-slate-300" />
     </div>
     <div class="pt-[20px] enter-x">
-      <el-button size="large" class="w-full" @click="onBackClick">
+      <el-button
+        size="large"
+        class="w-full"
+        @click="onBackClick"
+      >
         {{ $t("PUBLIC.BACK_TEXT") }}
       </el-button>
     </div>
@@ -14,7 +18,7 @@
 <script setup lang="ts">
 const emit = defineEmits(["back"]);
 
-const onBackClick = () => { 
+const onBackClick = () => {
   emit("back", "login");
 };
 </script>
@@ -22,6 +26,6 @@ const onBackClick = () => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "QrCodeLogin"
+  name: "QrCodeLogin",
 });
 </script>

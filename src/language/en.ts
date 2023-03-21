@@ -1,4 +1,3 @@
-
 export default {
   PUBLIC: {
     BACK_TEXT: "Go back",
@@ -7,46 +6,53 @@ export default {
     SYSTEM_LOADING: "The system is loading frantically...",
     NOT_DATA_TEXT: "No data yet",
     CANCEL_TEXT: "Cancel",
-    CONFIRM_TEXT: "Confirm"
+    CONFIRM_TEXT: "Confirm",
   },
   INDEX_SYETEM_DESCRIBE: {
     DESCRIBE_1: "A framework that will grow",
     DESCRIBE_2: "Middle-end front-end/design solution",
-    VICE_DESC_1: "Developed based on the latest technology stacks such as Vue3, Vite, TypeScript, etc.",
-    VICE_DESC_2: "Easily build a standardized and aesthetically pleasing system",
+    VICE_DESC_1:
+      "Developed based on the latest technology stacks such as Vue3, Vite, TypeScript, etc.",
+    VICE_DESC_2:
+      "Easily build a standardized and aesthetically pleasing system",
     BUTTON_TEXT: "Fast start",
     TRAIT: {
-      "0":{
+      "0": {
         TITLE: "latest technology stack",
-        DESCRIBE: "Developed based on the latest technology stacks such as Vue3, Vite, TypeScript, etc."
+        DESCRIBE:
+          "Developed based on the latest technology stacks such as Vue3, Vite, TypeScript, etc.",
       },
-      "1":{
+      "1": {
         TITLE: "Lightweight and fast hot reload",
-        DESCRIBE: "Always extremely fast hot module reloading (HMR) regardless of application size"
+        DESCRIBE:
+          "Always extremely fast hot module reloading (HMR) regardless of application size",
       },
-      "2":{
+      "2": {
         TITLE: "rich examples",
-        DESCRIBE: "Example implementation of common web-side plug-ins"
+        DESCRIBE: "Example implementation of common web-side plug-ins",
       },
-      "3":{
+      "3": {
         TITLE: "Component packaging",
-        DESCRIBE: "Secondary encapsulation of components with high frequency of daily use to meet the needs of basic work"
+        DESCRIBE:
+          "Secondary encapsulation of components with high frequency of daily use to meet the needs of basic work",
       },
-      "4":{
+      "4": {
         TITLE: "excellent layout scheme",
-        DESCRIBE: "Rich layout modes with high configurability to meet your various layout needs"
+        DESCRIBE:
+          "Rich layout modes with high configurability to meet your various layout needs",
       },
-      "5":{
+      "5": {
         TITLE: "default style",
-        DESCRIBE: "The style is beautiful and generous, without Css, and can be combined at will to achieve a beautiful page"
-      }
+        DESCRIBE:
+          "The style is beautiful and generous, without Css, and can be combined at will to achieve a beautiful page",
+      },
     },
-    SPONSOR_TITLE: "Sponsor"
+    SPONSOR_TITLE: "Sponsor",
   },
   LOIN_STATE: {
     STATE_1: "Light and fast",
     STATE_2: "Simple and generous",
-    STATE_3: "Out of the box"
+    STATE_3: "Out of the box",
   },
   LOGIN_WORD: {
     ACCESS_MSG: "Please enter the account number",
@@ -60,10 +66,10 @@ export default {
     MOBILE_PHONE: "Please enter your mobile phone number",
     VERIFICATION_CODE: "Please enter the verification code",
     GET_CODE: "Get Code",
-    CONFIRM_TEXT: "Confirm"
+    CONFIRM_TEXT: "Confirm",
   },
   RECORD_INFO: {
-    DESCRIBE: "Released under the MIT License"
+    DESCRIBE: "Released under the MIT License",
   },
   TABS_DROPDOWN_OPTION: {
     RELOAD: "Reload",
@@ -71,7 +77,7 @@ export default {
     CLOSE_LEFT_TAG: "Close the left tags",
     CLOSE_RIGHT_TAG: "Close the right tags",
     CLOSE_OTHER_TAG: "Close other tags",
-    CLOSE_ALL_TAG: "Close all tags"
+    CLOSE_ALL_TAG: "Close all tags",
   },
   APP_OPTION: {
     SETTING_TITLE: "System setting",
@@ -84,14 +90,14 @@ export default {
     SEARCH_PLACEHOLDER: "Search",
     NOT_SEARCH_DATA: "No search result is available!",
     USER_DATA: "User data",
-    LOG_OUT: "Log out"
+    LOG_OUT: "Log out",
   },
   SEARCH_BAR: {
     SEARCH_TYPE_PLACEHOLDER: "Select a query type",
     ADD_SEARCH: "Add condition",
-    RESET_SYETEM: "System default"
+    RESET_SYETEM: "System default",
   },
   TABLE: {
-    SERIAL: "NO."
-  }
-}
+    SERIAL: "NO.",
+  },
+};

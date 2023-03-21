@@ -1,6 +1,6 @@
 <template>
   <ElConfigProvider :locale="localBag">
-    <RouterView :class="themeClass"></RouterView>
+    <RouterView :class="themeClass" />
   </ElConfigProvider>
 </template>
 
@@ -8,11 +8,11 @@
 import { computed } from "vue";
 import { useThemeStore } from "store/modules/theme";
 import { useLanguageStore } from "store/modules/language";
-import { ElConfigProvider } from 'element-plus';
-import { useDark } from '@vueuse/core';
+import { ElConfigProvider } from "element-plus";
+import { useDark } from "@vueuse/core";
 
-import elzhCn from 'element-plus/dist/locale/zh-cn.mjs';
-import elEn from 'element-plus/dist/locale/en.mjs';
+import elzhCn from "element-plus/dist/locale/zh-cn.mjs";
+import elEn from "element-plus/dist/locale/en.mjs";
 
 import { THEME_KEY } from "@/assets/enums/cacheEnum";
 
@@ -26,24 +26,20 @@ const theme = computed(() => {
 const localBag = computed(() => {
   const localMap = {
     en: elEn,
-    ch: elzhCn
+    ch: elzhCn,
   };
   return localMap[languageStore.locale];
 });
 
 const themeClass = computed(() => {
   const type = theme.value;
-  return [
-    "invoice",
-    "theme-public",
-    `theme-${type}`
-  ]
+  return ["invoice", "theme-public", `theme-${type}`];
 });
 
 const isDark = useDark({
   storageKey: THEME_KEY,
-  valueDark: 'dark',
-  valueLight: 'light',
+  valueDark: "dark",
+  valueLight: "light",
 });
 const themeVlaue = isDark.value ? "dark" : "light";
 themeStore.theme = themeVlaue;
@@ -52,6 +48,6 @@ themeStore.theme = themeVlaue;
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "App"
+  name: "App",
 });
 </script>

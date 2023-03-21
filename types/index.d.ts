@@ -2,8 +2,8 @@ export interface Fn<T = any, R = T> {
   (...arg: T[]): R;
 }
 
-export interface Fun { 
-  (...anr: any[]): any
+export interface Fun {
+  (...anr: any[]): any;
 }
 
 export interface ViteEnv {
@@ -15,8 +15,7 @@ export interface ViteEnv {
 export interface ExtendedDocument extends Document {
   msExitFullscreen?: any;
   mozCancelFullScreen?: any;
-  msFullscreenElement?:any;
+  msFullscreenElement?: any;
   mozFullScreenElement?: any;
   webkitFullscreenElement?: any;
 }
-

@@ -1,18 +1,17 @@
-import type { EChartsOption } from 'echarts';
-import type { Ref } from 'vue';
-import { tryOnUnmounted } from '@vueuse/core';
+import type { EChartsOption } from "echarts";
+import type { Ref } from "vue";
+import { tryOnUnmounted } from "@vueuse/core";
 import { computed, watch, unref, ref, nextTick } from "vue";
 import { useThemeStore } from "store/modules/theme";
-import echarts from 'util/Echarts/index';
+import echarts from "util/Echarts/index";
 import { addEventResize, removeResizeListener } from "util/ElementResize/index";
 import { useNaiveUI } from "hooks/useGrow/index";
 import { debounce } from "util/index";
 
-export const useEcharts = (elRef:Ref<HTMLDivElement>) => { 
-
+export const useEcharts = (elRef: Ref<HTMLDivElement>) => {
   const themeStore = useThemeStore();
   let chartInstance: echarts.ECharts | null = null;
-  let resizeFn: Fn = resize;
+  const resizeFn: Fn = resize;
   const { useBreakpoint } = useNaiveUI();
   const debounceFn = debounce(30);
   const shake = debounce(200);
@@ -27,31 +26,31 @@ export const useEcharts = (elRef:Ref<HTMLDivElement>) => {
     chartInstance?.resize({
       animation: {
         duration: 300,
-        easing: 'quadraticIn',
+        easing: "quadraticIn",
       },
     });
-  };
+  }
 
   const initCharts = async (t = themeType.value) => {
     const el = unref(elRef);
     if (!el || !unref(el)) {
       return;
-    };
+    }
     chartInstance = echarts.init(el, t);
     addEventResize(elRef.value, resizeFn);
     const { widthRef, screenEnum } = useBreakpoint();
     if (unref(widthRef) <= screenEnum.MD || el.offsetHeight === 0) {
       await debounceFn();
       resizeFn();
-    };
+    }
   };
 
-  const getOptions:Ref<EChartsOption> = computed(() => {
-    if (themeType.value !== 'dark') {
+  const getOptions: Ref<EChartsOption> = computed(() => {
+    if (themeType.value !== "dark") {
       return unref(cacheOptions) as EChartsOption;
     }
     return {
-      backgroundColor: 'transparent',
+      backgroundColor: "transparent",
       ...cacheOptions.value,
     } as EChartsOption;
   });
@@ -88,13 +87,15 @@ export const useEcharts = (elRef:Ref<HTMLDivElement>) => {
     chartInstance = null;
   });
 
-  watch(() => themeType.value, async (theme) => {
+  watch(
+    () => themeType.value,
+    async (theme) => {
       if (chartInstance) {
         chartInstance.dispose();
         await initCharts(theme);
         await setOptions(cacheOptions.value);
       }
-    },
+    }
   );
 
   return {
@@ -102,5 +103,5 @@ export const useEcharts = (elRef:Ref<HTMLDivElement>) => {
     resize,
     echarts,
     getInstance,
-  }
+  };
 };

@@ -1,8 +1,9 @@
-
 const DEFAULT_CACHE_TIME = 60 * 60 * 24 * 7;
 
-export const createStorage = ({ prefixKey = '', storage = localStorage } = {}) => {
-
+export const createStorage = ({
+  prefixKey = "",
+  storage = localStorage,
+} = {}) => {
   const Storage = class {
     private storage = storage;
     private prefixKey?: string = prefixKey;
@@ -44,19 +45,23 @@ export const createStorage = ({ prefixKey = '', storage = localStorage } = {}) =
       this.storage.clear();
     }
 
-    setCookie(name: string, value: any, expire: number | null = DEFAULT_CACHE_TIME) {
+    setCookie(
+      name: string,
+      value: any,
+      expire: number | null = DEFAULT_CACHE_TIME
+    ) {
       document.cookie = `${this.getKey(name)}=${value}; Max-Age=${expire}`;
     }
 
     getCookie(name: string): string {
-      const cookieArr = document.cookie.split('; ');
+      const cookieArr = document.cookie.split("; ");
       for (let i = 0, length = cookieArr.length; i < length; i++) {
-        const kv = cookieArr[i].split('=');
+        const kv = cookieArr[i].split("=");
         if (kv[0] === this.getKey(name)) {
           return kv[1];
         }
       }
-      return '';
+      return "";
     }
 
     removeCookie(key: string) {

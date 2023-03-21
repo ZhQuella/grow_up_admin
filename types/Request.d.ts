@@ -2,17 +2,17 @@ import type {
   AxiosRequestConfig,
   AxiosResponse,
   AxiosError,
-  Method
+  Method,
 } from "axios";
 
-export interface Intercept { 
+export interface Intercept {
   requestIntercept?: (config: AxiosRequestConfig) => AxiosRequestConfig;
   requestError?: (error: AxiosError) => AxiosError;
   responseIntercept?: (config: AxiosResponse) => AxiosResponse;
   responseError?: (error: AxiosError) => AxiosError;
 }
 
-export interface RequestItem extends AxiosRequestConfig { 
+export interface RequestItem extends AxiosRequestConfig {
   key?: string;
   url?: string;
   method?: Method;

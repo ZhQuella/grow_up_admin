@@ -1,67 +1,69 @@
 import { computed, ref, onMounted, reactive, watch } from "vue";
 import { deepCopy } from "util/index";
 
-interface initProps { 
+interface initProps {
   columns: any[];
   nodeKey: string;
-};
+}
 
-export const useInitTree = ({ 
-  columns,
-  nodeKey
-}: initProps) => {
-
+export const useInitTree = ({ columns, nodeKey }: initProps) => {
   const treeRef = ref();
   const state = reactive({
     catchTreeCheckedKeys: [],
     catchVisible: {},
-    treeData: []
+    treeData: [],
   });
 
-  watch(() => columns, (newValue: any) => {
-    state.treeData = deepCopy(newValue);
-  }, {
-    immediate: true
-  });
+  watch(
+    () => columns,
+    (newValue: any) => {
+      state.treeData = deepCopy(newValue);
+    },
+    {
+      immediate: true,
+    }
+  );
 
   const allChild = computed(() => {
     const allChild = [...state.treeData];
-    let result = [];
-    for (let item of allChild) { 
+    const result = [];
+    for (const item of allChild) {
       const { children } = item;
       if (children) {
         allChild.push(...children);
-      } 
+      }
       result.push(item);
-    };
+    }
     console.log(result);
     return result;
   });
 
-  const getAllChild = (columns: any[]) => { 
-    let arr = [...columns];
-    for (let item of arr) {
-      if (item.children) { 
+  const getAllChild = (columns: any[]) => {
+    const arr = [...columns];
+    for (const item of arr) {
+      if (item.children) {
         arr.push(...item.children);
       }
     }
     return arr;
   };
 
-  const renderLabel = (data: any) => { 
+  const renderLabel = (data: any) => {
     return data.title;
   };
 
-  const setTreeNodeSelect = () => { 
+  const setTreeNodeSelect = () => {
     const allChild = getAllChild(state.treeData);
-    const visibles = allChild.filter((el) => el.visible !== false && el[nodeKey]).map(el => el[nodeKey]);
+    const visibles = allChild
+      .filter((el) => el.visible !== false && el[nodeKey])
+      .map((el) => el[nodeKey]);
     treeRef.value && treeRef.value.setCheckedKeys(visibles);
   };
 
   const setDisabled = () => {
     const allColumns = getAllChild(state.treeData);
-    for (let item of allColumns) {
-      if (['operate', 'serial'].includes(item[nodeKey])) {
+    for (const item of allColumns) {
+      if (["operate", "serial"].includes(item[nodeKey])) {
         Reflect.set(item, "disabled", true);
       }
     }
@@ -72,11 +74,11 @@ export const useInitTree = ({
     state.catchTreeCheckedKeys = keys.filter((el: string) => el);
   };
 
-  const catchInitVisible = () => { 
-    for (let item of allChild.value) { 
+  const catchInitVisible = () => {
+    for (const item of allChild.value) {
       const value = item.visible !== false;
-      Reflect.set(state.catchVisible, item[nodeKey], value)
-    };
+      Reflect.set(state.catchVisible, item[nodeKey], value);
+    }
   };
 
   const isAllChecked = computed(() => {
@@ -89,7 +91,6 @@ export const useInitTree = ({
     catchCheckedKeys();
     catchInitVisible();
   });
-  
 
   return {
     catchCheckedKeys,
@@ -98,6 +99,6 @@ export const useInitTree = ({
     state,
     allChild,
     isAllChecked,
-    getAllChild
+    getAllChild,
   };
 };

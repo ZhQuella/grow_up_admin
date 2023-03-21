@@ -15,10 +15,9 @@ import type { Fn } from "types/index";
  * @return {void}
  */
 class EventEmiter {
-
   private hashMap: any = {};
 
-  static $instance: EventEmiter|null = null;
+  static $instance: EventEmiter | null = null;
   /**
    * @description: 构造函数，处理单例
    * @param {void}
@@ -54,7 +53,7 @@ class EventEmiter {
   emit(eventName: string, ...args: any[]): EventEmiter {
     const listeners = this.hashMap[eventName] || [];
     //  ~ 持久事件总线
-    listeners.forEach((listener:Fn) => {
+    listeners.forEach((listener: Fn) => {
       listener(...args);
     });
     return this;
@@ -87,7 +86,7 @@ class EventEmiter {
     if (!this.hashMap[eventName]) {
       this.hashMap[eventName] = [];
     }
-    const _once:Fn = (...args) => {
+    const _once: Fn = (...args) => {
       listener(...args);
       this.off(eventName, _once);
     };

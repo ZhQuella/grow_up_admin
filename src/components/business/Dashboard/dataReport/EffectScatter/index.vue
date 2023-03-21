@@ -1,11 +1,14 @@
 <template>
-  <div ref="chartRef" :style="{ width, height }"></div>
+  <div
+    ref="chartRef"
+    :style="{ width, height }"
+  />
 </template>
 
 <script lang="ts" setup>
 import type { PropType, Ref } from "vue";
 import { ref, watch } from "vue";
-import { useEcharts } from 'hooks/useEcharts/index';
+import { useEcharts } from "hooks/useEcharts/index";
 const chartRef = ref<HTMLDivElement | null>(null);
 const { setOptions } = useEcharts(chartRef as Ref<HTMLDivElement>);
 
@@ -13,11 +16,11 @@ const props = defineProps({
   loading: Boolean,
   width: {
     type: String as PropType<string>,
-    default: '100%',
+    default: "100%",
   },
   height: {
     type: String as PropType<string>,
-    default: '300px',
+    default: "300px",
   },
 });
 
@@ -29,25 +32,25 @@ watch(
     }
     setOptions({
       tooltip: {
-        position: 'top'
+        position: "top",
       },
       xAxis: {
-        scale: true
+        scale: true,
       },
       yAxis: {
-        scale: true
+        scale: true,
       },
       series: [
         {
-          type: 'effectScatter',
+          type: "effectScatter",
           symbolSize: 20,
           data: [
             [172.7, 105.2],
-            [153.4, 42]
-          ]
+            [153.4, 42],
+          ],
         },
         {
-          type: 'scatter',
+          type: "scatter",
           // prettier-ignore
           data: [[161.2, 51.6], [167.5, 59.0], [159.5, 49.2], [157.0, 63.0], [155.8, 53.6],
                     [170.0, 59.0], [159.1, 47.6], [166.0, 69.8], [176.2, 66.8], [160.2, 75.2],
@@ -101,18 +104,18 @@ watch(
                     [156.2, 60.0], [149.9, 46.8], [169.5, 57.3], [160.0, 64.1], [175.3, 63.6],
                     [169.5, 67.3], [160.0, 75.5], [172.7, 68.2], [162.6, 61.4], [157.5, 76.8],
                     [176.5, 71.8], [164.4, 55.5], [160.7, 48.6], [174.0, 66.4], [163.8, 67.3]
-                ]
-        }
-      ]
-    })
+                ],
+        },
+      ],
+    });
   },
-  { immediate: true },
+  { immediate: true }
 );
 </script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "EffectScatter"
+  name: "EffectScatter",
 });
 </script>

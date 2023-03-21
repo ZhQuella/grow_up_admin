@@ -6,24 +6,23 @@ import { useAppStore } from "store/modules/app";
 import { debounce } from "util/index";
 
 export const useVariable = () => {
-
   const layoutStore = useLayoutStore();
   const menuStore = useMenuStore();
   const appStore = useAppStore();
   const systemLoading = ref<boolean>(false);
   const debounceFn = debounce(200);
 
-  const resizeFn = async () => { 
+  const resizeFn = async () => {
     await debounceFn();
     const docDOM = document.documentElement;
-    if (layoutStore.layout === "roof") { 
+    if (layoutStore.layout === "roof") {
       menuStore.setCollapsed(false);
       return;
-    };
+    }
     if (docDOM.clientWidth < 1024) {
       menuStore.setCollapsed(true);
       appStore.setIsPutAway(false);
-    } else { 
+    } else {
       menuStore.setCollapsed(false);
       appStore.setIsPutAway(true);
     }
@@ -41,6 +40,6 @@ export const useVariable = () => {
   });
 
   return {
-    systemLoading
+    systemLoading,
   };
 };
