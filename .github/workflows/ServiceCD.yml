@@ -1,0 +1,38 @@
+name: CD
+on:
+  push:
+    branches: main
+jobs:
+  CD:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "16.x"
+      - name: Cache
+        id: cache-dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            **/node_modules
+          key: ${{runner.OS}}-${{hashFiles('**/yarn.lock')}}
+      - name: Installing Dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        run: yarn install
+      - name: Building
+        run: |
+          yarn build
+      - name: Deploy
+        uses: cross-the-world/scp-pipeline@master
+        env:
+          WELCOME: "ssh scp ssh pipelines"
+          LASTSSH: "Doing something after copying"
+        with:
+          host: ${{ secrets.USER_HOST }}
+          user: ${{ secrets.USER_NAME }}
+          pass: ${{ secrets.USER_PASS }}
+          connect_timeout: 10s
+          local: "./dist/*"
+          remote: /home/www/dist
