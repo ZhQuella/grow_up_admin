@@ -50,14 +50,6 @@ export const createPlugin = ({ command, mode }: ConfigEnv): Plugin[] => {
     ext: '.gz',
   }));
 
-  // vitePlugins.push(AutoImport({
-  //   resolvers: [ElementPlusResolver()],
-  // }));
-
-  // vitePlugins.push(Components({
-  //   resolvers: [ElementPlusResolver()],
-  // }));
-
   vitePlugins.push(visualizer());
 
   vitePlugins.push(terser());
