@@ -1,12 +1,15 @@
 <template>
   <div>
     Child1
-    <el-input />
+    <el-input v-model="value" />
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import { useTabs } from "hooks/usetabs";
+
+const value = ref("");
 
 const { setTab } = useTabs();
 

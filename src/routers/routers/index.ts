@@ -30,7 +30,7 @@ export default [
         path: "child/:id",
         name: "Child",
         component: () => import("pages/Child1/index.vue"),
-        meta: { componentName: "Child1" },
+        meta: { componentName: "Child1Page" },
       },
     ],
   },

@@ -9,14 +9,7 @@
         <template #logo>
           <router-link
             to="/login"
-            class="block h-full w-[150px] pt-[5px] mx-[auto]"
-            :class="[
-              {
-                'w-[64px]': collapsed,
-                flex: collapsed,
-                'justify-center': collapsed,
-              },
-            ]"
+            class="block h-full pl-[10px] w-[160px] pt-[5px]"
           >
             <Logo :show-title="!collapsed" />
           </router-link>
