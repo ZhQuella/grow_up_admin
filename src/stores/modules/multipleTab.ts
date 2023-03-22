@@ -1,10 +1,11 @@
 import type { RouteLocationNormalizedLoaded } from "vue-router";
-import { toRefs } from "vue";
+import { toRaw } from "vue";
 import { defineStore } from "pinia";
 import { createStorage } from "util/Storage";
 import { TABS_CURRENT_KEY, TABS_LIST_KEY } from "@/assets/enums/cacheEnum";
 import { getRawRoute, findIndex } from "util/System";
 import router from "router/index";
+import { deleteMatched } from "util/System/index";
 
 const storage = createStorage({ prefixKey: "", storage: sessionStorage });
 
@@ -29,19 +30,19 @@ export const useMultipleTab = defineStore({
     },
     getCachedViews(): string[] {
       return Array.from(this.cachedViews);
-    },
+    }
   },
   actions: {
     addTabs(view: RouteLocationNormalizedLoaded) {
       this.addVisitedView(view);
       this.addCachedView();
-      const visitedViewsStr = JSON.stringify(toRefs(this.visitedViews));
+      const visitedViewsStr = JSON.stringify(deleteMatched(toRaw(this.visitedViews)));
       storage.set(TABS_LIST_KEY, visitedViewsStr);
       storage.set(TABS_CURRENT_KEY, this.activeKey);
     },
     saveVisitedViews(visitedViews: RouteLocationNormalizedLoaded[]) {
       this.visitedViews = visitedViews;
-      const visitedViewsStr = JSON.stringify(toRefs(this.visitedViews));
+      const visitedViewsStr = JSON.stringify(deleteMatched(toRaw(this.visitedViews)));
       storage.set(TABS_LIST_KEY, visitedViewsStr);
       storage.set(TABS_CURRENT_KEY, this.activeKey);
     },
@@ -80,7 +81,7 @@ export const useMultipleTab = defineStore({
           break;
         }
       }
-      const visitedViewsStr = JSON.stringify(toRefs(this.visitedViews));
+      const visitedViewsStr = JSON.stringify(deleteMatched(toRaw(this.visitedViews)));
       storage.set(TABS_LIST_KEY, visitedViewsStr);
     },
     delCachedView() {

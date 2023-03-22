@@ -35,7 +35,6 @@ export const useVariable = () => {
   });
 
   onUnmounted(() => {
-    console.log("卸载");
     removeResizeListener(document.querySelector("#app"), resizeFn);
   });
 

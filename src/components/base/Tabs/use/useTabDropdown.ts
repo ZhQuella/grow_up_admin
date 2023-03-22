@@ -69,21 +69,18 @@ export const useTabDropdown = () => {
 
   const closeTag = (view: RouteLocationNormalizedLoaded) => {
     tabsViewStore.delView(view);
-    console.log(view, "isActive(view)",isActive(view));
     if (isActive(view)) {
       toLastView();
     }
   };
 
   const isActive = (route: RouteLocationNormalizedLoaded): boolean => {
-    console.log(route.path, unref(currentRoute).path);
     return route.path === unref(currentRoute).path;
   };
 
   const toLastView = () => {
     const visitedViews = tabsViewStore.getVisitedViews;
     const latestView = visitedViews.slice(-1)[0];
-    console.log("latestView",latestView);
     if (latestView) {
       push(latestView);
     }
