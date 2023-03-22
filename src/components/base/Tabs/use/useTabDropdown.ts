@@ -83,6 +83,7 @@ export const useTabDropdown = () => {
   const toLastView = () => {
     const visitedViews = tabsViewStore.getVisitedViews;
     const latestView = visitedViews.slice(-1)[0];
+    console.log("latestView",latestView);
     if (latestView) {
       push(latestView);
     }

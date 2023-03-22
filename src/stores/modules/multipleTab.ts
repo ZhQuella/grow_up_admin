@@ -1,4 +1,5 @@
 import type { RouteLocationNormalizedLoaded } from "vue-router";
+import { toRefs } from "vue";
 import { defineStore } from "pinia";
 import { createStorage } from "util/Storage";
 import { TABS_CURRENT_KEY, TABS_LIST_KEY } from "@/assets/enums/cacheEnum";
@@ -34,13 +35,13 @@ export const useMultipleTab = defineStore({
     addTabs(view: RouteLocationNormalizedLoaded) {
       this.addVisitedView(view);
       this.addCachedView();
-      const visitedViewsStr = JSON.stringify(this.visitedViews);
+      const visitedViewsStr = JSON.stringify(toRefs(this.visitedViews));
       storage.set(TABS_LIST_KEY, visitedViewsStr);
       storage.set(TABS_CURRENT_KEY, this.activeKey);
     },
     saveVisitedViews(visitedViews: RouteLocationNormalizedLoaded[]) {
       this.visitedViews = visitedViews;
-      const visitedViewsStr = JSON.stringify(this.visitedViews);
+      const visitedViewsStr = JSON.stringify(toRefs(this.visitedViews));
       storage.set(TABS_LIST_KEY, visitedViewsStr);
       storage.set(TABS_CURRENT_KEY, this.activeKey);
     },
@@ -79,7 +80,7 @@ export const useMultipleTab = defineStore({
           break;
         }
       }
-      const visitedViewsStr = JSON.stringify(this.visitedViews);
+      const visitedViewsStr = JSON.stringify(toRefs(this.visitedViews));
       storage.set(TABS_LIST_KEY, visitedViewsStr);
     },
     delCachedView() {
