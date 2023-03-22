@@ -20,9 +20,7 @@
           type="primary"
           @click="onForgetPass"
         >
-          {{
-            $t("LOGIN_WORD.FORGET_PASSWORD")
-          }}
+          {{ $t("LOGIN_WORD.FORGET_PASSWORD") }}
         </el-button>
       </div>
       <div class="pt-[20px] enter-x">
@@ -31,9 +29,7 @@
           class="w-full"
           @click="onLogin"
         >
-          {{
-            $t("LOGIN_WORD.LOGIN_TEXT")
-          }}
+          {{ $t("LOGIN_WORD.LOGIN_TEXT") }}
         </el-button>
       </div>
     </el-form>

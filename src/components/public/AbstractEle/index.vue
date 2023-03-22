@@ -1,13 +1,23 @@
 <template>
   <component
     :is="config.elType"
+    v-if="!isSlot"
+    v-model="searchData[config.model]"
+    class="w-full"
+    v-bind="config"
+    size="default"
+    :teleported="false"
+  />
+  <component
+    :is="config.elType"
+    v-if="isSlot"
     v-model="searchData[config.model]"
     class="w-full"
     v-bind="config"
     size="default"
     :teleported="false"
   >
-    <template v-if="['el-select'].includes(config.elType)">
+    <template>
       <el-option
         v-for="(item, index) in config.options"
         :key="index"
@@ -19,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { toRefs } from "vue";
+import { computed } from "vue";
 
 const props = defineProps({
   searchData: {
@@ -30,6 +40,10 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
+});
+
+const isSlot = computed(() => {
+  return ["el-select"].includes(props.config.elType);
 });
 </script>
 

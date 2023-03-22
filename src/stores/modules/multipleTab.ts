@@ -30,19 +30,23 @@ export const useMultipleTab = defineStore({
     },
     getCachedViews(): string[] {
       return Array.from(this.cachedViews);
-    }
+    },
   },
   actions: {
     addTabs(view: RouteLocationNormalizedLoaded) {
       this.addVisitedView(view);
       this.addCachedView();
-      const visitedViewsStr = JSON.stringify(deleteMatched(toRaw(this.visitedViews)));
+      const visitedViewsStr = JSON.stringify(
+        deleteMatched(toRaw(this.visitedViews))
+      );
       storage.set(TABS_LIST_KEY, visitedViewsStr);
       storage.set(TABS_CURRENT_KEY, this.activeKey);
     },
     saveVisitedViews(visitedViews: RouteLocationNormalizedLoaded[]) {
       this.visitedViews = visitedViews;
-      const visitedViewsStr = JSON.stringify(deleteMatched(toRaw(this.visitedViews)));
+      const visitedViewsStr = JSON.stringify(
+        deleteMatched(toRaw(this.visitedViews))
+      );
       storage.set(TABS_LIST_KEY, visitedViewsStr);
       storage.set(TABS_CURRENT_KEY, this.activeKey);
     },
@@ -81,7 +85,9 @@ export const useMultipleTab = defineStore({
           break;
         }
       }
-      const visitedViewsStr = JSON.stringify(deleteMatched(toRaw(this.visitedViews)));
+      const visitedViewsStr = JSON.stringify(
+        deleteMatched(toRaw(this.visitedViews))
+      );
       storage.set(TABS_LIST_KEY, visitedViewsStr);
     },
     delCachedView() {

@@ -1,7 +1,7 @@
 import type {
   RouteLocationNormalized,
   RouteRecordNormalized,
-  RouteLocationNormalizedLoaded
+  RouteLocationNormalizedLoaded,
 } from "vue-router";
 import { deepCopy } from "util/index";
 
@@ -133,9 +133,9 @@ export const getElType = (arg: any) => {
   return Object.prototype.toString.call(arg).slice(8, -1);
 };
 
-export const deleteMatched = (list: RouteLocationNormalizedLoaded[]) => { 
-  return list.map(el => {
-    const deepObj:any = { ...el, matched: [] };
+export const deleteMatched = (list: RouteLocationNormalizedLoaded[]) => {
+  return list.map((el) => {
+    const deepObj: any = { ...el, matched: [] };
     return deepCopy(deepObj);
-  })
-}
+  });
+};

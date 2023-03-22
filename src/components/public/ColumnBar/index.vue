@@ -44,9 +44,7 @@
           :icon="DataView"
           @click="onResetColumns"
         >
-          {{
-            $t("SEARCH_BAR.RESET_SYETEM")
-          }}
+          {{ $t("SEARCH_BAR.RESET_SYETEM") }}
         </el-button>
         <el-button
           type="primary"

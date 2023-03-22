@@ -16,15 +16,11 @@
             :span="18"
             class="pr-[10px]"
           >
-            <el-input
-              :placeholder="$t('LOGIN_WORD.VERIFICATION_CODE')"
-            />
+            <el-input :placeholder="$t('LOGIN_WORD.VERIFICATION_CODE')" />
           </el-col>
           <el-col :span="6">
             <el-button class="w-full">
-              {{
-                $t("LOGIN_WORD.GET_CODE")
-              }}
+              {{ $t("LOGIN_WORD.GET_CODE") }}
             </el-button>
           </el-col>
         </el-row>
@@ -34,9 +30,7 @@
           type="primary"
           class="w-full"
         >
-          {{
-            $t("LOGIN_WORD.CONFIRM_TEXT")
-          }}
+          {{ $t("LOGIN_WORD.CONFIRM_TEXT") }}
         </el-button>
       </div>
       <div class="pt-[20px] enter-x">
@@ -44,9 +38,7 @@
           class="w-full"
           @click="onBackClick"
         >
-          {{
-            $t("PUBLIC.BACK_TEXT")
-          }}
+          {{ $t("PUBLIC.BACK_TEXT") }}
         </el-button>
       </div>
     </el-form>

@@ -18,9 +18,7 @@
               @select="onDropdownSelect"
               @visible-change="onHandleContextMenu"
             >
-              <div
-                class="flex h-full"
-              >
+              <div class="flex h-full">
                 <router-link
                   class="block pl-[10px] pr-[5px] leading-[30px]"
                   :to="{ ...item }"

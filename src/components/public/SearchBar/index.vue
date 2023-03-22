@@ -26,26 +26,20 @@
           :icon="DataView"
           @click="onSyetemDefault"
         >
-          {{
-            $t("SEARCH_BAR.RESET_SYETEM")
-          }}
+          {{ $t("SEARCH_BAR.RESET_SYETEM") }}
         </el-button>
         <el-button
           :icon="Reset"
           @click="onReset"
         >
-          {{
-            $t("PUBLIC.RESET_TEXT")
-          }}
+          {{ $t("PUBLIC.RESET_TEXT") }}
         </el-button>
         <el-button
           :icon="Search"
           type="primary"
           @click="onSearch"
         >
-          {{
-            $t("PUBLIC.SEARCH_TEXT")
-          }}
+          {{ $t("PUBLIC.SEARCH_TEXT") }}
         </el-button>
       </div>
     </div>
