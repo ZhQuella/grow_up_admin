@@ -25,12 +25,12 @@
                   class="block pl-[10px] pr-[5px] leading-[30px]"
                   :to="{ ...item }"
                 >
-                  {{ item?.meta?.label }} {{ currentName }} {{ item.path }}
+                  {{ item?.meta?.label }}
                 </router-link>
                 <CloseOutlined
                   v-if="!item?.meta?.default"
                   class="ml-[4px] my-[8px] mr-[10px] leading-[30px] w-[14px] h-[14px] inline-block transition-all"
-                  @click="onTabRemove(item)"
+                  @click.stop="onTabRemove(item)"
                 />
               </div>
             </ContextMenu>
