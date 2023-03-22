@@ -34,7 +34,6 @@ export const useInitTree = ({ columns, nodeKey }: initProps) => {
       }
       result.push(item);
     }
-    console.log(result);
     return result;
   });
 

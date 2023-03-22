@@ -86,7 +86,7 @@ const {
 } = useInitColumns({
   props,
 });
-console.log(allColumns);
+
 const {
   mouseKey,
   selectOnlyKeys,
