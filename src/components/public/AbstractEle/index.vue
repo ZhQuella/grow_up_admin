@@ -1,15 +1,6 @@
 <template>
   <component
     :is="config.elType"
-    v-if="!isSlot"
-    v-model="searchData[config.model]"
-    class="w-full"
-    v-bind="config"
-    size="default"
-    :teleported="false"
-  />
-  <component
-    :is="config.elType"
     v-if="isSlot"
     v-model="searchData[config.model]"
     class="w-full"
@@ -17,7 +8,7 @@
     size="default"
     :teleported="false"
   >
-    <template>
+    <template v-if="config.elType === 'el-select'">
       <el-option
         v-for="(item, index) in config.options"
         :key="index"
@@ -26,6 +17,15 @@
       />
     </template>
   </component>
+  <component
+    :is="config.elType"
+    v-if="!isSlot"
+    v-model="searchData[config.model]"
+    class="w-full"
+    v-bind="config"
+    size="default"
+    :teleported="false"
+  />
 </template>
 
 <script setup lang="ts">
