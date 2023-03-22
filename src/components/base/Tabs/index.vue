@@ -5,7 +5,6 @@
         :value="'first'"
         class="syetem-tabs-warp"
         :model-value="currentName"
-        @tab-remove="onTabRemove"
       >
         <el-tab-pane
           v-for="item in tabsList"
@@ -19,7 +18,10 @@
               @select="onDropdownSelect"
               @visible-change="onHandleContextMenu"
             >
-              <div class="flex h-full">
+              <div
+                class="flex h-full"
+                @click.stop
+              >
                 <router-link
                   class="block pl-[10px] pr-[5px] leading-[30px]"
                   :to="{ ...item }"
@@ -29,7 +31,7 @@
                 <CloseOutlined
                   v-if="!item?.meta?.default"
                   class="ml-[4px] my-[8px] mr-[10px] leading-[30px] w-[14px] h-[14px] inline-block transition-all"
-                  @click.stop="onTabRemove(item)"
+                  @click="onTabRemove(item)"
                 />
               </div>
             </ContextMenu>
@@ -122,7 +124,6 @@ const {
 } = useTabDropdown();
 
 const onTabRemove = (tag: any) => {
-  alert(1);
   closeTag(tag);
 };
 </script>

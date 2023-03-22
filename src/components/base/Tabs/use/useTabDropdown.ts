@@ -69,16 +69,12 @@ export const useTabDropdown = () => {
 
   const closeTag = (view: RouteLocationNormalizedLoaded) => {
     tabsViewStore.delView(view);
-    alert(JSON.stringify(view));
-    alert(isActive(view));
     if (isActive(view)) {
       toLastView();
     }
   };
 
   const isActive = (route: RouteLocationNormalizedLoaded): boolean => {
-    alert(route.path);
-    alert(unref(currentRoute).path);
     return route.path === unref(currentRoute).path;
   };
 
