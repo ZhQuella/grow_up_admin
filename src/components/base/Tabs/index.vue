@@ -18,16 +18,19 @@
               @select="onDropdownSelect"
               @visible-change="onHandleContextMenu"
             >
-              <div class="flex h-full">
+              <div class="flex h-full relative">
                 <router-link
-                  class="block pl-[10px] pr-[5px] leading-[30px]"
+                  class="block pl-[10px] pr-[10px] leading-[30px]"
+                  :class="[{
+                    'pr-[25px]':!item?.meta?.default
+                  }]"
                   :to="{ ...item }"
                 >
                   {{ item?.meta?.label }}
                 </router-link>
                 <CloseOutlined
                   v-if="!item?.meta?.default"
-                  class="ml-[4px] my-[8px] mr-[10px] leading-[30px] w-[14px] h-[14px] inline-block transition-all"
+                  class="leading-[30px] w-[14px] h-[14px] inline-block absolute top-[8px] right-[5px]"
                   @click.stop="onTabRemove(item)"
                 />
               </div>
