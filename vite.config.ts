@@ -7,11 +7,11 @@ import { createServer } from "./build/vite/server";
 
 export default (env: ConfigEnv) => {
 
-  const isProd = env.mode !== "development";
-  const base = isProd ? "/grow_up_admin/" : "/";
+  // const isProd = env.mode !== "development";
+  // const base = isProd ? "/grow_up_admin/" : "/";
 
   return {
-    base,
+    base: "/",
     plugins: createPlugin(env),
     css: createCss(),
     resolve: createResolve(),
