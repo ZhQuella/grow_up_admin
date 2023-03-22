@@ -121,7 +121,8 @@ const {
   curRoute,
 } = useTabDropdown();
 
-const onTabRemove = (tag:any) => {
+const onTabRemove = (tag: any) => {
+  alert(1);
   closeTag(tag);
 };
 </script>
