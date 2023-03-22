@@ -23,6 +23,14 @@
           <div class="pt-[10px] pl-[20px]">
             <SwitchLanguage />
           </div>
+          <div class="pt-[12px] pl-[20px]">
+            <a
+              href="https://github.com/ZhQuella/grow_up_admin"
+              target="_blank"
+            >
+              <GithubFilled class="w-[30px] h-[30px] text-MAIN_TEXT" />
+            </a>
+          </div>
         </div>
       </div>
       <div class="max-w-[1200px] mx-[auto] pt-[100px] px-[20px]">

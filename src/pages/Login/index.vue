@@ -16,6 +16,14 @@
         <div class="pt-[10px] pl-[20px]">
           <SwitchLanguage />
         </div>
+        <div class="pt-[12px] pl-[20px]">
+          <a
+            href="https://github.com/ZhQuella/grow_up_admin"
+            target="_blank"
+          >
+            <GithubFilled class="w-[30px] h-[30px] text-MAIN_TEXT" />
+          </a>
+        </div>
       </div>
     </div>
     <div class="flex">
@@ -125,6 +133,8 @@ import LoginFrom from "components/business/Login/Form/index.vue";
 import ForgetPassword from "components/business/Login/ForgetPassword/index.vue";
 import MobilePhone from "components/business/Login/MobilePhone/index.vue";
 import QrCodeLogin from "components/business/Login/QrCodeLogin/index.vue";
+import SwitchLanguage from "components/base/SwitchLanguage/index.vue";
+import SwitchTheme from "components/base/SwitchTheme/index.vue";
 import { useEvent } from "./use/useEvent";
 import { getImageUrl } from "util/System";
 
