@@ -20,13 +20,12 @@
             >
               <div
                 class="flex h-full"
-                @click.stop
               >
                 <router-link
                   class="block pl-[10px] pr-[5px] leading-[30px]"
                   :to="{ ...item }"
                 >
-                  {{ item?.meta?.label }}
+                  {{ item?.meta?.label }} {{ currentName }} {{ item.path }}
                 </router-link>
                 <CloseOutlined
                   v-if="!item?.meta?.default"
