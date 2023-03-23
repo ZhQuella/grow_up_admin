@@ -11,10 +11,9 @@ import { ElMessage } from "element-plus";
 const storage = createStorage({ prefixKey: "", storage: sessionStorage });
 
 const request = new Request({
-  baseURL: "/mock"
+  baseURL: import.meta.env.VITE_BASE_URL
 });
 const requestIntercept = (config: AxiosRequestConfig): AxiosRequestConfig => {
-
   const token = storage.get(AUTHORITY_TOKEN);
   const isToken = (config.headers || {}).isToken === false;
   if (token && !isToken) {
