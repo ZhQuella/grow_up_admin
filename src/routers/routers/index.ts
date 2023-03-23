@@ -1,4 +1,9 @@
 import type { RouteRecordRaw } from "vue-router";
+import { createStorage } from "util/Storage";
+import { AUTHORITY_TOKEN } from "@/assets/enums/cacheEnum";
+import { ROUTER_WHITELIST } from "@/assets/enums/systemEnum";
+
+const storage = createStorage({ prefixKey: "", storage: sessionStorage });
 
 export default [
   {
@@ -43,8 +48,14 @@ export default [
     path: "/:pathMatch(.*)",
     name: "pathMatch",
     redirect: () => {
-      //  ! 这里需要判断，这一步必须要做 如果登录跳转到系统内部404(/home/404) 如果没有登录跳转到 /404
-      return "/home/404";
+      const token = storage.get(AUTHORITY_TOKEN);
+      if (token) {
+        //  ! 这里最好可以判断一下权限，跳转到没有权限页面
+        return "/home/404";
+      }
+      else { 
+        return "/404";
+      }
     },
   },
 ] as RouteRecordRaw[];

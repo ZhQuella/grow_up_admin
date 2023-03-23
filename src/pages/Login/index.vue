@@ -98,7 +98,15 @@
             </div>
             <!--忘记密码-->
             <div v-if="formType === 'forgetPassword'">
-              <ForgetPassword @back="onChangeFormType" />
+              <ForgetPassword
+                @back="onChangeFormType" 
+                @success="onForgetPasswordSuccess"
+              />
+            </div>
+
+            <!--修改密码-->
+            <div v-if="formType === 'changePassword'">
+              修改密码(逻辑待添加)
             </div>
 
             <!--手机号登录-->
@@ -138,7 +146,12 @@ import SwitchTheme from "components/base/SwitchTheme/index.vue";
 import { useEvent } from "./use/useEvent";
 import { getImageUrl } from "util/System";
 
-const { formType, onGoToIndex, onChangeFormType } = useEvent();
+const {
+  formType,
+  onGoToIndex,
+  onChangeFormType,
+  onForgetPasswordSuccess
+} = useEvent();
 </script>
 
 <script lang="ts">

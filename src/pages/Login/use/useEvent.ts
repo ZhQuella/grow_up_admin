@@ -5,6 +5,7 @@ export const useEvent = () => {
   const router = useRouter();
 
   const formType = ref("login");
+  const tagCode = ref("");
 
   const onGoToIndex = () => {
     router.push({
@@ -16,9 +17,15 @@ export const useEvent = () => {
     formType.value = type;
   };
 
+  const onForgetPasswordSuccess = (identifying: string) => { 
+    tagCode.value = identifying;
+    formType.value = "changePassword";
+  };
+
   return {
+    onForgetPasswordSuccess,
     onChangeFormType,
     onGoToIndex,
-    formType,
+    formType
   };
 };
