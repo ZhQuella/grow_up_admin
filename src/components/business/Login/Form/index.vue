@@ -3,16 +3,39 @@
     <h4 class="enter-x font-bold text-TEXT_LIGHT1 text-[22px] pb-[10px]">
       {{ $t("LOGIN_WORD.LOGIN_TEXT") }}
     </h4>
-    <el-form size="large">
-      <el-form-item class="enter-x">
-        <el-input :placeholder="$t('LOGIN_WORD.ACCESS_MSG')" />
+    <el-form
+      ref="loginFormRef"
+      size="large"
+      :model="loginFormData"
+      :rules="formRules"
+    >
+      <el-form-item
+        prop="account"
+        class="enter-x"
+      >
+        <el-input
+          v-model="loginFormData.account" 
+          :placeholder="$t('LOGIN_WORD.ACCESS_MSG')"
+          clearable
+        />
       </el-form-item>
-      <el-form-item class="enter-x">
-        <el-input :placeholder="$t('LOGIN_WORD.PASSORD_MSG')" />
+      <el-form-item
+        prop="password"
+        class="enter-x"
+      >
+        <el-input
+          v-model="loginFormData.password" 
+          :placeholder="$t('LOGIN_WORD.PASSORD_MSG')"
+          type="password"
+          clearable
+          show-password
+        />
       </el-form-item>
       <div class="flex justify-between">
         <div class="-enter-x">
-          <ElCheckbox>{{ $t("LOGIN_WORD.REMEMBER_ME") }}</ElCheckbox>
+          <ElCheckbox v-model="loginFormData.isRemember">
+            {{ $t("LOGIN_WORD.REMEMBER_ME") }}
+          </ElCheckbox>
         </div>
         <el-button
           class="enter-x"
@@ -27,6 +50,7 @@
         <el-button
           type="primary"
           class="w-full"
+          :loading="loading"
           @click="onLogin"
         >
           {{ $t("LOGIN_WORD.LOGIN_TEXT") }}
@@ -37,20 +61,23 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from "vue-router";
+import { useForm } from "./use/useForm";
+import { useForget } from "./use/useForget";
 const emit = defineEmits(["forget"]);
 
-const router = useRouter();
+const { 
+  loginFormData,
+  loginFormRef,
+  formRules,
+  loading,
+  onLogin
+} = useForm();
 
-const onForgetPass = () => {
-  emit("forget", "forgetPassword");
-};
-
-const onLogin = () => {
-  router.push({
-    name: "Home",
-  });
-};
+const { 
+  onForgetPass
+} = useForget({
+  emit
+});
 </script>
 
 <script lang="ts">

@@ -7,10 +7,10 @@ export const createServer = () => {
     },
     host: "0.0.0.0",
     proxy: {
-      "/api": {
+      "/mock": {
         target: "http://127.0.0.1:3000",
         changeOrigin: true,
-        rewrite: (path: string) => path.replace(/^\/api/, ""),
+        rewrite: (path: string) => path.replace(/^\/mock/, ""),
       },
     },
   };

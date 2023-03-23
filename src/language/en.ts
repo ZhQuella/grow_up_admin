@@ -67,6 +67,8 @@ export default {
     VERIFICATION_CODE: "Please enter the verification code",
     GET_CODE: "Get Code",
     CONFIRM_TEXT: "Confirm",
+    ENTER_ACCOUNT: "Please enter the account number",
+    ENTER_PASSWORD: "Please enter password"
   },
   RECORD_INFO: {
     DESCRIBE: "Released under the MIT License",

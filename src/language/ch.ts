@@ -59,7 +59,7 @@ export default {
     MOBILE_PHONE: "请输入手机号",
     VERIFICATION_CODE: "请输入验证码",
     GET_CODE: "获取验证码",
-    CONFIRM_TEXT: "确认",
+    CONFIRM_TEXT: "确认"
   },
   RECORD_INFO: {
     DESCRIBE: "根据MIT许可证发布",
