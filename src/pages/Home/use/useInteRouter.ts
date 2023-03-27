@@ -1,16 +1,16 @@
 import type { Ref } from "vue";
 import type { MenuType } from "types/menu";
 import type { RouteRecordRaw, RouteLocationNormalizedLoaded } from "vue-router";
+import systemUserAxios from "api/System";
 import { useRouter } from "vue-router";
 import { nanoid } from "nanoid";
 
 import { useMenuStore } from "store/modules/menu";
 import { useMultipleTab } from "store/modules/multipleTab";
+import { useSystemStore } from "store/modules/systemInfo";
 
 import { extendComponent } from "util/System";
 
-//  模拟请求
-import { getSystemMenu } from "@/temporary/MockRequest";
 import frontMenuList from "router/pages/index";
 
 export const useInteRouter = async ({
@@ -21,6 +21,10 @@ export const useInteRouter = async ({
   const router = useRouter();
   const multipleTableStore = useMultipleTab();
   const menuStore = useMenuStore();
+  const systemInfoStore = useSystemStore();
+
+  const systemUser = systemUserAxios.create("userInfo");
+  const menuList = systemUserAxios.create("menuList");
 
   const addRouter = (
     allMenuList: MenuType[],
@@ -95,15 +99,20 @@ export const useInteRouter = async ({
     }
     return defaultMenu as MenuType;
   };
+  const getUserInfo = async () => { 
+    const result = await systemUser.getUserInfo();
+    systemInfoStore.setUserInfo(result);
+  };
 
   const systemMain = async () => {
+    await getUserInfo();
     const catchViews = JSON.parse(
       JSON.parse(sessionStorage.getItem("TABS_LIST__") || '{ "value": "[]" }')
         .value
     );
     router.push({ name: "Home" });
     systemLoading.value = true;
-    const backMenuList = await getSystemMenu();
+    const { menuList: backMenuList } = await menuList.getMenuList();
     menuStore.setBackMenuList(backMenuList);
     menuStore.setFrontMenuList(frontMenuList as MenuType[]);
     addRouter(menuStore.allMenuList, catchViews);

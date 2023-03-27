@@ -1,11 +1,19 @@
 import { ref, onMounted, computed, watch } from "vue";
 import { useThemeStore } from "store/modules/theme";
+import { useSystemStore } from "store/modules/systemInfo";
 
 export const useWerterMark = () => {
+
+  const systemStore = useSystemStore();
   const werterMarkRef = ref();
   const themeStore = useThemeStore();
+
+  const userInfo = computed(() => {
+    return systemStore.getUserInfo;
+  });
+
   const mackValue = computed(() => {
-    return "人力资源二部 李二狗";
+    return `${userInfo.value.dept} ${userInfo.value.userName}`;
   });
 
   const themeType = computed(() => {

@@ -56,6 +56,14 @@
           src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
         />
         <template #dropdown>
+          <div class="px-[10px] pt-[5px] bg-BG_COLOR">
+            <h5 class="text-TEXT_LIGHT2 text-[14px]">
+              {{ userInfo.userName }}
+            </h5>
+            <p class="text-TEXT_LIGHT2 text-[12px]">
+              {{ userInfo.dept }}
+            </p>
+          </div>
           <el-dropdown-menu>
             <el-dropdown-item
               v-for="(item, index) of options"
@@ -81,8 +89,14 @@ import MessageList from "components/business/Home/MessageList/index.vue";
 import { useEvent } from "./use/useEvent";
 import { useI18n } from "vue-i18n";
 import { getImageUrl } from "util/System";
+import { useSystemStore } from "store/modules/systemInfo";
 
 const i18n = useI18n();
+const systemStore = useSystemStore();
+
+const userInfo = computed(() => {
+  return systemStore.getUserInfo;
+});
 
 const {
   settingActive,

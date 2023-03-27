@@ -45,7 +45,7 @@ export default class Request {
     } = requestItem;
     const that = this;
 
-    return function (internalConfig: any) {
+    return function (internalConfig: any = {}) {
       const {
         data: internalData = {},
         query: internalQuery = {},

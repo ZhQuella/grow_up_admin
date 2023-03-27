@@ -1,4 +1,6 @@
-export default [
+// import { MockMethod } from "vite-plugin-mock";
+
+const menuList = [
   {
     label: "Dashboard",
     name: "dashboard",
@@ -62,3 +64,17 @@ export default [
     ],
   },
 ];
+
+export default [{
+  url: "/menu/list",
+  method: "get",
+  response: () => { 
+    return {
+      code: 10000,
+      message: "成功",
+      result: {
+        menuList
+      }
+    }
+  }
+}];
