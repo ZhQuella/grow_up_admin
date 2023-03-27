@@ -68,7 +68,12 @@ export default {
     GET_CODE: "Get Code",
     CONFIRM_TEXT: "Confirm",
     ENTER_ACCOUNT: "Please enter the account number",
-    ENTER_PASSWORD: "Please enter password"
+    ENTER_PASSWORD: "Please enter password",
+    ENTER_PASSWORD_CONTEXT: "Enter the new password again",
+    NEW_PASSWORD_CONTEXT: "Please enter a new password",
+    OLD_NEW_DIFFERENT: "Two passwords are different",
+    PASSWORD_LEN_CONTEXT: "The password must contain at least 6 characters and at least 20 characters",
+    PHONE_NUM_ERROR: "Please enter the correct mobile phone number"
   },
   RECORD_INFO: {
     DESCRIBE: "Released under the MIT License",

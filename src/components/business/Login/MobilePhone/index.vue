@@ -3,9 +3,17 @@
     <h4 class="enter-x font-bold text-TEXT_LIGHT1 text-[22px] pb-[10px]">
       {{ $t("LOGIN_WORD.NUMBER_LOGIN") }}
     </h4>
-    <el-form size="large">
+    <el-form
+      ref="formRef"
+      size="large"
+      :rules="rules"
+      :model="forgetForm"
+    >
       <el-form-item class="enter-x">
-        <el-input :placeholder="$t('LOGIN_WORD.MOBILE_PHONE')" />
+        <el-input
+          v-model="forgetForm.phoneNumber" 
+          :placeholder="$t('LOGIN_WORD.MOBILE_PHONE')"
+        />
       </el-form-item>
       <el-form-item class="enter-x">
         <el-row class="w-full">
@@ -13,11 +21,18 @@
             :span="18"
             class="pr-[10px]"
           >
-            <el-input :placeholder="$t('LOGIN_WORD.VERIFICATION_CODE')" />
+            <el-input
+              v-model="forgetForm.verificationCode" 
+              :placeholder="$t('LOGIN_WORD.VERIFICATION_CODE')"
+            />
           </el-col>
           <el-col :span="6">
-            <el-button class="w-full">
-              {{ $t("LOGIN_WORD.GET_CODE") }}
+            <el-button
+              class="w-full"
+              :disabled="isCooling || isGetCodeDisabled"
+              @click="onGetVerificationCode"
+            >
+              {{ codeContext }}
             </el-button>
           </el-col>
         </el-row>
@@ -26,6 +41,8 @@
         <el-button
           type="primary"
           class="w-full"
+          :loading="loginLoading"
+          @click="onPhoneLogin"
         >
           {{ $t("LOGIN_WORD.LOGIN_TEXT") }}
         </el-button>
@@ -43,15 +60,44 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
+import { useVerifivationCode } from "../use/useVerifivationCode";
+import { useLogin } from "./use/useLogin";
+const i18n = useI18n();
 const emit = defineEmits(["back"]);
+
+const forgetForm = reactive({
+  phoneNumber: "13800138000",
+  verificationCode: ""
+});
 
 const onBackClick = () => {
   emit("back", "login");
 };
+
+const {
+  loginLoading,
+  rules,
+  formRef,
+  onPhoneLogin
+} = useLogin({
+  formData: forgetForm,
+  t: i18n.t
+});
+
+const { 
+  isCooling,
+  isGetCodeDisabled,
+  codeContext,
+  onGetVerificationCode
+} = useVerifivationCode({
+  forgetForm,
+  t: i18n.t
+});
 </script>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, reactive } from "vue";
 export default defineComponent({
   name: "MobilePhone",
 });

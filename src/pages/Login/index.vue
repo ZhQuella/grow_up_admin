@@ -106,7 +106,11 @@
 
             <!--修改密码-->
             <div v-if="formType === 'changePassword'">
-              修改密码(逻辑待添加)
+              <ChangePassword
+                :tag-code="tagCode" 
+                @back="onChangePasswordBack"
+                @success="onChangePasswordSuccess"
+              />
             </div>
 
             <!--手机号登录-->
@@ -142,15 +146,19 @@ import ForgetPassword from "components/business/Login/ForgetPassword/index.vue";
 import MobilePhone from "components/business/Login/MobilePhone/index.vue";
 import QrCodeLogin from "components/business/Login/QrCodeLogin/index.vue";
 import SwitchLanguage from "components/base/SwitchLanguage/index.vue";
+import ChangePassword from "components/business/Login/ChangePassword/index.vue";
 import SwitchTheme from "components/base/SwitchTheme/index.vue";
 import { useEvent } from "./use/useEvent";
 import { getImageUrl } from "util/System";
 
 const {
   formType,
+  tagCode,
   onGoToIndex,
   onChangeFormType,
-  onForgetPasswordSuccess
+  onForgetPasswordSuccess,
+  onChangePasswordBack,
+  onChangePasswordSuccess
 } = useEvent();
 </script>
 

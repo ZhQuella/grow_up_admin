@@ -10,8 +10,8 @@ export default [
     url: "/verification/code",
     method: "post",
     response: ({ body }: any) => {
-      const { phoneNumber, account } = body;
-      if (phoneNumber === phone && account === "admin") {
+      const { phoneNumber } = body;
+      if (phoneNumber === phone) {
         return {
           code: 10000,
           message: "获取验证码成功",
@@ -52,19 +52,38 @@ export default [
     url: "/modify/account/password",
     method: "post",
     response: ({ body }: any) => {
-      const { phoneNumber, verificationCode:code } = body;
-      if (phoneNumber === phone && code === verificationCode) {
+      const { tagCode, newPassword } = body;
+      if (identifying === tagCode && newPassword) {
         return {
           code: 10000,
-          message: "获取验证码成功",
+          message: "密码修改成功"
+        };
+      } else { 
+        return {
+          code: 50004,
+          message: "密码修改失败"
+        }
+      }
+    }
+  },
+  {
+    url: "/modify/phone/login",
+    method: "post",
+    response: ({ body }: any) => {
+      const { phoneNumber, verificationCode: testCode } = body;
+      if (phone === phoneNumber && testCode === verificationCode) {
+        const token = customAlphabet('1234567890abcdef', 50)();
+        return {
+          code: 10000,
+          message: "登录成功",
           result: {
-            identifying
+            token
           }
         };
       } else { 
         return {
           code: 50004,
-          message: "验证码失效或者不正确"
+          message: "账号错误或验证码错误"
         }
       }
     }

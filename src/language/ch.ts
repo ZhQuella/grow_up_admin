@@ -59,7 +59,12 @@ export default {
     MOBILE_PHONE: "请输入手机号",
     VERIFICATION_CODE: "请输入验证码",
     GET_CODE: "获取验证码",
-    CONFIRM_TEXT: "确认"
+    CONFIRM_TEXT: "确认",
+    ENTER_PASSWORD_CONTEXT: "再次输入新密码",
+    NEW_PASSWORD_CONTEXT: "请输入新密码",
+    OLD_NEW_DIFFERENT: "两次密码不相同",
+    PASSWORD_LEN_CONTEXT: "密码不能少于6位大于20位",
+    PHONE_NUM_ERROR: "请输入正确手机号"
   },
   RECORD_INFO: {
     DESCRIBE: "根据MIT许可证发布",

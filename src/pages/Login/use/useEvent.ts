@@ -22,10 +22,23 @@ export const useEvent = () => {
     formType.value = "changePassword";
   };
 
+  const onChangePasswordBack = () => { 
+    tagCode.value = "";
+    formType.value = "forgetPassword";
+  };
+
+  const onChangePasswordSuccess = () => { 
+    tagCode.value = "";
+    formType.value = "login";
+  };
+
   return {
+    onChangePasswordSuccess,
+    onChangePasswordBack,
     onForgetPasswordSuccess,
     onChangeFormType,
     onGoToIndex,
-    formType
+    formType,
+    tagCode
   };
 };

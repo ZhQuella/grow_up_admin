@@ -6,8 +6,7 @@ import { ElMessage } from "element-plus";
 
 interface prop { 
   forgetForm: any;
-  t: Fn,
-  forgetMethod: any
+  t: Fn
 }
 
 export const useVerifivationCode = ({ 
@@ -41,7 +40,9 @@ export const useVerifivationCode = ({
   };
 
   const getVerificationCode = async () => {
-    const [error, { verificationCode }]:any = await to(forgetMethod.getVerificationCode({ data: forgetForm }));
+    const [error, result]: any = await to(forgetMethod.getVerificationCode({ data: forgetForm }));
+    console.log(result);
+    const { verificationCode } = result;
     if (error) { 
       const { message } = error;
       ElMessage.error(message);

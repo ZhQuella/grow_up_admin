@@ -155,13 +155,13 @@ const onSelectListTypeChange = (value: any, index: number) => {
 
 const onSearchListTypeClear = (index: number, isReset = true) => {
   const current = state.currentSelect[index];
-  Reflect.deleteProperty(state.searchData, current.model);
+  Reflect.set(state.searchData, current.model, null);
   isReset && state.currentSelect.splice(index, 1, {});
 };
 
 const onDeleteCurrent = (index: number) => {
   const current = state.currentSelect[index];
-  Reflect.deleteProperty(state.searchData, current.model);
+  Reflect.set(state.searchData, current.model, null);
   state.currentSelect.splice(index, 1);
 };
 

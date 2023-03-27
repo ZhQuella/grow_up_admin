@@ -104,8 +104,7 @@ const {
   onGetVerificationCode
 } = useVerifivationCode({
   forgetForm,
-  t: i18n.t,
-  forgetMethod
+  t: i18n.t
 });
 </script>
 

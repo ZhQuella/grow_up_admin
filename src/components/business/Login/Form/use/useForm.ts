@@ -1,17 +1,17 @@
 import to from 'await-to-js';
-import { useRouter } from "vue-router";
 import { ref, reactive, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import { createStorage, Storage } from "util/Storage";
-import { AUTHORITY_TOKEN, ACCOUNT_INFO } from "@/assets/enums/cacheEnum";
+import { Storage } from "util/Storage";
+import { useLoginSuccess } from "../../use/useLoginSuccess";
+import { ACCOUNT_INFO } from "@/assets/enums/cacheEnum";
 import formLogin from "api/Login";
 import { ElMessage } from "element-plus";
 
 export const useForm = () => {
 
-  const storage = createStorage({ prefixKey: "", storage: sessionStorage });
   const i18n = useI18n();
-  const router = useRouter();
+  const { loginSuccess } = useLoginSuccess();
+
   const loginFormRef = ref();
   const loading = ref(false);
   const loginFormData = reactive({
@@ -56,11 +56,7 @@ export const useForm = () => {
         return;
       }
       saveFormInfo();
-      const { token } = result as { token:string };
-      storage.set(AUTHORITY_TOKEN, token);
-      router.push({
-        name: "Home",
-      });
+      loginSuccess(result);
       loading.value = false;
     } catch { 
       loading.value = false;
