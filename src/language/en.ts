@@ -11,7 +11,7 @@ export default {
   APP_OTHER: {
     LOGIN_OUT_CANCEL_PROMPT: "Unlog out",
     LOGIN_OUT_TITLE: "Warm reminder",
-    LOGIN_OUT_PROMPT: "You are about to launch login, do you want to continue?"
+    LOGIN_OUT_PROMPT: "You are about to log out, whether to continue?"
   },
   INDEX_SYETEM_DESCRIBE: {
     DESCRIBE_1: "A framework that will grow",
