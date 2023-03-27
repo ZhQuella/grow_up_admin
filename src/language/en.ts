@@ -8,6 +8,11 @@ export default {
     CANCEL_TEXT: "Cancel",
     CONFIRM_TEXT: "Confirm",
   },
+  APP_OTHER: {
+    LOGIN_OUT_CANCEL_PROMPT: "Unlog out",
+    LOGIN_OUT_TITLE: "Warm reminder",
+    LOGIN_OUT_PROMPT: "You are about to launch login, do you want to continue?"
+  },
   INDEX_SYETEM_DESCRIBE: {
     DESCRIBE_1: "A framework that will grow",
     DESCRIBE_2: "Middle-end front-end/design solution",

@@ -8,6 +8,11 @@ export default {
     CANCEL_TEXT: "取消",
     CONFIRM_TEXT: "确认",
   },
+  APP_OTHER: {
+    LOGIN_OUT_CANCEL_PROMPT: "取消退出登录",
+    LOGIN_OUT_TITLE: "温馨提示",
+    LOGIN_OUT_PROMPT: "您即将推出登录，是否继续？"
+  },
   INDEX_SYETEM_DESCRIBE: {
     DESCRIBE_1: "一个会成长的框架",
     DESCRIBE_2: "开箱即用的中台前端/设计解决方案",

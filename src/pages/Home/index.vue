@@ -8,7 +8,7 @@
       <Layout>
         <template #logo>
           <router-link
-            to="/login"
+            :to="homePath"
             class="block h-full pl-[10px] w-full pr-[40px] pt-[5px]"
           >
             <Logo :show-title="!collapsed" />
@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import Layout from "components/public/Layout/index.vue";
 import Logo from "components/base/GLogo/index.vue";
 import RenderView from "components/public/RenderView/index.vue";
@@ -71,6 +71,8 @@ import { useVariable } from "./use/useVariable";
 import { useInteRouter } from "./use/useInteRouter";
 import { useOption } from "./use/useOption";
 
+const homePath = ref("");
+
 const menuStore = useMenuStore();
 const collapsed = computed(() => {
   return menuStore.getCollapsed;
@@ -80,7 +82,8 @@ const { systemLoading } = useVariable();
 const { settingActive, searchActive, onAppSearchSelect } = useOption();
 
 const onCreated = async () => {
-  await useInteRouter({ systemLoading });
+  const { defaultPath } = await useInteRouter({ systemLoading });
+  homePath.value = defaultPath.value;
 };
 onCreated();
 </script>

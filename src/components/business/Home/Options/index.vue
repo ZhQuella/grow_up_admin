@@ -50,7 +50,7 @@
       />
     </div>
     <div class="pt-[5px] ml-[5px]">
-      <el-dropdown>
+      <el-dropdown @command="onDropdownClick">
         <el-avatar
           :size="40"
           src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
@@ -68,6 +68,7 @@
             <el-dropdown-item
               v-for="(item, index) of options"
               :key="index"
+              :command="item.key"
             >
               <el-icon>
                 <component :is="item.icon" />
@@ -104,8 +105,11 @@ const {
   toggle,
   onSettingHadnler,
   onSearchHeadler,
+  onDropdownClick,
   messageActive,
-} = useEvent();
+} = useEvent({
+  t: i18n.t
+});
 
 const options = computed(() => {
   return [

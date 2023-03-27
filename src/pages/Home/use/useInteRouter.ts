@@ -1,7 +1,7 @@
 import type { Ref } from "vue";
 import type { MenuType } from "types/menu";
 import type { RouteRecordRaw, RouteLocationNormalizedLoaded } from "vue-router";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import systemUserAxios from "api/System";
 import { useRouter } from "vue-router";
 import { nanoid } from "nanoid";
@@ -28,6 +28,7 @@ export const useInteRouter = async ({
 
   const systemUser = systemUserAxios.create("userInfo");
   const menuList = systemUserAxios.create("menuList");
+  const defaultPath = ref("");
 
   const roleSings = computed(() => systemInfoStore.getRoleSings);
 
@@ -130,8 +131,10 @@ export const useInteRouter = async ({
     menuStore.setBackMenuList(backMenuList);
     menuStore.setFrontMenuList(frontMenuList as MenuType[]);
     addRouter(menuStore.allMenuList, catchViews);
+    const defaultView = getDefaultMenu(menuStore.allMenuList);
+    defaultPath.value = `/home/${defaultView.path}`;
     if (!catchViews.length) {
-      const { name } = getDefaultMenu(menuStore.allMenuList);
+      const { name } = defaultView;
       router.push({ name });
     } else {
       multipleTableStore.visitedViews = catchViews;
@@ -141,4 +144,8 @@ export const useInteRouter = async ({
   };
 
   await systemMain();
+
+  return { 
+    defaultPath
+  }
 };
