@@ -1,13 +1,16 @@
 import type { Ref } from "vue";
 import type { MenuType } from "types/menu";
 import type { RouteRecordRaw, RouteLocationNormalizedLoaded } from "vue-router";
+import { computed } from "vue";
 import systemUserAxios from "api/System";
 import { useRouter } from "vue-router";
 import { nanoid } from "nanoid";
+import { hasCommonElement } from "util/System";
 
 import { useMenuStore } from "store/modules/menu";
 import { useMultipleTab } from "store/modules/multipleTab";
 import { useSystemStore } from "store/modules/systemInfo";
+import authoritySigns from "router/authority";
 
 import { extendComponent } from "util/System";
 
@@ -25,6 +28,8 @@ export const useInteRouter = async ({
 
   const systemUser = systemUserAxios.create("userInfo");
   const menuList = systemUserAxios.create("menuList");
+
+  const roleSings = computed(() => systemInfoStore.getRoleSings);
 
   const addRouter = (
     allMenuList: MenuType[],
@@ -44,7 +49,10 @@ export const useInteRouter = async ({
       let name = custom ? nanoid(20) : routerName;
       const route = catchViews.find((el) => el.name === routerName);
       route && (name = (route?.meta?.componentName || name) as string);
-      if (path && componentPath) {
+      const authoritys = (authoritySigns as any)[routerName] || [];
+      const isAuthority = hasCommonElement(roleSings.value, authoritys);
+
+      if (path && componentPath && isAuthority) {
         const component = extendComponent(`../../pages/${componentPath}`, {
           name,
         });
@@ -104,8 +112,14 @@ export const useInteRouter = async ({
     systemInfoStore.setUserInfo(result);
   };
 
+  const getRoleSings = async () => { 
+    const { roleSings } = await menuList.getRoleSings();
+    systemInfoStore.setRoleSings(roleSings);
+  };
+
   const systemMain = async () => {
     await getUserInfo();
+    await getRoleSings();
     const catchViews = JSON.parse(
       JSON.parse(sessionStorage.getItem("TABS_LIST__") || '{ "value": "[]" }')
         .value

@@ -1,0 +1,25 @@
+
+export default {
+  Calibrate: ["admin"],
+  AutomatedTool: ["admin"],
+  PageDesigner: ["admin"],
+  ProcessEngine: ["admin"],
+  dashboard: ["admin"],
+  analysis: ["admin"],
+  workbench: ["admin"],
+  ExternalPage: ["admin"],
+  elementPlusDoc: ["admin"],
+  ComponentDocument: ["admin"],
+  ListPage: ["admin"],
+  ElementListPage: ["admin"],
+  ElBaseList: ["admin"],
+  ElVirtualList: ["admin"],
+  VxeVirtualList: ["admin"],
+  dataReport: ["admin"],
+  boot: ["admin"],
+  customPage: ["admin", "minor", "role"],
+  customPage1: ["admin"],
+  customPage2: ["admin"],
+  'customPage1-1': ["minor"],
+  'customPage2-2': ["role"]
+};

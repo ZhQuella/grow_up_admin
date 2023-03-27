@@ -1,4 +1,8 @@
 // import { MockMethod } from "vite-plugin-mock";
+const roleSings = [
+  "admin",
+  "minor"
+];
 
 const menuList = [
   {
@@ -74,6 +78,19 @@ export default [{
       message: "成功",
       result: {
         menuList
+      }
+    }
+  }
+},
+{
+  url: "/user/authority/signs",
+  method: "get",
+  response: () => { 
+    return {
+      code: 10000,
+      message: "成功",
+      result: {
+        roleSings
       }
     }
   }

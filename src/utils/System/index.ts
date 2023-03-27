@@ -139,3 +139,7 @@ export const deleteMatched = (list: RouteLocationNormalizedLoaded[]) => {
     return deepCopy(deepObj);
   });
 };
+
+export const hasCommonElement = (array1:string[], array2: string[]):boolean => {
+  return array1.some(item => array2.includes(item));
+}
