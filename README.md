@@ -33,7 +33,7 @@ Vue Grow admin 是一个中后台开发模版，采用了开箱即用的中后�
 
 ## 预览
 
-- [vue-vben-admin](https://gadmin.top) - 完整版站点
+- [vue-grow-admin](https://gadmin.top) - 完整版站点
 
 ## 文档
 
@@ -115,7 +115,3 @@ yarn build
 
 - Qq:827265905  
 - Wx:wo_99936
-
-<div align="center"> 
-   <img alt="VbenAdmin Logo" width="350" src="./ding-code.jpg"> 
-</div>
