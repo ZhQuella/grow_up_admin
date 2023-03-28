@@ -115,3 +115,7 @@ yarn build
 
 - Qq:827265905  
 - Wx:wo_99936
+
+<div align="center"> 
+   <img alt="VbenAdmin Logo" width="350" src="./ding-code.jpg"> 
+</div>
