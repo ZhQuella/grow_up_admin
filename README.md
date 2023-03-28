@@ -7,7 +7,7 @@
 
 ## 简介
 
-Vue Grow admin 是一个中后台开发模版，采用了开箱即用的中后台前端解决方案，主要是用了技术栈如下：
+Vue Grow admin 是一个中后台开发模版，采用了开箱即用的中后台前端解决方案，主要使用了技术栈如下：
 
 - [Vite2](https://cn.vitejs.dev/)
 - [Vue3](https://cn.vuejs.org/)
