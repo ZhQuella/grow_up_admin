@@ -44,6 +44,13 @@ const menuList = [
         icon: "Download",
         path: "DownExcel",
         component: "Feat/DownExcel/index.vue",
+      },
+      {
+        label: "消息示例",
+        name: "MessagePrompt",
+        icon: "Notification",
+        path: "MessagePrompt",
+        component: "Feat/MessagePrompt/index.vue",
       }
     ]
   },

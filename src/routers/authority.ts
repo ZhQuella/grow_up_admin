@@ -23,6 +23,7 @@ export default {
   Feat: ["admin"],
   DownExcel: ["admin"],
   OpenSubpage: ["admin"],
+  MessagePrompt: ["admin"],
   'customPage1-1': ["minor"],
   'customPage2-2': ["role"]
 };
