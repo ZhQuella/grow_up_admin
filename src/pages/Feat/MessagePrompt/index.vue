@@ -169,8 +169,8 @@ const onOpenSubmit = () => {
 
 const onOpenNotification = (type: any) => { 
   ElNotification({
-    title: 'Error',
-    message: 'This is an error message',
+    title: type,
+    message: `This is an ${type} message`,
     type
   })
 };
