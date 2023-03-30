@@ -21,7 +21,7 @@ const menuList = [
   },
   {
     label: "功能",
-    name: "function",
+    name: "Feat",
     icon: "Function",
     children:[
       {
@@ -29,14 +29,21 @@ const menuList = [
         name: "boot",
         icon: "CloudLogging",
         path: "guidance",
-        component: "Guide/guidance/index.vue",
+        component: "Feat/guidance/index.vue",
       },
       {
         label: "标签操作",
         name: "OpenSubpage",
         icon: "PageBreak",
         path: "OpenSubpage",
-        component: "Guide/OpenSubpage/index.vue",
+        component: "Feat/OpenSubpage/index.vue",
+      },
+      {
+        label: "本地下载Excel",
+        name: "DownExcel",
+        icon: "Download",
+        path: "DownExcel",
+        component: "Feat/DownExcel/index.vue",
       }
     ]
   },
