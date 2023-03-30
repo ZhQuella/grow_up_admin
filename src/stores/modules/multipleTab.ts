@@ -73,6 +73,7 @@ export const useMultipleTab = defineStore({
       )
         return;
       this.cachedViews = cacheMap;
+      this.saveVisitedViews(this.visitedViews);
     },
     delView(view: RouteLocationNormalizedLoaded) {
       this.delVisitedView(view);

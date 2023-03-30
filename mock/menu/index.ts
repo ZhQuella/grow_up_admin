@@ -20,11 +20,25 @@ const menuList = [
     ],
   },
   {
-    label: "引导页",
-    name: "boot",
-    icon: "CloudLogging",
-    path: "guidance",
-    component: "Guide/guidance/index.vue",
+    label: "功能",
+    name: "function",
+    icon: "Function",
+    children:[
+      {
+        label: "引导",
+        name: "boot",
+        icon: "CloudLogging",
+        path: "guidance",
+        component: "Guide/guidance/index.vue",
+      },
+      {
+        label: "标签操作",
+        name: "OpenSubpage",
+        icon: "PageBreak",
+        path: "OpenSubpage",
+        component: "Guide/OpenSubpage/index.vue",
+      }
+    ]
   },
   {
     label: "自定义组件名称",

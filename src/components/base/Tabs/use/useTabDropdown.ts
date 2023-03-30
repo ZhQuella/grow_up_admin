@@ -128,6 +128,11 @@ export const useTabDropdown = () => {
   };
 
   return {
+    closeAllTags,
+    closeLeftTags,
+    closeRightTags,
+    closeOthersTags,
+    redload,
     tabsList,
     currentName,
     closeTag,

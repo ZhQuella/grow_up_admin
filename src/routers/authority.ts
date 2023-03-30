@@ -20,6 +20,8 @@ export default {
   customPage: ["admin", "minor", "role"],
   customPage1: ["admin"],
   customPage2: ["admin"],
+  function: ["admin"],
+  OpenSubpage: ["admin"],
   'customPage1-1': ["minor"],
   'customPage2-2': ["role"]
 };
