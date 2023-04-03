@@ -56,6 +56,7 @@ export const useInitTree = ({ columns, nodeKey }: initProps) => {
     const visibles = allChild
       .filter((el) => el.visible !== false && el[nodeKey])
       .map((el) => el[nodeKey]);
+    console.log(visibles);
     treeRef.value && treeRef.value.setCheckedKeys(visibles);
   };
 
