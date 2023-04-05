@@ -1,7 +1,8 @@
 import type { App } from "vue";
 import PageLayout from "components/public/PageLayout/index.vue";
 import GDialog from "components/public/GDialog/index.vue";
-import { GDetail, GDetailItem } from "components/public/GDetail";
+import GDetail from "components/public/GDetail/index.vue";
+import GDetailItem from "components/public/GDetailItem/index.vue";
 
 export default (app: App) => {
   app.component(PageLayout.name, PageLayout);
