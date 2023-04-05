@@ -56,6 +56,7 @@ export default [{
         'id|+1': i+1,
         'account': Mock.mock('@string("lower",7, 10)'),
         'roleName': Mock.mock('@ctitle(3, 5)'),
+        'state|1': ["0", "1"],
         'belong': {
           'person': Mock.mock('@cname()'),
           'department': Mock.mock('@region()'),

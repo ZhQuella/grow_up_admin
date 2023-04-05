@@ -1,7 +1,8 @@
 import type { Tree } from "types/Tree"; 
 import type { Ref } from "vue";
-import { reactive, onMounted, computed } from "vue";
+import { reactive, onMounted, computed, h } from "vue";
 import request from "api/systemMent";
+import { ElTag } from "element-plus";
 
 interface props { 
   tableTotal: Ref<number>;
@@ -28,6 +29,27 @@ export const useTableOption = ({
       field: "account",
       title: "账号",
       "show-overflow-tooltip": true,
+    },
+    {
+      field: "state",
+      title: "状态",
+      "show-overflow-tooltip": true,
+      formatter: (space: any): any[] => {
+        const contextMap = ["停用", "启用"];
+        const type = space.state === '0' ? 'danger' : 'success';
+        return [
+          h(ElTag, {
+            type
+          }, contextMap[space.state])
+        ]
+      }  
+    },
+    {
+      field: "forbidCause",
+      title: "停用原因",
+      "show-overflow-tooltip": true,
+      width: 100,
+      visible: false
     },
     {
       field: "roleName",
@@ -69,6 +91,12 @@ export const useTableOption = ({
       title: "创建日期",
       "show-overflow-tooltip": true,
       width: 100
+    },
+    {
+      field: "remarks",
+      title: "备注",
+      "show-overflow-tooltip": true,
+      width: 140
     },
     {
       field: "operate",

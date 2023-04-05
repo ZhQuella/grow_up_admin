@@ -1,8 +1,13 @@
-import { computed, ref } from "vue";
+import { computed, ref, reactive } from "vue";
 
 export const useTableFunc = () => { 
 
-  const visible = ref(false);
+  const dialogConfig = reactive({
+    visible: false,
+    conmponetName: "",
+    title: "",
+    data: {}
+  })
 
   // ~ 表格操作配置
   const buttonGroup = computed(() => [
@@ -10,8 +15,12 @@ export const useTableFunc = () => {
       title: "详情",
       type: "primary",
       icon: "DataViewAlt",
-      func: (row: any) => {
-        visible.value = true;
+      func: ({ row }: any) => {
+        const { account } = row;
+        dialogConfig.visible = true;
+        dialogConfig.title = `${account} 详情`;
+        dialogConfig.conmponetName = "AccountInfo";
+        dialogConfig.data = row;
       },
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
     },
@@ -24,9 +33,9 @@ export const useTableFunc = () => {
       },
       color: "#626aef",
       authority: "LIST_PAGE:EL_BASE_LIST:REPORT",
-      disabled: () => {
-        return true;
-      },
+      disabled: (space:any):boolean => {
+        return space.row.state !== "0";
+      }
     },
     {
       title: "删除",
@@ -35,7 +44,10 @@ export const useTableFunc = () => {
       func: (row: any) => {
         console.log(row, 2);
       },
-      authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
+      disabled: (space: any): boolean => {
+        return space.row.state !== "0";
+      },
+      authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
     },
     {
       title: "停用",
@@ -45,6 +57,9 @@ export const useTableFunc = () => {
         console.log(row, 2);
       },
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
+      show: (space: any): boolean => { 
+        return space.row.state !== "0"
+      }
     },
     {
       title: "启用",
@@ -54,11 +69,32 @@ export const useTableFunc = () => {
         console.log(row, 2);
       },
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
+      show: (space: any): boolean => { 
+        return space.row.state === "0"
+      }
     },
     {
       title: "重置密码",
       type: "danger",
       icon: "ResetAlt",
+      func: (row: any) => {
+        console.log(row, 2);
+      },
+      authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
+    },
+    {
+      title: "解绑",
+      type: "warning",
+      icon: "HeatMap02",
+      func: (row: any) => {
+        console.log(row, 2);
+      },
+      authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
+    },
+    {
+      title: "账号历史",
+      type: "primary",
+      icon: "ChartHistogram",
       func: (row: any) => {
         console.log(row, 2);
       },
@@ -69,6 +105,18 @@ export const useTableFunc = () => {
   
   // ~ 表格批量操作配置
   const optionGroup = computed(() => [
+    {
+      title: "新增",
+      type: "success",
+      icon: "Add",
+      authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
+      func: () => {
+        dialogConfig.visible = true;
+        dialogConfig.title = `新增账号`;
+        dialogConfig.conmponetName = "AccountCreate";
+        dialogConfig.data = {};
+      },
+    },
     {
       title: "批量删除",
       type: "danger",
@@ -83,10 +131,18 @@ export const useTableFunc = () => {
     },
   ]);
 
+  const onDialogClose = () => { 
+    dialogConfig.visible = false;
+    dialogConfig.title = "";
+    dialogConfig.conmponetName = "";
+    dialogConfig.data = {};
+  };
+
   return {
-    visible,
+    dialogConfig,
     buttonGroup,
-    optionGroup
+    optionGroup,
+    onDialogClose
   };
 };
 

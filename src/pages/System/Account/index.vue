@@ -92,35 +92,18 @@
 
 
     <g-dialog
-      v-model="visible" 
-      width="900px"
-      title="账号详情"
+      v-model="dialogConfig.visible" 
+      width="600px"
+      :title="dialogConfig.title"
+      @close="onDialogClose"
     >
-      <g-detail
-        :model="{ a: 'zjl', b: 12321 }"
-        lable-width="150px"
-      >
-        <el-row>
-          <el-col :span="12">
-            <g-detail-item
-              label="用户名"
-              prop="a"
-              label-width="100px"
-            >
-              <template #default="{value}">
-                {{ value }} e...
-              </template>
-            </g-detail-item>
-          </el-col>
-          <el-col :span="12">
-            <g-detail-item
-              label="账号"
-              prop="b"
-              label-width="100px"
-            />
-          </el-col>
-        </el-row>
-      </g-detail>
+      <div class="p-[20px]">
+        <component
+          :is="dialogConfig.conmponetName"
+          :row="dialogConfig.data"
+          @close="onDialogClose"
+        />
+      </div>
     </g-dialog>
   </div>
 </template>
@@ -143,7 +126,8 @@ const { pageSizes, page, size, layout, total } = useTable();
 const {
   buttonGroup,
   optionGroup,
-  visible
+  dialogConfig,
+  onDialogClose
 } = useTableFunc();
 
 const { 
@@ -267,7 +251,14 @@ const onColumnsBarConfirm = (columns: any[]) => {
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import AccountInfo from "./component/AccountInfo/index.vue";
+import AccountCreate from "./component/AccountCreate/index.vue";
+
 export default defineComponent({
   name: "AccountManagement",
+  components: {
+    AccountInfo,
+    AccountCreate
+  }
 });
 </script>

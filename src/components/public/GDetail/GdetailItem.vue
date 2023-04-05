@@ -1,5 +1,5 @@
 <template>
-  <div class="flex leading-[28px]">
+  <div class="flex leading-[32px]">
     <div
       class="grow-0 shrink-0"
       :style="labelStyle"
@@ -16,6 +16,7 @@
 
 <script setup lang="ts">
 import { inject, toRefs, computed } from "vue";
+import { getObjectValue } from "util/System";
 
 const props = defineProps({
   prop: {
@@ -41,17 +42,15 @@ const { prop, label, labelWidth, align } = toRefs(props);
 const { model, labelWidth: pLabelWidth, align: pAlign } = toRefs(parentProps);
 
 const value = computed(() => {
-  return model.value[prop.value]
+  return getObjectValue(model.value, prop.value);
 });
 
-const labelStyle = computed(() => { 
+const labelStyle = computed(() => {
   return {
     width: labelWidth.value || pLabelWidth.value,
     'text-align': align.value || pAlign.value
   }
-})
-
-console.log(parentProps);
+});
 </script>
 
 <script lang="ts">

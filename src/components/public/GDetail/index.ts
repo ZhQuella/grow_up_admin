@@ -1,7 +1,7 @@
 import GDetail from "./GDetail.vue";
-import GdetailItem from "./GdetailItem.vue";
+import GDetailItem from "./GDetailItem.vue";
 
 export { 
   GDetail,
-  GdetailItem
+  GDetailItem
 };
