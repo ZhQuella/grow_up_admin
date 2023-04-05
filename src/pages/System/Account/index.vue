@@ -3,27 +3,33 @@
     <pageLayout>
       <template #aside>
         <div class="h-full">
-          <div class="p-[5px] border-b-[1px] border-[var(--el-border-color)] border-solid flex">
-            <el-input placeholder="请输入部门名称" />
-            <el-dropdown>
-              <el-button
-                icon="ChevronDown"
-                link
-                class="outline-none outline-0 text-[var(--el-border-color)] px-[5px text-[20px] font-bold"
-              />
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item>展开全部</el-dropdown-item>
-                  <el-dropdown-item>收起全部</el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
+          <div class="p-[5px] border-b-[1px] border-[var(--el-border-color)] border-solid">
+            <el-input
+              v-model="deptSearchValue" 
+              placeholder="请输入部门名称"
+              clearable
+              @input="onDeptInput"
+            />
           </div>
           <el-scrollbar style="height: calc(100% - 43px);">
-            <el-tree
-              :data="treeData"
-              :props="defaultProps"
-            />
+            <div v-show="!deptSearchValue">
+              <el-tree
+                :data="deptTreeList"
+                :props="defaultProps" 
+                default-expand-all
+                @node-click="onTreeNodeClick"
+              />
+            </div>
+            <div v-show="deptSearchValue">
+              <div
+                v-for="(item) of filterResult"
+                :key="item.id"
+                class="p-[5px] text-[13px] text-[var(--el-text-color-regular)] cursor-pointer"
+                @click="onTreeNodeClick(item)"
+              >
+                {{ item.label }}
+              </div>
+            </div>
           </el-scrollbar>
         </div>
       </template>
@@ -43,7 +49,7 @@
               @search="onTableSeach"
             />
             <ColumnBar
-              :columns="columns"
+              :columns="tableColumns"
               @confirm="onColumnsBarConfirm"
             />
           </div>
@@ -53,8 +59,9 @@
         <PerfectTable
           ref="tableRef"
           :height="height"
-          :columns="columns"
-          :data="data"
+          :columns="tableColumns"
+          :data="tableList"
+          only-key="id"
           @select="onPerfectTableSelect"
         >
           <template #btnOption="btnOption">
@@ -82,6 +89,39 @@
         </div>
       </template>
     </pageLayout>
+
+
+    <g-dialog
+      v-model="visible" 
+      width="900px"
+      title="账号详情"
+    >
+      <g-detail
+        :model="{ a: 'zjl', b: 12321 }"
+        lable-width="150px"
+      >
+        <el-row>
+          <el-col :span="12">
+            <g-detail-item
+              label="用户名"
+              prop="a"
+              label-width="100px"
+            >
+              <template #default="{value}">
+                {{ value }} e...
+              </template>
+            </g-detail-item>
+          </el-col>
+          <el-col :span="12">
+            <g-detail-item
+              label="账号"
+              prop="b"
+              label-width="100px"
+            />
+          </el-col>
+        </el-row>
+      </g-detail>
+    </g-dialog>
   </div>
 </template>
 
@@ -94,96 +134,38 @@ import SearchBar from "components/public/SearchBar/index.vue";
 import PerfectTable from "components/public/PerfectTable/index.vue";
 import ButtonGroup from "components/public/ButtonGroup/index.vue";
 
-interface Tree {
-  label: string
-  children?: Tree[]
-}
+import { useDeptTree } from "hooks/useBusiness/useDeptTree";
+import { useTableOption } from "./use/useTableOption";
+import { useTableFunc } from "./use/useTableFunc";
+
+const { pageSizes, page, size, layout, total } = useTable();
+
+const {
+  buttonGroup,
+  optionGroup,
+  visible
+} = useTableFunc();
+
+const { 
+  deptTreeList,
+  deptSearchValue,
+  filterResult,
+  onDeptInput
+} = useDeptTree();
+
+const { 
+  tableList,
+  tableColumns,
+  onTreeNodeClick
+} = useTableOption({
+  tableTotal: total
+});
 
 const tableRef = ref();
 const state = reactive({
   selectList: [],
 });
 
-// ~ 表格操作配置
-const buttonGroup = computed(() => [
-  {
-    title: "详情",
-    type: "primary",
-    icon: "DataViewAlt",
-    func: (row: any) => {
-      console.log(row, 1);
-    },
-    authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
-  },
-  {
-    title: "修改",
-    type: "warning",
-    icon: "EditOutlined",
-    func: (row: any) => {
-      console.log(row, 4);
-    },
-    color: "#626aef",
-    authority: "LIST_PAGE:EL_BASE_LIST:REPORT",
-    disabled: () => {
-      return true;
-    },
-  },
-  {
-    title: "删除",
-    type: "danger",
-    icon: "Delete",
-    func: (row: any) => {
-      console.log(row, 2);
-    },
-    authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
-  },
-  {
-    title: "停用",
-    type: "danger",
-    icon: "WarningOutlined",
-    func: (row: any) => {
-      console.log(row, 2);
-    },
-    authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
-  },
-  {
-    title: "启用",
-    type: "success",
-    icon: "RocketOutlined",
-    func: (row: any) => {
-      console.log(row, 2);
-    },
-    authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
-  },
-  {
-    title: "重置密码",
-    type: "danger",
-    icon: "ResetAlt",
-    func: (row: any) => {
-      console.log(row, 2);
-    },
-    authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
-  }
-]);
-
-
-// ~ 表格批量操作配置
-const optionGroup = computed(() => [
-  {
-    title: "批量删除",
-    type: "danger",
-    icon: "Delete",
-    func: (row: any) => {
-      console.log(tableRef.value, 2);
-    },
-    authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
-    disabled: () => {
-      return !state.selectList.length;
-    },
-  },
-]);
-
-const { pageSizes, page, size, layout, total } = useTable();
 
 // ~ 查询条件配置
 const searchList = [
@@ -260,220 +242,6 @@ const searchList = [
       {
         dictLabel: "否",
         dictValue: "0",
-      },
-    ],
-  },
-];
-
-// ~ 表头配置
-const columns = [
-  {
-    field: "serial",
-    title: "序号",
-  },
-  {
-    field: "zip11",
-    title: "用户名",
-    "show-overflow-tooltip": true,
-  },
-  {
-    field: "zip8",
-    title: "昵称",
-    "show-overflow-tooltip": true,
-  },
-  {
-    field: "zip7",
-    title: "角色名称",
-    "show-overflow-tooltip": true,
-  },
-  {
-    field: "zip6",
-    title: "归属",
-    "show-overflow-tooltip": true,
-    visible: false,
-    children: [{
-      field: "zip5",
-      title: "归属人",
-      "show-overflow-tooltip": true,
-      visible: false
-    },
-    {
-      field: "zip4",
-      title: "所属部门",
-      "show-overflow-tooltip": true,
-      visible: false
-    },
-    { 
-      field: "zip3",
-      title: "所属岗位",
-      "show-overflow-tooltip": true,
-      visible: false
-    }]
-  },
-  {
-    field: "zip2",
-    title: "创建方式",
-    "show-overflow-tooltip": true,
-  },
-  {
-    field: "zip1",
-    title: "创建日期",
-    "show-overflow-tooltip": true,
-  },
-  {
-    field: "operate",
-    title: "操作",
-    fixed: "right",
-    width: "200px",
-  },
-];
-
-const data = [
-  {
-    id: 1,
-    date: "2016-05-01",
-    name: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-  },
-  {
-    id: 2,
-    date: "2016-05-02",
-    name: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-  },
-  {
-    id: 3,
-    date: "2016-05-03",
-    name: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-  },
-  {
-    id: 4,
-    date: "2016-05-01",
-    name: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-  },
-  {
-    id: 5,
-    date: "2016-05-02",
-    name: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-  },
-  {
-    id: 6,
-    date: "2016-05-03",
-    name3: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-  },
-  {
-    id: 7,
-    date: "2016-05-01",
-    name2: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-  },
-  {
-    id: 8,
-    date: "2016-05-02",
-    name1: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-  },
-  {
-    id: 9,
-    date: "2016-05-03",
-    name: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-  },
-  {
-    id: 10,
-    date: "2016-05-01",
-    name: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-  },
-];
-
-const treeData: Tree[] = [
-  {
-    label: 'Level one 1',
-    children: [
-      {
-        label: 'Level two 1-1',
-        children: [
-          {
-            label: 'Level three 1-1-1',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: 'Level one 2',
-    children: [
-      {
-        label: 'Level two 2-1',
-        children: [
-          {
-            label: 'Level three 2-1-1',
-          },
-        ],
-      },
-      {
-        label: 'Level two 2-2',
-        children: [
-          {
-            label: 'Level three 2-2-1',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: 'Level one 3',
-    children: [
-      {
-        label: 'Level two 3-1',
-        children: [
-          {
-            label: 'Level three 3-1-1',
-          },
-        ],
-      },
-      {
-        label: 'Level two 3-2',
-        children: [
-          {
-            label: 'Level three 3-2-1',
-          },
-        ],
       },
     ],
   },
