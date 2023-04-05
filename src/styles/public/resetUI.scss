@@ -13,6 +13,15 @@ $sode-deg: 5deg;
   padding: 10px !important;
   position: relative;
 }
+.el-dialog {
+  .el-dialog__body {
+    padding: 0px !important;
+  }
+  .el-dialog__header {
+    width: 100% !important;
+    padding: 20px !important;
+  }
+}
 .reset-card-content {
   .el-card__body {
     padding: 0px !important;

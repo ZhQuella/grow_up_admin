@@ -95,6 +95,18 @@ const menuList = [
       },
     ],
   },
+  {
+    label: "系统管理",
+    name: "SystemManagement",
+    icon: "ShopOutlined",
+    children: [{
+      label: "账号管理",
+      name: "AccountManagement",
+      icon: "GroupAccount",
+      path: "account-management",
+      component: "System/Account/index.vue"
+    }]
+  }
 ];
 
 export default [{
