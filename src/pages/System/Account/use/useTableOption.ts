@@ -32,11 +32,13 @@ export const useTableOption = ({
       field: "account",
       title: "账号",
       "show-overflow-tooltip": true,
+      width: 120,
     },
     {
       field: "state",
       title: "状态",
       "show-overflow-tooltip": true,
+      width: 120,
       formatter: (space: any): any[] => {
         const item = accountStates.value.find(el => el.code === space.state);
         const type = ['danger', 'success'][item.code] as ("success" | "danger");
@@ -57,8 +59,7 @@ export const useTableOption = ({
     {
       field: "roleName",
       title: "角色名称",
-      "show-overflow-tooltip": true,
-      width: 100
+      "show-overflow-tooltip": true
     },
     {
       field: "belong",
@@ -96,8 +97,7 @@ export const useTableOption = ({
     {
       field: "createDate",
       title: "创建日期",
-      "show-overflow-tooltip": true,
-      width: 100
+      "show-overflow-tooltip": true
     },
     {
       field: "remarks",
