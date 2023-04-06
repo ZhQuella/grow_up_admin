@@ -1,17 +1,20 @@
 import type { Tree } from "types/Tree"; 
 import type { Ref } from "vue";
-import { reactive, onMounted, computed, h } from "vue";
+import { reactive, onMounted, computed, h, ref } from "vue";
 import request from "api/systemMent";
 import { ElTag } from "element-plus";
 
 interface props { 
   tableTotal: Ref<number>;
+  accountStates: Ref<any[]>
 }
 
 export const useTableOption = ({ 
-  tableTotal
+  tableTotal,
+  accountStates
 }: props) => { 
 
+  const tableLoading = ref(false);
   const accountMethod = request.create("accountMent");
   const searchData = reactive<any>({});
   const state = reactive({
@@ -19,7 +22,7 @@ export const useTableOption = ({
   });
   
   // ~ 表头配置
-  const tableColumns = [
+  const tableColumns = computed(() => [
     {
       field: "serial",
       title: "序号",
@@ -35,14 +38,14 @@ export const useTableOption = ({
       title: "状态",
       "show-overflow-tooltip": true,
       formatter: (space: any): any[] => {
-        const contextMap = ["停用", "启用"];
-        const type = space.state === '0' ? 'danger' : 'success';
+        const item = accountStates.value.find(el => el.code === space.state);
+        const type = ['danger', 'success'][item.code] as ("success" | "danger");
         return [
           h(ElTag, {
             type
-          }, contextMap[space.state])
+          }, item.label)
         ]
-      }  
+      }
     },
     {
       field: "forbidCause",
@@ -61,23 +64,27 @@ export const useTableOption = ({
       field: "belong",
       title: "归属",
       "show-overflow-tooltip": true,
+      visible: false,
       children: [{
         field: "belong.person",
         title: "归属人",
         "show-overflow-tooltip": true,
-        width: 150
+        width: 150,
+        visible: false
       },
       {
         field: "belong.department",
         title: "所属部门",
         "show-overflow-tooltip": true,
-        width: 150
+        width: 150,
+        visible: false
       },
-      { 
+      {
         field: "belong.post",
         title: "所属岗位",
         "show-overflow-tooltip": true,
-        width: 150
+        width: 150,
+        visible: false
       }]
     },
     {
@@ -104,7 +111,7 @@ export const useTableOption = ({
       fixed: "right",
       width: "200px",
     },
-  ];
+  ]);
 
   const tableList = computed(() => { 
     return state.tableList;
@@ -115,9 +122,11 @@ export const useTableOption = ({
   };
 
   const getAccountList = async () => { 
+    tableLoading.value = true;
     const { accountList, total } = await accountMethod.getAccountList();
     state.tableList = accountList;
     tableTotal.value = total;
+    tableLoading.value = false;
   };
 
   onMounted(async () => {
@@ -125,9 +134,11 @@ export const useTableOption = ({
   });
 
   return {
+    tableLoading,
     tableList,
     tableColumns,
-    onTreeNodeClick
+    onTreeNodeClick,
+    getAccountList
   }
 
 }

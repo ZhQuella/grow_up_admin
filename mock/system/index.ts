@@ -76,4 +76,24 @@ export default [{
       }
     }
   }
+},
+{
+  url: "/account/info",
+  method: "post",
+  response() { 
+    return {
+      code: 10000,
+      message: "成功"
+    }
+  }
+},
+{
+  url: "/account/info",
+  method: "put",
+  response() { 
+    return {
+      code: 10000,
+      message: "成功"
+    }
+  }
 }] as MockMethod[];

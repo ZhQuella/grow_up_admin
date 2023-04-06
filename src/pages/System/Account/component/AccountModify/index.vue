@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-alert
-      title="未绑定人员账号无法获知登录人员"
+      title="未绑定人员账号无法获知登录人员，修改后密码将会被重置"
       type="warning"
       :closable="false"
     />
@@ -61,6 +61,7 @@
             v-model="formData.personnel"
             class="w-full"
             placeholder="请选择使用人"
+            clearable
           />
         </el-form-item>
       </el-form>
@@ -81,9 +82,19 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, toRefs } from "vue";
 import PasswordIntensity from "components/public/PasswordIntensity/index.vue";
 import { useDict } from "../use/useDict";
 import { useForm } from "./use/useForm";
+
+const props = defineProps({
+  row: {
+    type: Object,
+    default: () => ({})
+  }
+});
+
+const { row } = toRefs(props);
 
 const emit = defineEmits(["close","success"]);
 
@@ -101,6 +112,17 @@ const {
   emit
 });
 
+const initFormData = () => { 
+  formData.account = row.value.account;
+  formData.state = row.value.state;
+  formData.personnel = row.value.belong.person;
+  formData.id = row.value.id;
+};
+
+onMounted(() => {
+  initFormData();
+});
+
 const onClose = () => { 
   emit("close");
 };
@@ -109,6 +131,6 @@ const onClose = () => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "AccountCreate",
+  name: "AccountModify",
 });
 </script>

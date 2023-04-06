@@ -4,9 +4,10 @@
     :model-value="modelValue"
     :show-close="false"
     append-to-body
-    :style="dialogStyles"
     v-bind="$attrs"
     destroy-on-close
+    :fullscreen="isFullscreen"
+    :draggable="!isFullscreen"
     @open="onDialogOpen"
     @close="onDialogClose"
   >
@@ -81,19 +82,8 @@ const fullscreenIconName = computed(() => {
   return isFullscreen.value ? "FullscreenExitOutlined" : "FullscreenOutlined";
 });
 
-const dialogStyles = computed(() => {
-  if (!isFullscreen.value) return {};
-  return {
-    position: "fixed",
-    margin: "0px",
-    height: "100%",
-    width: "100%"
-  }
-});
-
 const onFullscreenChange = () => { 
   isFullscreen.value = !isFullscreen.value;
-  console.log(gDialog.value.$el);
 };
 </script>
 

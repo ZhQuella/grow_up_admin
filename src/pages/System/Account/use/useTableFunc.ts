@@ -1,6 +1,13 @@
 import { computed, ref, reactive } from "vue";
+import { ElMessage } from "element-plus";
 
-export const useTableFunc = () => { 
+interface Prop { 
+  getAccountList: Fn
+}
+
+export const useTableFunc = ({ 
+  getAccountList
+}: Prop) => { 
 
   const dialogConfig = reactive({
     visible: false,
@@ -28,8 +35,12 @@ export const useTableFunc = () => {
       title: "修改",
       type: "warning",
       icon: "EditOutlined",
-      func: (row: any) => {
-        console.log(row, 4);
+      func: ({ row }: any) => {
+        const { account } = row;
+        dialogConfig.visible = true;
+        dialogConfig.title = `${account} 修改`;
+        dialogConfig.conmponetName = "AccountModify";
+        dialogConfig.data = row;
       },
       color: "#626aef",
       authority: "LIST_PAGE:EL_BASE_LIST:REPORT",
@@ -99,6 +110,15 @@ export const useTableFunc = () => {
         console.log(row, 2);
       },
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
+    },
+    {
+      title: "使用记录",
+      type: "primary",
+      icon: "DirectoryDomain",
+      func: (row: any) => {
+        console.log(row, 2);
+      },
+      authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
     }
   ]);
   
@@ -138,11 +158,21 @@ export const useTableFunc = () => {
     dialogConfig.data = {};
   };
 
+  const onAccountSuccess = (message: string) => { 
+    message && ElMessage({
+      type: "success",
+      message
+    });
+    onDialogClose();
+    getAccountList();
+  };
+
   return {
     dialogConfig,
     buttonGroup,
     optionGroup,
-    onDialogClose
+    onDialogClose,
+    onAccountSuccess
   };
 };
 

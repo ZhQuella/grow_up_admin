@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-[20px]">
     <GDetail
       :model="row"
       label-width="100px"
