@@ -62,6 +62,7 @@
           :columns="tableColumns"
           :data="tableList"
           only-key="id"
+          :loading="tableLoading"
           @select="onPerfectTableSelect"
         >
           <template #btnOption="btnOption">
@@ -97,13 +98,12 @@
       :title="dialogConfig.title"
       @close="onDialogClose"
     >
-      <div class="p-[20px]">
-        <component
-          :is="dialogConfig.conmponetName"
-          :row="dialogConfig.data"
-          @close="onDialogClose"
-        />
-      </div>
+      <component
+        :is="dialogConfig.conmponetName"
+        :row="dialogConfig.data"
+        @close="onDialogClose"
+        @success="onAccountSuccess"
+      />
     </g-dialog>
   </div>
 </template>
@@ -118,17 +118,36 @@ import PerfectTable from "components/public/PerfectTable/index.vue";
 import ButtonGroup from "components/public/ButtonGroup/index.vue";
 
 import { useDeptTree } from "hooks/useBusiness/useDeptTree";
+import { useDict } from "./use/useDict";
 import { useTableOption } from "./use/useTableOption";
 import { useTableFunc } from "./use/useTableFunc";
 
 const { pageSizes, page, size, layout, total } = useTable();
 
 const {
+  accountStates
+} = useDict();
+
+const { 
+  tableList,
+  tableColumns,
+  getAccountList,
+  onTreeNodeClick,
+  tableLoading
+} = useTableOption({
+  tableTotal: total,
+  accountStates
+});
+
+const {
   buttonGroup,
   optionGroup,
   dialogConfig,
-  onDialogClose
-} = useTableFunc();
+  onDialogClose,
+  onAccountSuccess
+} = useTableFunc({
+  getAccountList
+});
 
 const { 
   deptTreeList,
@@ -137,13 +156,6 @@ const {
   onDeptInput
 } = useDeptTree();
 
-const { 
-  tableList,
-  tableColumns,
-  onTreeNodeClick
-} = useTableOption({
-  tableTotal: total
-});
 
 const tableRef = ref();
 const state = reactive({
@@ -253,12 +265,14 @@ const onColumnsBarConfirm = (columns: any[]) => {
 import { defineComponent } from "vue";
 import AccountInfo from "./component/AccountInfo/index.vue";
 import AccountCreate from "./component/AccountCreate/index.vue";
+import AccountModify from "./component/AccountModify/index.vue";
 
 export default defineComponent({
   name: "AccountManagement",
   components: {
     AccountInfo,
-    AccountCreate
+    AccountCreate,
+    AccountModify
   }
 });
 </script>

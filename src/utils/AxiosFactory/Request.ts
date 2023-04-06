@@ -7,11 +7,13 @@ import type {
 } from "axios";
 import type { Intercept } from "types/Request";
 import type { Fun } from "types/index";
+import CatchResult from "./CatchResult";
 
-export default class Request {
+export default class Request extends CatchResult {
   private readonly axiosInstance;
 
   constructor(config: RawAxiosRequestConfig) {
+    super();
     this.axiosInstance = axios.create(config);
   }
 
@@ -33,8 +35,10 @@ export default class Request {
   }
 
   public createMethod(requestItem: any): Fun {
-    const { axiosInstance } = this;
+    const { axiosInstance, setCatch, getCache, isCache } = this;
     const {
+      isCatch = false,
+      key = "",
       url: beforeUrl = "",
       method = "get",
       data: outData = {},
@@ -69,12 +73,19 @@ export default class Request {
         ? internalParams
         : that.margeData(outParams, internalParams);
       const url = that.withParam(beforeUrl, beforeParams);
-
+      if (isCatch && isCache.call(that, key)) { 
+        return Promise.resolve(getCache.call(that, key));
+      }
       return axiosInstance({
         url,
         method,
         ...reuqestConfig,
         ...args,
+      }).then((result) => { 
+        if (isCatch) { 
+          setCatch.call(that, key, result);
+        }
+        return result;
       });
     };
   }

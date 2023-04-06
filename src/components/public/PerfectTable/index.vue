@@ -1,5 +1,6 @@
 <template>
   <el-table
+    v-loading="loading"
     :height="height"
     :data="data"
     :row-class-name="rowClassName"
@@ -73,6 +74,10 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  loading: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const {
