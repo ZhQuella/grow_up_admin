@@ -96,4 +96,24 @@ export default [{
       message: "成功"
     }
   }
+},
+{
+  url: "/account/info",
+  method: "delete",
+  response() { 
+    return {
+      code: 10000,
+      message: "成功"
+    }
+  }
+},
+{
+  url: "/account/change/state",
+  method: "put",
+  response() { 
+    return {
+      code: 10000,
+      message: "成功"
+    }
+  }
 }] as MockMethod[];
