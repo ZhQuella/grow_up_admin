@@ -76,7 +76,7 @@ export const useTableFunc = ({
       icon: "AiStatusFailed",
       func: async ({ row }: any) => {
         await await ElMessageBox.confirm("账号停用后将无法继续使用，是否继续？", "温馨提示", {
-          confirmButtonText: '删除',
+          confirmButtonText: '停用',
           cancelButtonText: '取消',
           type: 'warning',
         });
