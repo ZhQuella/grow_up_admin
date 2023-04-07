@@ -63,7 +63,7 @@ export const useTableFunc = ({
     {
       title: "停用",
       type: "danger",
-      icon: "WarningOutlined",
+      icon: "AiStatusFailed",
       func: (row: any) => {
         console.log(row, 2);
       },
@@ -75,7 +75,7 @@ export const useTableFunc = ({
     {
       title: "启用",
       type: "success",
-      icon: "RocketOutlined",
+      icon: "AiStatusComplete",
       func: (row: any) => {
         console.log(row, 2);
       },
