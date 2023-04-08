@@ -47,8 +47,11 @@
       v-model="searchActive"
       destroy-on-close
       :title="$t('APP_SEARCH.SEARCH_MENU')"
+      width="650px"
     >
-      <AppSearch @select="onAppSearchSelect" />
+      <div class="p-[20px]">
+        <AppSearch @select="onAppSearchSelect" />
+      </div>
     </el-dialog>
   </div>
 </template>

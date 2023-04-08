@@ -7,4 +7,5 @@ export interface GroupBtn {
   authority: string;
   title: string;
   disabled?: Fn;
+  show?: Fn;
 }

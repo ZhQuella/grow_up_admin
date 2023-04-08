@@ -13,7 +13,7 @@
           <el-button
             link
             :type="item.type"
-            :disabled="item.disabled ? item.disabled() : false"
+            :disabled="item.disabled ? item.disabled(data) : false"
             class="middle-btn"
             @click="onGroupClick(item)"
           >
@@ -93,9 +93,13 @@ interface propsType {
 const props = defineProps<propsType>();
 
 const buttonVisibles = computed(() => {
-  return props.buttonGroup.filter((el) =>
-    authorityList.value.includes(el.authority)
-  );
+  return props.buttonGroup.filter((el) => { 
+    let isShow = true;
+    if (el.show) { 
+      isShow = el.show(props.data);
+    }
+    return authorityList.value.includes(el.authority) && isShow;
+  });
 });
 
 const showBtns = computed(() => {
