@@ -24,6 +24,7 @@ export default {
   DownExcel: ["admin"],
   OpenSubpage: ["admin"],
   MessagePrompt: ["admin"],
+  CountTo: ["admin"],
   'customPage1-1': ["minor"],
   'customPage2-2': ["role"]
 };
