@@ -55,7 +55,7 @@ const menuList = [
       {
         label: "数字动画",
         name: "CountTo",
-        icon: "Notification",
+        icon: "NumberOutlined",
         path: "CountTo",
         component: "Feat/CountTo/index.vue",
       }
