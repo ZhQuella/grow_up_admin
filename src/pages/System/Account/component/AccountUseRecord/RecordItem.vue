@@ -38,8 +38,8 @@ import { toRefs } from "vue";
 const porp = defineProps({
   config: {
     type: Object,
-    default: () => ({})
-  }
+    default: () => ({}),
+  },
 });
 
 const { config } = toRefs(porp);

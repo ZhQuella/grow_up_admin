@@ -1,7 +1,8 @@
 <template>
   <g-detail label-width="50px">
     <el-tag :type="tagType">
-      {{ config.tagInfo }} <span v-if="config.personnel">{{ config.personnel }}</span>
+      {{ config.tagInfo }}
+      <span v-if="config.personnel">{{ config.personnel }}</span>
     </el-tag>
     <g-detail-item
       label="操作人"
@@ -26,15 +27,15 @@ import { toRefs, computed } from "vue";
 const porp = defineProps({
   config: {
     type: Object,
-    default: () => ({})
-  }
+    default: () => ({}),
+  },
 });
 
 const { config } = toRefs(porp);
 
 const tagType = computed(() => {
   let type = "";
-  switch (config.value.type) { 
+  switch (config.value.type) {
     case "3":
     case "5":
       type = "danger";
@@ -56,7 +57,6 @@ const tagType = computed(() => {
   }
   return type;
 });
-
 </script>
 
 <script lang="ts">

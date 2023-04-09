@@ -44,7 +44,7 @@ import type { Ref } from "vue";
 import { ref, onMounted, onUnmounted } from "vue";
 import { addEventResize, removeResizeListener } from "util/ElementResize";
 // ! 待开发
-import { Splitpanes, Pane } from 'splitpanes';
+import { Splitpanes, Pane } from "splitpanes";
 
 const mainRef: Ref = ref();
 const mainHeight = ref(0);

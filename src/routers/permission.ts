@@ -17,11 +17,11 @@ router.beforeEach((to, from, next) => {
     next();
     return;
   }
-  if (!token && !ROUTER_WHITELIST.includes(name as string)) { 
+  if (!token && !ROUTER_WHITELIST.includes(name as string)) {
     next({ path: fromPath });
     return;
   }
-  if (token && ROUTER_WHITELIST.includes(name as string)) { 
+  if (token && ROUTER_WHITELIST.includes(name as string)) {
     storage.remove(AUTHORITY_TOKEN);
   }
   next();

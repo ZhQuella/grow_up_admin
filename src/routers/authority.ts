@@ -1,4 +1,3 @@
-
 export default {
   Calibrate: ["admin"],
   AutomatedTool: ["admin"],
@@ -27,6 +26,6 @@ export default {
   SystemManagement: ["admin"],
   AccountManagement: ["admin"],
   CountTo: ["admin"],
-  'customPage1-1': ["minor"],
-  'customPage2-2': ["role"]
+  "customPage1-1": ["minor"],
+  "customPage2-2": ["role"],
 };

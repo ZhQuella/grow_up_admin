@@ -1,112 +1,114 @@
 <template>
   <div>
-    <div class="bg-BG_COLOR3 text-MAIN_TEXT py-[50px] px-[20px] text-[17px] mb-[10px]">
+    <div
+      class="bg-BG_COLOR3 text-MAIN_TEXT py-[50px] px-[20px] text-[17px] mb-[10px]"
+    >
       数字动画
     </div>
     <div class="flex flex-col justify-center items-center">
       <div class="text-7xl text-pink-500 tracking-normal">
         <count-to
           ref="counter"
-          :start-val="config.startVal" 
-          :end-val="config.endVal" 
-          :duration="config.duration" 
-          :decimals="config.decimals" 
-          :separator="config.separator" 
-          :prefix="config.prefix" 
+          :start-val="config.startVal"
+          :end-val="config.endVal"
+          :duration="config.duration"
+          :decimals="config.decimals"
+          :separator="config.separator"
+          :prefix="config.prefix"
           :suffix="config.suffix"
-          :autoplay="false" 
+          :autoplay="false"
         />
       </div>
       <div class="flex flex-wrap mx-[20px]">
-        <label 
-          for="startVal" 
+        <label
+          for="startVal"
           class="flex items-center flex-nowrap m-[10px]"
         >
           startVal:
-          <el-input 
-            v-model.number="config.startVal" 
-            name="startVal" 
+          <el-input
+            v-model.number="config.startVal"
+            name="startVal"
             type="number"
           />
         </label>
-        <label 
-          for="endVal" 
+        <label
+          for="endVal"
           class="flex items-center flex-nowrap m-[10px]"
         >
           endVal:
-          <el-input 
-            v-model.number="config.endVal" 
-            name="endVal" 
+          <el-input
+            v-model.number="config.endVal"
+            name="endVal"
             type="number"
           />
         </label>
-        <label 
-          for="duration" 
+        <label
+          for="duration"
           class="flex items-center flex-nowrap m-[10px]"
         >
           duration:
-          <el-input 
-            v-model.number="config.duration" 
-            name="duration" 
+          <el-input
+            v-model.number="config.duration"
+            name="duration"
             type="number"
           />
         </label>
-        <label 
-          for="decimals" 
+        <label
+          for="decimals"
           class="flex items-center flex-nowrap m-[10px]"
         >
           decimals:
-          <el-input 
-            v-model.number="config.decimals" 
-            name="decimals" 
+          <el-input
+            v-model.number="config.decimals"
+            name="decimals"
             type="number"
           />
         </label>
-        <label 
-          for="separator" 
+        <label
+          for="separator"
           class="flex items-center flex-nowrap m-[10px]"
         >
           separator:
-          <el-input 
-            v-model="config.separator" 
-            name="separator" 
+          <el-input
+            v-model="config.separator"
+            name="separator"
             type="text"
           />
         </label>
-        <label 
-          for="prefix" 
+        <label
+          for="prefix"
           class="flex items-center flex-nowrap m-[10px]"
         >
           prefix:
-          <el-input 
-            v-model="config.prefix" 
-            name="prefix" 
+          <el-input
+            v-model="config.prefix"
+            name="prefix"
             type="text"
           />
         </label>
-        <label 
-          for="suffix" 
+        <label
+          for="suffix"
           class="flex items-center flex-nowrap m-[10px]"
         >
           suffix:
-          <el-input 
-            v-model.number="config.suffix" 
-            name="suffix" 
+          <el-input
+            v-model.number="config.suffix"
+            name="suffix"
             type="text"
           />
         </label>
       </div>
       <div>
-        <el-button 
-          type="primary" 
+        <el-button
+          type="primary"
           @click="start"
-        > 
+        >
           start
         </el-button>
-        <el-button 
-          type="danger" 
+        <el-button
+          type="danger"
           @click="pauseResume"
-        > 
+        >
           pause/Resume
         </el-button>
       </div>
@@ -115,32 +117,32 @@
 </template>
 
 <script setup lang="ts">
-import { CountTo } from 'vue3-count-to';
+import { CountTo } from "vue3-count-to";
 
 const config = reactive({
-    startVal:0,
-    endVal:2023,
-    duration: 4000,
-    decimals: 0,
-    separator: ',',
-    prefix: '¥',
-    suffix: 'rmb'
-})
+  startVal: 0,
+  endVal: 2023,
+  duration: 4000,
+  decimals: 0,
+  separator: ",",
+  prefix: "¥",
+  suffix: "rmb",
+});
 
 const counter = ref();
 
 const start = () => {
-    counter.value.start();
-}
+  counter.value.start();
+};
 
 const pauseResume = () => {
-    counter.value.pauseResume();
-}
+  counter.value.pauseResume();
+};
 </script>
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
 export default defineComponent({
-    name: "CountTo",
+  name: "CountTo",
 });
 </script>

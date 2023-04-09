@@ -1,8 +1,4 @@
-import type {
-  AxiosRequestConfig,
-  AxiosResponse,
-  AxiosError
-} from "axios";
+import type { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
 import Request from "util/AxiosFactory";
 import { createStorage } from "util/Storage";
 import { AUTHORITY_TOKEN } from "@/assets/enums/cacheEnum";
@@ -11,15 +7,15 @@ import { ElMessage } from "element-plus";
 const storage = createStorage({ prefixKey: "", storage: sessionStorage });
 
 const request = new Request({
-  baseURL: import.meta.env.VITE_BASE_URL
+  baseURL: import.meta.env.VITE_BASE_URL,
 });
 const requestIntercept = (config: AxiosRequestConfig): AxiosRequestConfig => {
   const token = storage.get(AUTHORITY_TOKEN);
   const isToken = (config.headers || {}).isToken === false;
   if (token && !isToken) {
-    config.headers['Authorization'] = 'Bearer ' + token;
+    config.headers["Authorization"] = "Bearer " + token;
   }
-  
+
   return config;
 };
 const responseIntercept = (response: AxiosResponse): AxiosResponse => {
@@ -27,12 +23,10 @@ const responseIntercept = (response: AxiosResponse): AxiosResponse => {
   if (status === 200) {
     if (data.code === 10000) {
       return data.result;
-    }
-    else { 
+    } else {
       throw new Error(data.message);
     }
-  }
-  else {
+  } else {
     ElMessage.error(response.statusText);
     return response;
   }
@@ -45,7 +39,7 @@ request.interceptors({
   requestIntercept,
   requestError: processingError,
   responseIntercept,
-  responseError: processingError
+  responseError: processingError,
 });
 
 export default request;

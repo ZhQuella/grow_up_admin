@@ -108,7 +108,7 @@ const {
   onDropdownClick,
   messageActive,
 } = useEvent({
-  t: i18n.t
+  t: i18n.t,
 });
 
 const options = computed(() => {

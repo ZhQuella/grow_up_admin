@@ -99,7 +99,7 @@
             <!--忘记密码-->
             <div v-if="formType === 'forgetPassword'">
               <ForgetPassword
-                @back="onChangeFormType" 
+                @back="onChangeFormType"
                 @success="onForgetPasswordSuccess"
               />
             </div>
@@ -107,7 +107,7 @@
             <!--修改密码-->
             <div v-if="formType === 'changePassword'">
               <ChangePassword
-                :tag-code="tagCode" 
+                :tag-code="tagCode"
                 @back="onChangePasswordBack"
                 @success="onChangePasswordSuccess"
               />
@@ -158,7 +158,7 @@ const {
   onChangeFormType,
   onForgetPasswordSuccess,
   onChangePasswordBack,
-  onChangePasswordSuccess
+  onChangePasswordSuccess,
 } = useEvent();
 </script>
 

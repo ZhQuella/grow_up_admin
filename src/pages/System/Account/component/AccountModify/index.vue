@@ -18,8 +18,8 @@
           prop="account"
         >
           <el-input
-            v-model="formData.account" 
-            placeholder="请输入账号" 
+            v-model="formData.account"
+            placeholder="请输入账号"
             clearable
           />
         </el-form-item>
@@ -28,8 +28,8 @@
           prop="password"
         >
           <el-input
-            v-model="formData.password" 
-            placeholder="请输入初始密码" 
+            v-model="formData.password"
+            placeholder="请输入初始密码"
             clearable
           />
         </el-form-item>
@@ -46,7 +46,7 @@
             placeholder="请选择状态"
           >
             <el-option
-              v-for="(item) of accountStates"
+              v-for="item of accountStates"
               :key="item.code"
               :label="item.label"
               :value="item.code"
@@ -90,29 +90,22 @@ import { useForm } from "./use/useForm";
 const props = defineProps({
   row: {
     type: Object,
-    default: () => ({})
-  }
+    default: () => ({}),
+  },
 });
 
 const { row } = toRefs(props);
 
-const emit = defineEmits(["close","success"]);
+const emit = defineEmits(["close", "success"]);
 
-const {
-  accountStates
-} = useDict();
+const { accountStates } = useDict();
 
-const { 
-  rules,
-  formData,
-  accountForm,
-  buttonLoading,
-  onCreateAccount
-} = useForm({
-  emit
-});
+const { rules, formData, accountForm, buttonLoading, onCreateAccount } =
+  useForm({
+    emit,
+  });
 
-const initFormData = () => { 
+const initFormData = () => {
   formData.account = row.value.account;
   formData.state = row.value.state;
   formData.personnel = row.value.belong.person;
@@ -123,7 +116,7 @@ onMounted(() => {
   initFormData();
 });
 
-const onClose = () => { 
+const onClose = () => {
   emit("close");
 };
 </script>

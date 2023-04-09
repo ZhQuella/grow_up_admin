@@ -140,18 +140,22 @@ export const deleteMatched = (list: RouteLocationNormalizedLoaded[]) => {
   });
 };
 
-export const hasCommonElement = (array1:string[], array2: string[]):boolean => {
-  return array1.some(item => array2.includes(item));
-}
+export const hasCommonElement = (
+  array1: string[],
+  array2: string[]
+): boolean => {
+  return array1.some((item) => array2.includes(item));
+};
 
-export const getObjectValue = (from:any,selector:string) => { 
-  if(getElType(from) !== "Object") {
-    throw new Error("Parameter is not an object."); 
+export const getObjectValue = (from: any, selector: string) => {
+  if (getElType(from) !== "Object") {
+    throw new Error("Parameter is not an object.");
   }
 
-  return selector.replace(/\[(\w+)\]/g,".$1")
-          .split(".")
-          .reduce((prev,cur) => {
-            return prev && prev[cur];
-          }, from)
+  return selector
+    .replace(/\[(\w+)\]/g, ".$1")
+    .split(".")
+    .reduce((prev, cur) => {
+      return prev && prev[cur];
+    }, from);
 };

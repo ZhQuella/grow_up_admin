@@ -108,12 +108,12 @@ export const useInteRouter = async ({
     }
     return defaultMenu as MenuType;
   };
-  const getUserInfo = async () => { 
+  const getUserInfo = async () => {
     const result = await systemUser.getUserInfo();
     systemInfoStore.setUserInfo(result);
   };
 
-  const getRoleSings = async () => { 
+  const getRoleSings = async () => {
     const { roleSings } = await menuList.getRoleSings();
     systemInfoStore.setRoleSings(roleSings);
   };
@@ -145,7 +145,7 @@ export const useInteRouter = async ({
 
   await systemMain();
 
-  return { 
-    defaultPath
-  }
+  return {
+    defaultPath,
+  };
 };

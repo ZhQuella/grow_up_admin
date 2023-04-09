@@ -21,20 +21,20 @@ import { getObjectValue } from "util/System";
 const props = defineProps({
   prop: {
     type: String,
-    default: ""
+    default: "",
   },
   label: {
     type: String,
-    default: ""
+    default: "",
   },
   labelWidth: {
     type: String,
-    default: ""
+    default: "",
   },
   align: {
     type: String,
-    default: ""
-  }
+    default: "",
+  },
 });
 const parentProps = inject("g-detail") as any;
 
@@ -48,8 +48,8 @@ const value = computed(() => {
 const labelStyle = computed(() => {
   return {
     width: labelWidth.value || pLabelWidth.value,
-    'text-align': align.value || pAlign.value
-  }
+    "text-align": align.value || pAlign.value,
+  };
 });
 </script>
 

@@ -1,7 +1,6 @@
-import ExcelJS from "exceljs"
+import ExcelJS from "exceljs";
 
 export default class DownExcel {
-
   private sheets: any[] = [];
   private outMarges: any = {};
 
@@ -10,12 +9,12 @@ export default class DownExcel {
     this.outMarges = {};
   }
 
-  down(fileName:string, callBack?: Fn){
+  down(fileName: string, callBack?: Fn) {
     const { sheets, outMarges } = this;
     const workbook = new ExcelJS.Workbook();
-    for(let i = 0;i < sheets.length; i++){
+    for (let i = 0; i < sheets.length; i++) {
       const sheet = sheets[i];
-      const { 
+      const {
         header = [],
         data = [],
         border = true,
@@ -25,64 +24,79 @@ export default class DownExcel {
         fixedHead = false,
         verticalCentered = true,
         horizontalCentered = false,
-        flexConfig = {}
+        flexConfig = {},
       } = sheet;
       const maxLevel = this.maxLevel(header);
-      const flex = fixedHead?{
-        state: 'frozen', xSplit: 0, ySplit: maxLevel + 1
-      }: flexConfig;
-      const worksheet = this.createdSheet(workbook, { 
-        title, 
-        showGridLines, 
+      const flex = fixedHead
+        ? {
+            state: "frozen",
+            xSplit: 0,
+            ySplit: maxLevel + 1,
+          }
+        : flexConfig;
+      const worksheet = this.createdSheet(workbook, {
+        title,
+        showGridLines,
         tabColor,
         verticalCentered,
         horizontalCentered,
-        flex
+        flex,
       });
-      this.outMarges[i] = { startCell: -1, basisRow: 0, basisCell: 0,  maxRow: 0 };
+      this.outMarges[i] = {
+        startCell: -1,
+        basisRow: 0,
+        basisCell: 0,
+        maxRow: 0,
+      };
       const lastChild = this.getLastChild(header);
-      const mergeInfo = this.resetMergeHeaderInfo(header, maxLevel, this.outMarges[i]);
+      const mergeInfo = this.resetMergeHeaderInfo(
+        header,
+        maxLevel,
+        this.outMarges[i]
+      );
       this.createdHead(worksheet, mergeInfo, { border });
       this.setData(worksheet, lastChild, data, { border }, maxLevel, callBack);
     }
     this.openDownloadDialog(workbook, fileName);
   }
 
-  createdSheet(workbook: any, config: any){
-    const { 
-      title, 
-      showGridLines, 
+  createdSheet(workbook: any, config: any) {
+    const {
+      title,
+      showGridLines,
       tabColor,
       verticalCentered,
       horizontalCentered,
-      flex
+      flex,
     } = config;
     return workbook.addWorksheet(title, {
       views: [{ showGridLines, ...flex }],
-      properties:{tabColor:{argb: tabColor }, verticalCentered, horizontalCentered},
+      properties: {
+        tabColor: { argb: tabColor },
+        verticalCentered,
+        horizontalCentered,
+      },
       pageSetup: { verticalCentered, horizontalCentered },
     });
   }
 
-  createdHead(worksheet:any, mergeInfo:any, addition:any){ 
-    const {
-      border
-    } = addition;
-    for(let i = 0; i < mergeInfo.length; i++){
+  createdHead(worksheet: any, mergeInfo: any, addition: any) {
+    const { border } = addition;
+    for (let i = 0; i < mergeInfo.length; i++) {
       const merge = mergeInfo[i];
       const { s, e, item } = merge;
       //  s :  开始  e : 结束
-      //  c : 列（横向）  
+      //  c : 列（横向）
       //  r ： 行（纵向）
       const { r: sr, c: sc } = s;
       const { r: er, c: ec } = e;
-      const { 
-        title = "", 
+      const {
+        title = "",
         align = "left",
         bgColor = "E8EAEC",
         color = "606266",
         width = "",
-        minWidth = ""
+        minWidth = "",
       } = item;
       const s26BS = this.convertDSTo26BS(sc + 1);
       const e26BS = this.convertDSTo26BS(ec + 1);
@@ -90,93 +104,125 @@ export default class DownExcel {
       const end = `${e26BS}${er + 1}`;
       worksheet.mergeCells(`${statr}:${end}`);
       worksheet.getCell(statr).value = title;
-      border && (worksheet.getCell(statr).border = {
-        top: {style:'thin'},
-        left: {style:'thin'},
-        bottom: {style:'thin'},
-        right: {style:'thin'}
-      });
-      worksheet.getCell(end).alignment = { vertical: 'middle', horizontal: align };
+      border &&
+        (worksheet.getCell(statr).border = {
+          top: { style: "thin" },
+          left: { style: "thin" },
+          bottom: { style: "thin" },
+          right: { style: "thin" },
+        });
+      worksheet.getCell(end).alignment = {
+        vertical: "middle",
+        horizontal: align,
+      };
       worksheet.getCell(end).fill = {
-        type: 'pattern',
-        pattern:'solid',
-        fgColor:{ argb:`FF${bgColor}` },
-        bgColor:{ argb: `FF${bgColor}` }
+        type: "pattern",
+        pattern: "solid",
+        fgColor: { argb: `FF${bgColor}` },
+        bgColor: { argb: `FF${bgColor}` },
       };
       worksheet.getCell(end).font = {
         color: { argb: `FF${color}` },
         size: 10,
-        bold: true
+        bold: true,
       };
-      if(width || minWidth){
+      if (width || minWidth) {
         const dobCol = worksheet.getColumn(s26BS);
-        dobCol.width = parseInt((width || minWidth)) / 10;
+        dobCol.width = parseInt(width || minWidth) / 10;
       }
     }
   }
 
-  setData(worksheet:any, lastChild:any, data:any, addition:any, maxLevel:any, callBack:Fn){
-    const {
-      border
-    } = addition;
-    for(let i = 0; i < data.length; i++){
+  setData(
+    worksheet: any,
+    lastChild: any,
+    data: any,
+    addition: any,
+    maxLevel: any,
+    callBack: Fn
+  ) {
+    const { border } = addition;
+    for (let i = 0; i < data.length; i++) {
       const item = data[i];
-      const c = (maxLevel + i + 2);
-      for(let j = 0; j < lastChild.length; j++){
+      const c = maxLevel + i + 2;
+      for (let j = 0; j < lastChild.length; j++) {
         const ele = lastChild[j];
         const r = this.convertDSTo26BS(j + 1);
         const coordinate = `${r}${c}`;
-        worksheet.getCell(coordinate).value = item[ele.field] === undefined?"-":item[ele.field];
-        border && (worksheet.getCell(coordinate).border = {
-          top: {style:'thin'},
-          left: {style:'thin'},
-          bottom: {style:'thin'},
-          right: {style:'thin'}
-        });
+        worksheet.getCell(coordinate).value =
+          item[ele.field] === undefined ? "-" : item[ele.field];
+        border &&
+          (worksheet.getCell(coordinate).border = {
+            top: { style: "thin" },
+            left: { style: "thin" },
+            bottom: { style: "thin" },
+            right: { style: "thin" },
+          });
       }
       callBack && callBack(item, worksheet, c);
     }
   }
 
   //  导出Excel
-  async openDownloadDialog(workbook:any, fileName:any){
+  async openDownloadDialog(workbook: any, fileName: any) {
     const buffer = await workbook.xlsx.writeBuffer();
-    const blob:any = new Blob([buffer], {
-      type: "application/octet-stream"
+    const blob: any = new Blob([buffer], {
+      type: "application/octet-stream",
     });
     let url = "";
-    if (typeof blob == 'object' && blob instanceof Blob) {
+    if (typeof blob == "object" && blob instanceof Blob) {
       url = URL.createObjectURL(blob); // 创建blob地址
     }
-    const aLink = document.createElement('a');
+    const aLink = document.createElement("a");
     aLink.href = url;
     aLink.download = `${fileName}.xlsx`;
     let event;
-    if (window.MouseEvent) event = new MouseEvent('click');
+    if (window.MouseEvent) event = new MouseEvent("click");
     else {
-      event = document.createEvent('MouseEvents');
-      event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0,
-        null);
+      event = document.createEvent("MouseEvents");
+      event.initMouseEvent(
+        "click",
+        true,
+        false,
+        window,
+        0,
+        0,
+        0,
+        0,
+        0,
+        false,
+        false,
+        false,
+        false,
+        0,
+        null
+      );
     }
     aLink.dispatchEvent(event);
   }
 
-  resetMergeHeaderInfo(tableHeader:any, maxLevel:any, outMarge:any, result:any[] = [], onces = true){
+  resetMergeHeaderInfo(
+    tableHeader: any,
+    maxLevel: any,
+    outMarge: any,
+    result: any[] = [],
+    onces = true
+  ) {
     onces && this.tagHeadIn(tableHeader);
     this.tagMaxLevel(tableHeader);
-    for(let i = 0; i < tableHeader.length; i++){
+    for (let i = 0; i < tableHeader.length; i++) {
       const item = tableHeader[i];
       //  纵向跨度
       const { maxLen } = item;
       //  横向跨度
       const lastChild = this.getLastChild(item.children || []);
       //  s :  开始  e : 结束
-      //  c : 列（横向）  
+      //  c : 列（横向）
       //  r ： 行（纵向）
-      const s:any = {};
-      const e:any = {};
-      if(!item.children){
-        if(item.isOut){
+      const s: any = {};
+      const e: any = {};
+      if (!item.children) {
+        if (item.isOut) {
           outMarge.startCell += 1;
           outMarge.basisCell += 1;
           s.r = 0;
@@ -184,8 +230,7 @@ export default class DownExcel {
           s.c = outMarge.startCell;
           e.c = outMarge.startCell;
           result.push({ s, e, item });
-        }
-        else{
+        } else {
           let r = maxLevel - (outMarge.basisRow + maxLen);
           r = Math.max(r, 0);
           s.c = outMarge.basisCell;
@@ -196,8 +241,8 @@ export default class DownExcel {
           outMarge.basisCell += 1;
         }
       }
-      if(item.children){
-        if(item.isOut){
+      if (item.children) {
+        if (item.isOut) {
           s.r = 0;
           e.r = 0;
           outMarge.startCell += 1;
@@ -205,7 +250,7 @@ export default class DownExcel {
           outMarge.startCell += lastChild.length - 1;
           e.c = outMarge.startCell;
           result.push({ s, e, item });
-        }else{
+        } else {
           s.c = outMarge.basisCell;
           e.c = outMarge.basisCell + lastChild.length - 1;
           s.r = outMarge.basisRow;
@@ -213,28 +258,33 @@ export default class DownExcel {
           result.push({ s, e, item });
         }
         outMarge.basisRow += 1;
-        this.resetMergeHeaderInfo(item.children, maxLevel, outMarge, result, false);
+        this.resetMergeHeaderInfo(
+          item.children,
+          maxLevel,
+          outMarge,
+          result,
+          false
+        );
       }
     }
     outMarge.basisRow -= 1;
     return result;
   }
 
-  tagHeadIn(tableHeader:any[]){
+  tagHeadIn(tableHeader: any[]) {
     tableHeader.forEach((el) => {
       el.isOut = true;
       return el;
-    })
+    });
   }
 
   //  标记最大层级
-  tagMaxLevel(tableHeader:any[]){
+  tagMaxLevel(tableHeader: any[]) {
     const maxLevel = this.maxLevel(tableHeader, false);
     tableHeader.forEach((el) => {
-      if(!el.children){
+      if (!el.children) {
         el.maxLen = maxLevel;
-      }
-      else{
+      } else {
         this.tagMaxLevel(el.children);
         el.maxLen = maxLevel;
       }
@@ -243,30 +293,30 @@ export default class DownExcel {
 
   //  获取最大层级
   //  只包含子级最大层级(不包含本级)
-  maxLevel(arr:any[], isSetFloor = true){
+  maxLevel(arr: any[], isSetFloor = true) {
     const floor = -1;
     let max = -1;
-    function each (data:any, floor: number) {
-      data.forEach((e:any)=> {
+    function each(data: any, floor: number) {
+      data.forEach((e: any) => {
         max = Math.max(floor, max);
-        isSetFloor && (e.floor = (floor + 1));
+        isSetFloor && (e.floor = floor + 1);
         if (e.children) {
-          each(e.children, floor + 1)
+          each(e.children, floor + 1);
         }
-      })
+      });
     }
-    each(arr,0)
+    each(arr, 0);
     return max;
   }
 
   //  获取当前下面所有子级
   //  即：表头横向跨度单元格数量
-  getLastChild (arr:any[], result:any[] = []){
-    for (let i = 0; i < arr.length; i++){
+  getLastChild(arr: any[], result: any[] = []) {
+    for (let i = 0; i < arr.length; i++) {
       const item = arr[i];
-      if(!item.children){
+      if (!item.children) {
         result.push(item);
-      }else{
+      } else {
         result = this.getLastChild(item.children, result);
       }
     }
@@ -276,19 +326,19 @@ export default class DownExcel {
   //  10进制转26进制
   //  1  ->  A
   //  27 ->  AA
-  convertDSTo26BS(num: any){
-    let code='';
+  convertDSTo26BS(num: any) {
+    let code = "";
     const reg = /^\d+$/g;
-    if(!reg.test(num)){
-        return code;
+    if (!reg.test(num)) {
+      return code;
     }
-    while (num>0){
-      let m = num % 26
-      if (m==0){
+    while (num > 0) {
+      let m = num % 26;
+      if (m == 0) {
         m = 26;
       }
-      code =   String.fromCharCode(64 + parseInt(`${m}`)) + code;
-      num = (num-m) /26;
+      code = String.fromCharCode(64 + parseInt(`${m}`)) + code;
+      num = (num - m) / 26;
     }
     return code;
   }

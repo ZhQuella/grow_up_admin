@@ -29,14 +29,14 @@ import { computed } from "vue";
 const props = defineProps({
   value: {
     type: String,
-    default: ""
-  }
+    default: "",
+  },
 });
 
-const strength = computed(() => { 
+const strength = computed(() => {
   const str = props.value;
   let isStrength = -1;
-  if(str.length >= 10) isStrength++;
+  if (str.length >= 10) isStrength++;
   if (/\d/.test(str)) isStrength++;
   if (/[a-z]/.test(str)) isStrength++;
   if (/[A-Z]/.test(str)) isStrength++;

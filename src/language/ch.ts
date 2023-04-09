@@ -11,7 +11,7 @@ export default {
   APP_OTHER: {
     LOGIN_OUT_CANCEL_PROMPT: "取消退出登录",
     LOGIN_OUT_TITLE: "温馨提示",
-    LOGIN_OUT_PROMPT: "您即将退出登录，是否继续？"
+    LOGIN_OUT_PROMPT: "您即将退出登录，是否继续？",
   },
   INDEX_SYETEM_DESCRIBE: {
     DESCRIBE_1: "一个会成长的框架",
@@ -69,7 +69,7 @@ export default {
     NEW_PASSWORD_CONTEXT: "请输入新密码",
     OLD_NEW_DIFFERENT: "两次密码不相同",
     PASSWORD_LEN_CONTEXT: "密码不能少于6位大于20位",
-    PHONE_NUM_ERROR: "请输入正确手机号"
+    PHONE_NUM_ERROR: "请输入正确手机号",
   },
   RECORD_INFO: {
     DESCRIBE: "根据MIT许可证发布",
