@@ -3,26 +3,28 @@
     <pageLayout>
       <template #aside>
         <div class="h-full">
-          <div class="p-[5px] border-b-[1px] border-[var(--el-border-color)] border-solid">
+          <div
+            class="p-[5px] border-b-[1px] border-[var(--el-border-color)] border-solid"
+          >
             <el-input
-              v-model="deptSearchValue" 
+              v-model="deptSearchValue"
               placeholder="请输入部门名称"
               clearable
               @input="onDeptInput"
             />
           </div>
-          <el-scrollbar style="height: calc(100% - 43px);">
+          <el-scrollbar style="height: calc(100% - 43px)">
             <div v-show="!deptSearchValue">
               <el-tree
                 :data="deptTreeList"
-                :props="defaultProps" 
+                :props="defaultProps"
                 default-expand-all
                 @node-click="onTreeNodeClick"
               />
             </div>
             <div v-show="deptSearchValue">
               <div
-                v-for="(item) of filterResult"
+                v-for="item of filterResult"
                 :key="item.id"
                 class="p-[5px] text-[13px] text-[var(--el-text-color-regular)] cursor-pointer"
                 @click="onTreeNodeClick(item)"
@@ -91,9 +93,8 @@
       </template>
     </pageLayout>
 
-
     <g-dialog
-      v-model="dialogConfig.visible" 
+      v-model="dialogConfig.visible"
       width="600px"
       :title="dialogConfig.title"
       @close="onDialogClose"
@@ -105,6 +106,21 @@
         @success="onAccountSuccess"
       />
     </g-dialog>
+
+    <el-drawer
+      v-model="drawerConfig.visible"
+      :title="drawerConfig.title"
+      size="400px"
+      @close="onDrawerClose"
+    >
+      <el-scrollbar>
+        <component
+          :is="drawerConfig.conmponetName"
+          :row="drawerConfig.data"
+          @close="onDrawerClose"
+        />
+      </el-scrollbar>
+    </el-drawer>
   </div>
 </template>
 
@@ -113,6 +129,7 @@ import { ref, computed, reactive } from "vue";
 import { useTable } from "hooks/useTable";
 import ColumnBar from "components/public/ColumnBar/index.vue";
 import { Delete, DataViewAlt } from "@vicons/carbon";
+
 import SearchBar from "components/public/SearchBar/index.vue";
 import PerfectTable from "components/public/PerfectTable/index.vue";
 import ButtonGroup from "components/public/ButtonGroup/index.vue";
@@ -124,44 +141,35 @@ import { useTableFunc } from "./use/useTableFunc";
 
 const { pageSizes, page, size, layout, total } = useTable();
 
-const {
-  accountStates
-} = useDict();
+const { accountStates } = useDict();
 
-const { 
+const {
   tableList,
   tableColumns,
   getAccountList,
   onTreeNodeClick,
-  tableLoading
+  tableLoading,
 } = useTableOption({
   tableTotal: total,
-  accountStates
+  accountStates,
 });
 
 const {
+  tableRef,
   buttonGroup,
   optionGroup,
   dialogConfig,
+  drawerConfig,
+  onDrawerClose,
   onDialogClose,
-  onAccountSuccess
+  onAccountSuccess,
+  onPerfectTableSelect,
 } = useTableFunc({
-  getAccountList
+  getAccountList,
 });
 
-const { 
-  deptTreeList,
-  deptSearchValue,
-  filterResult,
-  onDeptInput
-} = useDeptTree();
-
-
-const tableRef = ref();
-const state = reactive({
-  selectList: [],
-});
-
+const { deptTreeList, deptSearchValue, filterResult, onDeptInput } =
+  useDeptTree();
 
 // ~ 查询条件配置
 const searchList = [
@@ -244,16 +252,12 @@ const searchList = [
 ];
 
 const defaultProps = {
-  children: 'children',
-  label: 'label',
-}
+  children: "children",
+  label: "label",
+};
 
 const onTableSeach = (data: any) => {
   console.log(data);
-};
-
-const onPerfectTableSelect = (data: any[]) => {
-  state.selectList = data;
 };
 
 const onColumnsBarConfirm = (columns: any[]) => {
@@ -266,13 +270,19 @@ import { defineComponent } from "vue";
 import AccountInfo from "./component/AccountInfo/index.vue";
 import AccountCreate from "./component/AccountCreate/index.vue";
 import AccountModify from "./component/AccountModify/index.vue";
+import AccountResetPassword from "./component/AccountResetPassword/index.vue";
+import AccountHistory from "./component/AccountHistory/index.vue";
+import AccountUseRecord from "./component/AccountUseRecord/index.vue";
 
 export default defineComponent({
   name: "AccountManagement",
   components: {
     AccountInfo,
     AccountCreate,
-    AccountModify
-  }
+    AccountModify,
+    AccountResetPassword,
+    AccountHistory,
+    AccountUseRecord,
+  },
 });
 </script>

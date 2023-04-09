@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div class="bg-BG_COLOR3 text-MAIN_TEXT py-[50px] px-[20px] text-[17px] mb-[10px]">
+    <div
+      class="bg-BG_COLOR3 text-MAIN_TEXT py-[50px] px-[20px] text-[17px] mb-[10px]"
+    >
       标签页操作示例
     </div>
     <div class="mx-[10px] mb-[10px]">
@@ -64,14 +66,14 @@ const {
   closeRight,
   closeOther,
   closeCurrent,
-  reloadCurrent
+  reloadCurrent,
 } = useTabs();
 
-const onOpenPage = (id: number) => { 
+const onOpenPage = (id: number) => {
   router.push({
     name: "Child",
     params: {
-      id
+      id,
     },
   });
 };

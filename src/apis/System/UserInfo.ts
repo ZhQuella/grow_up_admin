@@ -1,6 +1,7 @@
-
-export default [{
-  key: "getUserInfo",
-  url: "/user/info",
-  method: "get"
-}];
+export default [
+  {
+    key: "getUserInfo",
+    url: "/user/info",
+    method: "get",
+  },
+];

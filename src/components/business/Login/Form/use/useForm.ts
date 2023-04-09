@@ -1,4 +1,4 @@
-import to from 'await-to-js';
+import to from "await-to-js";
 import { ref, reactive, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { Storage } from "util/Storage";
@@ -8,7 +8,6 @@ import formLogin from "api/Login";
 import { ElMessage } from "element-plus";
 
 export const useForm = () => {
-
   const i18n = useI18n();
   const { loginSuccess } = useLoginSuccess();
 
@@ -17,26 +16,30 @@ export const useForm = () => {
   const loginFormData = reactive({
     account: "admin",
     password: "123789456",
-    isRemember: false
+    isRemember: false,
   });
   const formLoginMethod = formLogin.create("LoginMethod");
 
   const formRules = computed(() => ({
-    account: [{
-      required: true,
-      message: i18n.t("LOGIN_WORD.ACCESS_MSG"),
-      trigger: ['input','blur']
-    }],
-    password: [{
-      required: true,
-      message: i18n.t("LOGIN_WORD.PASSORD_MSG"),
-      trigger: ['input','blur']
-    }]
+    account: [
+      {
+        required: true,
+        message: i18n.t("LOGIN_WORD.ACCESS_MSG"),
+        trigger: ["input", "blur"],
+      },
+    ],
+    password: [
+      {
+        required: true,
+        message: i18n.t("LOGIN_WORD.PASSORD_MSG"),
+        trigger: ["input", "blur"],
+      },
+    ],
   }));
 
-  const saveFormInfo = () => { 
+  const saveFormInfo = () => {
     const { account, password, isRemember } = loginFormData;
-    if (!isRemember) { 
+    if (!isRemember) {
       Storage.remove(ACCOUNT_INFO);
       return;
     }
@@ -47,8 +50,10 @@ export const useForm = () => {
   const onLogin = async () => {
     loading.value = true;
     try {
-      await loginFormRef.value.validate()
-      const [error, result] = await to(formLoginMethod.accountLogin({ data: loginFormData }));
+      await loginFormRef.value.validate();
+      const [error, result] = await to(
+        formLoginMethod.accountLogin({ data: loginFormData })
+      );
       if (error) {
         const { message } = error;
         ElMessage.error(message);
@@ -58,14 +63,16 @@ export const useForm = () => {
       saveFormInfo();
       loginSuccess(result);
       loading.value = false;
-    } catch { 
+    } catch {
       loading.value = false;
     }
   };
 
-  const resetLoginForm = () => { 
-    const { account, password, isRemember } = JSON.parse(Storage.get(ACCOUNT_INFO) || "{}");
-    if (account && password) { 
+  const resetLoginForm = () => {
+    const { account, password, isRemember } = JSON.parse(
+      Storage.get(ACCOUNT_INFO) || "{}"
+    );
+    if (account && password) {
       loginFormData.account = account;
       loginFormData.password = password;
       loginFormData.isRemember = isRemember;
@@ -81,7 +88,6 @@ export const useForm = () => {
     formRules,
     loginFormData,
     loginFormRef,
-    onLogin
+    onLogin,
   };
-
 };

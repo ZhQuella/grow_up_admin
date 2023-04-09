@@ -93,9 +93,9 @@ interface propsType {
 const props = defineProps<propsType>();
 
 const buttonVisibles = computed(() => {
-  return props.buttonGroup.filter((el) => { 
+  return props.buttonGroup.filter((el) => {
     let isShow = true;
-    if (el.show) { 
+    if (el.show) {
       isShow = el.show(props.data);
     }
     return authorityList.value.includes(el.authority) && isShow;

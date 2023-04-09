@@ -1,17 +1,13 @@
-
-interface prop { 
-  emit: Fn
+interface prop {
+  emit: Fn;
 }
 
-export const useBack = ({ 
-  emit
-}: prop) => { 
-
+export const useBack = ({ emit }: prop) => {
   const onBackClick = () => {
     emit("back", "login");
   };
 
   return {
-    onBackClick
-  }
+    onBackClick,
+  };
 };

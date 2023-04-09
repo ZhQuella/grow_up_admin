@@ -13,9 +13,9 @@ import { useRoute } from "vue-router";
 const value = ref("");
 const route = useRoute();
 
-const id = computed(() => { 
+const id = computed(() => {
   return route.params.id;
-})
+});
 
 const { setTab } = useTabs();
 

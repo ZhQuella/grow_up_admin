@@ -14,7 +14,7 @@
         class="enter-x"
       >
         <el-input
-          v-model="forgetForm.account" 
+          v-model="forgetForm.account"
           :placeholder="$t('LOGIN_WORD.ACCESS_MSG')"
         />
       </el-form-item>
@@ -23,7 +23,7 @@
         class="enter-x"
       >
         <el-input
-          v-model="forgetForm.phoneNumber" 
+          v-model="forgetForm.phoneNumber"
           :placeholder="$t('LOGIN_WORD.MOBILE_PHONE')"
         />
       </el-form-item>
@@ -37,7 +37,7 @@
             class="pr-[10px]"
           >
             <el-input
-              v-model="forgetForm.verificationCode" 
+              v-model="forgetForm.verificationCode"
               :placeholder="$t('LOGIN_WORD.VERIFICATION_CODE')"
             />
           </el-col>
@@ -86,26 +86,17 @@ const i18n = useI18n();
 const emit = defineEmits(["back"]);
 
 const { onBackClick } = useBack({ emit });
-const { 
-  forgetFormRef,
-  forgetForm,
-  rules,
-  onForgetPassword
-} = useForm({
+const { forgetFormRef, forgetForm, rules, onForgetPassword } = useForm({
   t: i18n.t,
   forgetMethod,
-  emit
+  emit,
 });
 
-const { 
-  isCooling,
-  isGetCodeDisabled,
-  codeContext,
-  onGetVerificationCode
-} = useVerifivationCode({
-  forgetForm,
-  t: i18n.t
-});
+const { isCooling, isGetCodeDisabled, codeContext, onGetVerificationCode } =
+  useVerifivationCode({
+    forgetForm,
+    t: i18n.t,
+  });
 </script>
 
 <script lang="ts">

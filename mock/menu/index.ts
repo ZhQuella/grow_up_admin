@@ -1,8 +1,5 @@
 // import { MockMethod } from "vite-plugin-mock";
-const roleSings = [
-  "admin",
-  "minor"
-];
+const roleSings = ["admin", "minor"];
 
 const menuList = [
   {
@@ -23,7 +20,7 @@ const menuList = [
     label: "功能",
     name: "Feat",
     icon: "Function",
-    children:[
+    children: [
       {
         label: "引导",
         name: "boot",
@@ -106,39 +103,43 @@ const menuList = [
     label: "系统管理",
     name: "SystemManagement",
     icon: "ShopOutlined",
-    children: [{
-      label: "账号管理",
-      name: "AccountManagement",
-      icon: "GroupAccount",
-      path: "account-management",
-      component: "System/Account/index.vue"
-    }]
-  }
+    children: [
+      {
+        label: "账号管理",
+        name: "AccountManagement",
+        icon: "GroupAccount",
+        path: "account-management",
+        component: "System/Account/index.vue",
+      },
+    ],
+  },
 ];
 
-export default [{
-  url: "/menu/list",
-  method: "get",
-  response: () => { 
-    return {
-      code: 10000,
-      message: "成功",
-      result: {
-        menuList
-      }
-    }
-  }
-},
-{
-  url: "/user/authority/signs",
-  method: "get",
-  response: () => { 
-    return {
-      code: 10000,
-      message: "成功",
-      result: {
-        roleSings
-      }
-    }
-  }
-}];
+export default [
+  {
+    url: "/menu/list",
+    method: "get",
+    response: () => {
+      return {
+        code: 10000,
+        message: "成功",
+        result: {
+          menuList,
+        },
+      };
+    },
+  },
+  {
+    url: "/user/authority/signs",
+    method: "get",
+    response: () => {
+      return {
+        code: 10000,
+        message: "成功",
+        result: {
+          roleSings,
+        },
+      };
+    },
+  },
+];

@@ -76,8 +76,8 @@ const props = defineProps({
   },
   loading: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 const {
@@ -100,6 +100,7 @@ const {
   onTableCheckboxSelect,
   rowClassName,
   setColumns,
+  clearSelect,
 } = useEvent({
   emit,
   state,
@@ -108,6 +109,7 @@ const {
 
 defineExpose({
   setColumns,
+  clearSelect,
 });
 </script>
 

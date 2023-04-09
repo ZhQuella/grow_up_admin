@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    ref="gDialog" 
+    ref="gDialog"
     :model-value="modelValue"
     :show-close="false"
     append-to-body
@@ -48,41 +48,41 @@
 <script setup lang="ts">
 import { toRefs, computed, ref } from "vue";
 
-const emit = defineEmits(['update:modelValue','open','close']);
+const emit = defineEmits(["update:modelValue", "open", "close"]);
 const isFullscreen = ref(false);
 const gDialog = ref();
 
 const porps = defineProps({
   modelValue: {
     type: Boolean,
-    default: false
+    default: false,
   },
   destroyOnClose: {
     type: Boolean,
-    default: true
+    default: true,
   },
   title: {
     type: String,
-    default: ""
-  }
+    default: "",
+  },
 });
 const { modelValue } = toRefs(porps);
 
-const onDialogOpen = () => { 
+const onDialogOpen = () => {
   emit("update:modelValue", true);
-  emit('open');
+  emit("open");
 };
 
 const onDialogClose = () => {
   emit("update:modelValue", false);
-  emit('close');
+  emit("close");
 };
 
 const fullscreenIconName = computed(() => {
   return isFullscreen.value ? "FullscreenExitOutlined" : "FullscreenOutlined";
 });
 
-const onFullscreenChange = () => { 
+const onFullscreenChange = () => {
   isFullscreen.value = !isFullscreen.value;
 };
 </script>

@@ -17,7 +17,7 @@ export default [
         icon: "ListDropdown",
         path: "el-virtual-list",
         component: "ListPage/ElVirtualList/index.vue",
-      }
+      },
     ],
   },
 ];

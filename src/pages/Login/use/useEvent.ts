@@ -17,17 +17,17 @@ export const useEvent = () => {
     formType.value = type;
   };
 
-  const onForgetPasswordSuccess = (identifying: string) => { 
+  const onForgetPasswordSuccess = (identifying: string) => {
     tagCode.value = identifying;
     formType.value = "changePassword";
   };
 
-  const onChangePasswordBack = () => { 
+  const onChangePasswordBack = () => {
     tagCode.value = "";
     formType.value = "forgetPassword";
   };
 
-  const onChangePasswordSuccess = () => { 
+  const onChangePasswordSuccess = () => {
     tagCode.value = "";
     formType.value = "login";
   };
@@ -39,6 +39,6 @@ export const useEvent = () => {
     onChangeFormType,
     onGoToIndex,
     formType,
-    tagCode
+    tagCode,
   };
 };

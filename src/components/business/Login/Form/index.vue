@@ -14,7 +14,7 @@
         class="enter-x"
       >
         <el-input
-          v-model="loginFormData.account" 
+          v-model="loginFormData.account"
           :placeholder="$t('LOGIN_WORD.ACCESS_MSG')"
           clearable
         />
@@ -24,7 +24,7 @@
         class="enter-x"
       >
         <el-input
-          v-model="loginFormData.password" 
+          v-model="loginFormData.password"
           :placeholder="$t('LOGIN_WORD.PASSORD_MSG')"
           type="password"
           clearable
@@ -65,18 +65,10 @@ import { useForm } from "./use/useForm";
 import { useForget } from "./use/useForget";
 const emit = defineEmits(["forget"]);
 
-const { 
-  loginFormData,
-  loginFormRef,
-  formRules,
-  loading,
-  onLogin
-} = useForm();
+const { loginFormData, loginFormRef, formRules, loading, onLogin } = useForm();
 
-const { 
-  onForgetPass
-} = useForget({
-  emit
+const { onForgetPass } = useForget({
+  emit,
 });
 </script>
 

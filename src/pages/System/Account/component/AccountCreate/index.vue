@@ -18,8 +18,8 @@
           prop="account"
         >
           <el-input
-            v-model="formData.account" 
-            placeholder="请输入账号" 
+            v-model="formData.account"
+            placeholder="请输入账号"
             clearable
           />
         </el-form-item>
@@ -28,8 +28,8 @@
           prop="password"
         >
           <el-input
-            v-model="formData.password" 
-            placeholder="请输入初始密码" 
+            v-model="formData.password"
+            placeholder="请输入初始密码"
             clearable
           />
         </el-form-item>
@@ -46,7 +46,7 @@
             placeholder="请选择状态"
           >
             <el-option
-              v-for="(item) of accountStates"
+              v-for="item of accountStates"
               :key="item.code"
               :label="item.label"
               :value="item.code"
@@ -85,23 +85,16 @@ import PasswordIntensity from "components/public/PasswordIntensity/index.vue";
 import { useDict } from "../use/useDict";
 import { useForm } from "./use/useForm";
 
-const emit = defineEmits(["close","success"]);
+const emit = defineEmits(["close", "success"]);
 
-const {
-  accountStates
-} = useDict();
+const { accountStates } = useDict();
 
-const { 
-  rules,
-  formData,
-  accountForm,
-  buttonLoading,
-  onCreateAccount
-} = useForm({
-  emit
-});
+const { rules, formData, accountForm, buttonLoading, onCreateAccount } =
+  useForm({
+    emit,
+  });
 
-const onClose = () => { 
+const onClose = () => {
   emit("close");
 };
 </script>
