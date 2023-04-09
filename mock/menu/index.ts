@@ -51,6 +51,13 @@ const menuList = [
         icon: "Notification",
         path: "MessagePrompt",
         component: "Feat/MessagePrompt/index.vue",
+      },
+      {
+        label: "数字动画",
+        name: "CountTo",
+        icon: "NumberOutlined",
+        path: "CountTo",
+        component: "Feat/CountTo/index.vue",
       }
     ]
   },
