@@ -91,7 +91,6 @@
       </template>
     </pageLayout>
 
-
     <g-dialog
       v-model="dialogConfig.visible" 
       width="600px"
@@ -105,6 +104,21 @@
         @success="onAccountSuccess"
       />
     </g-dialog>
+
+    <el-drawer
+      v-model="drawerConfig.visible"
+      :title="drawerConfig.title"
+      size="400px"
+      @close="onDrawerClose"
+    >
+      <el-scrollbar>
+        <component
+          :is="drawerConfig.conmponetName"
+          :row="drawerConfig.data"
+          @close="onDrawerClose"
+        />
+      </el-scrollbar>
+    </el-drawer>
   </div>
 </template>
 
@@ -113,6 +127,7 @@ import { ref, computed, reactive } from "vue";
 import { useTable } from "hooks/useTable";
 import ColumnBar from "components/public/ColumnBar/index.vue";
 import { Delete, DataViewAlt } from "@vicons/carbon";
+
 import SearchBar from "components/public/SearchBar/index.vue";
 import PerfectTable from "components/public/PerfectTable/index.vue";
 import ButtonGroup from "components/public/ButtonGroup/index.vue";
@@ -140,11 +155,15 @@ const {
 });
 
 const {
+  tableRef,
   buttonGroup,
   optionGroup,
   dialogConfig,
+  drawerConfig,
+  onDrawerClose,
   onDialogClose,
-  onAccountSuccess
+  onAccountSuccess,
+  onPerfectTableSelect
 } = useTableFunc({
   getAccountList
 });
@@ -155,13 +174,6 @@ const {
   filterResult,
   onDeptInput
 } = useDeptTree();
-
-
-const tableRef = ref();
-const state = reactive({
-  selectList: [],
-});
-
 
 // ~ 查询条件配置
 const searchList = [
@@ -252,9 +264,6 @@ const onTableSeach = (data: any) => {
   console.log(data);
 };
 
-const onPerfectTableSelect = (data: any[]) => {
-  state.selectList = data;
-};
 
 const onColumnsBarConfirm = (columns: any[]) => {
   tableRef.value.setColumns(columns);
@@ -266,13 +275,19 @@ import { defineComponent } from "vue";
 import AccountInfo from "./component/AccountInfo/index.vue";
 import AccountCreate from "./component/AccountCreate/index.vue";
 import AccountModify from "./component/AccountModify/index.vue";
+import AccountResetPassword from "./component/AccountResetPassword/index.vue";
+import AccountHistory from "./component/AccountHistory/index.vue";
+import AccountUseRecord from "./component/AccountUseRecord/index.vue";
 
 export default defineComponent({
   name: "AccountManagement",
   components: {
     AccountInfo,
     AccountCreate,
-    AccountModify
+    AccountModify,
+    AccountResetPassword,
+    AccountHistory,
+    AccountUseRecord
   }
 });
 </script>
