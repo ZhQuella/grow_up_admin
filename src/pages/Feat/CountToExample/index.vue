@@ -115,7 +115,7 @@
 </template>
 
 <script setup lang="ts">
-import { CountTo } from 'vue3-count-to';
+import CountTo from "@/components/public/CountTo/index.vue"
 
 const config = reactive({
     startVal:0,
@@ -141,6 +141,6 @@ const pauseResume = () => {
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
 export default defineComponent({
-    name: "CountTo",
+    name: "CountToExample",
 });
 </script>
