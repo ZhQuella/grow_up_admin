@@ -104,6 +104,21 @@
         @success="onAccountSuccess"
       />
     </g-dialog>
+
+    <el-drawer
+      v-model="drawerConfig.visible"
+      :title="drawerConfig.title"
+      size="400px"
+      @close="onDrawerClose"
+    >
+      <el-scrollbar>
+        <component
+          :is="drawerConfig.conmponetName"
+          :row="drawerConfig.data"
+          @close="onDrawerClose"
+        />
+      </el-scrollbar>
+    </el-drawer>
   </div>
 </template>
 
@@ -144,6 +159,8 @@ const {
   buttonGroup,
   optionGroup,
   dialogConfig,
+  drawerConfig,
+  onDrawerClose,
   onDialogClose,
   onAccountSuccess,
   onPerfectTableSelect
@@ -259,6 +276,8 @@ import AccountInfo from "./component/AccountInfo/index.vue";
 import AccountCreate from "./component/AccountCreate/index.vue";
 import AccountModify from "./component/AccountModify/index.vue";
 import AccountResetPassword from "./component/AccountResetPassword/index.vue";
+import AccountHistory from "./component/AccountHistory/index.vue";
+import AccountUseRecord from "./component/AccountUseRecord/index.vue";
 
 export default defineComponent({
   name: "AccountManagement",
@@ -266,7 +285,9 @@ export default defineComponent({
     AccountInfo,
     AccountCreate,
     AccountModify,
-    AccountResetPassword
+    AccountResetPassword,
+    AccountHistory,
+    AccountUseRecord
   }
 });
 </script>

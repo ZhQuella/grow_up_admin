@@ -23,7 +23,14 @@ export const useTableFunc = ({
     conmponetName: "",
     title: "",
     data: {}
-  })
+  });
+
+  const drawerConfig = reactive({
+    visible: false,
+    conmponetName: "",
+    title: "",
+    data: {}
+  });
 
   // ~ 表格操作配置
   const buttonGroup = computed(() => [
@@ -130,8 +137,9 @@ export const useTableFunc = ({
       title: "解绑",
       type: "warning",
       icon: "HeatMap02",
-      func: (row: any) => {
-        console.log(row, 2);
+      func: ({ row }: any) => {
+        const { id } = row;
+        onAccountUnbind([id]);
       },
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
     },
@@ -139,8 +147,12 @@ export const useTableFunc = ({
       title: "账号历史",
       type: "primary",
       icon: "ChartHistogram",
-      func: (row: any) => {
-        console.log(row, 2);
+      func: ({ row }: any) => {
+        const { account } = row;
+        drawerConfig.visible = true;
+        drawerConfig.title = `${account} 历史`;
+        drawerConfig.conmponetName = "AccountHistory";
+        drawerConfig.data = row;
       },
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
     },
@@ -148,8 +160,12 @@ export const useTableFunc = ({
       title: "使用记录",
       type: "primary",
       icon: "DirectoryDomain",
-      func: (row: any) => {
-        console.log(row, 2);
+      func: ({ row }: any) => {
+        const { account } = row;
+        drawerConfig.visible = true;
+        drawerConfig.title = `${account} 使用记录`;
+        drawerConfig.conmponetName = "AccountUseRecord";
+        drawerConfig.data = row;
       },
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
     }
@@ -183,7 +199,22 @@ export const useTableFunc = ({
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
       disabled: () => {
         return !state.selectList.length;
+      }
+    },
+    {
+      title: "批量解绑",
+      type: "warning",
+      icon: "HeatMap02",
+      func: () => {
+        const ids = state.selectList.map(el => el.id);
+        onAccountUnbind(ids);
+        state.selectList = [];
+        tableRef.value.clearSelect();
       },
+      authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
+      disabled: () => {
+        return !state.selectList.length;
+      }
     },
   ]);
 
@@ -234,14 +265,44 @@ export const useTableFunc = ({
     return Promise.resolve();
   };
 
+  const onAccountUnbind = async (ids: string[]) => { 
+    const [messageError] = await to(ElMessageBox.confirm("账号解绑后绑定人员将无法继续时候，且无法获知登录人员", "温馨提示", {
+      confirmButtonText: '解绑',
+      cancelButtonText: '取消',
+      type: 'warning',
+    }));
+    if (messageError) return;
+    const [error] = await to(systemMentMethod.accountUnbind({ data: { ids } }));
+    if (error) {
+      const { message } = error;
+      ElMessage.error(message);
+      return;
+    }
+    ElMessage({
+      type: "success",
+      message: "解绑成功"
+    });
+    getAccountList();
+  };
+
+  const onDrawerClose = () => { 
+    drawerConfig.visible = true;
+    drawerConfig.title = ``;
+    drawerConfig.conmponetName = "AccountInfo";
+    drawerConfig.data = {};
+  };
+
   return {
     tableRef,
     dialogConfig,
+    drawerConfig,
     buttonGroup,
     optionGroup,
+    onDrawerClose,
     onDialogClose,
     onAccountSuccess,
-    onPerfectTableSelect
+    onPerfectTableSelect,
+    onAccountUnbind
   };
 };
 

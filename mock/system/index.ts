@@ -32,6 +32,53 @@ const deptTree: Tree[] = [{
   }]
 }];
 
+const historyList = [{
+  type: "1",
+  tagInfo: "新增",
+  operator: Mock.mock('@cname()'),
+  date: Mock.mock('@now()'),
+  remark: Mock.mock('@ctitle(0, 30)')
+},
+{
+  type: "2",
+  tagInfo: "启用",
+  operator: Mock.mock('@cname()'),
+  date: Mock.mock('@now()'),
+  remark: Mock.mock('@ctitle(0, 30)')
+},
+{
+  type: "3",
+  tagInfo: "停用",
+  operator: Mock.mock('@cname()'),
+  date: Mock.mock('@now()'),
+  remark: Mock.mock('@ctitle(0, 30)')
+},{
+  type: "4",
+  tagInfo: "绑定",
+  personnel: Mock.mock('@cname()'),
+  operator: Mock.mock('@cname()'),
+  date: Mock.mock('@now()'),
+  remark: Mock.mock('@ctitle(0, 30)')
+},{
+  type: "5",
+  tagInfo: "解绑",
+  operator: Mock.mock('@cname()'),
+  date: Mock.mock('@now()'),
+  remark: Mock.mock('@ctitle(0, 30)')
+},{
+  type: "6",
+  tagInfo: "重置密码",
+  operator: Mock.mock('@cname()'),
+  date: Mock.mock('@now()'),
+  remark: Mock.mock('@ctitle(0, 30)')
+},{
+  type: "7",
+  tagInfo: "修改",
+  operator: Mock.mock('@cname()'),
+  date: Mock.mock('@now()'),
+  remark: Mock.mock('@ctitle(0, 30)')
+}];
+
 export default [{
   url: "/dept/structure/tree",
   method: "get",
@@ -114,6 +161,62 @@ export default [{
     return {
       code: 10000,
       message: "成功"
+    }
+  }
+},
+{
+  url: "/account/reset/password",
+  method: "put",
+  response() { 
+    return {
+      code: 10000,
+      message: "成功"
+    }
+  }
+},
+{
+  url: "/account/unbind",
+  method: "put",
+  response() { 
+    return {
+      code: 10000,
+      message: "成功"
+    }
+  }
+},
+{
+  url: "/account/history/:id",
+  method: "get",
+  response() { 
+    return {
+      code: 10000,
+      message: "成功",
+      result: {
+        historyList
+      }
+    }
+  }
+},
+{
+  url: "/account/use/record/:id",
+  method: "get",
+  response() { 
+    const recordList:any[] = [];
+    for (let i = 0; i < 30; i++) { 
+      recordList.push({
+        'loginType|1': ["账号登录", "扫码登录", "手机号登录"],
+        'personnel': Mock.mock('@cname()'),
+        'loginResult|1': ["登录成功", "登录失败"],
+        'errorMessage': Mock.mock('@ctitle(3, 5)'),
+        'date': Mock.mock("@now()")
+      });
+    }
+    return {
+      code: 10000,
+      message: "成功",
+      result: {
+        recordList
+      }
     }
   }
 }] as MockMethod[];
