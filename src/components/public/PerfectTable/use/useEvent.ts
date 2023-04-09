@@ -49,7 +49,7 @@ export const useEvent = ({ onlyKey, emit, state }: argProp) => {
     state.columns = columns;
   };
 
-  const clearSelect = () => { 
+  const clearSelect = () => {
     selectData.value = [];
     emit("select", []);
   };
@@ -62,6 +62,6 @@ export const useEvent = ({ onlyKey, emit, state }: argProp) => {
     onTableCheckboxSelect,
     rowClassName,
     setColumns,
-    clearSelect
+    clearSelect,
   };
 };

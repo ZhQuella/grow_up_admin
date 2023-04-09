@@ -12,7 +12,7 @@ export const useTabs = () => {
     closeRightTags,
     closeOthersTags,
     closeTag,
-    redload
+    redload,
   } = useTabDropdown();
 
   const setTab = (name: string) => {
@@ -25,7 +25,7 @@ export const useTabs = () => {
     }
   };
 
-  const closeAll = () => { 
+  const closeAll = () => {
     closeAllTags();
   };
 
@@ -33,7 +33,7 @@ export const useTabs = () => {
     closeLeftTags(unref(currentRoute));
   };
 
-  const closeRight = () => { 
+  const closeRight = () => {
     closeRightTags(unref(currentRoute));
   };
 
@@ -41,13 +41,13 @@ export const useTabs = () => {
     closeOthersTags(unref(currentRoute));
   };
 
-  const closeCurrent = () => { 
+  const closeCurrent = () => {
     closeTag(unref(currentRoute));
   };
 
-  const reloadCurrent = () => { 
+  const reloadCurrent = () => {
     redload(unref(currentRoute));
-  }
+  };
 
   return {
     setTab,
@@ -56,6 +56,6 @@ export const useTabs = () => {
     closeRight,
     closeOther,
     closeCurrent,
-    reloadCurrent
+    reloadCurrent,
   };
 };

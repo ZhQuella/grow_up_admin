@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div class="bg-BG_COLOR3 text-MAIN_TEXT py-[50px] px-[20px] text-[17px] mb-[10px]">
+    <div
+      class="bg-BG_COLOR3 text-MAIN_TEXT py-[50px] px-[20px] text-[17px] mb-[10px]"
+    >
       消息示例
     </div>
     <el-card class="mx-[10px] mb-[10px]">
@@ -100,79 +102,80 @@
 </template>
 
 <script setup lang="ts">
-import type { Action } from 'element-plus';
-import { ElMessage, ElMessageBox, ElNotification } from 'element-plus';
+import type { Action } from "element-plus";
+import { ElMessage, ElMessageBox, ElNotification } from "element-plus";
 
-const onShowMessage = (type: any) => { 
+const onShowMessage = (type: any) => {
   console.log(type);
   ElMessage({
-    message: 'Congrats, this is a success message.',
-    type
-  })
+    message: "Congrats, this is a success message.",
+    type,
+  });
 };
 
-const onOpenInfoCOmfirm = () => { 
-  ElMessageBox.alert('This is a message', 'Title', {
-    confirmButtonText: 'OK',
+const onOpenInfoCOmfirm = () => {
+  ElMessageBox.alert("This is a message", "Title", {
+    confirmButtonText: "OK",
     callback: (action: Action) => {
       ElMessage({
-        type: 'info',
+        type: "info",
         message: `action: ${action}`,
-      })
+      });
     },
-  })
+  });
 };
-const onOpenConfirm = () => { 
+const onOpenConfirm = () => {
   ElMessageBox.confirm(
-    'proxy will permanently delete the file. Continue?',
-    'Warning',
+    "proxy will permanently delete the file. Continue?",
+    "Warning",
     {
-      confirmButtonText: 'OK',
-      cancelButtonText: 'Cancel',
-      type: 'warning',
+      confirmButtonText: "OK",
+      cancelButtonText: "Cancel",
+      type: "warning",
     }
   )
     .then(() => {
       ElMessage({
-        type: 'success',
-        message: 'Delete completed',
-      })
+        type: "success",
+        message: "Delete completed",
+      });
     })
     .catch(() => {
       ElMessage({
-        type: 'info',
-        message: 'Delete canceled',
-      })
-    })
+        type: "info",
+        message: "Delete canceled",
+      });
+    });
 };
 
-const onOpenSubmit = () => { 
-  ElMessageBox.prompt('Please input your e-mail', 'Tip', {
-    confirmButtonText: 'OK',
-    cancelButtonText: 'Cancel',
-    inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-    inputErrorMessage: 'Invalid Email',
+const onOpenSubmit = () => {
+  ElMessageBox.prompt("Please input your e-mail", "Tip", {
+    confirmButtonText: "OK",
+    cancelButtonText: "Cancel",
+    inputPattern:
+      /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+    inputErrorMessage: "Invalid Email",
   })
     .then(({ value }) => {
       ElMessage({
-        type: 'success',
+        type: "success",
         message: `Your email is:${value}`,
-      })
+      });
     })
     .catch(() => {
       ElMessage({
-        type: 'info',
-        message: 'Input canceled',
-      })
-    })
+        type: "info",
+        message: "Input canceled",
+      });
+    });
 };
 
-const onOpenNotification = (type: any) => { 
+const onOpenNotification = (type: any) => {
   ElNotification({
     title: type,
     message: `This is an ${type} message`,
-    type
-  })
+    type,
+  });
 };
 </script>
 

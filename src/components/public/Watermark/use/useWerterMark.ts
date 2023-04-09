@@ -3,7 +3,6 @@ import { useThemeStore } from "store/modules/theme";
 import { useSystemStore } from "store/modules/systemInfo";
 
 export const useWerterMark = () => {
-
   const systemStore = useSystemStore();
   const werterMarkRef = ref();
   const themeStore = useThemeStore();

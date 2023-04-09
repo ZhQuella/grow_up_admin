@@ -11,7 +11,7 @@
     >
       <el-form-item class="enter-x">
         <el-input
-          v-model="forgetForm.phoneNumber" 
+          v-model="forgetForm.phoneNumber"
           :placeholder="$t('LOGIN_WORD.MOBILE_PHONE')"
         />
       </el-form-item>
@@ -22,7 +22,7 @@
             class="pr-[10px]"
           >
             <el-input
-              v-model="forgetForm.verificationCode" 
+              v-model="forgetForm.verificationCode"
               :placeholder="$t('LOGIN_WORD.VERIFICATION_CODE')"
             />
           </el-col>
@@ -68,32 +68,23 @@ const emit = defineEmits(["back"]);
 
 const forgetForm = reactive({
   phoneNumber: "13800138000",
-  verificationCode: ""
+  verificationCode: "",
 });
 
 const onBackClick = () => {
   emit("back", "login");
 };
 
-const {
-  loginLoading,
-  rules,
-  formRef,
-  onPhoneLogin
-} = useLogin({
+const { loginLoading, rules, formRef, onPhoneLogin } = useLogin({
   formData: forgetForm,
-  t: i18n.t
+  t: i18n.t,
 });
 
-const { 
-  isCooling,
-  isGetCodeDisabled,
-  codeContext,
-  onGetVerificationCode
-} = useVerifivationCode({
-  forgetForm,
-  t: i18n.t
-});
+const { isCooling, isGetCodeDisabled, codeContext, onGetVerificationCode } =
+  useVerifivationCode({
+    forgetForm,
+    t: i18n.t,
+  });
 </script>
 
 <script lang="ts">

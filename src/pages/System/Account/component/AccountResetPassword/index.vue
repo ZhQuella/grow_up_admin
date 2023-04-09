@@ -1,7 +1,7 @@
 <template>
   <div class="p-[20px]">
     <el-form
-      ref="formRef" 
+      ref="formRef"
       :model="formData"
       label-width="100px"
       :rules="rules"
@@ -22,8 +22,8 @@
     </el-form>
     <div class="flex justify-end pt-[10]">
       <el-button
-        :loading="buttonLoading" 
-        type="primary" 
+        :loading="buttonLoading"
+        type="primary"
         @click="onReset"
       >
         提交
@@ -41,21 +41,11 @@ import PasswordIntensity from "components/public/PasswordIntensity/index.vue";
 
 import { useForm } from "./use/useForm";
 
-const emit = defineEmits(["close","success"]);
+const emit = defineEmits(["close", "success"]);
 
-const {
-  formData,
-  rules,
-  formRef,
-  buttonLoading,
-  onReset,
-  onClean
-} = useForm({
-  emit
+const { formData, rules, formRef, buttonLoading, onReset, onClean } = useForm({
+  emit,
 });
-
-
-
 </script>
 
 <script lang="ts">

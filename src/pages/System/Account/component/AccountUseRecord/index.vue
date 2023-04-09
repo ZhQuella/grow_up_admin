@@ -2,9 +2,9 @@
   <div class="p-[20px]">
     <el-timeline>
       <el-timeline-item
-        v-for="(item, index) in usedRecordList" 
-        :key="index" 
-        :timestamp="item.date" 
+        v-for="(item, index) in usedRecordList"
+        :key="index"
+        :timestamp="item.date"
         placement="top"
       >
         <RecordItem :config="item" />
@@ -22,17 +22,14 @@ const emit = defineEmits(["close"]);
 const porps = defineProps({
   row: {
     type: Object,
-    default: () => ({})
-  }
+    default: () => ({}),
+  },
 });
 
-const {
-  usedRecordList
-} = useInit({
+const { usedRecordList } = useInit({
   id: porps.row.id,
-  emit
+  emit,
 });
-
 </script>
 
 <script lang="ts">

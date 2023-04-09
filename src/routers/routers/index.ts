@@ -52,8 +52,7 @@ export default [
       if (token) {
         //  ! 这里最好可以判断一下权限，跳转到没有权限页面
         return "/home/404";
-      }
-      else { 
+      } else {
         return "/404";
       }
     },

@@ -23,27 +23,32 @@ export const useOptions = () => {
   const roleSings = computed(() => systemInfoStore.getRoleSings);
   const { currentRoute, push } = useRouter();
 
-  const urlReg = /^(((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?/;
+  const urlReg =
+    /^(((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?/;
 
   const resetMenuOption = (menuList: MenuType[]): any[] => {
-    return [...menuList].map((el): any => {
-      const { label, name, icon, children, path } = el;
-      const isDomain = urlReg.test(path);
-      const toPaht = isDomain ? path : `/home/${path}`;
-      const authoritys = (authoritySigns as any)[name] || [];
-      const isAuthority = hasCommonElement(roleSings.value, authoritys);
-      if (!isAuthority) return null;
-      const menu = {
-        label,
-        name: path ? toPaht : name,
-        icon,
-      };
-      if (children) {
-        const childs = (resetMenuOption(children) as never[]).filter(el => el);
-        Reflect.set(menu, "children", childs);
-      }
-      return menu;
-    }).filter(el => el);
+    return [...menuList]
+      .map((el): any => {
+        const { label, name, icon, children, path } = el;
+        const isDomain = urlReg.test(path);
+        const toPaht = isDomain ? path : `/home/${path}`;
+        const authoritys = (authoritySigns as any)[name] || [];
+        const isAuthority = hasCommonElement(roleSings.value, authoritys);
+        if (!isAuthority) return null;
+        const menu = {
+          label,
+          name: path ? toPaht : name,
+          icon,
+        };
+        if (children) {
+          const childs = (resetMenuOption(children) as never[]).filter(
+            (el) => el
+          );
+          Reflect.set(menu, "children", childs);
+        }
+        return menu;
+      })
+      .filter((el) => el);
   };
 
   const menuList = computed(() => {

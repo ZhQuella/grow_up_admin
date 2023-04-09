@@ -21,9 +21,11 @@
               <div class="flex h-full relative">
                 <router-link
                   class="block pl-[10px] pr-[10px] leading-[30px]"
-                  :class="[{
-                    'pr-[25px]':!item?.meta?.default
-                  }]"
+                  :class="[
+                    {
+                      'pr-[25px]': !item?.meta?.default,
+                    },
+                  ]"
                   :to="{ ...item }"
                 >
                   {{ item?.meta?.label }}

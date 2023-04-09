@@ -73,7 +73,7 @@ export default class Request extends CatchResult {
         ? internalParams
         : that.margeData(outParams, internalParams);
       const url = that.withParam(beforeUrl, beforeParams);
-      if (isCatch && isCache.call(that, key)) { 
+      if (isCatch && isCache.call(that, key)) {
         return Promise.resolve(getCache.call(that, key));
       }
       return axiosInstance({
@@ -81,8 +81,8 @@ export default class Request extends CatchResult {
         method,
         ...reuqestConfig,
         ...args,
-      }).then((result) => { 
-        if (isCatch) { 
+      }).then((result) => {
+        if (isCatch) {
           setCatch.call(that, key, result);
         }
         return result;

@@ -58,17 +58,17 @@
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits(['close'])
+const emit = defineEmits(["close"]);
 
 const prop = defineProps({
   row: {
     type: Object,
-    default: () => ({})
-  }
+    default: () => ({}),
+  },
 });
 
-const onClose = () => { 
-  emit("close")
+const onClose = () => {
+  emit("close");
 };
 </script>
 

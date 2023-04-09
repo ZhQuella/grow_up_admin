@@ -4,22 +4,22 @@ export const useSystemStore = defineStore({
   id: "systemInfo",
   state: () => ({
     userInfo: {},
-    roleSings: []
+    roleSings: [],
   }),
   getters: {
-    getUserInfo():any { 
+    getUserInfo(): any {
       return this.userInfo;
     },
-    getRoleSings():string[] { 
+    getRoleSings(): string[] {
       return this.roleSings;
-    }
+    },
   },
   actions: {
-    setUserInfo(userInfo: any) { 
+    setUserInfo(userInfo: any) {
       this.userInfo = userInfo;
     },
-    setRoleSings(roleSings: string[]) { 
+    setRoleSings(roleSings: string[]) {
       this.roleSings = roleSings;
-    }
+    },
   },
 });

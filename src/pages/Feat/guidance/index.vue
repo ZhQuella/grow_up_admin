@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div class="bg-BG_COLOR3 text-MAIN_TEXT py-[50px] px-[20px] text-[17px] mb-[10px]">
+    <div
+      class="bg-BG_COLOR3 text-MAIN_TEXT py-[50px] px-[20px] text-[17px] mb-[10px]"
+    >
       引导示例
     </div>
     <div class="mx-[10px] mb-[10px]">
@@ -26,53 +28,53 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, onMounted, getCurrentInstance } from 'vue';
+import { reactive, onMounted, getCurrentInstance } from "vue";
 
-const internalInstance = getCurrentInstance()
+const internalInstance = getCurrentInstance();
 
 const reactData = reactive({
   myOptions: {
     useKeyboardNavigation: false,
     labels: {
-      buttonSkip: '跳过',
-      buttonPrevious: '上一步',
-      buttonNext: '下一步',
-      buttonStop: '完成'
-    }
+      buttonSkip: "跳过",
+      buttonPrevious: "上一步",
+      buttonNext: "下一步",
+      buttonStop: "完成",
+    },
   },
   steps: [
     {
-      target: '#intro_title',
+      target: "#intro_title",
       header: {
-        title: '这是第一步引导'
+        title: "这是第一步引导",
       },
-      content: '这里进行的是第一步!'
+      content: "这里进行的是第一步!",
     },
     {
-      target: '#intro_mine',
+      target: "#intro_mine",
       header: {
-        title: '这是第二步引导'
+        title: "这是第二步引导",
       },
-      content: '不可以点击其他地方!',
+      content: "不可以点击其他地方!",
       params: {
-        highlight: true
-      }
+        highlight: true,
+      },
     },
     {
-      target: '#intro_save',
+      target: "#intro_save",
       header: {
-        title: '这是第三步引导'
+        title: "这是第三步引导",
       },
-      content: '可以点击其他地方哦!'
-    }
-  ]
-  })
-  
+      content: "可以点击其他地方哦!",
+    },
+  ],
+});
+
 const onStartGuide = () => {
-  const $tours = internalInstance.appContext.config.globalProperties.$tours
+  const $tours = internalInstance.appContext.config.globalProperties.$tours;
   if ($tours) {
-    if ($tours['myTour']) {
-      $tours['myTour'].start()
+    if ($tours["myTour"]) {
+      $tours["myTour"].start();
     }
   }
 };

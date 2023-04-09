@@ -1,7 +1,5 @@
 <template>
-  <router-view
-    class="grow shrink-0 h-full overflow-hidden"
-  >
+  <router-view class="grow shrink-0 h-full overflow-hidden">
     <template #default="{ Component, route }">
       <keep-alive :include="cachedViews">
         <component

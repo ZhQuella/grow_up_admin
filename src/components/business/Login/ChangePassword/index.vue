@@ -59,21 +59,14 @@ const emit = defineEmits(["success", "back"]);
 const props = defineProps({
   tagCode: {
     type: String,
-    default: ""
-  }
+    default: "",
+  },
 });
 
-const { 
-  rules,
-  formRef,
-  formData,
-  onModifyPassword,
-  onBack
-} = useForm({
+const { rules, formRef, formData, onModifyPassword, onBack } = useForm({
   tagCode: props.tagCode,
-  emit
+  emit,
 });
-
 </script>
 
 <script lang="ts">

@@ -3,26 +3,28 @@
     <pageLayout>
       <template #aside>
         <div class="h-full">
-          <div class="p-[5px] border-b-[1px] border-[var(--el-border-color)] border-solid">
+          <div
+            class="p-[5px] border-b-[1px] border-[var(--el-border-color)] border-solid"
+          >
             <el-input
-              v-model="deptSearchValue" 
+              v-model="deptSearchValue"
               placeholder="请输入部门名称"
               clearable
               @input="onDeptInput"
             />
           </div>
-          <el-scrollbar style="height: calc(100% - 43px);">
+          <el-scrollbar style="height: calc(100% - 43px)">
             <div v-show="!deptSearchValue">
               <el-tree
                 :data="deptTreeList"
-                :props="defaultProps" 
+                :props="defaultProps"
                 default-expand-all
                 @node-click="onTreeNodeClick"
               />
             </div>
             <div v-show="deptSearchValue">
               <div
-                v-for="(item) of filterResult"
+                v-for="item of filterResult"
                 :key="item.id"
                 class="p-[5px] text-[13px] text-[var(--el-text-color-regular)] cursor-pointer"
                 @click="onTreeNodeClick(item)"
@@ -92,7 +94,7 @@
     </pageLayout>
 
     <g-dialog
-      v-model="dialogConfig.visible" 
+      v-model="dialogConfig.visible"
       width="600px"
       :title="dialogConfig.title"
       @close="onDialogClose"
@@ -139,19 +141,17 @@ import { useTableFunc } from "./use/useTableFunc";
 
 const { pageSizes, page, size, layout, total } = useTable();
 
-const {
-  accountStates
-} = useDict();
+const { accountStates } = useDict();
 
-const { 
+const {
   tableList,
   tableColumns,
   getAccountList,
   onTreeNodeClick,
-  tableLoading
+  tableLoading,
 } = useTableOption({
   tableTotal: total,
-  accountStates
+  accountStates,
 });
 
 const {
@@ -163,17 +163,13 @@ const {
   onDrawerClose,
   onDialogClose,
   onAccountSuccess,
-  onPerfectTableSelect
+  onPerfectTableSelect,
 } = useTableFunc({
-  getAccountList
+  getAccountList,
 });
 
-const { 
-  deptTreeList,
-  deptSearchValue,
-  filterResult,
-  onDeptInput
-} = useDeptTree();
+const { deptTreeList, deptSearchValue, filterResult, onDeptInput } =
+  useDeptTree();
 
 // ~ 查询条件配置
 const searchList = [
@@ -256,14 +252,13 @@ const searchList = [
 ];
 
 const defaultProps = {
-  children: 'children',
-  label: 'label',
-}
+  children: "children",
+  label: "label",
+};
 
 const onTableSeach = (data: any) => {
   console.log(data);
 };
-
 
 const onColumnsBarConfirm = (columns: any[]) => {
   tableRef.value.setColumns(columns);
@@ -287,7 +282,7 @@ export default defineComponent({
     AccountModify,
     AccountResetPassword,
     AccountHistory,
-    AccountUseRecord
-  }
+    AccountUseRecord,
+  },
 });
 </script>
