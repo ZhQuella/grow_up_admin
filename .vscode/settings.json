@@ -8,7 +8,6 @@
   },
   "vetur.format.options.tabSize": 2,
   "workbench.tree.indent": 16,
-  "leetcode.endpoint": "leetcode-cn",
   "diffEditor.ignoreTrimWhitespace": false,
   "files.associations": {
     "*.cjson": "jsonc",
@@ -22,7 +21,6 @@
   "minapp-vscode.disableAutoConfig": true,
   "workbench.startupEditor": "newUntitledFile",
   "html.format.wrapAttributesIndentSize": 1,
-  "todo-tree.tree.showScanModeButton": false,
   "better-comments.tags": [
     {
       "tag": "!",
@@ -56,31 +54,12 @@
     }
   ],
   "explorer.confirmDragAndDrop": false,
-  "editor.fontLigatures": null,
-  "powermode.enabled": true,
-  "powermode.enableShake": false,
-  "powermode.presets": "particles",
-  "settingsSync.ignoredSettings": [],
   "gitlens.advanced.messages": {
     "suppressGitMissingWarning": true
   },
   "terminal.integrated.tabs.enabled": true,
   "vsicons.dontShowNewVersionMessage": true,
-  "security.workspace.trust.untrustedFiles": "open",
   "editor.formatOnType": true,
-  "fileheader.customMade": {
-      "Description": "",
-      "Author": "张金龙",
-      "Date": "Do not edit",
-      "LastEditors": "",
-      "LastEditTime": "Do not edit"
-  },
-  "fileheader.cursorMode": {
-      "author":"张金龙",
-      "description":"",
-      "param": "",
-      "return": ""
-  },
   "fileheader.configObj": {
     "autoAdd": false,
     "prohibitAutoAdd": [
@@ -91,11 +70,7 @@
     "wideNum": 13
   },
   "editor.unicodeHighlight.ambiguousCharacters": false,
-  "python.languageServer": "Jedi",
   "gohome.hour": 19,
-  "leetcode.workspaceFolder": "/Users/aaron/.leetcode",
-  "leetcode.hint.configWebviewMarkdown": false,
-  "leetcode.hint.commandShortcut": false,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": false
   },
