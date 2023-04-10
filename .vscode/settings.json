@@ -75,6 +75,7 @@
     "source.fixAll.eslint": false
   },
   "editor.tabSize": 2,
+  "editor.detectIndentation":false,
   "window.zoomLevel": -1,
   "auto-close-tag.activationOnLanguage": [
     "xml",
