@@ -1,5 +1,11 @@
 $sode-deg: 5deg;
 
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{
+  -webkit-appearance:none;
+}
+input[type="number"]{
+  appearance: textfield; 
+}
 *:focus {
   outline: none;
 }

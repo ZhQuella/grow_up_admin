@@ -51,12 +51,12 @@ const menuList = [
       },
       {
         label: "数字动画",
-        name: "CountTo",
+        name: "CountToExample",
         icon: "NumberOutlined",
-        path: "CountTo",
-        component: "Feat/CountTo/index.vue",
-      },
-    ],
+        path: "CountToExample",
+        component: "Feat/CountToExample/index.vue",
+      }
+    ]
   },
   {
     label: "自定义组件名称",
