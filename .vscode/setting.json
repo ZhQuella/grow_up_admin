@@ -1,0 +1,125 @@
+{
+  "workbench.iconTheme": "vscode-icons",
+  "git.enableSmartCommit": true,
+  "editor.fontSize": 16,
+  "explorer.confirmDelete": false,
+  "[javascript]": {
+    "editor.defaultFormatter": "HookyQR.beautify"
+  },
+  "vetur.format.options.tabSize": 2,
+  "workbench.tree.indent": 16,
+  "leetcode.endpoint": "leetcode-cn",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "files.associations": {
+    "*.cjson": "jsonc",
+    "*.wxss": "css",
+    "*.wxs": "javascript"
+  },
+  "emmet.includeLanguages": {
+    "wxml": "html",
+    "javascript": "javascriptreact"
+  },
+  "minapp-vscode.disableAutoConfig": true,
+  "workbench.startupEditor": "newUntitledFile",
+  "html.format.wrapAttributesIndentSize": 1,
+  "todo-tree.tree.showScanModeButton": false,
+  "better-comments.tags": [
+    {
+      "tag": "!",
+      "color": "#FF2D00",
+      "strikethrough": false,
+      "backgroundColor": "transparent"
+    },
+    {
+      "tag": "?",
+      "color": "#3498DB",
+      "strikethrough": false,
+      "backgroundColor": "transparent"
+    },
+    {
+      "tag": "//",
+      "color": "#474747",
+      "strikethrough": true,
+      "backgroundColor": "transparent"
+    },
+    {
+      "tag": "todo",
+      "color": "#FF8C00",
+      "strikethrough": false,
+      "backgroundColor": "transparent"
+    },
+    {
+      "tag": "*",
+      "color": "#98C379",
+      "strikethrough": false,
+      "backgroundColor": "transparent"
+    }
+  ],
+  "explorer.confirmDragAndDrop": false,
+  "editor.fontLigatures": null,
+  "powermode.enabled": true,
+  "powermode.enableShake": false,
+  "powermode.presets": "particles",
+  "settingsSync.ignoredSettings": [],
+  "gitlens.advanced.messages": {
+    "suppressGitMissingWarning": true
+  },
+  "terminal.integrated.tabs.enabled": true,
+  "vsicons.dontShowNewVersionMessage": true,
+  "security.workspace.trust.untrustedFiles": "open",
+  "editor.formatOnType": true,
+  "fileheader.customMade": {
+      "Description": "",
+      "Author": "张金龙",
+      "Date": "Do not edit",
+      "LastEditors": "",
+      "LastEditTime": "Do not edit"
+  },
+  "fileheader.cursorMode": {
+      "author":"张金龙",
+      "description":"",
+      "param": "",
+      "return": ""
+  },
+  "fileheader.configObj": {
+    "autoAdd": false,
+    "prohibitAutoAdd": [
+      "json",
+      "md"
+    ],
+    "wideSame": false,
+    "wideNum": 13
+  },
+  "editor.unicodeHighlight.ambiguousCharacters": false,
+  "python.languageServer": "Jedi",
+  "gohome.hour": 19,
+  "leetcode.workspaceFolder": "/Users/aaron/.leetcode",
+  "leetcode.hint.configWebviewMarkdown": false,
+  "leetcode.hint.commandShortcut": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": false
+  },
+  "editor.tabSize": 2,
+  "window.zoomLevel": -1,
+  "auto-close-tag.activationOnLanguage": [
+    "xml",
+    "php",
+    "blade",
+    "ejs",
+    "jinja",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "plaintext",
+    "markdown",
+    "vue",
+    "liquid",
+    "erb",
+    "lang-cfml",
+    "cfml",
+    "HTML (EEx)",
+    "HTML (Eex)",
+    "plist"
+  ]
+}
