@@ -4,7 +4,7 @@
       数字动画
     </div>
     <div class="mx-[20px]">
-      <div class="text-7xl text-pink-500 tracking-normal text-center">
+      <div class="my-[20px] text-7xl text-pink-500 tracking-normal text-center">
         <count-to
           ref="counter"
           :start-val="config.startVal"
@@ -14,119 +14,111 @@
           :separator="config.separator"
           :prefix="config.prefix"
           :suffix="config.suffix"
+          :autoplay="config.autoplay"
+          :delay="config.delay"
         />
       </div>
-      <el-row align="middle">
-        <el-col :span="6">
-          <label
-            for="startVal"
-            class="flex items-center flex-nowrap m-[10px]"
-          >
-            startVal:
-            <el-input
-              v-model.number="config.startVal"
-              name="startVal"
-              type="number"
-            />
-          </label>
-        </el-col>
-        <el-col :span="6">
-          <label
-            for="endVal"
-            class="flex items-center flex-nowrap m-[10px]"
-          >
-            endVal:
-            <el-input
-              v-model.number="config.endVal"
-              name="endVal"
-              type="number"
-            />
-          </label>
-        </el-col>
-        <el-col :span="6">
-          <label
-            for="duration"
-            class="flex items-center flex-nowrap m-[10px]"
-          >
-            duration:
-            <el-input
-              v-model.number="config.duration"
-              name="duration"
-              type="number"
-            />
-          </label>
-        </el-col>
-        <el-col :span="6">
-          <label
-            for="decimals"
-            class="flex items-center flex-nowrap m-[10px]"
-          >
-            decimals:
-            <el-input
-              v-model.number="config.decimals"
-              name="decimals"
-              type="number"
-            />
-          </label>
-        </el-col>
-      </el-row>
-      <el-row align="middle">
-        <el-col :span="6">
-          <label
-            for="separator"
-            class="flex items-center flex-nowrap m-[10px]"
-          >
-            separator:
-            <el-input
-              v-model="config.separator"
-              name="separator"
-              type="text"
-            />
-          </label>
-        </el-col>
-        <el-col :span="6">
-          <label
-            for="prefix"
-            class="flex items-center flex-nowrap m-[10px]"
-          >
-            prefix:
-            <el-input
-              v-model="config.prefix"
-              name="prefix"
-              type="text"
-            />
-          </label>
-        </el-col>
-        <el-col :span="6">
-          <label
-            for="suffix"
-            class="flex items-center flex-nowrap m-[10px]"
-          >
-            suffix:
-            <el-input
-              v-model.number="config.suffix"
-              name="suffix"
-              type="text"
-            />
-          </label>
-        </el-col>
-        <el-col :span="6">
-          <div class="flex-algin-center">
-            <el-button
-              type="primary"
-              @click="start"
-            >
-              start
-            </el-button>
-            <el-button
-              type="danger"
-              @click="pauseResume"
-            >
-              pause/Resume
-            </el-button>
-          </div>
-        </el-col>
-      </el-row>
+      <el-form
+        label-position="right"
+        label-width="80px"
+        :model="config"
+      >
+        <el-row align="middle">
+          <el-col :span="6">
+            <el-form-item label="开始值:">
+              <el-input
+                v-model.number="config.startVal"
+                name="startVal"
+                type="number"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="结束值:">
+              <el-input
+                v-model.number="config.endVal"
+                name="endVal"
+                type="number"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="持续时间:">
+              <el-input
+                v-model.number="config.duration"
+                name="duration"
+                type="number"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="小数:">
+              <el-input
+                v-model.number="config.decimals"
+                name="decimals"
+                type="number"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row align="middle">
+          <el-col :span="6">
+            <el-form-item label="分隔符:">
+              <el-input
+                v-model="config.separator"
+                name="separator"
+                type="text"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="前缀:">
+              <el-input
+                v-model="config.prefix"
+                name="prefix"
+                type="text"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="后缀:">
+              <el-input
+                v-model.number="config.suffix"
+                name="suffix"
+                type="text"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="延时执行:">
+              <el-input
+                v-model.number="config.delay"
+                type="number"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item>
+              <div class="flex-algin-center">
+                <el-button
+                  type="primary"
+                  @click="start"
+                >
+                  start
+                </el-button>
+                <el-button
+                  type="danger"
+                  @click="pauseResume"
+                >
+                  pause/Resume
+                </el-button>
+              </div>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
     </div>
   </div>
 </template>
@@ -136,13 +128,15 @@ import { reactive, ref } from 'vue';
 import CountTo from "components/public/CountTo/index.vue"
 
 const config = reactive({
-  startVal: 0,
+  startVal: 20,
   endVal: 2023,
-  duration: 4000,
-  decimals: 0,
+  duration: 350,
+  decimals: 2,
   separator: ',',
   prefix: '¥',
-  suffix: 'rmb'
+  suffix: 'RMB',
+  autoplay: true,
+  delay: 0,
 })
 
 const counter = ref(null);

@@ -3,7 +3,7 @@
 </template>
   
 <script setup lang="ts">
-import { onUnmounted, reactive, ref, defineExpose, computed } from 'vue';
+import { onUnmounted, reactive, ref, defineExpose, computed, watch } from 'vue';
 
 const props = defineProps({
   startVal: {
@@ -48,6 +48,19 @@ const props = defineProps({
     required: false,
     default: ''
   },
+  autoplay: {
+    type: Boolean,
+    required: false,
+    default: true,
+  },
+  delay: {
+    type: Number,
+    required: false,
+    default: 0,
+    validator(value: number) {
+      return value >= 0;
+    }
+  }
 })
 
 // 格式化数据，返回想要展示的数据格式
@@ -80,6 +93,8 @@ const state = reactive<{
   remaining: number,
   rAF: number | null,
   printVal: number,
+  autoplay: boolean,
+  delay: number,
 }>({
   previousTimestamp: null,
   start: props.startVal,
@@ -89,7 +104,12 @@ const state = reactive<{
   remaining: 0,
   rAF: null,
   printVal: props.startVal,
+  autoplay: props.autoplay,// 是否自动播放
+  delay: props.delay,
 })
+
+// 初始化定时器
+let timer: any = null
 
 // 初始化展示在页面上的值
 const displayValue = computed(() => formatNumber(state.printVal));
@@ -120,19 +140,37 @@ const step = (timestamp: number) => {
 
   if (progress < state.duration) {
     state.rAF = window.requestAnimationFrame(step)
+  } else if (timer) {
+    clearTimeout(timer);
+    timer = null;
   }
 }
 
 // 开始动画
 const start = () => {
   state.start = props.startVal;
+  state.end = props.endVal;
   state.previousTimestamp = null;
   state.paused = false;
   state.duration = props.duration;
+  state.delay = props.delay;
 
+  // 延时执行
+  delayStart();
+}
+
+// 使用setTimeOut延时执行
+const delayStart = () => {
+  // 如果有,先清除
   if (state.rAF) window.cancelAnimationFrame(state.rAF);
 
-  state.rAF = window.requestAnimationFrame(step);
+  // 如果有定时器,先清除
+  if (timer) clearTimeout(timer);
+
+  // 如果没有定时器,生成一个定时器
+  timer = setTimeout(() => {
+    state.rAF = window.requestAnimationFrame(step);
+  }, state.delay);
 }
 
 // 暂停
@@ -164,6 +202,11 @@ defineExpose({
   start,
   pauseResume,
 })
+
+// 如果是autoplay为true时,自动执行
+watch(() => state.autoplay, (autoplay) => {
+  autoplay && start();
+}, { immediate: true });
 
 // 组件销毁之后取消动画
 onUnmounted(() => {
