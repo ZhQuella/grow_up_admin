@@ -1,0 +1,16 @@
+*.sh
+*.md
+*.ico
+*.css
+*.md
+*.scss
+*.woff
+*.ttf
+*/*/shims.d.ts 
+*/*/index.html
+*/*/yarn-error.log
+packages/azui/rollup-plugin-vue/index.d.ts
+node_modules
+lib
+coverage
+dist

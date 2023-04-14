@@ -1,0 +1,17 @@
+{
+  "name": "grow_utils",
+  "version": "1.0.0",
+  "author": "ZhQuella (Email:827265905@qq.com)",
+  "type": "module",
+  "license": "ISC",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup -c --environment NODE_ENV:production",
+    "dev": "rollup -c -w --environment NODE_ENV:development"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "rollup-plugin-copy": "^3.4.0"
+  }
+}
