@@ -1,1 +1,9 @@
-export default class Detaile {}
+export default class Detaile {
+
+  getConfig() { 
+    return {
+      a:1
+    }
+  }
+
+}
