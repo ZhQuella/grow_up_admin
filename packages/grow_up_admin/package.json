@@ -1,6 +1,7 @@
 {
   "name": "grow_up_admin",
   "version": "1.0.0",
+  "private": true,
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,5 +12,35 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {}
+  "devDependencies": {
+    "mockjs": "^1.1.0",
+    "rollup-plugin-visualizer": "^5.9.0",
+    "typescript": "^5.0.4",
+    "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-imagemin": "^0.6.1",
+    "vite-plugin-mock": "^2.9.8"
+  },
+  "dependencies": {
+    "@vicons/antd": "^0.12.0",
+    "@vicons/carbon": "^0.12.0",
+    "@vueuse/core": "^10.0.2",
+    "animate.css": "^4.1.1",
+    "await-to-js": "^3.0.0",
+    "axios": "^1.3.5",
+    "echarts": "^5.4.2",
+    "exceljs": "^4.3.0",
+    "grow_utils": "workspace:*",
+    "hover.css": "^2.3.2",
+    "nanoid": "^4.0.2",
+    "nprogress": "^0.2.0",
+    "pinia": "^2.0.34",
+    "reset-css": "^5.0.1",
+    "resize-observer-polyfill": "^1.5.1",
+    "sortablejs": "^1.15.0",
+    "splitpanes": "^3.1.5",
+    "v3-tour": "^3.1.2",
+    "vue-i18n": "^9.2.2",
+    "vue-router": "4",
+    "vue3-grid-layout": "^1.0.0"
+  }
 }

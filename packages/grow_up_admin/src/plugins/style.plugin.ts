@@ -1,0 +1,10 @@
+import "reset-css";
+import "style/tailwindcss/index.scss";
+import "animate.css";
+import "hover.css";
+import "nprogress/nprogress.css";
+import "style/public/resetUI.scss";
+import "element-plus/dist/index.css";
+import "element-plus/theme-chalk/dark/css-vars.css";
+import "v3-tour/dist/vue-tour.css";
+import "splitpanes/dist/splitpanes.css";
