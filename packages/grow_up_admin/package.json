@@ -21,6 +21,12 @@
     "vite-plugin-mock": "^2.9.8"
   },
   "dependencies": {
+    "grow_admin_icons": "workspace:*",
+    "grow_components": "workspace:*",
+    "grow_designer": "workspace:*",
+    "grow_flow": "workspace:*",
+    "grow_rule_engine": "workspace:*",
+    "grow_utils": "workspace:*",
     "@vicons/antd": "^0.12.0",
     "@vicons/carbon": "^0.12.0",
     "@vueuse/core": "^10.0.2",
@@ -29,7 +35,6 @@
     "axios": "^1.3.5",
     "echarts": "^5.4.2",
     "exceljs": "^4.3.0",
-    "grow_utils": "workspace:*",
     "hover.css": "^2.3.2",
     "nanoid": "^4.0.2",
     "nprogress": "^0.2.0",

@@ -1,5 +1,4 @@
 {
-  "extends": "tsconfig/base.json",
   "compilerOptions": {
     "skipLibCheck": true,
     "target": "es2022",

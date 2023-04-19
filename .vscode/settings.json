@@ -6,7 +6,6 @@
   "[javascript]": {
     "editor.defaultFormatter": "HookyQR.beautify"
   },
-  "vetur.format.options.tabSize": 2,
   "workbench.tree.indent": 16,
   "diffEditor.ignoreTrimWhitespace": false,
   "files.associations": {

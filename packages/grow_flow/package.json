@@ -6,6 +6,7 @@
   "author": "ZhQuella (Email:827265905@qq.com)",
   "type": "module",
   "license": "ISC",
+  "main": "./src/index.ts",
   "scripts": {
     "build": "rollup -c --environment NODE_ENV:production",
     "dev": "rollup -c -w --environment NODE_ENV:development"

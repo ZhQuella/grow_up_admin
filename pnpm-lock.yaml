@@ -255,6 +255,21 @@ importers:
       exceljs:
         specifier: ^4.3.0
         version: 4.3.0
+      grow_admin_icons:
+        specifier: workspace:^
+        version: link:../grow_admin_icons
+      grow_components:
+        specifier: workspace:^
+        version: link:../grow_components
+      grow_designer:
+        specifier: workspace:*
+        version: link:../grow_designer
+      grow_flow:
+        specifier: workspace:*
+        version: link:../grow_flow
+      grow_rule_engine:
+        specifier: workspace:^
+        version: link:../grow_rule_engine
       grow_utils:
         specifier: workspace:*
         version: link:../grow_utils
