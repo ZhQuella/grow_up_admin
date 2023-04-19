@@ -1,7 +1,13 @@
 import Detaile from "./utils/detaile";
 
-export const a = "1";
-export const b = "2";
+const a = "1";
+const b = "2";
+
+export { 
+  a,
+  b,
+  Detaile
+};
 
 export default {
   a,

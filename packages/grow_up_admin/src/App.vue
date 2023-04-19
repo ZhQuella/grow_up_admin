@@ -10,7 +10,6 @@ import { useThemeStore } from "store/modules/theme";
 import { useLanguageStore } from "store/modules/language";
 import { ElConfigProvider } from "element-plus";
 import { useDark } from "@vueuse/core";
-import Utils from "grow_utils";
 import elzhCn from "element-plus/dist/locale/zh-cn.mjs";
 import elEn from "element-plus/dist/locale/en.mjs";
 
@@ -22,7 +21,7 @@ const languageStore = useLanguageStore();
 const theme = computed(() => {
   return themeStore.theme;
 });
-console.log(new Utils.Detaile());
+
 const localBag = computed(() => {
   const localMap = {
     en: elEn,
