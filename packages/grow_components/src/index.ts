@@ -24,6 +24,9 @@ const GrowConponent = {
   GButton
 };
 
-export { version };
+export {
+  version,
+  GButton
+};
 
 export default GrowConponent;
