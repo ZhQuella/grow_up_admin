@@ -21,11 +21,6 @@
       "types/*": ["types/*"]
     }
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "types/**/*.d.ts",
-    "types/**/*.ts"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "types/**/*.d.ts", "types/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }

@@ -9,15 +9,15 @@ export default [
         name: "PageDesigner",
         icon: "Departure",
         path: "page-designer",
-        component: "AutomatedTool/PageDesigner/index.vue",
+        component: "AutomatedTool/PageDesigner/index.vue"
       },
       {
         label: "流程引擎",
         name: "ProcessEngine",
         icon: "FlowModeler",
         path: "process-engine",
-        component: "AutomatedTool/ProcessEngine/index.vue",
-      },
-    ],
-  },
+        component: "AutomatedTool/ProcessEngine/index.vue"
+      }
+    ]
+  }
 ];

@@ -38,8 +38,8 @@ import { toRefs } from "vue";
 const porp = defineProps({
   config: {
     type: Object,
-    default: () => ({}),
-  },
+    default: () => ({})
+  }
 });
 
 const { config } = toRefs(porp);
@@ -48,6 +48,6 @@ const { config } = toRefs(porp);
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "RecordItem",
+  name: "RecordItem"
 });
 </script>

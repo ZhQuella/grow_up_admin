@@ -11,6 +11,6 @@ const { werterMarkRef } = useWerterMark();
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "RenderView",
+  name: "RenderView"
 });
 </script>

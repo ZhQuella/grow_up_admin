@@ -9,6 +9,6 @@ export const useCatch = () => {
   });
 
   return {
-    cachedViews,
+    cachedViews
   };
 };

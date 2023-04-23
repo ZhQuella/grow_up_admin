@@ -1,8 +1,5 @@
 <template>
-  <div
-    ref="chartRef"
-    :style="{ width, height }"
-  />
+  <div ref="chartRef" :style="{ width, height }" />
 </template>
 
 <script lang="ts" setup>
@@ -16,12 +13,12 @@ const props = defineProps({
   loading: Boolean,
   width: {
     type: String as PropType<string>,
-    default: "100%",
+    default: "100%"
   },
   height: {
     type: String as PropType<string>,
-    default: "300px",
-  },
+    default: "300px"
+  }
 });
 
 watch(
@@ -38,12 +35,12 @@ watch(
           lineStyle: {
             color: "rgba(0,0,0,0.2)",
             width: 1,
-            type: "solid",
-          },
-        },
+            type: "solid"
+          }
+        }
       },
       legend: {
-        data: ["DQ", "TY", "SS", "QG", "SY", "DD"],
+        data: ["DQ", "TY", "SS", "QG", "SY", "DD"]
       },
       singleAxis: {
         top: 50,
@@ -54,16 +51,16 @@ watch(
         axisPointer: {
           animation: true,
           label: {
-            show: true,
-          },
+            show: true
+          }
         },
         splitLine: {
           show: true,
           lineStyle: {
             type: "dashed",
-            opacity: 0.2,
-          },
-        },
+            opacity: 0.2
+          }
+        }
       },
       series: [
         {
@@ -71,8 +68,8 @@ watch(
           emphasis: {
             itemStyle: {
               shadowBlur: 20,
-              shadowColor: "rgba(0, 0, 0, 0.8)",
-            },
+              shadowColor: "rgba(0, 0, 0, 0.8)"
+            }
           },
           data: [
             ["2015/11/08", 10, "DQ"],
@@ -200,10 +197,10 @@ watch(
             ["2015/11/25", 22, "DD"],
             ["2015/11/26", 16, "DD"],
             ["2015/11/27", 22, "DD"],
-            ["2015/11/28", 10, "DD"],
-          ],
-        },
-      ],
+            ["2015/11/28", 10, "DD"]
+          ]
+        }
+      ]
     });
   },
   { immediate: true }
@@ -213,6 +210,6 @@ watch(
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "ThemeRiver",
+  name: "ThemeRiver"
 });
 </script>

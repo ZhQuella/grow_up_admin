@@ -1,10 +1,5 @@
 import axios from "axios";
-import type {
-  AxiosRequestConfig,
-  AxiosResponse,
-  AxiosError,
-  RawAxiosRequestConfig,
-} from "axios";
+import type { AxiosRequestConfig, AxiosResponse, AxiosError, RawAxiosRequestConfig } from "axios";
 import type { Intercept } from "types/Request";
 import type { Fun } from "types/index";
 import CatchResult from "./CatchResult";
@@ -19,18 +14,11 @@ export default class Request extends CatchResult {
 
   interceptors(intercept: Intercept): void {
     const { axiosInstance } = this;
-    const requestIntercept =
-      intercept.requestIntercept || ((config: AxiosRequestConfig) => config);
-    const requestError =
-      intercept.requestError || ((error: AxiosError): AxiosError => error);
-    const responseIntercept =
-      intercept.responseIntercept || ((config: AxiosResponse) => config);
-    const responseError =
-      intercept.responseError || ((error: AxiosError): AxiosError => error);
-    axiosInstance.interceptors.request.use(
-      requestIntercept as any,
-      requestError
-    );
+    const requestIntercept = intercept.requestIntercept || ((config: AxiosRequestConfig) => config);
+    const requestError = intercept.requestError || ((error: AxiosError): AxiosError => error);
+    const responseIntercept = intercept.responseIntercept || ((config: AxiosResponse) => config);
+    const responseError = intercept.responseError || ((error: AxiosError): AxiosError => error);
+    axiosInstance.interceptors.request.use(requestIntercept as any, requestError);
     axiosInstance.interceptors.response.use(responseIntercept, responseError);
   }
 
@@ -69,9 +57,7 @@ export default class Request extends CatchResult {
         reuqestConfig.params = internalQuery;
       }
       const args = that.margeData(outArg, internalArg);
-      const beforeParams = isIn
-        ? internalParams
-        : that.margeData(outParams, internalParams);
+      const beforeParams = isIn ? internalParams : that.margeData(outParams, internalParams);
       const url = that.withParam(beforeUrl, beforeParams);
       if (isCatch && isCache.call(that, key)) {
         return Promise.resolve(getCache.call(that, key));
@@ -80,7 +66,7 @@ export default class Request extends CatchResult {
         url,
         method,
         ...reuqestConfig,
-        ...args,
+        ...args
       }).then((result) => {
         if (isCatch) {
           setCatch.call(that, key, result);

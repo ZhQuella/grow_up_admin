@@ -6,13 +6,11 @@
       :class="[
         {
           'w-[210px]': !collapsed && isPutAway,
-          'w-[65px]': collapsed && !isPutAway,
-        },
+          'w-[65px]': collapsed && !isPutAway
+        }
       ]"
     >
-      <div
-        class="h-[50px] border-b-[1px] border-BORDER_COLOR2 border-solid box-border"
-      >
+      <div class="h-[50px] border-b-[1px] border-BORDER_COLOR2 border-solid box-border">
         <slot name="logo" />
       </div>
       <div class="flex-1 relative transition-all">
@@ -24,8 +22,8 @@
           :class="[
             {
               max: isPutAway,
-              min: !isPutAway,
-            },
+              min: !isPutAway
+            }
           ]"
           @click="onChangeSide"
         />
@@ -37,17 +35,11 @@
         class="h-[50px] flex justify-between px-[10px] bg-BG_COLOR border-b-[1px] border-BORDER_COLOR2 border-solid box-border"
       >
         <div class="-enter-y flex shrink-0">
-          <slot
-            v-if="layoutType === 'roof'"
-            name="logo"
-          />
+          <slot v-if="layoutType === 'roof'" name="logo" />
           <slot name="bread" />
         </div>
         <div class="-enter-y w-full grow-0 overflow-hidden relative px-[10px]">
-          <slot
-            v-if="layoutType === 'roof'"
-            name="menu"
-          />
+          <slot v-if="layoutType === 'roof'" name="menu" />
         </div>
         <div class="-enter-y">
           <slot name="option" />
@@ -61,12 +53,10 @@
       <div
         class="flex-1 relative overflow-hidden bg-BG_COLOR enter-y"
         :style="{
-          height: `calc(100% - ${!isFullScreen ? 90 : 40}px)`,
+          height: `calc(100% - ${!isFullScreen ? 90 : 40}px)`
         }"
       >
-        <WerterMark
-          class="absolute top-0 left-0 right-0 bottom-0 z-[3000] pointer-events-none"
-        />
+        <WerterMark class="absolute top-0 left-0 right-0 bottom-0 z-[3000] pointer-events-none" />
         <slot name="view" />
       </div>
     </div>
@@ -110,6 +100,6 @@ const layoutType = computed(() => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "LayoutComponent",
+  name: "LayoutComponent"
 });
 </script>

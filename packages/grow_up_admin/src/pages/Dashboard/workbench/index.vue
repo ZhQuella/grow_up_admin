@@ -3,10 +3,7 @@
     <SayHello />
     <div class="p-[10px]">
       <el-row :gutter="10">
-        <el-col
-          :span="16"
-          class="enter-y"
-        >
+        <el-col :span="16" class="enter-y">
           <el-card shadow="never">
             <template #header>
               <span>项目</span>
@@ -14,10 +11,7 @@
             <Project />
           </el-card>
 
-          <el-card
-            shadow="never"
-            class="mt-[10px]"
-          >
+          <el-card shadow="never" class="mt-[10px]">
             <template #header>
               <span>动态</span>
             </template>
@@ -41,12 +35,9 @@
             </el-scrollbar>
           </el-card>
 
-          <el-card
-            shadow="never"
-            class="mt-[10px]"
-          >
+          <el-card shadow="never" class="mt-[10px]">
             <div>
-              <img :src="getImageUrl('login_illustration.png')">
+              <img :src="getImageUrl('login_illustration.png')" />
             </div>
           </el-card>
         </el-col>
@@ -66,6 +57,6 @@ import { getImageUrl } from "util/System";
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "WorkbenchPage",
+  name: "WorkbenchPage"
 });
 </script>

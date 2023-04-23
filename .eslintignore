@@ -6,6 +6,7 @@
 *.scss
 *.woff
 *.ttf
+*/*/index.d.ts 
 */*/shims.d.ts 
 */*/index.html
 */*/yarn-error.log

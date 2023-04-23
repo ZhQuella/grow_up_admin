@@ -46,13 +46,13 @@ import {
   WechatFilled,
   WeiboOutlined,
   GoogleOutlined,
-  GithubFilled,
+  GithubFilled
 } from "@vicons/antd";
 </script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "ThirdParty",
+  name: "ThirdParty"
 });
 </script>

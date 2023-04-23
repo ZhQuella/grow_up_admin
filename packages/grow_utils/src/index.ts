@@ -4,7 +4,7 @@ import Storage, { createStorage, storageExample } from "./packages/Storage";
 import { addEventResize, removeResizeListener } from "./packages/ElementResize";
 import Request from "./packages/AxiosFactory";
 
-export { 
+export {
   DownExcel,
   EventEmiter,
   createStorage,

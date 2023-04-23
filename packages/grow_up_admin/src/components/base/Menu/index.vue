@@ -8,38 +8,26 @@
     :class="{
       'h-[49px]': isRoof,
       'bg-transparent': isRoof,
-      'border-none': isRoof,
+      'border-none': isRoof
     }"
     :unique-opened="true"
     @select="onSelectMenu"
   >
-    <template
-      v-for="item of menuList"
-      :key="item.name"
-    >
-      <ElMenuItem
-        v-if="!item.children"
-        :index="item.name"
-      >
+    <template v-for="item of menuList" :key="item.name">
+      <ElMenuItem v-if="!item.children" :index="item.name">
         <el-icon>
           <component :is="item.icon" />
         </el-icon>
         <span>{{ item.label }}</span>
       </ElMenuItem>
-      <el-sub-menu
-        v-else
-        :index="item.label"
-      >
+      <el-sub-menu v-else :index="item.label">
         <template #title>
           <el-icon>
             <component :is="item.icon" />
           </el-icon>
           <span>{{ item.label }}</span>
         </template>
-        <MenuItem
-          :menu-list="item.children"
-          collapsed
-        />
+        <MenuItem :menu-list="item.children" collapsed />
       </el-sub-menu>
     </template>
   </el-menu>
@@ -58,6 +46,6 @@ const { collapsed, menuMode, isRoof } = useResizeEle();
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "MenuComponent",
+  name: "MenuComponent"
 });
 </script>

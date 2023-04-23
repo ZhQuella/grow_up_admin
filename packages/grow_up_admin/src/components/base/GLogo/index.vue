@@ -1,10 +1,7 @@
 <template>
   <div class="flex justify-between">
     <div class="h-[40px] min-w-[40px]">
-      <img
-        class="block h-[100%]"
-        :src="getImageUrl(systemConfig?.logUrl)"
-      >
+      <img class="block h-[100%]" :src="getImageUrl(systemConfig?.logUrl)" />
     </div>
     <h1
       v-if="showTitle"
@@ -22,18 +19,18 @@ import systemConfig from "@/systemConfig";
 defineProps({
   isOpacity: {
     type: Boolean,
-    default: false,
+    default: false
   },
   showTitle: {
     type: Boolean,
-    default: true,
-  },
+    default: true
+  }
 });
 </script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "GLogo",
+  name: "GLogo"
 });
 </script>

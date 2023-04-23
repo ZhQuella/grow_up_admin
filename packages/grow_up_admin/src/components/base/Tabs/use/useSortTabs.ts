@@ -17,7 +17,7 @@ export const useSortTabs = () => {
         const currRow = _visitedViews.splice(oldIndex - 1, 1)[0];
         _visitedViews.splice(newIndex - 1, 0, currRow);
         tabsViewStore.saveVisitedViews(_visitedViews);
-      },
+      }
     });
   };
 

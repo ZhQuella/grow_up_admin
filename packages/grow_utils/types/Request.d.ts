@@ -1,9 +1,4 @@
-import type {
-  AxiosRequestConfig,
-  AxiosResponse,
-  AxiosError,
-  Method,
-} from "axios";
+import type { AxiosRequestConfig, AxiosResponse, AxiosError, Method } from "axios";
 
 export interface Intercept {
   requestIntercept?: (config: AxiosRequestConfig) => AxiosRequestConfig;

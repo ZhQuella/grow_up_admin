@@ -1,8 +1,5 @@
 <template>
-  <div
-    ref="chartRef"
-    :style="{ width, height }"
-  />
+  <div ref="chartRef" :style="{ width, height }" />
 </template>
 
 <script lang="ts" setup>
@@ -16,12 +13,12 @@ const props = defineProps({
   loading: Boolean,
   width: {
     type: String as PropType<string>,
-    default: "100%",
+    default: "100%"
   },
   height: {
     type: String as PropType<string>,
-    default: "300px",
-  },
+    default: "300px"
+  }
 });
 
 watch(
@@ -32,13 +29,13 @@ watch(
     }
     setOptions({
       tooltip: {
-        trigger: "item",
+        trigger: "item"
       },
       legend: {
         top: "5%",
         left: "center",
         // doesn't perfectly work with our tricks, disable it
-        selectedMode: false,
+        selectedMode: false
       },
       series: [
         {
@@ -53,7 +50,7 @@ watch(
             formatter(param) {
               // correct the percentage
               return param.name + " (" + param.percent * 2 + "%)";
-            },
+            }
           },
           data: [
             { value: 1048, name: "Search Engine" },
@@ -68,16 +65,16 @@ watch(
                 // stop the chart from rendering this piece
                 color: "none",
                 decal: {
-                  symbol: "none",
-                },
+                  symbol: "none"
+                }
               },
               label: {
-                show: false,
-              },
-            },
-          ],
-        },
-      ],
+                show: false
+              }
+            }
+          ]
+        }
+      ]
     });
   },
   { immediate: true }
@@ -87,6 +84,6 @@ watch(
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "HalfDoughnut",
+  name: "HalfDoughnut"
 });
 </script>

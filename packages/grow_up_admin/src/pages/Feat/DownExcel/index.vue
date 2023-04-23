@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div
-      class="bg-BG_COLOR3 text-MAIN_TEXT py-[50px] px-[20px] text-[17px] mb-[10px]"
-    >
+    <div class="bg-BG_COLOR3 text-MAIN_TEXT py-[50px] px-[20px] text-[17px] mb-[10px]">
       导出Excel
     </div>
     <div class="mx-[10px]">
@@ -13,9 +11,7 @@
           </div>
         </template>
         <div>
-          <el-button @click="onLocalDownExcel">
-            Down Excel
-          </el-button>
+          <el-button @click="onLocalDownExcel"> Down Excel </el-button>
         </div>
       </el-card>
     </div>
@@ -39,19 +35,19 @@ const onLocalDownExcel = () => {
             {
               field: "c2",
               title: "c222",
-              bgColor: "A9BCD1",
+              bgColor: "A9BCD1"
             },
             {
               field: "c3",
               title: "c333",
-              bgColor: "A9BCD1",
+              bgColor: "A9BCD1"
             },
             {
               field: "c4",
               title: "c444",
-              bgColor: "A9BCD1",
-            },
-          ],
+              bgColor: "A9BCD1"
+            }
+          ]
         },
         {
           field: "d1",
@@ -61,20 +57,20 @@ const onLocalDownExcel = () => {
             {
               field: "d2",
               title: "d222",
-              bgColor: "E9AF80",
+              bgColor: "E9AF80"
             },
             {
               field: "d3",
               title: "d333",
-              bgColor: "E9AF80",
+              bgColor: "E9AF80"
             },
             {
               field: "d4",
               title: "d444",
-              bgColor: "E9AF80",
-            },
-          ],
-        },
+              bgColor: "E9AF80"
+            }
+          ]
+        }
       ],
       data: [
         {
@@ -83,10 +79,10 @@ const onLocalDownExcel = () => {
           c4: 3,
           d2: 1,
           d3: 2,
-          d4: 3,
-        },
-      ],
-    },
+          d4: 3
+        }
+      ]
+    }
   ]);
   downLoadExcel.down("测试");
 };
@@ -95,6 +91,6 @@ const onLocalDownExcel = () => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "DownExcel",
+  name: "DownExcel"
 });
 </script>

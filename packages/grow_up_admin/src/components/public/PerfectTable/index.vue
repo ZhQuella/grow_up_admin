@@ -7,43 +7,26 @@
     @cell-mouse-enter="onRowMouseEnter"
     @cell-mouse-leave="onRowMouseLeave"
   >
-    <el-table-column
-      v-if="isSerial"
-      width="60px"
-      v-bind="serialColumn"
-    >
+    <el-table-column v-if="isSerial" width="60px" v-bind="serialColumn">
       <template #header>
         {{ $t("TABLE.SERIAL") }}
       </template>
       <template #default="scope">
         <div class="h-[28px] leading-[28px]">
           <span
-            v-if="
-              mouseKey !== scope.row[onlyKey] &&
-                !selectOnlyKeys.includes(scope.row[onlyKey])
-            "
-          >{{ scope.$index + 1 }}</span>
-          <el-checkbox
-            v-else
-            size="small"
-            @change="onTableCheckboxSelect($event, scope)"
-          />
+            v-if="mouseKey !== scope.row[onlyKey] && !selectOnlyKeys.includes(scope.row[onlyKey])"
+            >{{ scope.$index + 1 }}</span
+          >
+          <el-checkbox v-else size="small" @change="onTableCheckboxSelect($event, scope)" />
         </div>
       </template>
     </el-table-column>
 
     <Column :children="allColumns" />
 
-    <el-table-column
-      v-if="isOperate"
-      :label="operateColumn.title"
-      v-bind="operateColumn"
-    >
+    <el-table-column v-if="isOperate" :label="operateColumn.title" v-bind="operateColumn">
       <template #default="scope">
-        <slot
-          name="btnOption"
-          v-bind="scope"
-        />
+        <slot name="btnOption" v-bind="scope" />
       </template>
     </el-table-column>
   </el-table>
@@ -60,37 +43,30 @@ const emit = defineEmits(["select"]);
 const props = defineProps({
   height: {
     type: Number,
-    default: 0,
+    default: 0
   },
   columns: {
     type: Array,
-    default: () => [],
+    default: () => []
   },
   onlyKey: {
     type: String,
-    default: "id",
+    default: "id"
   },
   data: {
     type: Array,
-    default: () => [],
+    default: () => []
   },
   loading: {
     type: Boolean,
-    default: false,
-  },
+    default: false
+  }
 });
 
-const {
-  isSerial,
-  isOperate,
-  allColumns,
-  serialColumn,
-  operateColumn,
-  currentColumns,
-  state,
-} = useInitColumns({
-  props,
-});
+const { isSerial, isOperate, allColumns, serialColumn, operateColumn, currentColumns, state } =
+  useInitColumns({
+    props
+  });
 
 const {
   mouseKey,
@@ -100,22 +76,22 @@ const {
   onTableCheckboxSelect,
   rowClassName,
   setColumns,
-  clearSelect,
+  clearSelect
 } = useEvent({
   emit,
   state,
-  onlyKey: props.onlyKey,
+  onlyKey: props.onlyKey
 });
 
 defineExpose({
   setColumns,
-  clearSelect,
+  clearSelect
 });
 </script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "ElBaseList",
+  name: "ElBaseList"
 });
 </script>

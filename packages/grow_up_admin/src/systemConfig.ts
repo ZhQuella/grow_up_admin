@@ -3,5 +3,5 @@ export default {
   logUrl: "logo.png",
   companyName: "*******科技有限公司",
   recordNum: "*ICP备*****号",
-  recordYear: "2023",
+  recordYear: "2023"
 };

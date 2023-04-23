@@ -4,10 +4,7 @@
       {{ config.tagInfo }}
       <span v-if="config.personnel">{{ config.personnel }}</span>
     </el-tag>
-    <g-detail-item
-      label="操作人"
-      class="text-[var(--el-text-color-secondary)] text-[12px]"
-    >
+    <g-detail-item label="操作人" class="text-[var(--el-text-color-secondary)] text-[12px]">
       <p class="text-[var(--el-text-color-secondary)]">
         {{ config.operator }}
       </p>
@@ -27,8 +24,8 @@ import { toRefs, computed } from "vue";
 const porp = defineProps({
   config: {
     type: Object,
-    default: () => ({}),
-  },
+    default: () => ({})
+  }
 });
 
 const { config } = toRefs(porp);
@@ -62,6 +59,6 @@ const tagType = computed(() => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "HistoryItem",
+  name: "HistoryItem"
 });
 </script>

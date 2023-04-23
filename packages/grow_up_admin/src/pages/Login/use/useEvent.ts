@@ -9,7 +9,7 @@ export const useEvent = () => {
 
   const onGoToIndex = () => {
     router.push({
-      name: "Index",
+      name: "Index"
     });
   };
 
@@ -39,6 +39,6 @@ export const useEvent = () => {
     onChangeFormType,
     onGoToIndex,
     formType,
-    tagCode,
+    tagCode
   };
 };

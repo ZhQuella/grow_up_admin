@@ -15,7 +15,7 @@ export const useForm = ({ tagCode, emit }: prop) => {
   const loading = ref(false);
   const formData = reactive({
     password: "",
-    newPassword: "",
+    newPassword: ""
   });
   const formLoginMethod = formLogin.create("ForgetPassword");
 
@@ -36,17 +36,17 @@ export const useForm = ({ tagCode, emit }: prop) => {
       { min: 6, max: 20, message: t("LOGIN_WORD.PASSWORD_LEN_CONTEXT") },
       {
         validator: validatePasswordSame,
-        message: t("LOGIN_WORD.OLD_NEW_DIFFERENT"),
-      },
+        message: t("LOGIN_WORD.OLD_NEW_DIFFERENT")
+      }
     ],
     newPassword: [
       { required: true, message: t("LOGIN_WORD.ENTER_PASSWORD_CONTEXT") },
       { min: 6, max: 20, message: t("LOGIN_WORD.PASSWORD_LEN_CONTEXT") },
       {
         validator: validatePasswordSame,
-        message: t("LOGIN_WORD.OLD_NEW_DIFFERENT"),
-      },
-    ],
+        message: t("LOGIN_WORD.OLD_NEW_DIFFERENT")
+      }
+    ]
   }));
 
   const onModifyPassword = async () => {
@@ -57,8 +57,8 @@ export const useForm = ({ tagCode, emit }: prop) => {
         formLoginMethod.modifyPassword({
           data: {
             ...formData,
-            tagCode,
-          },
+            tagCode
+          }
         })
       );
       if (error) {
@@ -83,6 +83,6 @@ export const useForm = ({ tagCode, emit }: prop) => {
     rules,
     formData,
     onModifyPassword,
-    onBack,
+    onBack
   };
 };

@@ -19,7 +19,7 @@ export const useEvent = ({
   getAllChild,
   emit,
   visible,
-  nodeKey,
+  nodeKey
 }: propsArg) => {
   const onTreeChange = () => {
     catchCheckedKeys();
@@ -31,9 +31,7 @@ export const useEvent = ({
       treeRef.value.setCheckedKeys(keys);
       state.catchTreeCheckedKeys = keys;
     } else {
-      const keys = allChild
-        .filter((el) => el.disabled)
-        .map((el) => el[nodeKey]);
+      const keys = allChild.filter((el) => el.disabled).map((el) => el[nodeKey]);
       treeRef.value.setCheckedKeys(keys);
       state.catchTreeCheckedKeys = keys;
     }
@@ -72,6 +70,6 @@ export const useEvent = ({
     onTreeChange,
     onAllSelectChange,
     onSetColumns,
-    onResetColumns,
+    onResetColumns
   };
 };

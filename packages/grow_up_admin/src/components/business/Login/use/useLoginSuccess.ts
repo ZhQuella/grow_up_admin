@@ -10,11 +10,11 @@ export const useLoginSuccess = () => {
     const { token } = result as { token: string };
     storage.set(AUTHORITY_TOKEN, token);
     router.push({
-      name: "Home",
+      name: "Home"
     });
   };
 
   return {
-    loginSuccess,
+    loginSuccess
   };
 };

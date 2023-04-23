@@ -10,15 +10,15 @@ export default [
         icon: "RadioCombat",
         path: "element-plus-doc",
         component: "EmbedPage/index.vue",
-        iframeSrc: "https://element-plus.gitee.io/zh-CN/",
+        iframeSrc: "https://element-plus.gitee.io/zh-CN/"
       },
       {
         label: "组件文档(外链)",
         name: "ComponentDocument",
         icon: "ComposerEdit",
         path: "https://element-plus.gitee.io/zh-CN/",
-        component: "EmbedPage/index.vue",
-      },
-    ],
-  },
+        component: "EmbedPage/index.vue"
+      }
+    ]
+  }
 ];

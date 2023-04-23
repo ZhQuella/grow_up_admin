@@ -10,9 +10,9 @@ export default [
         message: "成功",
         result: {
           userName: "李二狗",
-          dept: "人力资源二部",
-        },
+          dept: "人力资源二部"
+        }
       };
-    },
-  },
+    }
+  }
 ];

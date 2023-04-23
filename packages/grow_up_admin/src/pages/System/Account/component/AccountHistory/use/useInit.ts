@@ -31,6 +31,6 @@ export const useInit = ({ id, emit }: prop) => {
   });
 
   return {
-    historyList,
+    historyList
   };
 };

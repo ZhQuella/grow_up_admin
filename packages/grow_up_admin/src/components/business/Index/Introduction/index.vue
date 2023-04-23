@@ -55,7 +55,7 @@ const router = useRouter();
 
 const onFastStart = () => {
   router.push({
-    name: "Login",
+    name: "Login"
   });
 };
 </script>
@@ -63,6 +63,6 @@ const onFastStart = () => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "IntroductionComponent",
+  name: "IntroductionComponent"
 });
 </script>

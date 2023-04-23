@@ -16,7 +16,7 @@ export const useForm = ({ emit }: Prop) => {
     account: "",
     password: "g123987",
     personnel: "",
-    state: "1",
+    state: "1"
   });
 
   //  /^[A-Za-z0-9]{6,12}$/
@@ -25,20 +25,20 @@ export const useForm = ({ emit }: Prop) => {
       {
         required: true,
         message: "请输入账号",
-        trigger: "change",
+        trigger: "change"
       },
       {
         pattern: /^[A-Za-z0-9]{6,12}$/,
-        message: "密码位数应该在6-12之间",
-      },
+        message: "密码位数应该在6-12之间"
+      }
     ],
     password: [
       {
         required: true,
         message: "请输入初始密码",
-        trigger: "change",
-      },
-    ],
+        trigger: "change"
+      }
+    ]
   }));
 
   const onCreateAccount = async () => {
@@ -64,6 +64,6 @@ export const useForm = ({ emit }: Prop) => {
     formData,
     accountForm,
     buttonLoading,
-    onCreateAccount,
+    onCreateAccount
   };
 };

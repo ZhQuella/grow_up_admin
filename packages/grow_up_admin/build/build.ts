@@ -4,8 +4,8 @@ export const createBuild = (): any => {
     terserOptions: {
       compress: {
         drop_console: false,
-        drop_debugger: true,
-      },
+        drop_debugger: true
+      }
     },
     rollupOptions: {
       output: {
@@ -13,8 +13,8 @@ export const createBuild = (): any => {
           if (id.includes("node_modules")) {
             return "vendor";
           }
-        },
-      },
-    },
+        }
+      }
+    }
   };
 };

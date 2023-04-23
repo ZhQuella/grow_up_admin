@@ -1,24 +1,24 @@
 <template>
   <span>{{ displayValue }}</span>
 </template>
-  
+
 <script setup lang="ts">
-import { onUnmounted, reactive, ref, defineExpose, computed, watch } from 'vue';
+import { onUnmounted, reactive, ref, defineExpose, computed, watch } from "vue";
 
 const props = defineProps({
   startVal: {
     type: Number,
     required: false,
-    default: 0,
+    default: 0
   },
   endVal: {
     type: Number,
     required: false,
-    default: 2023,
+    default: 2023
   },
   duration: {
     type: Number,
-    default: 3000,
+    default: 3000
   },
   decimals: {
     type: Number,
@@ -31,27 +31,27 @@ const props = defineProps({
   decimal: {
     type: String,
     required: false,
-    default: '.'
+    default: "."
   },
   separator: {
     type: String,
     required: false,
-    default: ','
+    default: ","
   },
   prefix: {
     type: String,
     required: false,
-    default: ''
+    default: ""
   },
   suffix: {
     type: String,
     required: false,
-    default: ''
+    default: ""
   },
   autoplay: {
     type: Boolean,
     required: false,
-    default: true,
+    default: true
   },
   delay: {
     type: Number,
@@ -61,55 +61,55 @@ const props = defineProps({
       return value >= 0;
     }
   }
-})
+});
 
 // 格式化数据，返回想要展示的数据格式
 const formatNumber = (val: number) => {
-  const value = val.toFixed(props.decimals)
-  const x = value.split('.')
-  let x1 = x[0]
-  const x2 = x.length > 1 ? props.decimal + x[1] : ''
-  const rgx = /(\d+)(\d{3})/
+  const value = val.toFixed(props.decimals);
+  const x = value.split(".");
+  let x1 = x[0];
+  const x2 = x.length > 1 ? props.decimal + x[1] : "";
+  const rgx = /(\d+)(\d{3})/;
   if (props.separator && !isNumber(props.separator)) {
     while (rgx.test(x1)) {
-      x1 = x1.replace(rgx, '$1' + props.separator + '$2')
+      x1 = x1.replace(rgx, "$1" + props.separator + "$2");
     }
   }
   return props.prefix + x1 + x2 + props.suffix;
-}
+};
 
 // 判断是否为number
 const isNumber = (val: string) => {
-  return !isNaN(parseFloat(val))
-}
+  return !isNaN(parseFloat(val));
+};
 
 // 初始化props传进来的值
 const state = reactive<{
-  previousTimestamp: number | null,
-  start: number,
-  end: number,
-  duration: number,
-  paused: boolean,
-  remaining: number,
-  rAF: number | null,
-  printVal: number,
-  autoplay: boolean,
-  delay: number,
+  previousTimestamp: number | null;
+  start: number;
+  end: number;
+  duration: number;
+  paused: boolean;
+  remaining: number;
+  rAF: number | null;
+  printVal: number;
+  autoplay: boolean;
+  delay: number;
 }>({
   previousTimestamp: null,
   start: props.startVal,
   end: props.endVal,
   duration: props.duration,
-  paused: false,// 是否暂停
+  paused: false, // 是否暂停
   remaining: 0,
   rAF: null,
   printVal: props.startVal,
-  autoplay: props.autoplay,// 是否自动播放
-  delay: props.delay,
-})
+  autoplay: props.autoplay, // 是否自动播放
+  delay: props.delay
+});
 
 // 初始化定时器
-let timer: any = null
+let timer: any = null;
 
 // 初始化展示在页面上的值
 const displayValue = computed(() => formatNumber(state.printVal));
@@ -117,7 +117,7 @@ const displayValue = computed(() => formatNumber(state.printVal));
 // 定义一个计算属性，当开始数字大于结束数字时返回true
 const stopCount = computed(() => {
   return props.startVal > props.endVal;
-})
+});
 
 // 数字增加的过程函数
 const step = (timestamp: number) => {
@@ -139,12 +139,12 @@ const step = (timestamp: number) => {
   }
 
   if (progress < state.duration) {
-    state.rAF = window.requestAnimationFrame(step)
+    state.rAF = window.requestAnimationFrame(step);
   } else if (timer) {
     clearTimeout(timer);
     timer = null;
   }
-}
+};
 
 // 开始动画
 const start = () => {
@@ -157,7 +157,7 @@ const start = () => {
 
   // 延时执行
   delayStart();
-}
+};
 
 // 使用setTimeOut延时执行
 const delayStart = () => {
@@ -171,12 +171,12 @@ const delayStart = () => {
   timer = setTimeout(() => {
     state.rAF = window.requestAnimationFrame(step);
   }, state.delay);
-}
+};
 
 // 暂停
 const pause = () => {
   window.cancelAnimationFrame(state.rAF!);
-}
+};
 
 // 恢复计数
 const resume = () => {
@@ -184,7 +184,7 @@ const resume = () => {
   state.start = +state.printVal;
   state.duration = +state.remaining || props.duration;
   window.requestAnimationFrame(step);
-}
+};
 
 //暂停之后继续
 const pauseResume = () => {
@@ -195,29 +195,32 @@ const pauseResume = () => {
     pause();
     state.paused = true;
   }
-}
+};
 
 // 将start函数和pauseResume函数抛出去
 defineExpose({
   start,
-  pauseResume,
-})
+  pauseResume
+});
 
 // 如果是autoplay为true时,自动执行
-watch(() => state.autoplay, (autoplay) => {
-  autoplay && start();
-}, { immediate: true });
+watch(
+  () => state.autoplay,
+  (autoplay) => {
+    autoplay && start();
+  },
+  { immediate: true }
+);
 
 // 组件销毁之后取消动画
 onUnmounted(() => {
   window.cancelAnimationFrame(state.rAF!);
-})
+});
 </script>
-  
+
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "CountTo",
+  name: "CountTo"
 });
 </script>
-  

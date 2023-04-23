@@ -9,7 +9,7 @@ export default [
   {
     path: "/",
     name: "Login",
-    component: () => import("pages/Login/index.vue"),
+    component: () => import("pages/Login/index.vue")
   },
   {
     path: "/home",
@@ -19,25 +19,25 @@ export default [
       {
         path: "404",
         name: "NotFound",
-        component: () => import("pages/NotFound/index.vue"),
+        component: () => import("pages/NotFound/index.vue")
       },
       {
         path: "redirect/:path(.*)",
         name: "Redirect",
-        component: () => import("pages/Redirect/index.vue"),
+        component: () => import("pages/Redirect/index.vue")
       },
       {
         path: "child/:id",
         name: "Child",
         component: () => import("pages/Child1/index.vue"),
-        meta: { componentName: "Child1Page" },
-      },
-    ],
+        meta: { componentName: "Child1Page" }
+      }
+    ]
   },
   {
     path: "/404",
     name: "404",
-    component: () => import("pages/NotFound/index.vue"),
+    component: () => import("pages/NotFound/index.vue")
   },
   {
     path: "/:pathMatch(.*)",
@@ -50,6 +50,6 @@ export default [
       } else {
         return "/404";
       }
-    },
-  },
+    }
+  }
 ] as RouteRecordRaw[];

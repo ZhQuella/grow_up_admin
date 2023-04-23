@@ -1,8 +1,5 @@
 <template>
-  <div
-    ref="chartRef"
-    :style="{ width, height }"
-  />
+  <div ref="chartRef" :style="{ width, height }" />
 </template>
 <script lang="ts" setup>
 import type { PropType } from "vue";
@@ -13,12 +10,12 @@ const props = defineProps({
   loading: Boolean,
   width: {
     type: String as PropType<string>,
-    default: "100%",
+    default: "100%"
   },
   height: {
     type: String as PropType<string>,
-    default: "300px",
-  },
+    default: "300px"
+  }
 });
 
 const chartRef = ref<HTMLDivElement | null>(null);
@@ -32,7 +29,7 @@ watch(
     }
     setOptions({
       tooltip: {
-        trigger: "item",
+        trigger: "item"
       },
 
       series: [
@@ -46,7 +43,7 @@ watch(
             { value: 500, name: "电子产品" },
             { value: 310, name: "服装" },
             { value: 274, name: "化妆品" },
-            { value: 400, name: "家居" },
+            { value: 400, name: "家居" }
           ].sort(function (a, b) {
             return a.value - b.value;
           }),
@@ -55,9 +52,9 @@ watch(
           animationEasing: "exponentialInOut",
           animationDelay: function () {
             return Math.random() * 400;
-          },
-        },
-      ],
+          }
+        }
+      ]
     });
   },
   { immediate: true }
@@ -67,6 +64,6 @@ watch(
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "SalesProductPie",
+  name: "SalesProductPie"
 });
 </script>

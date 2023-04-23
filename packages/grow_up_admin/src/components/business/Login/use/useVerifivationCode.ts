@@ -35,9 +35,7 @@ export const useVerifivationCode = ({ forgetForm, t }: prop) => {
   };
 
   const getVerificationCode = async () => {
-    const [error, result]: any = await to(
-      forgetMethod.getVerificationCode({ data: forgetForm })
-    );
+    const [error, result]: any = await to(forgetMethod.getVerificationCode({ data: forgetForm }));
     console.log(result);
     const { verificationCode } = result;
     if (error) {
@@ -69,6 +67,6 @@ export const useVerifivationCode = ({ forgetForm, t }: prop) => {
     codeContext,
     isCooling,
     isGetCodeDisabled,
-    onGetVerificationCode,
+    onGetVerificationCode
   };
 };

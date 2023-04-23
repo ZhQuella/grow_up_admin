@@ -10,7 +10,7 @@ export const useOption = () => {
     },
     set() {
       return appStore.setSettingActive(false);
-    },
+    }
   });
 
   const searchActive = computed({
@@ -19,7 +19,7 @@ export const useOption = () => {
     },
     set() {
       return appStore.setSearchActive(false);
-    },
+    }
   });
 
   const onAppSearchSelect = () => {
@@ -29,6 +29,6 @@ export const useOption = () => {
   return {
     settingActive,
     searchActive,
-    onAppSearchSelect,
+    onAppSearchSelect
   };
 };

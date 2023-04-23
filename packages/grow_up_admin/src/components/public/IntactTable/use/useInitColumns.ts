@@ -7,7 +7,7 @@ interface props {
 
 export const useInitColumns = ({ columns }: props) => {
   const state = reactive({
-    columns: [],
+    columns: []
   });
 
   watch(
@@ -16,7 +16,7 @@ export const useInitColumns = ({ columns }: props) => {
       state.columns = deepCopy(newValue);
     },
     {
-      immediate: true,
+      immediate: true
     }
   );
 
@@ -24,13 +24,13 @@ export const useInitColumns = ({ columns }: props) => {
     return state.columns.map((el) => {
       return {
         ...el,
-        hidden: el.visible === false,
+        hidden: el.visible === false
       };
     });
   });
 
   return {
     state,
-    allColumns,
+    allColumns
   };
 };

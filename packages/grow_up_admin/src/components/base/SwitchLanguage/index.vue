@@ -12,10 +12,7 @@
       </el-dropdown-menu>
     </template>
     <span class="el-dropdown-link leading-[36px]">
-      <el-icon
-        :size="20"
-        class="mr-[5px] align-middle text-TEXT_LIGHT1"
-      >
+      <el-icon :size="20" class="mr-[5px] align-middle text-TEXT_LIGHT1">
         <Language />
       </el-icon>
       <span class="leading-[36px] text-TEXT_LIGHT1">{{ context }}</span>
@@ -40,8 +37,8 @@ defineProps({
   title: {
     type: [String, Object] as PropType<string>,
     required: true,
-    default: "",
-  },
+    default: ""
+  }
 });
 
 const onHandleSelect = (value: LanguageType) => {
@@ -59,6 +56,6 @@ const context = computed(() => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "SwitchLanguage",
+  name: "SwitchLanguage"
 });
 </script>

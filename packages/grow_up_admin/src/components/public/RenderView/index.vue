@@ -2,11 +2,7 @@
   <router-view class="grow shrink-0 h-full overflow-hidden">
     <template #default="{ Component, route }">
       <keep-alive :include="cachedViews">
-        <component
-          :is="Component"
-          :key="route.fullPath"
-          class="enter-y"
-        />
+        <component :is="Component" :key="route.fullPath" class="enter-y" />
       </keep-alive>
     </template>
   </router-view>
@@ -21,6 +17,6 @@ const { cachedViews } = useCatch();
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "RenderView",
+  name: "RenderView"
 });
 </script>

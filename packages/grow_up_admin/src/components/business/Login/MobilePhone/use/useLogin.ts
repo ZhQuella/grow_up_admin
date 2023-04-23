@@ -20,24 +20,24 @@ export const useLogin = ({ t, formData }: props) => {
         {
           required: true,
           message: t("LOGIN_WORD.MOBILE_PHONE"),
-          trigger: ["input", "blur"],
+          trigger: ["input", "blur"]
         },
         {
           pattern:
             /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-79])|(?:5[0-35-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[1589]))\d{8}$/,
-          message: t("LOGIN_WORD.PHONE_NUM_ERROR"),
-        },
-      ],
+          message: t("LOGIN_WORD.PHONE_NUM_ERROR")
+        }
+      ]
     },
     {
       verificationCode: [
         {
           required: true,
           message: t("LOGIN_WORD.VERIFICATION_CODE"),
-          trigger: ["input", "blur"],
-        },
-      ],
-    },
+          trigger: ["input", "blur"]
+        }
+      ]
+    }
   ]);
 
   const onPhoneLogin = async () => {
@@ -61,6 +61,6 @@ export const useLogin = ({ t, formData }: props) => {
     formRef,
     loginLoading,
     rules,
-    onPhoneLogin,
+    onPhoneLogin
   };
 };

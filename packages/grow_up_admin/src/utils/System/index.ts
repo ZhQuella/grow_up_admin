@@ -1,7 +1,7 @@
 import type {
   RouteLocationNormalized,
   RouteRecordNormalized,
-  RouteLocationNormalizedLoaded,
+  RouteLocationNormalizedLoaded
 } from "vue-router";
 import { deepCopy } from "util/index";
 
@@ -19,15 +19,12 @@ export const extendComponent = (file: string, options: any) => {
     lazyComponent(file)().then((res: any) => {
       return {
         ...res.default,
-        ...options,
+        ...options
       };
     });
 };
 
-export const treeIterator = (
-  backMenuList: any[] = [],
-  frontMenuList: any[] = []
-): any[] => {
+export const treeIterator = (backMenuList: any[] = [], frontMenuList: any[] = []): any[] => {
   const arr: any[] = [];
   const tree = [...frontMenuList, ...backMenuList];
   if (!Array.isArray(tree) || !tree.length) return arr;
@@ -67,9 +64,7 @@ export const filterBinaryTree = (tree: any[]) => {
   return _tree;
 };
 
-export const getRawRoute = (
-  route: RouteLocationNormalized
-): RouteLocationNormalized => {
+export const getRawRoute = (route: RouteLocationNormalized): RouteLocationNormalized => {
   if (!route) return route;
   const { matched, ...opt } = route;
   return {
@@ -78,9 +73,9 @@ export const getRawRoute = (
       ? matched.map((item) => ({
           meta: item.meta,
           name: item.name,
-          path: item.path,
+          path: item.path
         }))
-      : undefined) as RouteRecordNormalized[],
+      : undefined) as RouteRecordNormalized[]
   };
 };
 
@@ -140,10 +135,7 @@ export const deleteMatched = (list: RouteLocationNormalizedLoaded[]) => {
   });
 };
 
-export const hasCommonElement = (
-  array1: string[],
-  array2: string[]
-): boolean => {
+export const hasCommonElement = (array1: string[], array2: string[]): boolean => {
   return array1.some((item) => array2.includes(item));
 };
 

@@ -16,10 +16,7 @@ export const createPlugin = ({ command, mode }: ConfigEnv): Plugin[] => {
   let env = {} as any;
   const isBuild = command === "build";
   if (!isBuild) {
-    env = loadEnv(
-      process.argv[3] === "--mode" ? process.argv[4] : process.argv[3],
-      root
-    );
+    env = loadEnv(process.argv[3] === "--mode" ? process.argv[4] : process.argv[3], root);
   } else {
     env = loadEnv(mode, root);
   }
@@ -41,7 +38,7 @@ export const createPlugin = ({ command, mode }: ConfigEnv): Plugin[] => {
       injectCode: `
         import { setupProdMockServer } from '../mock/_createProductionServer'
         setupProdMockServer()
-      `,
+      `
     })
   );
 
@@ -51,7 +48,7 @@ export const createPlugin = ({ command, mode }: ConfigEnv): Plugin[] => {
       disable: false,
       threshold: 10240,
       algorithm: "gzip",
-      ext: ".gz",
+      ext: ".gz"
     })
   );
 
@@ -63,29 +60,29 @@ export const createPlugin = ({ command, mode }: ConfigEnv): Plugin[] => {
     viteImagemin({
       gifsicle: {
         optimizationLevel: 7,
-        interlaced: false,
+        interlaced: false
       },
       optipng: {
-        optimizationLevel: 7,
+        optimizationLevel: 7
       },
       mozjpeg: {
-        quality: 20,
+        quality: 20
       },
       pngquant: {
         quality: [0.8, 0.9],
-        speed: 4,
+        speed: 4
       },
       svgo: {
         plugins: [
           {
-            name: "removeViewBox",
+            name: "removeViewBox"
           },
           {
             name: "removeEmptyAttrs",
-            active: false,
-          },
-        ],
-      },
+            active: false
+          }
+        ]
+      }
     })
   );
 

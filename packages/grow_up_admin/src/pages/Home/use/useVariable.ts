@@ -39,6 +39,6 @@ export const useVariable = () => {
   });
 
   return {
-    systemLoading,
+    systemLoading
   };
 };

@@ -5,7 +5,7 @@
         v-for="item of state.filterList"
         :key="item.label"
         :to="{
-          path: `/home/${item.path}`,
+          path: `/home/${item.path}`
         }"
         class="block mb-[5px] text-[14px] leading-[40px] p-[5px] overflow-hidden border-solid border-[1px] rounded-[4px] border-gray-300 text-gray-500 hover:bg-sky-700 hover:text-gray-300 transition-all"
         @click="onSelect"
@@ -13,10 +13,7 @@
         {{ item.label }}
       </router-link>
     </div>
-    <p
-      v-else
-      class="leading-[100px] text-center text-[12px] text-gray-400"
-    >
+    <p v-else class="leading-[100px] text-center text-[12px] text-gray-400">
       {{ $t("APP_SEARCH.NOT_SEARCH_DATA") }}
     </p>
   </div>
@@ -35,15 +32,15 @@ const { menuList } = useMenuStore();
 const props = defineProps({
   searchValue: {
     type: String,
-    default: "",
-  },
+    default: ""
+  }
 });
 const emit = defineEmits(["select"]);
 
 const state = reactive<{
   filterList: MenuType[];
 }>({
-  filterList: [],
+  filterList: []
 });
 
 const onSelect = () => {
@@ -68,7 +65,7 @@ const joinMenus = (fileMenus: MenuType[][]): MenuType[] => {
     const label = el.map((ele) => ele.label).join(" > ");
     return {
       ...el[el.length - 1],
-      label,
+      label
     };
   }) as MenuType[];
 };
@@ -82,11 +79,7 @@ const filterMenu = (filterMenus: MenuType[], value: string): MenuType[] => {
   });
 };
 
-const DFSMethod = (
-  node: MenuType,
-  result: MenuType[][] = [],
-  current: MenuType[] = []
-) => {
+const DFSMethod = (node: MenuType, result: MenuType[][] = [], current: MenuType[] = []) => {
   node.name && current.push(node);
   if (node.name && node?.children?.length) {
     node.children.forEach((v) => DFSMethod(v, result, current));
@@ -112,6 +105,6 @@ watch(searchValue, async () => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "SearchContainer",
+  name: "SearchContainer"
 });
 </script>

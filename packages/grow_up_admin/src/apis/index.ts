@@ -7,7 +7,7 @@ import { ElMessage } from "element-plus";
 const storage = createStorage({ prefixKey: "", storage: sessionStorage });
 
 const request = new Request({
-  baseURL: import.meta.env.VITE_BASE_URL,
+  baseURL: import.meta.env.VITE_BASE_URL
 });
 const requestIntercept = (config: AxiosRequestConfig): AxiosRequestConfig => {
   const token = storage.get(AUTHORITY_TOKEN);
@@ -39,7 +39,7 @@ request.interceptors({
   requestIntercept,
   requestError: processingError,
   responseIntercept,
-  responseError: processingError,
+  responseError: processingError
 });
 
 export default request;

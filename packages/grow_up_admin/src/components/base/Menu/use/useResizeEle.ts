@@ -20,6 +20,6 @@ export const useResizeEle = () => {
   return {
     collapsed,
     menuMode,
-    isRoof,
+    isRoof
   };
 };

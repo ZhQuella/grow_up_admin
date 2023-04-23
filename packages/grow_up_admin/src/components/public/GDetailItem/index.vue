@@ -1,9 +1,6 @@
 <template>
   <div class="flex leading-[32px]">
-    <div
-      class="grow-0 shrink-0"
-      :style="labelStyle"
-    >
+    <div class="grow-0 shrink-0" :style="labelStyle">
       {{ label }}
     </div>
     <span class="px-[2px]">:</span>
@@ -21,20 +18,20 @@ import { getObjectValue } from "util/System";
 const props = defineProps({
   prop: {
     type: String,
-    default: "",
+    default: ""
   },
   label: {
     type: String,
-    default: "",
+    default: ""
   },
   labelWidth: {
     type: String,
-    default: "",
+    default: ""
   },
   align: {
     type: String,
-    default: "",
-  },
+    default: ""
+  }
 });
 const parentProps = inject("g-detail") as any;
 
@@ -48,7 +45,7 @@ const value = computed(() => {
 const labelStyle = computed(() => {
   return {
     width: labelWidth.value || pLabelWidth.value,
-    "text-align": align.value || pAlign.value,
+    "text-align": align.value || pAlign.value
   };
 });
 </script>
@@ -56,6 +53,6 @@ const labelStyle = computed(() => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "GDetailItem",
+  name: "GDetailItem"
 });
 </script>

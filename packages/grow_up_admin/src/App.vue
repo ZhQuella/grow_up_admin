@@ -25,7 +25,7 @@ const theme = computed(() => {
 const localBag = computed(() => {
   const localMap = {
     en: elEn,
-    ch: elzhCn,
+    ch: elzhCn
   };
   return localMap[languageStore.locale];
 });
@@ -38,7 +38,7 @@ const themeClass = computed(() => {
 const isDark = useDark({
   storageKey: THEME_KEY,
   valueDark: "dark",
-  valueLight: "light",
+  valueLight: "light"
 });
 const themeVlaue = isDark.value ? "dark" : "light";
 themeStore.theme = themeVlaue;

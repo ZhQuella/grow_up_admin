@@ -7,10 +7,7 @@
     @hide="onSetColumns"
   >
     <template #reference>
-      <el-button
-        :icon="DataTableReference"
-        circle
-      />
+      <el-button :icon="DataTableReference" circle />
     </template>
     <div>
       <div
@@ -30,7 +27,7 @@
           :node-key="nodeKey"
           :data="state.treeData"
           :props="{
-            label: renderLabel,
+            label: renderLabel
           }"
           show-checkbox
           default-expand-all
@@ -40,17 +37,10 @@
       <div
         class="border-t-[1px] border-[var(--el-border-color)] border-solid p-[10px] flex justify-end"
       >
-        <el-button
-          :icon="DataView"
-          @click="onResetColumns"
-        >
+        <el-button :icon="DataView" @click="onResetColumns">
           {{ $t("SEARCH_BAR.RESET_SYETEM") }}
         </el-button>
-        <el-button
-          type="primary"
-          :icon="FolderDetailsReference"
-          @click="onSetColumns"
-        >
+        <el-button type="primary" :icon="FolderDetailsReference" @click="onSetColumns">
           {{ $t("PUBLIC.CONFIRM_TEXT") }}
         </el-button>
       </div>
@@ -60,12 +50,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import {
-  DataTableReference,
-  FolderDetailsReference,
-  Reset,
-  DataView,
-} from "@vicons/carbon";
+import { DataTableReference, FolderDetailsReference, Reset, DataView } from "@vicons/carbon";
 import { useInitTree } from "./use/useInitTree";
 import { useEvent } from "./use/useEvent";
 
@@ -74,45 +59,37 @@ const emit = defineEmits(["confirm"]);
 const props = defineProps({
   columns: {
     type: Array,
-    default: () => [],
+    default: () => []
   },
   nodeKey: {
     type: String,
-    default: "field",
-  },
+    default: "field"
+  }
 });
 
 const visible = ref(false);
 
-const {
-  renderLabel,
-  treeRef,
-  catchCheckedKeys,
-  state,
-  allChild,
-  isAllChecked,
-  getAllChild,
-} = useInitTree({
-  columns: props.columns,
-  nodeKey: props.nodeKey,
-});
-
-const { onTreeChange, onAllSelectChange, onSetColumns, onResetColumns } =
-  useEvent({
-    treeRef,
-    state,
-    catchCheckedKeys,
-    allChild: allChild.value,
-    getAllChild,
-    emit,
-    visible,
-    nodeKey: props.nodeKey,
+const { renderLabel, treeRef, catchCheckedKeys, state, allChild, isAllChecked, getAllChild } =
+  useInitTree({
+    columns: props.columns,
+    nodeKey: props.nodeKey
   });
+
+const { onTreeChange, onAllSelectChange, onSetColumns, onResetColumns } = useEvent({
+  treeRef,
+  state,
+  catchCheckedKeys,
+  allChild: allChild.value,
+  getAllChild,
+  emit,
+  visible,
+  nodeKey: props.nodeKey
+});
 </script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "ColumnBar",
+  name: "ColumnBar"
 });
 </script>

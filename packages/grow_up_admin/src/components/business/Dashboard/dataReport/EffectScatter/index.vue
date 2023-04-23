@@ -1,8 +1,5 @@
 <template>
-  <div
-    ref="chartRef"
-    :style="{ width, height }"
-  />
+  <div ref="chartRef" :style="{ width, height }" />
 </template>
 
 <script lang="ts" setup>
@@ -16,12 +13,12 @@ const props = defineProps({
   loading: Boolean,
   width: {
     type: String as PropType<string>,
-    default: "100%",
+    default: "100%"
   },
   height: {
     type: String as PropType<string>,
-    default: "300px",
-  },
+    default: "300px"
+  }
 });
 
 watch(
@@ -32,13 +29,13 @@ watch(
     }
     setOptions({
       tooltip: {
-        position: "top",
+        position: "top"
       },
       xAxis: {
-        scale: true,
+        scale: true
       },
       yAxis: {
-        scale: true,
+        scale: true
       },
       series: [
         {
@@ -46,8 +43,8 @@ watch(
           symbolSize: 20,
           data: [
             [172.7, 105.2],
-            [153.4, 42],
-          ],
+            [153.4, 42]
+          ]
         },
         {
           type: "scatter",
@@ -104,9 +101,9 @@ watch(
                     [156.2, 60.0], [149.9, 46.8], [169.5, 57.3], [160.0, 64.1], [175.3, 63.6],
                     [169.5, 67.3], [160.0, 75.5], [172.7, 68.2], [162.6, 61.4], [157.5, 76.8],
                     [176.5, 71.8], [164.4, 55.5], [160.7, 48.6], [174.0, 66.4], [163.8, 67.3]
-                ],
-        },
-      ],
+                ]
+        }
+      ]
     });
   },
   { immediate: true }
@@ -116,6 +113,6 @@ watch(
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "EffectScatter",
+  name: "EffectScatter"
 });
 </script>

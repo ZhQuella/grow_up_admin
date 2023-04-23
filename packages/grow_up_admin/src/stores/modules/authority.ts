@@ -11,17 +11,17 @@ export const useAuthorityStore = defineStore({
     authorityList: [
       "LIST_PAGE:EL_BASE_LIST:VIEW",
       "LIST_PAGE:EL_BASE_LIST:DELETE",
-      "LIST_PAGE:EL_BASE_LIST:REPORT",
-    ],
+      "LIST_PAGE:EL_BASE_LIST:REPORT"
+    ]
   }),
   getters: {
     getAuthorityType(): string[] {
       return this.authorityList;
-    },
+    }
   },
   actions: {
     setAuthority(authorityList: string[]) {
       this.authorityList = authorityList;
-    },
-  },
+    }
+  }
 });

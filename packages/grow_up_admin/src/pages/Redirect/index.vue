@@ -15,13 +15,13 @@ const { path, _redirect_type = "path" } = params;
 replace({
   path,
   query,
-  params,
+  params
 } as RouteLocationRaw);
 </script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "RedirectPage",
+  name: "RedirectPage"
 });
 </script>

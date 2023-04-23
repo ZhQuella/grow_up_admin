@@ -13,17 +13,17 @@ const deptTree: Tree[] = [
         children: [
           {
             label: "市场一部",
-            id: "2",
+            id: "2"
           },
           {
             label: "市场二部",
-            id: "3",
+            id: "3"
           },
           {
             label: "市场三部",
-            id: "4",
-          },
-        ],
+            id: "4"
+          }
+        ]
       },
       {
         label: "销售部",
@@ -31,16 +31,16 @@ const deptTree: Tree[] = [
         children: [
           {
             label: "销售一部",
-            id: "6",
+            id: "6"
           },
           {
             label: "销售二部",
-            id: "7",
-          },
-        ],
-      },
-    ],
-  },
+            id: "7"
+          }
+        ]
+      }
+    ]
+  }
 ];
 
 const historyList = [
@@ -49,21 +49,21 @@ const historyList = [
     tagInfo: "新增",
     operator: Mock.mock("@cname()"),
     date: Mock.mock("@now()"),
-    remark: Mock.mock("@ctitle(0, 30)"),
+    remark: Mock.mock("@ctitle(0, 30)")
   },
   {
     type: "2",
     tagInfo: "启用",
     operator: Mock.mock("@cname()"),
     date: Mock.mock("@now()"),
-    remark: Mock.mock("@ctitle(0, 30)"),
+    remark: Mock.mock("@ctitle(0, 30)")
   },
   {
     type: "3",
     tagInfo: "停用",
     operator: Mock.mock("@cname()"),
     date: Mock.mock("@now()"),
-    remark: Mock.mock("@ctitle(0, 30)"),
+    remark: Mock.mock("@ctitle(0, 30)")
   },
   {
     type: "4",
@@ -71,29 +71,29 @@ const historyList = [
     personnel: Mock.mock("@cname()"),
     operator: Mock.mock("@cname()"),
     date: Mock.mock("@now()"),
-    remark: Mock.mock("@ctitle(0, 30)"),
+    remark: Mock.mock("@ctitle(0, 30)")
   },
   {
     type: "5",
     tagInfo: "解绑",
     operator: Mock.mock("@cname()"),
     date: Mock.mock("@now()"),
-    remark: Mock.mock("@ctitle(0, 30)"),
+    remark: Mock.mock("@ctitle(0, 30)")
   },
   {
     type: "6",
     tagInfo: "重置密码",
     operator: Mock.mock("@cname()"),
     date: Mock.mock("@now()"),
-    remark: Mock.mock("@ctitle(0, 30)"),
+    remark: Mock.mock("@ctitle(0, 30)")
   },
   {
     type: "7",
     tagInfo: "修改",
     operator: Mock.mock("@cname()"),
     date: Mock.mock("@now()"),
-    remark: Mock.mock("@ctitle(0, 30)"),
-  },
+    remark: Mock.mock("@ctitle(0, 30)")
+  }
 ];
 
 export default [
@@ -105,10 +105,10 @@ export default [
         code: 10000,
         message: "成功",
         result: {
-          deptTree,
-        },
+          deptTree
+        }
       };
-    },
+    }
   },
   {
     url: "/account/list",
@@ -125,10 +125,10 @@ export default [
           belong: {
             person: Mock.mock("@cname()"),
             department: Mock.mock("@region()"),
-            post: Mock.mock("@ctitle(3, 5)"),
+            post: Mock.mock("@ctitle(3, 5)")
           },
           "createType|1": ["自动生成", "手动添加"],
-          createDate: Mock.mock("@now()"),
+          createDate: Mock.mock("@now()")
         });
       }
 
@@ -137,10 +137,10 @@ export default [
         message: "成功",
         result: {
           total: 20,
-          accountList: data,
-        },
+          accountList: data
+        }
       };
-    },
+    }
   },
   {
     url: "/account/info",
@@ -148,9 +148,9 @@ export default [
     response() {
       return {
         code: 10000,
-        message: "成功",
+        message: "成功"
       };
-    },
+    }
   },
   {
     url: "/account/info",
@@ -158,9 +158,9 @@ export default [
     response() {
       return {
         code: 10000,
-        message: "成功",
+        message: "成功"
       };
-    },
+    }
   },
   {
     url: "/account/info",
@@ -168,9 +168,9 @@ export default [
     response() {
       return {
         code: 10000,
-        message: "成功",
+        message: "成功"
       };
-    },
+    }
   },
   {
     url: "/account/change/state",
@@ -178,9 +178,9 @@ export default [
     response() {
       return {
         code: 10000,
-        message: "成功",
+        message: "成功"
       };
-    },
+    }
   },
   {
     url: "/account/reset/password",
@@ -188,9 +188,9 @@ export default [
     response() {
       return {
         code: 10000,
-        message: "成功",
+        message: "成功"
       };
-    },
+    }
   },
   {
     url: "/account/unbind",
@@ -198,9 +198,9 @@ export default [
     response() {
       return {
         code: 10000,
-        message: "成功",
+        message: "成功"
       };
-    },
+    }
   },
   {
     url: "/account/history/:id",
@@ -210,10 +210,10 @@ export default [
         code: 10000,
         message: "成功",
         result: {
-          historyList,
-        },
+          historyList
+        }
       };
-    },
+    }
   },
   {
     url: "/account/use/record/:id",
@@ -226,16 +226,16 @@ export default [
           personnel: Mock.mock("@cname()"),
           "loginResult|1": ["登录成功", "登录失败"],
           errorMessage: Mock.mock("@ctitle(3, 5)"),
-          date: Mock.mock("@now()"),
+          date: Mock.mock("@now()")
         });
       }
       return {
         code: 10000,
         message: "成功",
         result: {
-          recordList,
-        },
+          recordList
+        }
       };
-    },
-  },
+    }
+  }
 ] as MockMethod[];

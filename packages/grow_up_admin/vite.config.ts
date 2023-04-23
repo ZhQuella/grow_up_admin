@@ -12,6 +12,6 @@ export default (env: ConfigEnv) => {
     css: createCss(),
     resolve: createResolve(),
     build: createBuild(),
-    server: createServer(),
+    server: createServer()
   };
 };

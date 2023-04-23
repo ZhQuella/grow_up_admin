@@ -7,7 +7,7 @@ interface argProp {
 
 export const useInitColumns = ({ props }: argProp) => {
   const state = reactive({
-    columns: [],
+    columns: []
   });
 
   watch(
@@ -16,7 +16,7 @@ export const useInitColumns = ({ props }: argProp) => {
       state.columns = deepCopy(newValue);
     },
     {
-      immediate: true,
+      immediate: true
     }
   );
 
@@ -53,6 +53,6 @@ export const useInitColumns = ({ props }: argProp) => {
     isOperate,
     operateColumn,
     currentColumns,
-    state,
+    state
   };
 };

@@ -18,10 +18,7 @@
           :disabled="item.disabled"
           :command="item"
         >
-          <component
-            :is="item.icon"
-            class="w-[15px] h-[15px] mr-[4px]"
-          />
+          <component :is="item.icon" class="w-[15px] h-[15px] mr-[4px]" />
           <span>{{ item.label }}</span>
         </ElDropdownItem>
       </ElDropdownMenu>
@@ -37,16 +34,16 @@ import { useContextMenu } from "./use/useContextMenu";
 const props = defineProps({
   trigger: {
     type: String as PropType<"click" | "hover" | "focus" | "contextmenu">,
-    default: "contextmenu",
+    default: "contextmenu"
   },
   tagItem: {
     type: Object,
-    default: () => ({}),
+    default: () => ({})
   },
   curRoute: {
     type: Object,
-    default: () => ({}),
-  },
+    default: () => ({})
+  }
 });
 
 const { contextMenuOptions } = useContextMenu(props);
@@ -65,6 +62,6 @@ const visibleChange = (visible: boolean) => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "ContextMenu",
+  name: "ContextMenu"
 });
 </script>

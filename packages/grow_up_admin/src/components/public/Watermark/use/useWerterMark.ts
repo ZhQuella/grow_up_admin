@@ -25,8 +25,7 @@ export const useWerterMark = () => {
     oCanvasDom.height = 150;
     const context = oCanvasDom.getContext("2d");
     context.rotate((-15 * Math.PI) / 180);
-    const colorRgba =
-      themeType.value === "dark" ? "0, 0, 0, 0.3" : "200, 200, 200, 0.2";
+    const colorRgba = themeType.value === "dark" ? "0, 0, 0, 0.3" : "200, 200, 200, 0.2";
     context.fillStyle = `rgba(${colorRgba})`;
     context.textAlign = "left";
     context.font = "14px Verdana";
@@ -52,6 +51,6 @@ export const useWerterMark = () => {
   });
 
   return {
-    werterMarkRef,
+    werterMarkRef
   };
 };

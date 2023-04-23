@@ -9,15 +9,15 @@ export default [
         name: "ElBaseList",
         icon: "ListNumbered",
         path: "el-base-list",
-        component: "ListPage/ElBaseList/index.vue",
+        component: "ListPage/ElBaseList/index.vue"
       },
       {
         label: "虚拟列表",
         name: "ElVirtualList",
         icon: "ListDropdown",
         path: "el-virtual-list",
-        component: "ListPage/ElVirtualList/index.vue",
-      },
-    ],
-  },
+        component: "ListPage/ElVirtualList/index.vue"
+      }
+    ]
+  }
 ];

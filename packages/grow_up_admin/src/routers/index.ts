@@ -5,7 +5,7 @@ import routes from "./routers/index";
 const router = createRouter({
   history: createWebHistory(),
   strict: true,
-  routes,
+  routes
 });
 
 export default router;

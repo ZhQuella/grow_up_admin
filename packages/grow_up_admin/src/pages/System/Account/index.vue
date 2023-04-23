@@ -3,9 +3,7 @@
     <pageLayout>
       <template #aside>
         <div class="h-full">
-          <div
-            class="p-[5px] border-b-[1px] border-[var(--el-border-color)] border-solid"
-          >
+          <div class="p-[5px] border-b-[1px] border-[var(--el-border-color)] border-solid">
             <el-input
               v-model="deptSearchValue"
               placeholder="请输入部门名称"
@@ -39,21 +37,11 @@
       <template #header>
         <div class="flex justify-between">
           <div class="pt-[8px]">
-            <ButtonGroup
-              :button-group="optionGroup"
-              :max="5"
-              show-text
-            />
+            <ButtonGroup :button-group="optionGroup" :max="5" show-text />
           </div>
           <div class="pt-[3px]">
-            <SearchBar
-              :search="searchList"
-              @search="onTableSeach"
-            />
-            <ColumnBar
-              :columns="tableColumns"
-              @confirm="onColumnsBarConfirm"
-            />
+            <SearchBar :search="searchList" @search="onTableSeach" />
+            <ColumnBar :columns="tableColumns" @confirm="onColumnsBarConfirm" />
           </div>
         </div>
       </template>
@@ -68,19 +56,12 @@
           @select="onPerfectTableSelect"
         >
           <template #btnOption="btnOption">
-            <ButtonGroup
-              :button-group="buttonGroup"
-              :max="4"
-              :data="btnOption"
-            />
+            <ButtonGroup :button-group="buttonGroup" :max="4" :data="btnOption" />
           </template>
         </PerfectTable>
       </template>
       <template #footer>
-        <div
-          :span="12"
-          class="flex justify-end pt-[10px]"
-        >
+        <div :span="12" class="flex justify-end pt-[10px]">
           <el-pagination
             v-model:current-page="page"
             v-model:page-size="size"
@@ -143,15 +124,9 @@ const { pageSizes, page, size, layout, total } = useTable();
 
 const { accountStates } = useDict();
 
-const {
-  tableList,
-  tableColumns,
-  getAccountList,
-  onTreeNodeClick,
-  tableLoading,
-} = useTableOption({
+const { tableList, tableColumns, getAccountList, onTreeNodeClick, tableLoading } = useTableOption({
   tableTotal: total,
-  accountStates,
+  accountStates
 });
 
 const {
@@ -163,13 +138,12 @@ const {
   onDrawerClose,
   onDialogClose,
   onAccountSuccess,
-  onPerfectTableSelect,
+  onPerfectTableSelect
 } = useTableFunc({
-  getAccountList,
+  getAccountList
 });
 
-const { deptTreeList, deptSearchValue, filterResult, onDeptInput } =
-  useDeptTree();
+const { deptTreeList, deptSearchValue, filterResult, onDeptInput } = useDeptTree();
 
 // ~ 查询条件配置
 const searchList = [
@@ -177,43 +151,43 @@ const searchList = [
     elType: "el-input",
     labelText: "导入文件ID1",
     model: "fileId1",
-    placeholder: "请输入文件ID1",
+    placeholder: "请输入文件ID1"
   },
   {
     elType: "el-input",
     labelText: "导入文件ID2",
     model: "fileId2",
-    placeholder: "请输入文件ID2",
+    placeholder: "请输入文件ID2"
   },
   {
     elType: "el-input",
     labelText: "导入文件ID3",
     model: "fileId3",
-    placeholder: "请输入文件ID3",
+    placeholder: "请输入文件ID3"
   },
   {
     elType: "el-input",
     labelText: "导入文件ID4",
     model: "fileId4",
-    placeholder: "请输入文件ID4",
+    placeholder: "请输入文件ID4"
   },
   {
     elType: "el-input",
     labelText: "导入文件ID5",
     model: "fileId5",
-    placeholder: "请输入文件ID5",
+    placeholder: "请输入文件ID5"
   },
   {
     elType: "el-input",
     labelText: "导入文件ID",
     model: "fileId",
-    placeholder: "请输入文件ID",
+    placeholder: "请输入文件ID"
   },
   {
     elType: "el-input",
     labelText: "导入文件ID6",
     model: "fileId6",
-    placeholder: "请输入文件ID6",
+    placeholder: "请输入文件ID6"
   },
   {
     elType: "el-date-picker",
@@ -222,13 +196,13 @@ const searchList = [
     type: "daterange",
     "start-placeholder": "开始日期",
     "end-placeholder": "结束日期",
-    "value-format": "YYYY-MM-DD",
+    "value-format": "YYYY-MM-DD"
   },
   {
     collapseTags: true,
     requestConfig: {
       method: "get",
-      url: "/system/dict/data/type/sys_yes_no_number",
+      url: "/system/dict/data/type/sys_yes_no_number"
     },
     elType: "el-select",
     labelText: "是否清洗",
@@ -241,19 +215,19 @@ const searchList = [
     options: [
       {
         dictLabel: "是",
-        dictValue: "1",
+        dictValue: "1"
       },
       {
         dictLabel: "否",
-        dictValue: "0",
-      },
-    ],
-  },
+        dictValue: "0"
+      }
+    ]
+  }
 ];
 
 const defaultProps = {
   children: "children",
-  label: "label",
+  label: "label"
 };
 
 const onTableSeach = (data: any) => {
@@ -282,7 +256,7 @@ export default defineComponent({
     AccountModify,
     AccountResetPassword,
     AccountHistory,
-    AccountUseRecord,
-  },
+    AccountUseRecord
+  }
 });
 </script>

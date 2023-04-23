@@ -9,7 +9,7 @@ export const useTabDropdown = () => {
   const tabsViewStore = useMultipleTab();
 
   const state = reactive({
-    catchTab: <any>null,
+    catchTab: <any>null
   });
 
   const { currentRoute, push, replace, getRoutes } = useRouter();
@@ -33,7 +33,7 @@ export const useTabDropdown = () => {
         const currRow = _visitedViews.splice(oldIndex - 1, 1)[0];
         _visitedViews.splice(newIndex - 1, 0, currRow);
         tabsViewStore.saveVisitedViews(_visitedViews);
-      },
+      }
     });
   };
 
@@ -61,9 +61,9 @@ export const useTabDropdown = () => {
     replace({
       name: "Redirect",
       params: {
-        path,
+        path
       },
-      query,
+      query
     });
   };
 
@@ -117,7 +117,7 @@ export const useTabDropdown = () => {
       closeRightTag: closeRightTags,
       closeOtherTag: closeOthersTags,
       closeAllTag: closeAllTags,
-      addTag: tabsViewStore.addTabs,
+      addTag: tabsViewStore.addTabs
     };
     methods[value](state.catchTab || unref(currentRoute));
     state.catchTab = null;
@@ -141,6 +141,6 @@ export const useTabDropdown = () => {
     onClickoutside,
     onDropdownSelect,
     onRedload,
-    curRoute,
+    curRoute
   };
 };

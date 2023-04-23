@@ -25,6 +25,6 @@ setTab(`详情页-${id.value}`);
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "Child1Page",
+  name: "Child1Page"
 });
 </script>

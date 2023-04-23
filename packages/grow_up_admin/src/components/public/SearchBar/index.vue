@@ -1,20 +1,9 @@
 <template>
-  <el-popover
-    v-model:visible="visible"
-    width="650px"
-    placement="top-end"
-    trigger="click"
-  >
+  <el-popover v-model:visible="visible" width="650px" placement="top-end" trigger="click">
     <template #reference>
-      <el-button
-        :icon="Search"
-        circle
-      />
+      <el-button :icon="Search" circle />
     </template>
-    <SearchContainer
-      ref="container"
-      :search="search"
-    />
+    <SearchContainer ref="container" :search="search" />
     <div
       class="flex p-[10px] justify-between border-t-[1px] border-[var(--el-border-color)] border-solid"
     >
@@ -22,23 +11,13 @@
         <slot name="option" />
       </div>
       <div>
-        <el-button
-          :icon="DataView"
-          @click="onSyetemDefault"
-        >
+        <el-button :icon="DataView" @click="onSyetemDefault">
           {{ $t("SEARCH_BAR.RESET_SYETEM") }}
         </el-button>
-        <el-button
-          :icon="Reset"
-          @click="onReset"
-        >
+        <el-button :icon="Reset" @click="onReset">
           {{ $t("PUBLIC.RESET_TEXT") }}
         </el-button>
-        <el-button
-          :icon="Search"
-          type="primary"
-          @click="onSearch"
-        >
+        <el-button :icon="Search" type="primary" @click="onSearch">
           {{ $t("PUBLIC.SEARCH_TEXT") }}
         </el-button>
       </div>
@@ -78,14 +57,14 @@ const onSyetemDefault = () => {
 defineProps({
   search: {
     type: Array,
-    default: () => [],
-  },
+    default: () => []
+  }
 });
 </script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "SearchBar",
+  name: "SearchBar"
 });
 </script>

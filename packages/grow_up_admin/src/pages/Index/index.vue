@@ -9,8 +9,8 @@
         :style="[
           {
             backgroundImage: `radial-gradient(transparent 1px,rgba(var(--bg-color2), ${opacityNum}) 1px)`,
-            backdropFilter: `saturate(50%) blur(${opacityNum}px)`,
-          },
+            backdropFilter: `saturate(50%) blur(${opacityNum}px)`
+          }
         ]"
       >
         <div class="px-[5px] pt-[10px]">
@@ -24,10 +24,7 @@
             <SwitchLanguage />
           </div>
           <div class="pt-[12px] pl-[20px]">
-            <a
-              href="https://github.com/ZhQuella/grow_up_admin"
-              target="_blank"
-            >
+            <a href="https://github.com/ZhQuella/grow_up_admin" target="_blank">
               <GithubFilled class="w-[30px] h-[30px] text-MAIN_TEXT" />
             </a>
           </div>
@@ -39,14 +36,8 @@
           <div
             class="md:w-[340px] md:h-[340px] sm:w-[200px] sm:h-[200px] relative enter-x shrink-0 grow-0 sm:mx-auto lg:mx-0"
           >
-            <img
-              class="block w-full blur-[80px]"
-              :src="getImageUrl(systemConfig.logUrl)"
-            >
-            <img
-              class="block w-full translate-y-[-100%]"
-              :src="getImageUrl(systemConfig.logUrl)"
-            >
+            <img class="block w-full blur-[80px]" :src="getImageUrl(systemConfig.logUrl)" />
+            <img class="block w-full translate-y-[-100%]" :src="getImageUrl(systemConfig.logUrl)" />
           </div>
         </div>
         <div class="lg:py-[80px] sm:py-[30px] -enter-y">
@@ -68,9 +59,7 @@
         <div class="p-[20px]" />
       </div>
       <el-divider border-style="double" />
-      <div
-        class="max-w-[1200px] mx-[auto] pb-[20px] text-center text-[12px] text-TEXT_LIGHT2"
-      >
+      <div class="max-w-[1200px] mx-[auto] pb-[20px] text-center text-[12px] text-TEXT_LIGHT2">
         <p>{{ $t("RECORD_INFO.DESCRIBE") }}</p>
         <p>Copyright © 2022-present **************</p>
       </div>
@@ -89,13 +78,12 @@ import SwitchTheme from "components/base/SwitchTheme/index.vue";
 import { getImageUrl } from "util/System";
 import systemConfig from "@/systemConfig";
 
-const { onPageContentScroll, opacityNum, isShowBorder, traitIntroduces } =
-  useContainer();
+const { onPageContentScroll, opacityNum, isShowBorder, traitIntroduces } = useContainer();
 </script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "IndexPage",
+  name: "IndexPage"
 });
 </script>

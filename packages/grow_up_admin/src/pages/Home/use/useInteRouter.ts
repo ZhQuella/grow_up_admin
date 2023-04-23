@@ -16,11 +16,7 @@ import { extendComponent } from "util/System";
 
 import frontMenuList from "router/pages/index";
 
-export const useInteRouter = async ({
-  systemLoading,
-}: {
-  systemLoading: Ref<boolean>;
-}) => {
+export const useInteRouter = async ({ systemLoading }: { systemLoading: Ref<boolean> }) => {
   const router = useRouter();
   const multipleTableStore = useMultipleTab();
   const menuStore = useMenuStore();
@@ -32,10 +28,7 @@ export const useInteRouter = async ({
 
   const roleSings = computed(() => systemInfoStore.getRoleSings);
 
-  const addRouter = (
-    allMenuList: MenuType[],
-    catchViews: RouteLocationNormalizedLoaded[]
-  ) => {
+  const addRouter = (allMenuList: MenuType[], catchViews: RouteLocationNormalizedLoaded[]) => {
     allMenuList.forEach((el) => {
       const {
         custom,
@@ -55,7 +48,7 @@ export const useInteRouter = async ({
 
       if (path && componentPath && isAuthority) {
         const component = extendComponent(`../../pages/${componentPath}`, {
-          name,
+          name
         });
         const routerRecord: RouteRecordRaw = {
           path,
@@ -64,8 +57,8 @@ export const useInteRouter = async ({
           props,
           meta: {
             componentName: cache === false ? void 0 : name,
-            ...attrs,
-          },
+            ...attrs
+          }
         };
         router.addRoute("Home", routerRecord);
       }
@@ -122,8 +115,7 @@ export const useInteRouter = async ({
     await getUserInfo();
     await getRoleSings();
     const catchViews = JSON.parse(
-      JSON.parse(sessionStorage.getItem("TABS_LIST__") || '{ "value": "[]" }')
-        .value
+      JSON.parse(sessionStorage.getItem("TABS_LIST__") || '{ "value": "[]" }').value
     );
     router.push({ name: "Home" });
     systemLoading.value = true;
@@ -146,6 +138,6 @@ export const useInteRouter = async ({
   await systemMain();
 
   return {
-    defaultPath,
+    defaultPath
   };
 };

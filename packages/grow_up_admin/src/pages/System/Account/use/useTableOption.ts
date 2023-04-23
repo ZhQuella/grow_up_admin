@@ -14,7 +14,7 @@ export const useTableOption = ({ tableTotal, accountStates }: props) => {
   const accountMethod = request.create("accountMent");
   const searchData = reactive<any>({});
   const state = reactive({
-    tableList: [],
+    tableList: []
   });
 
   // ~ 表头配置
@@ -22,13 +22,13 @@ export const useTableOption = ({ tableTotal, accountStates }: props) => {
     {
       field: "serial",
       title: "序号",
-      fixed: "left",
+      fixed: "left"
     },
     {
       field: "account",
       title: "账号",
       "show-overflow-tooltip": true,
-      width: 120,
+      width: 120
     },
     {
       field: "state",
@@ -42,24 +42,24 @@ export const useTableOption = ({ tableTotal, accountStates }: props) => {
           h(
             ElTag,
             {
-              type,
+              type
             },
             item.label
-          ),
+          )
         ];
-      },
+      }
     },
     {
       field: "forbidCause",
       title: "停用原因",
       "show-overflow-tooltip": true,
       width: 100,
-      visible: false,
+      visible: false
     },
     {
       field: "roleName",
       title: "角色名称",
-      "show-overflow-tooltip": true,
+      "show-overflow-tooltip": true
     },
     {
       field: "belong",
@@ -72,47 +72,47 @@ export const useTableOption = ({ tableTotal, accountStates }: props) => {
           title: "归属人",
           "show-overflow-tooltip": true,
           width: 150,
-          visible: false,
+          visible: false
         },
         {
           field: "belong.department",
           title: "所属部门",
           "show-overflow-tooltip": true,
           width: 150,
-          visible: false,
+          visible: false
         },
         {
           field: "belong.post",
           title: "所属岗位",
           "show-overflow-tooltip": true,
           width: 150,
-          visible: false,
-        },
-      ],
+          visible: false
+        }
+      ]
     },
     {
       field: "createType",
       title: "创建方式",
       "show-overflow-tooltip": true,
-      width: 100,
+      width: 100
     },
     {
       field: "createDate",
       title: "创建日期",
-      "show-overflow-tooltip": true,
+      "show-overflow-tooltip": true
     },
     {
       field: "remarks",
       title: "备注",
       "show-overflow-tooltip": true,
-      width: 140,
+      width: 140
     },
     {
       field: "operate",
       title: "操作",
       fixed: "right",
-      width: "200px",
-    },
+      width: "200px"
+    }
   ]);
 
   const tableList = computed(() => {
@@ -140,6 +140,6 @@ export const useTableOption = ({ tableTotal, accountStates }: props) => {
     tableList,
     tableColumns,
     onTreeNodeClick,
-    getAccountList,
+    getAccountList
   };
 };

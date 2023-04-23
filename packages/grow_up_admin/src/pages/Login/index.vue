@@ -1,13 +1,8 @@
 <template>
   <div class="h-full bg-BG_COLOR overflow-hidden">
-    <div
-      class="-enter-y w-full h-[60px] box-border fixed z-20 flex px-[20px] justify-between"
-    >
+    <div class="-enter-y w-full h-[60px] box-border fixed z-20 flex px-[20px] justify-between">
       <div class="px-[5px] pt-[10px] cursor-pointer">
-        <GLogo
-          is-opacity
-          @click="onGoToIndex"
-        />
+        <GLogo is-opacity @click="onGoToIndex" />
       </div>
       <div class="flex">
         <div class="pt-[10px]">
@@ -17,10 +12,7 @@
           <SwitchLanguage />
         </div>
         <div class="pt-[12px] pl-[20px]">
-          <a
-            href="https://github.com/ZhQuella/grow_up_admin"
-            target="_blank"
-          >
+          <a href="https://github.com/ZhQuella/grow_up_admin" target="_blank">
             <GithubFilled class="w-[30px] h-[30px] text-MAIN_TEXT" />
           </a>
         </div>
@@ -32,14 +24,10 @@
       >
         <div>
           <div class="px-[10px]">
-            <h3
-              class="text-[30px] pl-[32px] pb-[10px] text-TEXT_LIGHT1 -enter-x"
-            >
+            <h3 class="text-[30px] pl-[32px] pb-[10px] text-TEXT_LIGHT1 -enter-x">
               {{ $t("LOIN_STATE.STATE_1") }}
             </h3>
-            <h3
-              class="text-[30px] pl-[64px] pb-[10px] text-TEXT_LIGHT1 -enter-x"
-            >
+            <h3 class="text-[30px] pl-[64px] pb-[10px] text-TEXT_LIGHT1 -enter-x">
               {{ $t("LOIN_STATE.STATE_2") }}
             </h3>
             <h3 class="text-[30px] pl-[98px] text-TEXT_LIGHT1 -enter-x">
@@ -47,10 +35,7 @@
             </h3>
           </div>
           <div class="w-[400px h-[400px] enter-y">
-            <img
-              class="block"
-              :src="getImageUrl('login_illustration.png')"
-            >
+            <img class="block" :src="getImageUrl('login_illustration.png')" />
           </div>
         </div>
       </div>
@@ -59,10 +44,7 @@
           class="xl:w-[450px] md:w-[700px] sm:w-full absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-[4px] overflow-hidden border-solid border-[1px] pb-[40px] md:bg-BG_COLOR2 sm:bg-transparent md:border-BORDER_COLOR sm:border-transparent"
         >
           <div class="w-[100px] h-[100px] mx-[auto] my-[30px] -enter-y">
-            <img
-              class="block"
-              :src="getImageUrl('logo.png')"
-            >
+            <img class="block" :src="getImageUrl('logo.png')" />
           </div>
           <div class="px-[40px] relative">
             <!--登录-->
@@ -72,25 +54,13 @@
                 <LoginFrom @forget="onChangeFormType" />
               </div>
               <el-row :gutter="20">
-                <el-col
-                  :span="12"
-                  class="-enter-x"
-                >
-                  <el-button
-                    class="w-full"
-                    @click="onChangeFormType('mobilePhone')"
-                  >
+                <el-col :span="12" class="-enter-x">
+                  <el-button class="w-full" @click="onChangeFormType('mobilePhone')">
                     {{ $t("LOGIN_WORD.NUMBER_LOGIN") }}
                   </el-button>
                 </el-col>
-                <el-col
-                  :span="12"
-                  class="enter-x"
-                >
-                  <el-button
-                    class="w-full"
-                    @click="onChangeFormType('qrCodeLogin')"
-                  >
+                <el-col :span="12" class="enter-x">
+                  <el-button class="w-full" @click="onChangeFormType('qrCodeLogin')">
                     {{ $t("LOGIN_WORD.SCAN_CODE_LOGIN") }}
                   </el-button>
                 </el-col>
@@ -98,10 +68,7 @@
             </div>
             <!--忘记密码-->
             <div v-if="formType === 'forgetPassword'">
-              <ForgetPassword
-                @back="onChangeFormType"
-                @success="onForgetPasswordSuccess"
-              />
+              <ForgetPassword @back="onChangeFormType" @success="onForgetPasswordSuccess" />
             </div>
 
             <!--修改密码-->
@@ -158,13 +125,13 @@ const {
   onChangeFormType,
   onForgetPasswordSuccess,
   onChangePasswordBack,
-  onChangePasswordSuccess,
+  onChangePasswordSuccess
 } = useEvent();
 </script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "LoginPage",
+  name: "LoginPage"
 });
 </script>

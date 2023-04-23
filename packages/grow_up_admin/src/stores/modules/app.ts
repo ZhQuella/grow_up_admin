@@ -6,7 +6,7 @@ export const useAppStore = defineStore({
     webFullScreen: false,
     settingActive: false,
     searchActive: false,
-    isPutAway: false,
+    isPutAway: false
   }),
   getters: {
     getWebFullScreen(): boolean {
@@ -20,7 +20,7 @@ export const useAppStore = defineStore({
     },
     getIsPutAway(): boolean {
       return this.isPutAway;
-    },
+    }
   },
   actions: {
     setWebFullScreen(isFullScreen: boolean) {
@@ -34,6 +34,6 @@ export const useAppStore = defineStore({
     },
     setIsPutAway(isPutAway: boolean) {
       this.isPutAway = isPutAway;
-    },
-  },
+    }
+  }
 });

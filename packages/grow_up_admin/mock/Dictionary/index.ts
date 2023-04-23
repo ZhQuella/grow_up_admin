@@ -10,15 +10,15 @@ export default [
           dictList: [
             {
               code: "1",
-              label: "启用",
+              label: "启用"
             },
             {
               code: "0",
-              label: "禁用",
-            },
-          ],
-        },
+              label: "禁用"
+            }
+          ]
+        }
       };
-    },
-  },
+    }
+  }
 ];

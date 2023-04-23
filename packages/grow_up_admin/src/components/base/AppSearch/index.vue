@@ -10,11 +10,7 @@
       <n-icon :component="SearchOutlined" />
     </template>
   </el-input>
-  <SearchContainer
-    class="enter-y mt-[14px]"
-    :search-value="searchValue"
-    @select="onSelect"
-  />
+  <SearchContainer class="enter-y mt-[14px]" :search-value="searchValue" @select="onSelect" />
 </template>
 
 <script setup lang="ts">
@@ -33,6 +29,6 @@ const onSelect = () => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "AppSearch",
+  name: "AppSearch"
 });
 </script>

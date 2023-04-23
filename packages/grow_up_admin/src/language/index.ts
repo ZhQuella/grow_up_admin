@@ -20,15 +20,15 @@ declare module "@vue/runtime-core" {
 const i18n: I18n = createI18n({
   locale: storageExample.get(LOCALE_KEY, "ch"),
   legacy: false,
-  messages: { ch, en },
+  messages: { ch, en }
 });
 
 export default (app: App) => {
   app.use(i18n);
   app.use(ElementPlus, {
-    locale: elzhCn,
+    locale: elzhCn
   });
   app.use(ElementPlus, {
-    locale: elEn,
+    locale: elEn
   });
 };

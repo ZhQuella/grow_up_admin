@@ -12,9 +12,9 @@ const menuList = [
         name: "dataReport",
         icon: "ChartCombo",
         path: "dataReport",
-        component: "Dashboard/dataReport/index.vue",
-      },
-    ],
+        component: "Dashboard/dataReport/index.vue"
+      }
+    ]
   },
   {
     label: "功能",
@@ -26,35 +26,35 @@ const menuList = [
         name: "boot",
         icon: "CloudLogging",
         path: "guidance",
-        component: "Feat/guidance/index.vue",
+        component: "Feat/guidance/index.vue"
       },
       {
         label: "标签操作",
         name: "OpenSubpage",
         icon: "PageBreak",
         path: "OpenSubpage",
-        component: "Feat/OpenSubpage/index.vue",
+        component: "Feat/OpenSubpage/index.vue"
       },
       {
         label: "本地下载Excel",
         name: "DownExcel",
         icon: "Download",
         path: "DownExcel",
-        component: "Feat/DownExcel/index.vue",
+        component: "Feat/DownExcel/index.vue"
       },
       {
         label: "消息示例",
         name: "MessagePrompt",
         icon: "Notification",
         path: "MessagePrompt",
-        component: "Feat/MessagePrompt/index.vue",
+        component: "Feat/MessagePrompt/index.vue"
       },
       {
         label: "数字动画",
         name: "CountToExample",
         icon: "NumberOutlined",
         path: "CountToExample",
-        component: "Feat/CountToExample/index.vue",
+        component: "Feat/CountToExample/index.vue"
       }
     ]
   },
@@ -69,7 +69,7 @@ const menuList = [
         icon: "Development",
         path: "customPage1",
         component: "Custom/customPage1/index.vue",
-        custom: true,
+        custom: true
       },
       {
         label: "自定义2",
@@ -85,7 +85,7 @@ const menuList = [
             icon: "Development",
             path: "customPage1-1",
             component: "Custom/customPage1/index.vue",
-            custom: true,
+            custom: true
           },
           {
             label: "自定义2-2",
@@ -93,11 +93,11 @@ const menuList = [
             icon: "Development",
             path: "customPage2-2",
             component: "Custom/customPage2/index.vue",
-            custom: true,
-          },
-        ],
-      },
-    ],
+            custom: true
+          }
+        ]
+      }
+    ]
   },
   {
     label: "系统管理",
@@ -109,10 +109,10 @@ const menuList = [
         name: "AccountManagement",
         icon: "GroupAccount",
         path: "account-management",
-        component: "System/Account/index.vue",
-      },
-    ],
-  },
+        component: "System/Account/index.vue"
+      }
+    ]
+  }
 ];
 
 export default [
@@ -124,10 +124,10 @@ export default [
         code: 10000,
         message: "成功",
         result: {
-          menuList,
-        },
+          menuList
+        }
       };
-    },
+    }
   },
   {
     url: "/user/authority/signs",
@@ -137,9 +137,9 @@ export default [
         code: 10000,
         message: "成功",
         result: {
-          roleSings,
-        },
+          roleSings
+        }
       };
-    },
-  },
+    }
+  }
 ];

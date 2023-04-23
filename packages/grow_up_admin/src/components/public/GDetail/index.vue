@@ -8,16 +8,16 @@ import { provide, toRefs } from "vue";
 const props = defineProps({
   model: {
     type: Object,
-    default: () => ({}),
+    default: () => ({})
   },
   labelWidth: {
     type: String,
-    default: "",
+    default: ""
   },
   align: {
     type: String,
-    default: "right",
-  },
+    default: "right"
+  }
 });
 
 provide("g-detail", props);
@@ -26,6 +26,6 @@ provide("g-detail", props);
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "GDetail",
+  name: "GDetail"
 });
 </script>

@@ -30,6 +30,6 @@ export const useInit = ({ id, emit }: prop) => {
   });
 
   return {
-    usedRecordList,
+    usedRecordList
   };
 };

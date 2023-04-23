@@ -34,12 +34,12 @@ import { computed } from "vue";
 const props = defineProps({
   searchData: {
     type: Object,
-    default: () => ({}),
+    default: () => ({})
   },
   config: {
     type: Object,
-    default: () => ({}),
-  },
+    default: () => ({})
+  }
 });
 
 const isSlot = computed(() => {
@@ -50,6 +50,6 @@ const isSlot = computed(() => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "AbstractEle",
+  name: "AbstractEle"
 });
 </script>

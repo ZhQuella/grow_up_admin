@@ -22,7 +22,6 @@ hero:
       text: "Pro 版本"
       link: ""
       target: _blank
-
 # features:
 #   - icon: <span class="i-carbon:ibm-toolchain"></span>
 #     title: Fully Customizable
@@ -53,7 +52,7 @@ hero:
 #   - icon: <span class="i-carbon-face-wink hover:i-carbon-face-satisfied"></span>
 #     title: Pure CSS Icons
 #     details: "Use any icon as a single class"
-#     link: /presets/icons 
+#     link: /presets/icons
 #     linkText: "@unocss/preset-icons"
 #   - icon: <span class="i-carbon:group-objects"></span>
 #     title: Variant Groups

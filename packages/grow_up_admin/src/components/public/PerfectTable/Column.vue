@@ -8,14 +8,14 @@ export default defineComponent({
   props: {
     children: {
       type: Array,
-      default: (): any[] => [],
-    },
+      default: (): any[] => []
+    }
   },
   setup(props) {
     const { children } = toRefs(props);
 
     const state = reactive({
-      columns: [],
+      columns: []
     });
 
     watch(
@@ -25,7 +25,7 @@ export default defineComponent({
       },
       {
         immediate: true,
-        deep: true,
+        deep: true
       }
     );
 
@@ -51,6 +51,6 @@ export default defineComponent({
     };
 
     return () => <>{renderColumnsFn(unref(children))}</>;
-  },
+  }
 });
 </script>

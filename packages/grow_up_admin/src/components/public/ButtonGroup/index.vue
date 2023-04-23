@@ -1,14 +1,7 @@
 <template>
   <div class="flex">
-    <template
-      v-for="(item, index) of showBtns"
-      :key="index"
-    >
-      <el-tooltip
-        effect="dark"
-        :content="item.title"
-        placement="top"
-      >
+    <template v-for="(item, index) of showBtns" :key="index">
+      <el-tooltip effect="dark" :content="item.title" placement="top">
         <span class="pr-[10px]">
           <el-button
             link
@@ -44,11 +37,7 @@
           </template>
         </el-button>
       </template>
-      <div
-        v-for="(item, index) of hidenBtns"
-        :key="index"
-        class="p-[10px]"
-      >
+      <div v-for="(item, index) of hidenBtns" :key="index" class="p-[10px]">
         <el-button
           :type="item.type"
           link
@@ -57,10 +46,7 @@
           @click="onGroupClick(item)"
         >
           <template #icon>
-            <el-icon
-              size="19px"
-              class="align-middle"
-            >
+            <el-icon size="19px" class="align-middle">
               <component :is="item.icon" />
             </el-icon>
           </template>
@@ -119,6 +105,6 @@ const onGroupClick = (item: GroupBtn) => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "ButtonGroup",
+  name: "ButtonGroup"
 });
 </script>

@@ -7,10 +7,7 @@
     >
       <Layout>
         <template #logo>
-          <router-link
-            :to="homePath"
-            class="block h-full pl-[10px] w-full pr-[40px] pt-[5px]"
-          >
+          <router-link :to="homePath" class="block h-full pl-[10px] w-full pr-[40px] pt-[5px]">
             <Logo :show-title="!collapsed" />
           </router-link>
         </template>
@@ -94,6 +91,6 @@ onCreated();
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "IndexPage",
+  name: "IndexPage"
 });
 </script>

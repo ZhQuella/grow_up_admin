@@ -1,9 +1,6 @@
 const DEFAULT_CACHE_TIME = 60 * 60 * 24 * 7;
 
-export const createStorage = ({
-  prefixKey = "",
-  storage = localStorage,
-} = {}) => {
+export const createStorage = ({ prefixKey = "", storage = localStorage } = {}) => {
   const Storage = class {
     storage = storage;
     prefixKey?: string = prefixKey;
@@ -15,7 +12,7 @@ export const createStorage = ({
     set(key: string, value: any, expire: number | null = DEFAULT_CACHE_TIME) {
       const stringData = JSON.stringify({
         value,
-        expire: expire !== null ? new Date().getTime() + expire * 1000 : null,
+        expire: expire !== null ? new Date().getTime() + expire * 1000 : null
       });
       this.storage.setItem(this.getKey(key), stringData);
     }
@@ -45,11 +42,7 @@ export const createStorage = ({
       this.storage.clear();
     }
 
-    setCookie(
-      name: string,
-      value: any,
-      expire: number | null = DEFAULT_CACHE_TIME
-    ) {
+    setCookie(name: string, value: any, expire: number | null = DEFAULT_CACHE_TIME) {
       document.cookie = `${this.getKey(name)}=${value}; Max-Age=${expire}`;
     }
 

@@ -8,6 +8,6 @@ export const useEvent = ({ state }: props) => {
   };
 
   return {
-    setColumns,
+    setColumns
   };
 };

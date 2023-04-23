@@ -2,16 +2,16 @@ export default [
   {
     key: "getVerificationCode",
     url: "/verification/code",
-    method: "post",
+    method: "post"
   },
   {
     key: "testVerificationCode",
     url: "/test/verification/code",
-    method: "post",
+    method: "post"
   },
   {
     key: "modifyPassword",
     url: "/modify/account/password",
-    method: "post",
-  },
+    method: "post"
+  }
 ];

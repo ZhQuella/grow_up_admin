@@ -13,27 +13,16 @@
   >
     <template #header="{ close, titleId, titleClass }">
       <div class="flex justify-between">
-        <h4
-          :id="titleId"
-          class="text-[14px]"
-          :class="titleClass"
-        >
+        <h4 :id="titleId" class="text-[14px]" :class="titleClass">
           {{ title }}
         </h4>
         <div>
-          <el-button
-            link
-            @click="onFullscreenChange"
-          >
+          <el-button link @click="onFullscreenChange">
             <el-icon class="el-icon--left">
               <component :is="fullscreenIconName" />
             </el-icon>
           </el-button>
-          <el-button
-            link
-            class="ml-[10px]"
-            @click="close"
-          >
+          <el-button link class="ml-[10px]" @click="close">
             <el-icon class="el-icon--left">
               <Close />
             </el-icon>
@@ -55,16 +44,16 @@ const gDialog = ref();
 const porps = defineProps({
   modelValue: {
     type: Boolean,
-    default: false,
+    default: false
   },
   destroyOnClose: {
     type: Boolean,
-    default: true,
+    default: true
   },
   title: {
     type: String,
-    default: "",
-  },
+    default: ""
+  }
 });
 const { modelValue } = toRefs(porps);
 
@@ -90,6 +79,6 @@ const onFullscreenChange = () => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "GDialog",
+  name: "GDialog"
 });
 </script>

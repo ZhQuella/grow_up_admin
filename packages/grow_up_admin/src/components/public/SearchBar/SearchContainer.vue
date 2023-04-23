@@ -16,19 +16,9 @@
       </el-button>
     </div>
   </div>
-  <el-scrollbar
-    height="350px"
-    class="overflow-visible"
-  >
-    <ul
-      v-if="state.currentSelect.length"
-      class="p-[10px]"
-    >
-      <li
-        v-for="(item, index) of state.currentSelect"
-        :key="item.model"
-        class="flex pb-[10px]"
-      >
+  <el-scrollbar height="350px" class="overflow-visible">
+    <ul v-if="state.currentSelect.length" class="p-[10px]">
+      <li v-for="(item, index) of state.currentSelect" :key="item.model" class="flex pb-[10px]">
         <div class="w-[260px] grow-0 shrink-0 pr-[10px]">
           <el-select
             class="w-full"
@@ -52,11 +42,7 @@
         </div>
 
         <div class="flex-1">
-          <AbstractEle
-            v-if="item.elType"
-            :search-data="state.searchData"
-            :config="item"
-          />
+          <AbstractEle v-if="item.elType" :search-data="state.searchData" :config="item" />
         </div>
         <div class="grow-0 shrink-0 w-[30px]">
           <el-button
@@ -70,14 +56,8 @@
         </div>
       </li>
     </ul>
-    <div
-      v-else
-      class="h-full w-full"
-    >
-      <el-empty
-        :image-size="200"
-        :description="$t('PUBLIC.NOT_DATA_TEXT')"
-      />
+    <div v-else class="h-full w-full">
+      <el-empty :image-size="200" :description="$t('PUBLIC.NOT_DATA_TEXT')" />
     </div>
   </el-scrollbar>
 </template>
@@ -90,31 +70,29 @@ import AbstractEle from "components/public/AbstractEle/index.vue";
 const props = defineProps({
   search: {
     type: Array,
-    default: () => [],
+    default: () => []
   },
   defaultData: {
     type: Object,
-    default: () => ({}),
-  },
+    default: () => ({})
+  }
 });
 const { search, defaultData } = toRefs(props);
 
 const state = reactive({
   currentSelect: [],
   searchData: {},
-  notDeleteModels: [],
+  notDeleteModels: []
 });
 
 watch(
   () => defaultData.value,
   (newValue: any) => {
-    state.searchData = JSON.parse(
-      JSON.stringify({ ...newValue, ...state.searchData })
-    );
+    state.searchData = JSON.parse(JSON.stringify({ ...newValue, ...state.searchData }));
   },
   {
     deep: true,
-    immediate: true,
+    immediate: true
   }
 );
 
@@ -129,7 +107,7 @@ watch(
     });
   },
   {
-    immediate: true,
+    immediate: true
   }
 );
 
@@ -192,13 +170,13 @@ const resetDefault = () => {
 defineExpose({
   getSearchData,
   resetSearch,
-  resetDefault,
+  resetDefault
 });
 </script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "SearchContainer",
+  name: "SearchContainer"
 });
 </script>

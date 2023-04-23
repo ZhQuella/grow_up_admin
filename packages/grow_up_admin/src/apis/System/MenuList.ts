@@ -2,11 +2,11 @@ export default [
   {
     key: "getMenuList",
     url: "/menu/list",
-    method: "get",
+    method: "get"
   },
   {
     key: "getRoleSings",
     url: "/user/authority/signs",
-    method: "get",
-  },
+    method: "get"
+  }
 ];

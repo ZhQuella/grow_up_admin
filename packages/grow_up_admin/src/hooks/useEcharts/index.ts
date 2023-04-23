@@ -26,8 +26,8 @@ export const useEcharts = (elRef: Ref<HTMLDivElement>) => {
     chartInstance?.resize({
       animation: {
         duration: 300,
-        easing: "quadraticIn",
-      },
+        easing: "quadraticIn"
+      }
     });
   }
 
@@ -51,7 +51,7 @@ export const useEcharts = (elRef: Ref<HTMLDivElement>) => {
     }
     return {
       backgroundColor: "transparent",
-      ...cacheOptions.value,
+      ...cacheOptions.value
     } as EChartsOption;
   });
 
@@ -102,6 +102,6 @@ export const useEcharts = (elRef: Ref<HTMLDivElement>) => {
     setOptions,
     resize,
     echarts,
-    getInstance,
+    getInstance
   };
 };

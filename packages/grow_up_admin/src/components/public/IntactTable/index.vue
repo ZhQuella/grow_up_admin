@@ -19,36 +19,36 @@ const tableRef = ref();
 const props = defineProps({
   height: {
     type: Number,
-    default: 0,
+    default: 0
   },
   width: {
     type: Number,
-    default: 0,
+    default: 0
   },
   columns: {
     type: Array,
-    default: () => [],
+    default: () => []
   },
   data: {
     type: Array,
-    default: () => [],
+    default: () => []
   },
   onlyKey: {
     type: String,
-    default: "id",
-  },
+    default: "id"
+  }
 });
 
 const { state, allColumns } = useInitColumns({
-  columns: props.columns,
+  columns: props.columns
 });
 
 const { setColumns } = useEvent({
-  state,
+  state
 });
 
 defineExpose({
-  setColumns,
+  setColumns
 });
 
 onActivated(async () => {
@@ -60,6 +60,6 @@ onActivated(async () => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "IntactTable",
+  name: "IntactTable"
 });
 </script>

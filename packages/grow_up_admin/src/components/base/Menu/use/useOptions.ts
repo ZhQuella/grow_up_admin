@@ -38,12 +38,10 @@ export const useOptions = () => {
         const menu = {
           label,
           name: path ? toPaht : name,
-          icon,
+          icon
         };
         if (children) {
-          const childs = (resetMenuOption(children) as never[]).filter(
-            (el) => el
-          );
+          const childs = (resetMenuOption(children) as never[]).filter((el) => el);
           Reflect.set(menu, "children", childs);
         }
         return menu;
@@ -99,6 +97,6 @@ export const useOptions = () => {
   return {
     menuList,
     menuActiveKey,
-    onSelectMenu,
+    onSelectMenu
   };
 };

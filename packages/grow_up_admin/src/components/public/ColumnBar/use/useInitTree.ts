@@ -11,7 +11,7 @@ export const useInitTree = ({ columns, nodeKey }: initProps) => {
   const state = reactive({
     catchTreeCheckedKeys: [],
     catchVisible: {},
-    treeData: [],
+    treeData: []
   });
 
   watch(
@@ -20,7 +20,7 @@ export const useInitTree = ({ columns, nodeKey }: initProps) => {
       state.treeData = deepCopy(newValue);
     },
     {
-      immediate: true,
+      immediate: true
     }
   );
 
@@ -98,6 +98,6 @@ export const useInitTree = ({ columns, nodeKey }: initProps) => {
     state,
     allChild,
     isAllChecked,
-    getAllChild,
+    getAllChild
   };
 };

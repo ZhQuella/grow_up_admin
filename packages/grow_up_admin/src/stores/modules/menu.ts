@@ -17,7 +17,7 @@ export const useMenuStore = defineStore({
     // 后台菜单列表
     backMenuList: [],
     // 前台菜单列表
-    frontMenuList: [],
+    frontMenuList: []
   }),
   getters: {
     getCollapsed(): boolean {
@@ -31,7 +31,7 @@ export const useMenuStore = defineStore({
       const { allMenuList } = this;
       const menuList = filterBinaryTree(allMenuList);
       return menuList;
-    },
+    }
   },
   actions: {
     setCollapsed(collapsed: boolean) {
@@ -45,6 +45,6 @@ export const useMenuStore = defineStore({
     },
     setBackMenuList(backMenuList: MenuType[]) {
       this.backMenuList = backMenuList;
-    },
-  },
+    }
+  }
 });

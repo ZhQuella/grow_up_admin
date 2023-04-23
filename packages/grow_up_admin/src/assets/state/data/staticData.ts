@@ -3,10 +3,10 @@ import { LanguageItem } from "types/language";
 export const internationOption: LanguageItem[] = [
   {
     label: "中文",
-    key: "ch",
+    key: "ch"
   },
   {
     label: "English",
-    key: "en",
-  },
+    key: "en"
+  }
 ];

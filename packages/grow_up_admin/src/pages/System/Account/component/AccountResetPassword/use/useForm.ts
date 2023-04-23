@@ -13,7 +13,7 @@ export const useForm = ({ emit }: Prop) => {
   const formRef = ref();
 
   const formData = reactive({
-    password: "",
+    password: ""
   });
 
   const rules = computed(() => ({
@@ -21,18 +21,16 @@ export const useForm = ({ emit }: Prop) => {
       {
         required: true,
         message: "请输入初始密码",
-        trigger: "change",
-      },
-    ],
+        trigger: "change"
+      }
+    ]
   }));
 
   const onReset = async () => {
     buttonLoading.value = true;
     try {
       await formRef.value.validate();
-      const [error] = await to(
-        accoutMethods.accountResetPassword({ data: formData })
-      );
+      const [error] = await to(accoutMethods.accountResetPassword({ data: formData }));
       if (error) {
         const { message } = error;
         ElMessage.error(message);
@@ -56,6 +54,6 @@ export const useForm = ({ emit }: Prop) => {
     rules,
     formData,
     onClean,
-    onReset,
+    onReset
   };
 };

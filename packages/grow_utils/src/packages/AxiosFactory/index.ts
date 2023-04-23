@@ -28,9 +28,7 @@ export default class AxiosFactory extends Request {
     }
     let createConfig = [];
     if (filters.length) {
-      createConfig = requestConfigs.filter((el: RequestItem) =>
-        filters.includes(el.key || "")
-      );
+      createConfig = requestConfigs.filter((el: RequestItem) => filters.includes(el.key || ""));
     } else {
       createConfig = requestConfigs;
     }

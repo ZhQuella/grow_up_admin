@@ -17,19 +17,9 @@
         class="text-[18px] ml-[5px]"
         @click="toggle"
       />
-      <el-popover
-        v-model="messageActive"
-        trigger="click"
-        width="340px"
-      >
+      <el-popover v-model="messageActive" trigger="click" width="340px">
         <template #reference>
-          <el-button
-            :icon="Notification"
-            size="large"
-            circle
-            text
-            class="text-[18px] ml-[5px]"
-          />
+          <el-button :icon="Notification" size="large" circle text class="text-[18px] ml-[5px]" />
         </template>
         <MessageList />
       </el-popover>
@@ -41,13 +31,7 @@
         class="text-[18px] ml-[5px]"
         @click="onSettingHadnler"
       />
-      <el-button
-        :icon="Help"
-        size="large"
-        circle
-        text
-        class="text-[18px] ml-[5px]"
-      />
+      <el-button :icon="Help" size="large" circle text class="text-[18px] ml-[5px]" />
     </div>
     <div class="pt-[5px] ml-[5px]">
       <el-dropdown @command="onDropdownClick">
@@ -65,11 +49,7 @@
             </p>
           </div>
           <el-dropdown-menu>
-            <el-dropdown-item
-              v-for="(item, index) of options"
-              :key="index"
-              :command="item.key"
-            >
+            <el-dropdown-item v-for="(item, index) of options" :key="index" :command="item.key">
               <el-icon>
                 <component :is="item.icon" />
               </el-icon>
@@ -106,9 +86,9 @@ const {
   onSettingHadnler,
   onSearchHeadler,
   onDropdownClick,
-  messageActive,
+  messageActive
 } = useEvent({
-  t: i18n.t,
+  t: i18n.t
 });
 
 const options = computed(() => {
@@ -116,13 +96,13 @@ const options = computed(() => {
     {
       label: i18n.t("APP_SEARCH.USER_DATA"),
       key: "profile",
-      icon: "User",
+      icon: "User"
     },
     {
       label: i18n.t("APP_SEARCH.LOG_OUT"),
       key: "logout",
-      icon: "Logout",
-    },
+      icon: "Logout"
+    }
   ];
 });
 </script>
@@ -130,6 +110,6 @@ const options = computed(() => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "OptionsComponent",
+  name: "OptionsComponent"
 });
 </script>

@@ -1,25 +1,10 @@
 <template>
   <div class="flex h-[5px]">
-    <div
-      v-show="strength >= 0"
-      class="w-1/5 h-[5px] bg-green-300 mr-[4px] -enter-x"
-    />
-    <div
-      v-show="strength >= 1"
-      class="w-1/5 mr-[4px] bg-green-400 -enter-x"
-    />
-    <div
-      v-show="strength >= 2"
-      class="w-1/5 mr-[4px] bg-yellow-400 -enter-x"
-    />
-    <div
-      v-show="strength >= 3"
-      class="w-1/5 mr-[4px] bg-orange-400 -enter-x"
-    />
-    <div
-      v-show="strength === 4"
-      class="w-1/5 bg-red-400 -enter-x"
-    />
+    <div v-show="strength >= 0" class="w-1/5 h-[5px] bg-green-300 mr-[4px] -enter-x" />
+    <div v-show="strength >= 1" class="w-1/5 mr-[4px] bg-green-400 -enter-x" />
+    <div v-show="strength >= 2" class="w-1/5 mr-[4px] bg-yellow-400 -enter-x" />
+    <div v-show="strength >= 3" class="w-1/5 mr-[4px] bg-orange-400 -enter-x" />
+    <div v-show="strength === 4" class="w-1/5 bg-red-400 -enter-x" />
   </div>
 </template>
 
@@ -29,8 +14,8 @@ import { computed } from "vue";
 const props = defineProps({
   value: {
     type: String,
-    default: "",
-  },
+    default: ""
+  }
 });
 
 const strength = computed(() => {
@@ -48,6 +33,6 @@ const strength = computed(() => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "ChangePassword",
+  name: "ChangePassword"
 });
 </script>

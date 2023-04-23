@@ -12,21 +12,21 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
   const systemMentMethod = axios.create("accountMent");
 
   const state = reactive({
-    selectList: [],
+    selectList: []
   });
 
   const dialogConfig = reactive({
     visible: false,
     conmponetName: "",
     title: "",
-    data: {},
+    data: {}
   });
 
   const drawerConfig = reactive({
     visible: false,
     conmponetName: "",
     title: "",
-    data: {},
+    data: {}
   });
 
   // ~ 表格操作配置
@@ -42,7 +42,7 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
         dialogConfig.conmponetName = "AccountInfo";
         dialogConfig.data = row;
       },
-      authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
+      authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
     },
     {
       title: "修改",
@@ -59,7 +59,7 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
       authority: "LIST_PAGE:EL_BASE_LIST:REPORT",
       disabled: (space: any): boolean => {
         return space.row.state !== "0";
-      },
+      }
     },
     {
       title: "删除",
@@ -72,35 +72,31 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
       disabled: (space: any): boolean => {
         return space.row.state !== "0";
       },
-      authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
+      authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
     },
     {
       title: "停用",
       type: "danger",
       icon: "AiStatusFailed",
       func: async ({ row }: any) => {
-        await await ElMessageBox.confirm(
-          "账号停用后将无法继续使用，是否继续？",
-          "温馨提示",
-          {
-            confirmButtonText: "停用",
-            cancelButtonText: "取消",
-            type: "warning",
-          }
-        );
+        await await ElMessageBox.confirm("账号停用后将无法继续使用，是否继续？", "温馨提示", {
+          confirmButtonText: "停用",
+          cancelButtonText: "取消",
+          type: "warning"
+        });
         const ids = [row.id];
         const data = { ids, state: "0" };
         await onAccountChangeState(data);
         getAccountList();
         ElMessage({
           type: "success",
-          message: "账号停用成功",
+          message: "账号停用成功"
         });
       },
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
       show: (space: any): boolean => {
         return space.row.state !== "0";
-      },
+      }
     },
     {
       title: "启用",
@@ -113,13 +109,13 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
         getAccountList();
         ElMessage({
           type: "success",
-          message: "账号启用成功",
+          message: "账号启用成功"
         });
       },
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
       show: (space: any): boolean => {
         return space.row.state === "0";
-      },
+      }
     },
     {
       title: "重置密码",
@@ -132,7 +128,7 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
         dialogConfig.conmponetName = "AccountResetPassword";
         dialogConfig.data = row;
       },
-      authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
+      authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
     },
     {
       title: "解绑",
@@ -142,7 +138,7 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
         const { id } = row;
         onAccountUnbind([id]);
       },
-      authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
+      authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
     },
     {
       title: "账号历史",
@@ -155,7 +151,7 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
         drawerConfig.conmponetName = "AccountHistory";
         drawerConfig.data = row;
       },
-      authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
+      authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
     },
     {
       title: "使用记录",
@@ -168,8 +164,8 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
         drawerConfig.conmponetName = "AccountUseRecord";
         drawerConfig.data = row;
       },
-      authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
-    },
+      authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
+    }
   ]);
 
   // ~ 表格批量操作配置
@@ -184,7 +180,7 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
         dialogConfig.title = `新增账号`;
         dialogConfig.conmponetName = "AccountCreate";
         dialogConfig.data = {};
-      },
+      }
     },
     {
       title: "批量删除",
@@ -199,7 +195,7 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
       disabled: () => {
         return !state.selectList.length;
-      },
+      }
     },
     {
       title: "批量解绑",
@@ -214,8 +210,8 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
       disabled: () => {
         return !state.selectList.length;
-      },
-    },
+      }
+    }
   ]);
 
   const onDialogClose = () => {
@@ -229,7 +225,7 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
     await ElMessageBox.confirm("删除内容无法恢复，是否继续？", "温馨提示", {
       confirmButtonText: "删除",
       cancelButtonText: "取消",
-      type: "warning",
+      type: "warning"
     });
     const [error] = await to(systemMentMethod.deleteAccount({ data: { ids } }));
     if (error) {
@@ -239,7 +235,7 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
     }
     ElMessage({
       type: "success",
-      message: "删除成功",
+      message: "删除成功"
     });
     getAccountList();
   };
@@ -248,7 +244,7 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
     message &&
       ElMessage({
         type: "success",
-        message,
+        message
       });
     onDialogClose();
     getAccountList();
@@ -268,15 +264,11 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
 
   const onAccountUnbind = async (ids: string[]) => {
     const [messageError] = await to(
-      ElMessageBox.confirm(
-        "账号解绑后绑定人员将无法继续时候，且无法获知登录人员",
-        "温馨提示",
-        {
-          confirmButtonText: "解绑",
-          cancelButtonText: "取消",
-          type: "warning",
-        }
-      )
+      ElMessageBox.confirm("账号解绑后绑定人员将无法继续时候，且无法获知登录人员", "温馨提示", {
+        confirmButtonText: "解绑",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
     );
     if (messageError) return Promise.reject();
     const [error] = await to(systemMentMethod.accountUnbind({ data: { ids } }));
@@ -287,7 +279,7 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
     }
     ElMessage({
       type: "success",
-      message: "解绑成功",
+      message: "解绑成功"
     });
     getAccountList();
   };
@@ -309,6 +301,6 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
     onDialogClose,
     onAccountSuccess,
     onPerfectTableSelect,
-    onAccountUnbind,
+    onAccountUnbind
   };
 };

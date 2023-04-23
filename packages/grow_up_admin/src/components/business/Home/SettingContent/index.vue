@@ -32,6 +32,6 @@ import LayoutSelect from "components/base/LayoutSelect/index.vue";
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "SettingContent",
+  name: "SettingContent"
 });
 </script>

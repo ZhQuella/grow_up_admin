@@ -12,6 +12,6 @@ export const useTable = () => {
     page,
     size,
     layout,
-    total,
+    total
   };
 };

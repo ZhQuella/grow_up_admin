@@ -16,22 +16,10 @@
         >
           <slot name="header" />
         </el-header>
-        <el-main
-          v-if="$slots.main"
-          ref="mainRef"
-          class="p-[0px]"
-        >
-          <slot
-            name="main"
-            :height="mainHeight"
-            :width="mainWidth"
-          />
+        <el-main v-if="$slots.main" ref="mainRef" class="p-[0px]">
+          <slot name="main" :height="mainHeight" :width="mainWidth" />
         </el-main>
-        <el-footer
-          v-if="$slots.footer"
-          class="px-[10px]"
-          height="40px"
-        >
+        <el-footer v-if="$slots.footer" class="px-[10px]" height="40px">
           <slot name="footer" />
         </el-footer>
       </el-container>
@@ -64,18 +52,18 @@ onMounted(() => {
 defineProps({
   isAside: {
     type: Boolean,
-    default: false,
+    default: false
   },
   asideWidth: {
     type: String,
-    default: "240px",
-  },
+    default: "240px"
+  }
 });
 </script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "PageLayout",
+  name: "PageLayout"
 });
 </script>

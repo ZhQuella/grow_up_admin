@@ -1,14 +1,6 @@
 <template>
-  <div
-    v-loading="loading"
-    class="h-full"
-  >
-    <iframe
-      ref="iframeRef"
-      :src="iframeSrc"
-      class="w-full h-full"
-      @load="onIframeLoad"
-    />
+  <div v-loading="loading" class="h-full">
+    <iframe ref="iframeRef" :src="iframeSrc" class="w-full h-full" @load="onIframeLoad" />
   </div>
 </template>
 
@@ -33,6 +25,6 @@ const onIframeLoad = () => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "EmbedPage",
+  name: "EmbedPage"
 });
 </script>

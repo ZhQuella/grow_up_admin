@@ -4,21 +4,11 @@
       <template #header>
         <div class="flex justify-between">
           <div class="pt-[8px]">
-            <ButtonGroup
-              :button-group="optionGroup"
-              :max="5"
-              show-text
-            />
+            <ButtonGroup :button-group="optionGroup" :max="5" show-text />
           </div>
           <div class="pt-[3px]">
-            <SearchBar
-              :search="searchList"
-              @search="onTableSeach"
-            />
-            <ColumnBar
-              :columns="columns"
-              @confirm="onColumnsBarConfirm"
-            />
+            <SearchBar :search="searchList" @search="onTableSeach" />
+            <ColumnBar :columns="columns" @confirm="onColumnsBarConfirm" />
           </div>
         </div>
       </template>
@@ -31,19 +21,12 @@
           @select="onPerfectTableSelect"
         >
           <template #btnOption="btnOption">
-            <ButtonGroup
-              :button-group="buttonGroup"
-              :max="4"
-              :data="btnOption"
-            />
+            <ButtonGroup :button-group="buttonGroup" :max="4" :data="btnOption" />
           </template>
         </PerfectTable>
       </template>
       <template #footer>
-        <div
-          :span="12"
-          class="flex justify-end pt-[10px]"
-        >
+        <div :span="12" class="flex justify-end pt-[10px]">
           <el-pagination
             v-model:current-page="page"
             v-model:page-size="size"
@@ -69,7 +52,7 @@ import ButtonGroup from "components/public/ButtonGroup/index.vue";
 
 const tableRef = ref();
 const state = reactive({
-  selectList: [],
+  selectList: []
 });
 
 // ~ 表格操作配置
@@ -81,7 +64,7 @@ const buttonGroup = computed(() => [
     func: (row: any) => {
       console.log(row, 1);
     },
-    authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
+    authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
   },
   {
     title: "删除",
@@ -90,7 +73,7 @@ const buttonGroup = computed(() => [
     func: (row: any) => {
       console.log(row, 2);
     },
-    authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
+    authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
   },
   {
     title: "报表",
@@ -100,7 +83,7 @@ const buttonGroup = computed(() => [
       console.log(row, 3);
     },
     color: "#626aef",
-    authority: "LIST_PAGE:EL_BASE_LIST:REPORT",
+    authority: "LIST_PAGE:EL_BASE_LIST:REPORT"
   },
   {
     title: "其他",
@@ -113,8 +96,8 @@ const buttonGroup = computed(() => [
     authority: "LIST_PAGE:EL_BASE_LIST:REPORT",
     disabled: () => {
       return true;
-    },
-  },
+    }
+  }
 ]);
 
 // ~ 表格批量操作配置
@@ -129,8 +112,8 @@ const optionGroup = computed(() => [
     authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
     disabled: () => {
       return !state.selectList.length;
-    },
-  },
+    }
+  }
 ]);
 
 const { pageSizes, page, size, layout, total } = useTable();
@@ -141,43 +124,43 @@ const searchList = [
     elType: "el-input",
     labelText: "导入文件ID1",
     model: "fileId1",
-    placeholder: "请输入文件ID1",
+    placeholder: "请输入文件ID1"
   },
   {
     elType: "el-input",
     labelText: "导入文件ID2",
     model: "fileId2",
-    placeholder: "请输入文件ID2",
+    placeholder: "请输入文件ID2"
   },
   {
     elType: "el-input",
     labelText: "导入文件ID3",
     model: "fileId3",
-    placeholder: "请输入文件ID3",
+    placeholder: "请输入文件ID3"
   },
   {
     elType: "el-input",
     labelText: "导入文件ID4",
     model: "fileId4",
-    placeholder: "请输入文件ID4",
+    placeholder: "请输入文件ID4"
   },
   {
     elType: "el-input",
     labelText: "导入文件ID5",
     model: "fileId5",
-    placeholder: "请输入文件ID5",
+    placeholder: "请输入文件ID5"
   },
   {
     elType: "el-input",
     labelText: "导入文件ID",
     model: "fileId",
-    placeholder: "请输入文件ID",
+    placeholder: "请输入文件ID"
   },
   {
     elType: "el-input",
     labelText: "导入文件ID6",
     model: "fileId6",
-    placeholder: "请输入文件ID6",
+    placeholder: "请输入文件ID6"
   },
   {
     elType: "el-date-picker",
@@ -186,13 +169,13 @@ const searchList = [
     type: "daterange",
     "start-placeholder": "开始日期",
     "end-placeholder": "结束日期",
-    "value-format": "YYYY-MM-DD",
+    "value-format": "YYYY-MM-DD"
   },
   {
     collapseTags: true,
     requestConfig: {
       method: "get",
-      url: "/system/dict/data/type/sys_yes_no_number",
+      url: "/system/dict/data/type/sys_yes_no_number"
     },
     elType: "el-select",
     labelText: "是否清洗",
@@ -205,26 +188,26 @@ const searchList = [
     options: [
       {
         dictLabel: "是",
-        dictValue: "1",
+        dictValue: "1"
       },
       {
         dictLabel: "否",
-        dictValue: "0",
-      },
-    ],
-  },
+        dictValue: "0"
+      }
+    ]
+  }
 ];
 
 // ~ 表头配置
 const columns = [
   {
     field: "serial",
-    title: "序号",
+    title: "序号"
   },
   {
     field: "date",
     title: "日期",
-    "show-overflow-tooltip": true,
+    "show-overflow-tooltip": true
   },
   {
     field: "name",
@@ -234,46 +217,46 @@ const columns = [
       {
         field: "name1",
         title: "名称1",
-        "show-overflow-tooltip": true,
+        "show-overflow-tooltip": true
       },
       {
         field: "name2",
         title: "名称2",
-        "show-overflow-tooltip": true,
+        "show-overflow-tooltip": true
       },
       {
         field: "name3",
         title: "名称3",
-        "show-overflow-tooltip": true,
-      },
-    ],
+        "show-overflow-tooltip": true
+      }
+    ]
   },
   {
     field: "state",
     title: "状态",
-    "show-overflow-tooltip": true,
+    "show-overflow-tooltip": true
   },
   {
     field: "city",
     title: "城市",
-    "show-overflow-tooltip": true,
+    "show-overflow-tooltip": true
   },
   {
     field: "address",
     title: "地址",
-    "show-overflow-tooltip": true,
+    "show-overflow-tooltip": true
   },
   {
     field: "zip",
     title: "编号",
-    "show-overflow-tooltip": true,
+    "show-overflow-tooltip": true
   },
   {
     field: "operate",
     title: "操作",
     fixed: "right",
-    width: "160px",
-  },
+    width: "160px"
+  }
 ];
 
 const data = [
@@ -284,7 +267,7 @@ const data = [
     state: "California",
     city: "Los Angeles",
     address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
+    zip: "CA 90036"
   },
   {
     id: 2,
@@ -293,7 +276,7 @@ const data = [
     state: "California",
     city: "Los Angeles",
     address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
+    zip: "CA 90036"
   },
   {
     id: 3,
@@ -302,7 +285,7 @@ const data = [
     state: "California",
     city: "Los Angeles",
     address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
+    zip: "CA 90036"
   },
   {
     id: 4,
@@ -311,7 +294,7 @@ const data = [
     state: "California",
     city: "Los Angeles",
     address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
+    zip: "CA 90036"
   },
   {
     id: 5,
@@ -320,7 +303,7 @@ const data = [
     state: "California",
     city: "Los Angeles",
     address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
+    zip: "CA 90036"
   },
   {
     id: 6,
@@ -329,7 +312,7 @@ const data = [
     state: "California",
     city: "Los Angeles",
     address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
+    zip: "CA 90036"
   },
   {
     id: 7,
@@ -338,7 +321,7 @@ const data = [
     state: "California",
     city: "Los Angeles",
     address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
+    zip: "CA 90036"
   },
   {
     id: 8,
@@ -347,7 +330,7 @@ const data = [
     state: "California",
     city: "Los Angeles",
     address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
+    zip: "CA 90036"
   },
   {
     id: 9,
@@ -356,7 +339,7 @@ const data = [
     state: "California",
     city: "Los Angeles",
     address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
+    zip: "CA 90036"
   },
   {
     id: 10,
@@ -365,8 +348,8 @@ const data = [
     state: "California",
     city: "Los Angeles",
     address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-  },
+    zip: "CA 90036"
+  }
 ];
 
 const onTableSeach = (data: any) => {
@@ -385,6 +368,6 @@ const onColumnsBarConfirm = (columns: any[]) => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "ElBaseList",
+  name: "ElBaseList"
 });
 </script>

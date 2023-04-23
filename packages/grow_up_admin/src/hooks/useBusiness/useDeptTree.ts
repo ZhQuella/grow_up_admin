@@ -7,7 +7,7 @@ export const useDeptTree = () => {
   const deptSearchValue = ref("");
   const state = reactive({
     deptTreeList: [],
-    filterResult: [],
+    filterResult: []
   });
 
   const deptTreeList = computed(() => {
@@ -23,11 +23,7 @@ export const useDeptTree = () => {
     state.deptTreeList = [...deptTree];
   };
 
-  const DFSMethod = (
-    node: Tree,
-    result: Tree[][] = [],
-    current: Tree[] = []
-  ) => {
+  const DFSMethod = (node: Tree, result: Tree[][] = [], current: Tree[] = []) => {
     node.label && current.push(node);
     if (node.label && node?.children?.length) {
       node.children.forEach((v) => DFSMethod(v, result, current));
@@ -59,7 +55,7 @@ export const useDeptTree = () => {
       if (index !== -1) {
         result.push({
           id,
-          label,
+          label
         });
       }
     }
@@ -80,6 +76,6 @@ export const useDeptTree = () => {
     onDeptInput,
     deptSearchValue,
     deptTreeList,
-    filterResult,
+    filterResult
   };
 };

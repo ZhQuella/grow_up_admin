@@ -18,12 +18,12 @@ export const useNaiveUI = () => {
       screenRef: computed(() => unref(globalScreenRef)),
       widthRef: globalWidthRef,
       screenEnum,
-      realWidthRef: globalRealWidthRef,
+      realWidthRef: globalRealWidthRef
     };
   };
 
   return {
     renderIcon,
-    useBreakpoint,
+    useBreakpoint
   };
 };

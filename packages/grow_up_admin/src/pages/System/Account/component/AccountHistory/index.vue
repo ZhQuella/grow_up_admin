@@ -22,19 +22,19 @@ const emit = defineEmits(["close"]);
 const porps = defineProps({
   row: {
     type: Object,
-    default: () => ({}),
-  },
+    default: () => ({})
+  }
 });
 
 const { historyList } = useInit({
   id: porps.row.id,
-  emit,
+  emit
 });
 </script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "AccountHistory",
+  name: "AccountHistory"
 });
 </script>

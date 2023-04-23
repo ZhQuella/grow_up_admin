@@ -1,8 +1,5 @@
 <template>
-  <div
-    ref="chartRef"
-    :style="{ width, height }"
-  />
+  <div ref="chartRef" :style="{ width, height }" />
 </template>
 
 <script lang="ts" setup>
@@ -13,12 +10,12 @@ const props = defineProps({
   loading: Boolean,
   width: {
     type: String as PropType<string>,
-    default: "100%",
+    default: "100%"
   },
   height: {
     type: String as PropType<string>,
-    default: "300px",
-  },
+    default: "300px"
+  }
 });
 const chartRef = ref<HTMLDivElement | null>(null);
 const { setOptions } = useEcharts(chartRef as Ref<HTMLDivElement>);
@@ -31,11 +28,11 @@ watch(
     }
     setOptions({
       tooltip: {
-        trigger: "item",
+        trigger: "item"
       },
       legend: {
         bottom: "1%",
-        left: "center",
+        left: "center"
       },
       series: [
         {
@@ -47,35 +44,35 @@ watch(
           itemStyle: {
             borderRadius: 10,
             borderColor: "#fff",
-            borderWidth: 2,
+            borderWidth: 2
           },
           label: {
             show: false,
-            position: "center",
+            position: "center"
           },
           emphasis: {
             label: {
               show: true,
               fontSize: "12",
-              fontWeight: "bold",
-            },
+              fontWeight: "bold"
+            }
           },
           labelLine: {
-            show: false,
+            show: false
           },
           data: [
             { value: 1048, name: "搜索引擎" },
             { value: 735, name: "直接访问" },
             { value: 580, name: "邮件营销" },
-            { value: 484, name: "联盟广告" },
+            { value: 484, name: "联盟广告" }
           ],
           animationType: "scale",
           animationEasing: "exponentialInOut",
           animationDelay: function () {
             return Math.random() * 100;
-          },
-        },
-      ],
+          }
+        }
+      ]
     });
   },
   { immediate: true }
@@ -85,6 +82,6 @@ watch(
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "VisitSource",
+  name: "VisitSource"
 });
 </script>

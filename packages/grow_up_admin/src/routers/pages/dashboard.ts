@@ -9,7 +9,7 @@ export default [
         name: "analysis",
         icon: "Bot",
         path: "analysis",
-        component: "Dashboard/analysis/index.vue",
+        component: "Dashboard/analysis/index.vue"
       },
       {
         label: "工作台",
@@ -18,8 +18,8 @@ export default [
         path: "workbench",
         component: "Dashboard/workbench/index.vue",
         hidden: true,
-        default: true,
-      },
-    ],
-  },
+        default: true
+      }
+    ]
+  }
 ];

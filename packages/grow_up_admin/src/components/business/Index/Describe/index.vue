@@ -23,6 +23,6 @@ defineProps<Props>();
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "DescribeComponent",
+  name: "DescribeComponent"
 });
 </script>

@@ -4,8 +4,8 @@
     :class="[
       {
         'border-sky-600': layoutType === 'roof',
-        'border-gray-300': layoutType !== 'roof',
-      },
+        'border-gray-300': layoutType !== 'roof'
+      }
     ]"
     @click="onSelectLayoutType('roof')"
   >
@@ -18,8 +18,8 @@
     :class="[
       {
         'border-sky-600': layoutType === 'side',
-        'border-gray-300': layoutType !== 'side',
-      },
+        'border-gray-300': layoutType !== 'side'
+      }
     ]"
     @click="onSelectLayoutType('side')"
   >
@@ -60,6 +60,6 @@ const onSelectLayoutType = (type: LayoutTypes) => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "LayoutSelect",
+  name: "LayoutSelect"
 });
 </script>

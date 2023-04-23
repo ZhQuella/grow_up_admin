@@ -9,7 +9,7 @@ import {
   RadarChart,
   ScatterChart,
   ThemeRiverChart,
-  EffectScatterChart,
+  EffectScatterChart
 } from "echarts/charts";
 
 import {
@@ -27,7 +27,7 @@ import {
   TimelineComponent,
   CalendarComponent,
   GraphicComponent,
-  SingleAxisComponent,
+  SingleAxisComponent
 } from "echarts/components";
 
 import { SVGRenderer } from "echarts/renderers";
@@ -57,7 +57,7 @@ echarts.use([
   ScatterChart,
   ThemeRiverChart,
   SingleAxisComponent,
-  EffectScatterChart,
+  EffectScatterChart
 ]);
 
 export default echarts;

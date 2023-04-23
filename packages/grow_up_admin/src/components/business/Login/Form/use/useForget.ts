@@ -8,6 +8,6 @@ export const useForget = ({ emit }: props) => {
   };
 
   return {
-    onForgetPass,
+    onForgetPass
   };
 };

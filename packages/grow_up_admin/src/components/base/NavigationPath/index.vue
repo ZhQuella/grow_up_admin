@@ -1,9 +1,6 @@
 <template>
   <el-breadcrumb>
-    <el-breadcrumb-item
-      v-for="item of state.breadcrumbMap"
-      :key="item.name"
-    >
+    <el-breadcrumb-item v-for="item of state.breadcrumbMap" :key="item.name">
       {{ item.label }}
     </el-breadcrumb-item>
   </el-breadcrumb>
@@ -22,7 +19,7 @@ const multipleTab = useMultipleTab();
 const { currentRoute } = useRouter();
 
 const state = reactive<any>({
-  breadcrumbMap: [],
+  breadcrumbMap: []
 });
 
 const visitedViews = computed(() => {
@@ -34,7 +31,7 @@ const resetMenuOption = (menuList: MenuType[]): any[] => {
     const { label, name, children } = el;
     const menu = {
       label,
-      name,
+      name
     };
     if (children) {
       const childs = resetMenuOption(children) as never[];
@@ -44,10 +41,7 @@ const resetMenuOption = (menuList: MenuType[]): any[] => {
   });
 };
 
-const getPathById = (
-  tree: any[],
-  target: RouteLocationNormalizedLoaded
-): any[] => {
+const getPathById = (tree: any[], target: RouteLocationNormalizedLoaded): any[] => {
   if (!tree.length) {
     return [];
   }
@@ -56,7 +50,7 @@ const getPathById = (
     return data.map((item: any) => {
       const node: any = {
         item,
-        parent,
+        parent
       };
       targetData[item.name] = node;
       node.children = loops(item.children, node);
@@ -95,14 +89,14 @@ watch(
       if (tabItem) {
         result.push({
           label: tabItem?.meta?.label,
-          name: tabItem?.meta?.componentName,
+          name: tabItem?.meta?.componentName
         });
       }
     }
     state.breadcrumbMap = result;
   },
   {
-    immediate: true,
+    immediate: true
   }
 );
 </script>
@@ -110,6 +104,6 @@ watch(
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "NavigationPath",
+  name: "NavigationPath"
 });
 </script>

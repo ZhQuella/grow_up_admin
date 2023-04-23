@@ -16,16 +16,16 @@ export default [
           code: 10000,
           message: "获取验证码成功",
           result: {
-            verificationCode,
-          },
+            verificationCode
+          }
         };
       } else {
         return {
           code: 50002,
-          message: "手机号不存在或账号不存在",
+          message: "手机号不存在或账号不存在"
         };
       }
-    },
+    }
   },
   {
     url: "/test/verification/code",
@@ -37,16 +37,16 @@ export default [
           code: 10000,
           message: "验证码验证成功",
           result: {
-            identifying,
-          },
+            identifying
+          }
         };
       } else {
         return {
           code: 50003,
-          message: "验证码验证失败",
+          message: "验证码验证失败"
         };
       }
-    },
+    }
   },
   {
     url: "/modify/account/password",
@@ -56,15 +56,15 @@ export default [
       if (identifying === tagCode && newPassword) {
         return {
           code: 10000,
-          message: "密码修改成功",
+          message: "密码修改成功"
         };
       } else {
         return {
           code: 50004,
-          message: "密码修改失败",
+          message: "密码修改失败"
         };
       }
-    },
+    }
   },
   {
     url: "/modify/phone/login",
@@ -77,15 +77,15 @@ export default [
           code: 10000,
           message: "登录成功",
           result: {
-            token,
-          },
+            token
+          }
         };
       } else {
         return {
           code: 50004,
-          message: "账号错误或验证码错误",
+          message: "账号错误或验证码错误"
         };
       }
-    },
-  },
+    }
+  }
 ];

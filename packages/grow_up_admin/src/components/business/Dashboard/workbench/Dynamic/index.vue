@@ -4,11 +4,7 @@
       v-for="(item, index) in 20"
       :key="index"
       class="flex py-[5px] px-[10px]"
-      :class="[
-        index !== 19
-          ? ['border-b-[1px] border-BORDER_COLOR2 border-solid']
-          : [],
-      ]"
+      :class="[index !== 19 ? ['border-b-[1px] border-BORDER_COLOR2 border-solid'] : []]"
     >
       <div class="pr-[10px] flex justify-center">
         <el-avatar
@@ -31,6 +27,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "DynamicComponent",
+  name: "DynamicComponent"
 });
 </script>

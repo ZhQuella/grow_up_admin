@@ -25,14 +25,14 @@ export default class DownExcel {
         fixedHead = false,
         verticalCentered = true,
         horizontalCentered = false,
-        flexConfig = {},
+        flexConfig = {}
       } = sheet;
       const maxLevel = this.maxLevel(header);
       const flex = fixedHead
         ? {
             state: "frozen",
             xSplit: 0,
-            ySplit: maxLevel + 1,
+            ySplit: maxLevel + 1
           }
         : flexConfig;
       const worksheet = this.createdSheet(workbook, {
@@ -41,20 +41,16 @@ export default class DownExcel {
         tabColor,
         verticalCentered,
         horizontalCentered,
-        flex,
+        flex
       });
       this.outMarges[i] = {
         startCell: -1,
         basisRow: 0,
         basisCell: 0,
-        maxRow: 0,
+        maxRow: 0
       };
       const lastChild = this.getLastChild(header);
-      const mergeInfo = this.resetMergeHeaderInfo(
-        header,
-        maxLevel,
-        this.outMarges[i]
-      );
+      const mergeInfo = this.resetMergeHeaderInfo(header, maxLevel, this.outMarges[i]);
       this.createdHead(worksheet, mergeInfo, { border });
       this.setData(worksheet, lastChild, data, { border }, maxLevel, callBack);
     }
@@ -62,22 +58,15 @@ export default class DownExcel {
   }
 
   createdSheet(workbook: any, config: any) {
-    const {
-      title,
-      showGridLines,
-      tabColor,
-      verticalCentered,
-      horizontalCentered,
-      flex,
-    } = config;
+    const { title, showGridLines, tabColor, verticalCentered, horizontalCentered, flex } = config;
     return workbook.addWorksheet(title, {
       views: [{ showGridLines, ...flex }],
       properties: {
         tabColor: { argb: tabColor },
         verticalCentered,
-        horizontalCentered,
+        horizontalCentered
       },
-      pageSetup: { verticalCentered, horizontalCentered },
+      pageSetup: { verticalCentered, horizontalCentered }
     });
   }
 
@@ -97,7 +86,7 @@ export default class DownExcel {
         bgColor = "E8EAEC",
         color = "606266",
         width = "",
-        minWidth = "",
+        minWidth = ""
       } = item;
       const s26BS = this.convertDSTo26BS(sc + 1);
       const e26BS = this.convertDSTo26BS(ec + 1);
@@ -110,22 +99,22 @@ export default class DownExcel {
           top: { style: "thin" },
           left: { style: "thin" },
           bottom: { style: "thin" },
-          right: { style: "thin" },
+          right: { style: "thin" }
         });
       worksheet.getCell(end).alignment = {
         vertical: "middle",
-        horizontal: align,
+        horizontal: align
       };
       worksheet.getCell(end).fill = {
         type: "pattern",
         pattern: "solid",
         fgColor: { argb: `FF${bgColor}` },
-        bgColor: { argb: `FF${bgColor}` },
+        bgColor: { argb: `FF${bgColor}` }
       };
       worksheet.getCell(end).font = {
         color: { argb: `FF${color}` },
         size: 10,
-        bold: true,
+        bold: true
       };
       if (width || minWidth) {
         const dobCol = worksheet.getColumn(s26BS);
@@ -134,14 +123,7 @@ export default class DownExcel {
     }
   }
 
-  setData(
-    worksheet: any,
-    lastChild: any,
-    data: any,
-    addition: any,
-    maxLevel: any,
-    callBack?: Fn
-  ) {
+  setData(worksheet: any, lastChild: any, data: any, addition: any, maxLevel: any, callBack?: Fn) {
     const { border } = addition;
     for (let i = 0; i < data.length; i++) {
       const item = data[i];
@@ -150,14 +132,13 @@ export default class DownExcel {
         const ele = lastChild[j];
         const r = this.convertDSTo26BS(j + 1);
         const coordinate = `${r}${c}`;
-        worksheet.getCell(coordinate).value =
-          item[ele.field] === undefined ? "-" : item[ele.field];
+        worksheet.getCell(coordinate).value = item[ele.field] === undefined ? "-" : item[ele.field];
         border &&
           (worksheet.getCell(coordinate).border = {
             top: { style: "thin" },
             left: { style: "thin" },
             bottom: { style: "thin" },
-            right: { style: "thin" },
+            right: { style: "thin" }
           });
       }
       callBack && callBack(item, worksheet, c);
@@ -168,7 +149,7 @@ export default class DownExcel {
   async openDownloadDialog(workbook: any, fileName: any) {
     const buffer = await workbook.xlsx.writeBuffer();
     const blob: any = new Blob([buffer], {
-      type: "application/octet-stream",
+      type: "application/octet-stream"
     });
     let url = "";
     if (typeof blob == "object" && blob instanceof Blob) {
@@ -259,13 +240,7 @@ export default class DownExcel {
           result.push({ s, e, item });
         }
         outMarge.basisRow += 1;
-        this.resetMergeHeaderInfo(
-          item.children,
-          maxLevel,
-          outMarge,
-          result,
-          false
-        );
+        this.resetMergeHeaderInfo(item.children, maxLevel, outMarge, result, false);
       }
     }
     outMarge.basisRow -= 1;

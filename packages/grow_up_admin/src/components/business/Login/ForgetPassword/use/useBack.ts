@@ -8,6 +8,6 @@ export const useBack = ({ emit }: prop) => {
   };
 
   return {
-    onBackClick,
+    onBackClick
   };
 };

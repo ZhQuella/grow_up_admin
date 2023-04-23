@@ -22,10 +22,7 @@
           <template #header>
             <span>{{ item.title }}</span>
           </template>
-          <component
-            :is="item.componentName"
-            :height="`${item.h * 30}px`"
-          />
+          <component :is="item.componentName" :height="`${item.h * 30}px`" />
         </el-card>
       </GridItem>
     </GridLayout>
@@ -47,7 +44,7 @@ const layout = [
     h: 11,
     i: 0,
     componentName: "GradientStackedArea",
-    title: "渐变堆叠面积图",
+    title: "渐变堆叠面积图"
   },
   {
     x: 0,
@@ -56,7 +53,7 @@ const layout = [
     h: 10,
     i: 1,
     componentName: "MixedLineAndBar",
-    title: "折柱混合",
+    title: "折柱混合"
   },
   {
     x: 8,
@@ -65,7 +62,7 @@ const layout = [
     h: 10,
     i: 2,
     componentName: "EffectScatter",
-    title: "涟漪特效散点图",
+    title: "涟漪特效散点图"
   },
   {
     x: 16,
@@ -74,7 +71,7 @@ const layout = [
     h: 10,
     i: 3,
     componentName: "HalfDoughnut",
-    title: "半环形图",
+    title: "半环形图"
   },
   {
     x: 0,
@@ -83,8 +80,8 @@ const layout = [
     h: 12,
     i: 4,
     componentName: "ThemeRiver",
-    title: "主题河流图",
-  },
+    title: "主题河流图"
+  }
 ];
 </script>
 
@@ -103,7 +100,7 @@ export default defineComponent({
     MixedLineAndBar,
     EffectScatter,
     HalfDoughnut,
-    ThemeRiver,
-  },
+    ThemeRiver
+  }
 });
 </script>

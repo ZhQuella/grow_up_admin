@@ -29,9 +29,7 @@ export const useEvent = ({ onlyKey, emit, state }: argProp) => {
     if (value) {
       selectData.value.push(row);
     } else {
-      const index = selectData.value.findIndex(
-        (val) => val[onlyKey] === cellValue
-      );
+      const index = selectData.value.findIndex((val) => val[onlyKey] === cellValue);
       if (index !== -1) {
         selectData.value.splice(index, 1);
       }
@@ -62,6 +60,6 @@ export const useEvent = ({ onlyKey, emit, state }: argProp) => {
     onTableCheckboxSelect,
     rowClassName,
     setColumns,
-    clearSelect,
+    clearSelect
   };
 };

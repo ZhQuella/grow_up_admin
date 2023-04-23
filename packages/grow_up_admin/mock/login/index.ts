@@ -13,15 +13,15 @@ export default [
           code: 10000,
           message: "登录成功",
           result: {
-            token,
-          },
+            token
+          }
         };
       } else {
         return {
           code: 50001,
-          message: "账号或密码错误",
+          message: "账号或密码错误"
         };
       }
-    },
-  },
+    }
+  }
 ];

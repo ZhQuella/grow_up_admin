@@ -4,7 +4,7 @@ import axios from "api/Dictionary";
 export const useDict = () => {
   const dictMethods = axios.create("dicts");
   const state: any = reactive({
-    accountStates: [],
+    accountStates: []
   });
 
   const getAccountState = async () => {
@@ -19,6 +19,6 @@ export const useDict = () => {
   });
 
   return {
-    ...toRefs(dictMap.value),
+    ...toRefs(dictMap.value)
   };
 };

@@ -6,11 +6,7 @@
           <div />
           <div class="pt-[3px]">
             <SearchBar />
-            <ColumnBar
-              :columns="columns"
-              node-key="dataKey"
-              @confirm="onColumnsBarConfirm"
-            />
+            <ColumnBar :columns="columns" node-key="dataKey" @confirm="onColumnsBarConfirm" />
           </div>
         </div>
       </template>
@@ -24,10 +20,7 @@
         />
       </template>
       <template #footer>
-        <div
-          :span="12"
-          class="flex justify-end pt-[10px]"
-        >
+        <div :span="12" class="flex justify-end pt-[10px]">
           <el-pagination
             v-model:current-page="page"
             v-model:page-size="size"
@@ -64,14 +57,10 @@ const generateColumns = (length = 10, prefix = "column-", props?: any) =>
     fixed: false,
     dataKey: `${prefix}${columnIndex}`,
     title: `Column ${columnIndex + 1}`,
-    width: 300,
+    width: 300
   }));
 
-const generateData = (
-  columns: ReturnType<typeof generateColumns>,
-  length = 200,
-  prefix = "row-"
-) =>
+const generateData = (columns: ReturnType<typeof generateColumns>, length = 200, prefix = "row-") =>
   Array.from({ length }).map((_, rowIndex) => {
     return columns.reduce(
       (rowData, column, columnIndex) => {
@@ -80,7 +69,7 @@ const generateData = (
       },
       {
         id: `${prefix}${rowIndex}`,
-        parentId: null,
+        parentId: null
       }
     );
   });
@@ -96,6 +85,6 @@ const onColumnsBarConfirm = (columns: any[]) => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "ElVirtualList",
+  name: "ElVirtualList"
 });
 </script>

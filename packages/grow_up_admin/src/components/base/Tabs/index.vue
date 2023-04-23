@@ -1,16 +1,8 @@
 <template>
   <div class="flex">
     <div class="flex-1 w-[1px]">
-      <el-tabs
-        :value="'first'"
-        class="syetem-tabs-warp"
-        :model-value="currentName"
-      >
-        <el-tab-pane
-          v-for="item in tabsList"
-          :key="item.fullPath"
-          :name="item.fullPath"
-        >
+      <el-tabs :value="'first'" class="syetem-tabs-warp" :model-value="currentName">
+        <el-tab-pane v-for="item in tabsList" :key="item.fullPath" :name="item.fullPath">
           <template #label>
             <ContextMenu
               :tag-item="item"
@@ -23,8 +15,8 @@
                   class="block pl-[10px] pr-[10px] leading-[30px]"
                   :class="[
                     {
-                      'pr-[25px]': !item?.meta?.default,
-                    },
+                      'pr-[25px]': !item?.meta?.default
+                    }
                   ]"
                   :to="{ ...item }"
                 >
@@ -74,13 +66,7 @@
           @select="onDropdownSelect"
           @visible-change="onHandleContextMenu"
         >
-          <el-button
-            :icon="ChevronDown"
-            size="large"
-            circle
-            text
-            class="text-[18px]"
-          />
+          <el-button :icon="ChevronDown" size="large" circle text class="text-[18px]" />
         </ContextMenu>
       </div>
     </div>
@@ -88,11 +74,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  ReloadOutlined,
-  FullscreenOutlined,
-  FullscreenExitOutlined,
-} from "@vicons/antd";
+import { ReloadOutlined, FullscreenOutlined, FullscreenExitOutlined } from "@vicons/antd";
 import { ChevronDown } from "@vicons/carbon";
 import ContextMenu from "components/base/ContextMenu/index.vue";
 import { useTabDropdown } from "./use/useTabDropdown";
@@ -122,7 +104,7 @@ const {
   closeTag,
   onRedload,
   addDrag,
-  curRoute,
+  curRoute
 } = useTabDropdown();
 
 const onTabRemove = (tag: any) => {
@@ -133,6 +115,6 @@ const onTabRemove = (tag: any) => {
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "TabsComponent",
+  name: "TabsComponent"
 });
 </script>

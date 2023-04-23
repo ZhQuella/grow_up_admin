@@ -6,12 +6,12 @@ export default {
     SYSTEM_LOADING: "系统疯狂加载中...",
     NOT_DATA_TEXT: "暂无数据",
     CANCEL_TEXT: "取消",
-    CONFIRM_TEXT: "确认",
+    CONFIRM_TEXT: "确认"
   },
   APP_OTHER: {
     LOGIN_OUT_CANCEL_PROMPT: "取消退出登录",
     LOGIN_OUT_TITLE: "温馨提示",
-    LOGIN_OUT_PROMPT: "您即将退出登录，是否继续？",
+    LOGIN_OUT_PROMPT: "您即将退出登录，是否继续？"
   },
   INDEX_SYETEM_DESCRIBE: {
     DESCRIBE_1: "一个会成长的框架",
@@ -22,35 +22,35 @@ export default {
     TRAIT: {
       "0": {
         TITLE: "最新的技术栈",
-        DESCRIBE: "基于Vue3、Vite、TypeScript等最新技术栈开发",
+        DESCRIBE: "基于Vue3、Vite、TypeScript等最新技术栈开发"
       },
       "1": {
         TITLE: "轻量快速的热重载",
-        DESCRIBE: "无论应用程序大小如何，都始终极快的模块热重载(HMR)",
+        DESCRIBE: "无论应用程序大小如何，都始终极快的模块热重载(HMR)"
       },
       "2": {
         TITLE: "丰富的示例",
-        DESCRIBE: "常见的Web端插件示例实现",
+        DESCRIBE: "常见的Web端插件示例实现"
       },
       "3": {
         TITLE: "组件封装",
-        DESCRIBE: "对日常使用频率较高的组件二次封装,满足基础工作需求",
+        DESCRIBE: "对日常使用频率较高的组件二次封装,满足基础工作需求"
       },
       "4": {
         TITLE: "优秀的布局方案",
-        DESCRIBE: "丰富的布局模式，具有高可配性，满足您的各类布局需求",
+        DESCRIBE: "丰富的布局模式，具有高可配性，满足您的各类布局需求"
       },
       "5": {
         TITLE: "预设样式",
-        DESCRIBE: "样式美观大方，不会 Css，也能随意组合，实现漂亮的页面",
-      },
+        DESCRIBE: "样式美观大方，不会 Css，也能随意组合，实现漂亮的页面"
+      }
     },
-    SPONSOR_TITLE: "赞助商",
+    SPONSOR_TITLE: "赞助商"
   },
   LOIN_STATE: {
     STATE_1: "轻便快捷的",
     STATE_2: "简洁大方的",
-    STATE_3: "开箱即用的",
+    STATE_3: "开箱即用的"
   },
   LOGIN_WORD: {
     ACCESS_MSG: "请输入账号",
@@ -69,10 +69,10 @@ export default {
     NEW_PASSWORD_CONTEXT: "请输入新密码",
     OLD_NEW_DIFFERENT: "两次密码不相同",
     PASSWORD_LEN_CONTEXT: "密码不能少于6位大于20位",
-    PHONE_NUM_ERROR: "请输入正确手机号",
+    PHONE_NUM_ERROR: "请输入正确手机号"
   },
   RECORD_INFO: {
-    DESCRIBE: "根据MIT许可证发布",
+    DESCRIBE: "根据MIT许可证发布"
   },
   TABS_DROPDOWN_OPTION: {
     RELOAD: "重新加载",
@@ -80,27 +80,27 @@ export default {
     CLOSE_LEFT_TAG: "关闭左侧标签",
     CLOSE_RIGHT_TAG: "关闭右侧标签",
     CLOSE_OTHER_TAG: "关闭其他标签",
-    CLOSE_ALL_TAG: "关闭所有标签",
+    CLOSE_ALL_TAG: "关闭所有标签"
   },
   APP_OPTION: {
     SETTING_TITLE: "系统设置",
     LANGUAGE_TITLE: "语言",
     THEME_TITLE: "主题",
-    LAYOUT_TITLE: "布局",
+    LAYOUT_TITLE: "布局"
   },
   APP_SEARCH: {
     SEARCH_MENU: "搜索菜单",
     SEARCH_PLACEHOLDER: "搜索",
     NOT_SEARCH_DATA: "暂无搜索结果",
     USER_DATA: "用户资料",
-    LOG_OUT: "退出登录",
+    LOG_OUT: "退出登录"
   },
   SEARCH_BAR: {
     SEARCH_TYPE_PLACEHOLDER: "请选择查询类型",
     ADD_SEARCH: "添加条件",
-    RESET_SYETEM: "系统默认",
+    RESET_SYETEM: "系统默认"
   },
   TABLE: {
-    SERIAL: "序号",
-  },
+    SERIAL: "序号"
+  }
 };

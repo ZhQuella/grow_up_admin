@@ -6,17 +6,17 @@ import { storageExample } from "grow_utils";
 export const useLanguageStore = defineStore({
   id: "locale",
   state: (): LanguageState => ({
-    locale: storageExample.get(LOCALE_KEY, "ch"),
+    locale: storageExample.get(LOCALE_KEY, "ch")
   }),
   getters: {
     getLocale(): LanguageType {
       return this.locale ?? "ch";
-    },
+    }
   },
   actions: {
     setLocale(locale: LanguageType) {
       this.locale = locale;
       storageExample.set(LOCALE_KEY, locale);
-    },
-  },
+    }
+  }
 });

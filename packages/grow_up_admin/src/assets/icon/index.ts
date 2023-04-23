@@ -7,7 +7,7 @@ const withe = ["Label"];
 export default (app: App) => {
   const iconMap = {
     ...antd,
-    ...carbon,
+    ...carbon
   };
 
   for (let name in iconMap) {

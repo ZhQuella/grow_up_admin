@@ -21,33 +21,33 @@ export const useContainer = () => {
       {
         emjo: "💡",
         title: t("INDEX_SYETEM_DESCRIBE.TRAIT.0.TITLE"),
-        detail: t("INDEX_SYETEM_DESCRIBE.TRAIT.0.DESCRIBE"),
+        detail: t("INDEX_SYETEM_DESCRIBE.TRAIT.0.DESCRIBE")
       },
       {
         emjo: "⚡️",
         title: t("INDEX_SYETEM_DESCRIBE.TRAIT.1.TITLE"),
-        detail: t("INDEX_SYETEM_DESCRIBE.TRAIT.1.DESCRIBE"),
+        detail: t("INDEX_SYETEM_DESCRIBE.TRAIT.1.DESCRIBE")
       },
       {
         emjo: "🔧",
         title: t("INDEX_SYETEM_DESCRIBE.TRAIT.2.TITLE"),
-        detail: t("INDEX_SYETEM_DESCRIBE.TRAIT.2.DESCRIBE"),
+        detail: t("INDEX_SYETEM_DESCRIBE.TRAIT.2.DESCRIBE")
       },
       {
         emjo: "📦",
         title: t("INDEX_SYETEM_DESCRIBE.TRAIT.3.TITLE"),
-        detail: t("INDEX_SYETEM_DESCRIBE.TRAIT.3.DESCRIBE"),
+        detail: t("INDEX_SYETEM_DESCRIBE.TRAIT.3.DESCRIBE")
       },
       {
         emjo: "🏭",
         title: t("INDEX_SYETEM_DESCRIBE.TRAIT.4.TITLE"),
-        detail: t("INDEX_SYETEM_DESCRIBE.TRAIT.4.DESCRIBE"),
+        detail: t("INDEX_SYETEM_DESCRIBE.TRAIT.4.DESCRIBE")
       },
       {
         emjo: "🔩",
         title: t("INDEX_SYETEM_DESCRIBE.TRAIT.5.TITLE"),
-        detail: t("INDEX_SYETEM_DESCRIBE.TRAIT.5.DESCRIBE"),
-      },
+        detail: t("INDEX_SYETEM_DESCRIBE.TRAIT.5.DESCRIBE")
+      }
     ];
   });
 
@@ -55,6 +55,6 @@ export const useContainer = () => {
     onPageContentScroll,
     isShowBorder,
     opacityNum,
-    traitIntroduces,
+    traitIntroduces
   };
 };

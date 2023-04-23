@@ -16,7 +16,7 @@ export const useForm = () => {
   const loginFormData = reactive({
     account: "admin",
     password: "123789456",
-    isRemember: false,
+    isRemember: false
   });
   const formLoginMethod = formLogin.create("LoginMethod");
 
@@ -25,16 +25,16 @@ export const useForm = () => {
       {
         required: true,
         message: i18n.t("LOGIN_WORD.ACCESS_MSG"),
-        trigger: ["input", "blur"],
-      },
+        trigger: ["input", "blur"]
+      }
     ],
     password: [
       {
         required: true,
         message: i18n.t("LOGIN_WORD.PASSORD_MSG"),
-        trigger: ["input", "blur"],
-      },
-    ],
+        trigger: ["input", "blur"]
+      }
+    ]
   }));
 
   const saveFormInfo = () => {
@@ -51,9 +51,7 @@ export const useForm = () => {
     loading.value = true;
     try {
       await loginFormRef.value.validate();
-      const [error, result] = await to(
-        formLoginMethod.accountLogin({ data: loginFormData })
-      );
+      const [error, result] = await to(formLoginMethod.accountLogin({ data: loginFormData }));
       if (error) {
         const { message } = error;
         ElMessage.error(message);
@@ -69,9 +67,7 @@ export const useForm = () => {
   };
 
   const resetLoginForm = () => {
-    const { account, password, isRemember } = JSON.parse(
-      storageExample.get(ACCOUNT_INFO) || "{}"
-    );
+    const { account, password, isRemember } = JSON.parse(storageExample.get(ACCOUNT_INFO) || "{}");
     if (account && password) {
       loginFormData.account = account;
       loginFormData.password = password;
@@ -88,6 +84,6 @@ export const useForm = () => {
     formRules,
     loginFormData,
     loginFormRef,
-    onLogin,
+    onLogin
   };
 };
