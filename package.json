@@ -7,9 +7,12 @@
   "author": "ZhQuella (Email:827265905@qq.com)",
   "main": "index.js",
   "scripts": {
-    "dev": "node ./scripts/dev.js",
     "preinstall": "npx only-allow pnpm",
+    "dev": "node ./scripts/dev.js",
+    "build": "node ./scripts/build.js",
+    "preview": "pnpm --filter grow_up_admin preview",
     "grow_admin:dev": "pnpm --filter grow_up_admin dev",
+    "grow_admin:build": "pnpm --filter grow_up_admin build",
     "grow_com:dev": "pnpm --filter grow_components dev",
     "grow_com:build": "pnpm --filter grow_components build",
     "grow_icon:dev": "pnpm --filter grow_admin_icons dev",

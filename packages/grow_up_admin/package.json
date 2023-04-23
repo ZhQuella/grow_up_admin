@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "test": "tsrv test"
+    "preview": "vite preview"
   },
   "keywords": [],
   "author": "",
