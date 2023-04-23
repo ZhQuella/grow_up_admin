@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
 import { THEME_KEY } from "@/assets/enums/cacheEnum";
-import { Storage } from "util/Storage";
+import { storageExample } from "grow_utils";
 import type { ThemeState, themeType } from "types/theme";
 
 export const useThemeStore = defineStore({
   id: "theme",
   state: (): ThemeState => ({
-    theme: Storage.get(THEME_KEY, "light"),
+    theme: storageExample.get(THEME_KEY, "light"),
   }),
   getters: {
     getTheme(): themeType {
@@ -16,7 +16,7 @@ export const useThemeStore = defineStore({
   actions: {
     setTheme(theme: themeType) {
       this.theme = theme;
-      Storage.set(THEME_KEY, theme);
+      storageExample.set(THEME_KEY, theme);
     },
   },
 });

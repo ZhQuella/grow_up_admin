@@ -1,5 +1,5 @@
 import { AUTHORITY_TOKEN } from "@/assets/enums/cacheEnum";
-import { createStorage } from "util/Storage";
+import { createStorage } from "grow_utils";
 import { useRouter } from "vue-router";
 
 export const useLoginSuccess = () => {

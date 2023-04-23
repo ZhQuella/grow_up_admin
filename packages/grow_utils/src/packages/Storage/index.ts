@@ -5,10 +5,10 @@ export const createStorage = ({
   storage = localStorage,
 } = {}) => {
   const Storage = class {
-    private storage = storage;
-    private prefixKey?: string = prefixKey;
+    storage = storage;
+    prefixKey?: string = prefixKey;
 
-    private getKey(key: string) {
+    getKey(key: string) {
       return `${this.prefixKey}${key}`.toUpperCase();
     }
 
@@ -80,6 +80,6 @@ export const createStorage = ({
   return new Storage();
 };
 
-export const Storage = createStorage();
+export const storageExample = createStorage();
 
 export default Storage;

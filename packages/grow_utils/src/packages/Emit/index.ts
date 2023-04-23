@@ -1,7 +1,7 @@
 /*
  * @Author: 事件总线
  * @Date: 2021-09-18 13:37:40
- * @LastEditTime: 2022-12-16 15:47:47
+ * @LastEditTime: 2023-04-23 14:06:22
  * @LastEditors: Please set LastEditors
  * @Description: 用于事件监听
  * @FilePath: \nova_ui_mobile\src\utils\Event.ts
@@ -14,7 +14,7 @@ import type { Fn } from "types/index";
  * @param {void}
  * @return {void}
  */
-class EventEmiter {
+export default class EventEmiter {
   private hashMap: any = {};
 
   static $instance: EventEmiter | null = null;
@@ -94,5 +94,3 @@ class EventEmiter {
     return this;
   }
 }
-
-export default new EventEmiter();

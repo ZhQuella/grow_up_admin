@@ -23,7 +23,8 @@
 </template>
 
 <script setup lang="ts">
-import DownExcel from "util/DownExcel/index";
+import { DownExcel } from "grow_utils";
+// import DownExcel from "util/DownExcel/index";
 
 const onLocalDownExcel = () => {
   const downLoadExcel = new DownExcel([

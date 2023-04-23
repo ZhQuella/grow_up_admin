@@ -7,7 +7,7 @@ import {
   TABS_LIST_KEY,
   TABS_CURRENT_KEY,
 } from "@/assets/enums/cacheEnum";
-import { createStorage } from "util/Storage";
+import { createStorage } from "grow_utils";
 import { useRouter } from "vue-router";
 import { ElMessageBox, ElMessage } from "element-plus";
 

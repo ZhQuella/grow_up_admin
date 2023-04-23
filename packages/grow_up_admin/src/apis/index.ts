@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
-import Request from "util/AxiosFactory";
-import { createStorage } from "util/Storage";
+import { Request } from "grow_utils";
+import { createStorage } from "grow_utils";
 import { AUTHORITY_TOKEN } from "@/assets/enums/cacheEnum";
 import { ElMessage } from "element-plus";
 

@@ -1,6 +1,6 @@
 import type { RawAxiosRequestConfig } from "axios";
 import type { RequestItem } from "types/Request";
-import Request from "util/AxiosFactory/Request";
+import Request from "./Request";
 
 export default class AxiosFactory extends Request {
   private RequestConfigMap: any = {};

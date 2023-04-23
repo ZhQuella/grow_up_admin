@@ -6,7 +6,7 @@ import elzhCn from "element-plus/dist/locale/zh-cn.mjs";
 import elEn from "element-plus/dist/locale/en.mjs";
 
 import { LOCALE_KEY } from "@/assets/enums/cacheEnum";
-import { Storage } from "util/Storage";
+import { storageExample } from "grow_utils";
 
 import ch from "./ch";
 import en from "./en";
@@ -18,7 +18,7 @@ declare module "@vue/runtime-core" {
 }
 
 const i18n: I18n = createI18n({
-  locale: Storage.get(LOCALE_KEY, "ch"),
+  locale: storageExample.get(LOCALE_KEY, "ch"),
   legacy: false,
   messages: { ch, en },
 });

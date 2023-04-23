@@ -1,7 +1,7 @@
 import { ref, onMounted, onUnmounted, nextTick } from "vue";
 import { useMenuStore } from "store/modules/menu";
 import { useLayoutStore } from "store/modules/layout";
-import { addEventResize, removeResizeListener } from "util/ElementResize/index";
+import { addEventResize, removeResizeListener } from "grow_utils";
 import { useAppStore } from "store/modules/app";
 import { debounce } from "util/index";
 

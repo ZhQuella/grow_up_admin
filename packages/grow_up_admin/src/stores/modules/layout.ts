@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { LAYOUT_KEY } from "@/assets/enums/cacheEnum";
-import { Storage } from "util/Storage";
+import { storageExample } from "grow_utils";
 import type { LayoutState, LayoutTypes } from "types/layout";
 
 const defaultValue = "side";
@@ -8,7 +8,7 @@ const defaultValue = "side";
 export const useLayoutStore = defineStore({
   id: "layout",
   state: (): LayoutState => ({
-    layout: Storage.get(LAYOUT_KEY, defaultValue),
+    layout: storageExample.get(LAYOUT_KEY, defaultValue),
   }),
   getters: {
     getLayoutType(): LayoutTypes {
@@ -18,7 +18,7 @@ export const useLayoutStore = defineStore({
   actions: {
     setLayout(layout: LayoutTypes) {
       this.layout = layout;
-      Storage.set(LAYOUT_KEY, layout);
+      storageExample.set(LAYOUT_KEY, layout);
     },
   },
 });

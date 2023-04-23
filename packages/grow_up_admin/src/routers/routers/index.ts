@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from "vue-router";
-import { createStorage } from "util/Storage";
+import { createStorage } from "grow_utils";
 import { AUTHORITY_TOKEN } from "@/assets/enums/cacheEnum";
 import { ROUTER_WHITELIST } from "@/assets/enums/systemEnum";
 

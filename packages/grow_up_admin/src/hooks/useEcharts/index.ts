@@ -4,7 +4,7 @@ import { tryOnUnmounted } from "@vueuse/core";
 import { computed, watch, unref, ref, nextTick } from "vue";
 import { useThemeStore } from "store/modules/theme";
 import echarts from "util/Echarts/index";
-import { addEventResize, removeResizeListener } from "util/ElementResize/index";
+import { addEventResize, removeResizeListener } from "grow_utils";
 import { useNaiveUI } from "hooks/useGrow/index";
 import { debounce } from "util/index";
 

@@ -1,3 +1,4 @@
+import { Fn } from "types/index";
 import ExcelJS from "exceljs";
 
 export default class DownExcel {
@@ -10,7 +11,7 @@ export default class DownExcel {
   }
 
   down(fileName: string, callBack?: Fn) {
-    const { sheets, outMarges } = this;
+    const { sheets } = this;
     const workbook = new ExcelJS.Workbook();
     for (let i = 0; i < sheets.length; i++) {
       const sheet = sheets[i];
@@ -139,7 +140,7 @@ export default class DownExcel {
     data: any,
     addition: any,
     maxLevel: any,
-    callBack: Fn
+    callBack?: Fn
   ) {
     const { border } = addition;
     for (let i = 0; i < data.length; i++) {
@@ -294,7 +295,6 @@ export default class DownExcel {
   //  获取最大层级
   //  只包含子级最大层级(不包含本级)
   maxLevel(arr: any[], isSetFloor = true) {
-    const floor = -1;
     let max = -1;
     function each(data: any, floor: number) {
       data.forEach((e: any) => {

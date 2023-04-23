@@ -1,7 +1,7 @@
 import to from "await-to-js";
 import { ref, reactive, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import { Storage } from "util/Storage";
+import { storageExample } from "grow_utils";
 import { useLoginSuccess } from "../../use/useLoginSuccess";
 import { ACCOUNT_INFO } from "@/assets/enums/cacheEnum";
 import formLogin from "api/Login";
@@ -40,11 +40,11 @@ export const useForm = () => {
   const saveFormInfo = () => {
     const { account, password, isRemember } = loginFormData;
     if (!isRemember) {
-      Storage.remove(ACCOUNT_INFO);
+      storageExample.remove(ACCOUNT_INFO);
       return;
     }
     const formData = { account, password, isRemember };
-    Storage.set(ACCOUNT_INFO, JSON.stringify(formData));
+    storageExample.set(ACCOUNT_INFO, JSON.stringify(formData));
   };
 
   const onLogin = async () => {
@@ -70,7 +70,7 @@ export const useForm = () => {
 
   const resetLoginForm = () => {
     const { account, password, isRemember } = JSON.parse(
-      Storage.get(ACCOUNT_INFO) || "{}"
+      storageExample.get(ACCOUNT_INFO) || "{}"
     );
     if (account && password) {
       loginFormData.account = account;

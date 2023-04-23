@@ -42,7 +42,7 @@
 <script setup lang="ts">
 import type { Ref } from "vue";
 import { ref, onMounted, onUnmounted } from "vue";
-import { addEventResize, removeResizeListener } from "util/ElementResize";
+import { addEventResize, removeResizeListener } from "grow_utils";
 // ! 待开发
 import { Splitpanes, Pane } from "splitpanes";
 

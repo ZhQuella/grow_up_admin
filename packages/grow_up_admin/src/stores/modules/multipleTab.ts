@@ -1,7 +1,7 @@
 import type { RouteLocationNormalizedLoaded } from "vue-router";
 import { toRaw } from "vue";
 import { defineStore } from "pinia";
-import { createStorage } from "util/Storage";
+import { createStorage } from "grow_utils";
 import { TABS_CURRENT_KEY, TABS_LIST_KEY } from "@/assets/enums/cacheEnum";
 import { getRawRoute, findIndex } from "util/System";
 import router from "router/index";

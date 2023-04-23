@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
 import type { LanguageState, LanguageType } from "types/language";
 import { LOCALE_KEY } from "@/assets/enums/cacheEnum";
-import { Storage } from "util/Storage";
+import { storageExample } from "grow_utils";
 
 export const useLanguageStore = defineStore({
   id: "locale",
   state: (): LanguageState => ({
-    locale: Storage.get(LOCALE_KEY, "ch"),
+    locale: storageExample.get(LOCALE_KEY, "ch"),
   }),
   getters: {
     getLocale(): LanguageType {
@@ -16,7 +16,7 @@ export const useLanguageStore = defineStore({
   actions: {
     setLocale(locale: LanguageType) {
       this.locale = locale;
-      Storage.set(LOCALE_KEY, locale);
+      storageExample.set(LOCALE_KEY, locale);
     },
   },
 });
