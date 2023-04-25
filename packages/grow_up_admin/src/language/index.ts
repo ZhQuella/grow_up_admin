@@ -13,7 +13,7 @@ import en from "./en";
 
 declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {
-    $t: any;
+    $t: any
   }
 }
 

@@ -12,6 +12,7 @@
 */*/yarn-error.log
 packages/azui/rollup-plugin-vue/index.d.ts
 node_modules
+*/*/node_modules
 lib
 coverage
 dist
