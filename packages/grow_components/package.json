@@ -10,5 +10,9 @@
   "scripts": {
     "build": "rollup -c --environment NODE_ENV:production",
     "dev": "rollup -c -w --environment NODE_ENV:development"
+  },
+  "devDependencies": {
+    "@vicons/antd": "^0.12.0",
+    "@vicons/carbon": "^0.12.0"
   }
 }

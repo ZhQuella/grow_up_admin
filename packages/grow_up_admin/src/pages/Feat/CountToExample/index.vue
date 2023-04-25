@@ -5,7 +5,7 @@
     </div>
     <div class="mx-[20px]">
       <div class="my-[20px] text-7xl text-pink-500 tracking-normal text-center">
-        <count-to
+        <GCountTo
           ref="counter"
           :start-val="config.startVal"
           :end-val="config.endVal"
@@ -80,7 +80,8 @@
 
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import CountTo from "components/public/CountTo/index.vue";
+import { GCountTo } from "grow_components";
+// import CountTo from "components/public/CountTo/index.vue";
 
 const config = reactive({
   startVal: 20,

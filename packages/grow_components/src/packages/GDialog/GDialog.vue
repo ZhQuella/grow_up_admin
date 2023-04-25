@@ -78,7 +78,15 @@ const onFullscreenChange = () => {
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { FullscreenExitOutlined, FullscreenOutlined } from "@vicons/antd";
+import { Close } from "@vicons/carbon";
+
 export default defineComponent({
-  name: "GDialog"
+  name: "GDialog",
+  components: {
+    FullscreenExitOutlined, 
+    FullscreenOutlined,
+    Close
+  }
 });
 </script>

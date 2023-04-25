@@ -1,9 +1,16 @@
 import { App, Component } from "vue";
 import { version } from "../package.json";
 
-import { GButton } from "./packages/Button";
+import { GCountTo } from "./packages/GCountTo";
+import { GDetail, GDetailItem } from "./packages/GDetail";
+import { GDialog } from "./packages/GDialog";
 
-const components: Component[] = [GButton];
+const components: Component[] = [
+  GCountTo,
+  GDetail,
+  GDetailItem,
+  GDialog
+];
 
 const install = (app: App) => {
   const useComponent = (component: Component) => {
@@ -21,9 +28,18 @@ const install = (app: App) => {
 const GrowConponent = {
   version,
   install,
-  GButton
+  GCountTo,
+  GDetail,
+  GDetailItem,
+  GDialog
 };
 
-export { version, GButton };
+export { 
+  version, 
+  GCountTo,
+  GDetail,
+  GDetailItem,
+  GDialog
+};
 
 export default GrowConponent;

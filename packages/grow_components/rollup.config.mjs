@@ -11,7 +11,7 @@ import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
 
 import pkg from "./package.json" assert { type: "json" };
-
+console.log(compileTemplate);
 const createBanner = () => {
   return `/*!
   * ${pkg.name} v${pkg.version}
@@ -52,7 +52,13 @@ export default defineConfig({
     commonjs(),
     ts(),
     jsx(),
-    vue({}),
+    vue({
+      target: 'browser',
+      preprocessStyles: true,
+      template: {
+        isProduction: true
+      }
+    }),
     json(),
     terser(),
     postcss()

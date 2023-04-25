@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { onUnmounted, reactive, ref, defineExpose, computed, watch } from "vue";
+import { onUnmounted, reactive, computed, watch } from "vue";
 
 const props = defineProps({
   startVal: {
@@ -220,7 +220,8 @@ onUnmounted(() => {
 
 <script lang="ts">
 import { defineComponent } from "vue";
+
 export default defineComponent({
-  name: "CountTo"
+  name: "GCountTo"
 });
 </script>
