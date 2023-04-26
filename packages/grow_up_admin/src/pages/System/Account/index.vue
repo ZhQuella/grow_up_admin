@@ -24,7 +24,7 @@
               <div
                 v-for="item of filterResult"
                 :key="item.id"
-                class="p-[5px] text-[13px] text-[var(--el-text-color-regular)] cursor-pointer"
+                class="px-[10px] py-[8px] text-[14px] text-[var(--el-text-color-regular)] cursor-pointer"
                 @click="onTreeNodeClick(item)"
               >
                 {{ item.label }}
@@ -148,77 +148,44 @@ const { deptTreeList, deptSearchValue, filterResult, onDeptInput } = useDeptTree
 // ~ 查询条件配置
 const searchList = [
   {
+    labelText: "账号",
+    placeholder: "请输入账号",
     elType: "el-input",
-    labelText: "导入文件ID1",
-    model: "fileId1",
-    placeholder: "请输入文件ID1"
+    isDefault: true,
+    model: "account"
   },
   {
-    elType: "el-input",
-    labelText: "导入文件ID2",
-    model: "fileId2",
-    placeholder: "请输入文件ID2"
-  },
-  {
-    elType: "el-input",
-    labelText: "导入文件ID3",
-    model: "fileId3",
-    placeholder: "请输入文件ID3"
-  },
-  {
-    elType: "el-input",
-    labelText: "导入文件ID4",
-    model: "fileId4",
-    placeholder: "请输入文件ID4"
-  },
-  {
-    elType: "el-input",
-    labelText: "导入文件ID5",
-    model: "fileId5",
-    placeholder: "请输入文件ID5"
-  },
-  {
-    elType: "el-input",
-    labelText: "导入文件ID",
-    model: "fileId",
-    placeholder: "请输入文件ID"
-  },
-  {
-    elType: "el-input",
-    labelText: "导入文件ID6",
-    model: "fileId6",
-    placeholder: "请输入文件ID6"
-  },
-  {
+    labelText: "创建日期",
     elType: "el-date-picker",
-    labelText: "日期区间",
-    model: "seles.create.date",
+    isDefault: true,
+    startPlaceholder: "请选择开始日期",
+    endPlaceholder: "请结束开始日期",
     type: "daterange",
-    "start-placeholder": "开始日期",
-    "end-placeholder": "结束日期",
-    "value-format": "YYYY-MM-DD"
+    model: "createDate",
+    valueFormat: "YYYY-DD-MM"
   },
   {
+    isDefault: true,
     collapseTags: true,
     requestConfig: {
       method: "get",
       url: "/system/dict/data/type/sys_yes_no_number"
     },
     elType: "el-select",
-    labelText: "是否清洗",
+    labelText: "账号状态",
     multiple: true,
     model: "cleanSignList",
     label: "dictLabel",
-    placeholder: "请选择是否清洗",
+    placeholder: "请选择账号状态",
     value: "dictValue",
     noDataText: "暂无数据",
     options: [
       {
-        dictLabel: "是",
+        dictLabel: "启用",
         dictValue: "1"
       },
       {
-        dictLabel: "否",
+        dictLabel: "停用",
         dictValue: "0"
       }
     ]

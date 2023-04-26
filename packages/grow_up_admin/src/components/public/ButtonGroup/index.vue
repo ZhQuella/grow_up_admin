@@ -32,7 +32,7 @@
         <el-button link>
           <template #icon>
             <el-icon size="19px">
-              <component :is="`MoreOutlined`" />
+              <component :is="`OverflowMenuHorizontal`" />
             </el-icon>
           </template>
         </el-button>
