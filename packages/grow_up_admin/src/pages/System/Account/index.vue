@@ -124,7 +124,14 @@ const { pageSizes, page, size, layout, total } = useTable();
 
 const { accountStates } = useDict();
 
-const { tableList, tableColumns, getAccountList, onTreeNodeClick, tableLoading } = useTableOption({
+const { 
+  searchData, 
+  tableList, 
+  tableColumns, 
+  getAccountList, 
+  onTreeNodeClick, 
+  tableLoading 
+} = useTableOption({
   tableTotal: total,
   accountStates
 });
@@ -198,7 +205,8 @@ const defaultProps = {
 };
 
 const onTableSeach = (data: any) => {
-  console.log(data);
+  searchData.value = data;
+  getAccountList();
 };
 
 const onColumnsBarConfirm = (columns: any[]) => {

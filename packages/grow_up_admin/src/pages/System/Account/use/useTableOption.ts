@@ -9,7 +9,10 @@ interface props {
   accountStates: Ref<any[]>;
 }
 
-export const useTableOption = ({ tableTotal, accountStates }: props) => {
+export const useTableOption = ({ 
+  tableTotal, 
+  accountStates
+}: props) => {
   const tableLoading = ref(false);
   const accountMethod = request.create("accountMent");
   const searchData = reactive<any>({});
@@ -121,11 +124,14 @@ export const useTableOption = ({ tableTotal, accountStates }: props) => {
 
   const onTreeNodeClick = (item: Tree) => {
     searchData.deptId = item.id;
+    getAccountList();
   };
 
   const getAccountList = async () => {
     tableLoading.value = true;
-    const { accountList, total } = await accountMethod.getAccountList();
+    const { accountList, total } = await accountMethod.getAccountList({
+      data: searchData.value
+    });
     state.tableList = accountList;
     tableTotal.value = total;
     tableLoading.value = false;
@@ -136,6 +142,7 @@ export const useTableOption = ({ tableTotal, accountStates }: props) => {
   });
 
   return {
+    searchData,
     tableLoading,
     tableList,
     tableColumns,
