@@ -49,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, toRefs } from "vue";
 import { DataTableReference, FolderDetailsReference, Reset, DataView } from "@vicons/carbon";
 import { useInitTree } from "./use/useInitTree";
 import { useEvent } from "./use/useEvent";
@@ -69,10 +69,12 @@ const props = defineProps({
 
 const visible = ref(false);
 
+const { columns, nodeKey } = toRefs(props);
+
 const { renderLabel, treeRef, catchCheckedKeys, state, allChild, isAllChecked, getAllChild } =
   useInitTree({
-    columns: props.columns,
-    nodeKey: props.nodeKey
+    columns,
+    nodeKey
   });
 
 const { onTreeChange, onAllSelectChange, onSetColumns, onResetColumns } = useEvent({
@@ -83,7 +85,7 @@ const { onTreeChange, onAllSelectChange, onSetColumns, onResetColumns } = useEve
   getAllChild,
   emit,
   visible,
-  nodeKey: props.nodeKey
+  nodeKey
 });
 </script>
 

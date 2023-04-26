@@ -27,11 +27,11 @@ export const useEvent = ({
 
   const onAllSelectChange = (value: boolean) => {
     if (value) {
-      const keys = allChild.map((el) => el[nodeKey]);
+      const keys = allChild.map((el) => el[nodeKey.value]);
       treeRef.value.setCheckedKeys(keys);
       state.catchTreeCheckedKeys = keys;
     } else {
-      const keys = allChild.filter((el) => el.disabled).map((el) => el[nodeKey]);
+      const keys = allChild.filter((el) => el.disabled).map((el) => el[nodeKey.value]);
       treeRef.value.setCheckedKeys(keys);
       state.catchTreeCheckedKeys = keys;
     }
@@ -46,9 +46,9 @@ export const useEvent = ({
   };
 
   const setVisabled = (keys: string[], allChild: any[]) => {
-    const columns = allChild.filter((el) => el[nodeKey]);
+    const columns = allChild.filter((el) => el[nodeKey.value]);
     for (const column of columns) {
-      const isIn = keys.includes(column[nodeKey]);
+      const isIn = keys.includes(column[nodeKey.value]);
       Reflect.set(column, "visible", isIn);
     }
     emit("confirm", [...state.treeData]);

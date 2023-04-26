@@ -1,9 +1,10 @@
-import { computed, ref, onMounted, reactive, watch } from "vue";
+import type { Ref } from "vue";
+import { computed, ref, onMounted, reactive, watch, nextTick } from "vue";
 import { deepCopy } from "util/index";
 
 interface initProps {
   columns: any[];
-  nodeKey: string;
+  nodeKey: Ref<string>;
 }
 
 export const useInitTree = ({ columns, nodeKey }: initProps) => {
@@ -15,12 +16,18 @@ export const useInitTree = ({ columns, nodeKey }: initProps) => {
   });
 
   watch(
-    () => columns,
-    (newValue: any) => {
+    () => columns.value,
+    async (newValue: any) => {
+      await nextTick();
       state.treeData = deepCopy(newValue);
+      setTreeNodeSelect();
+      setDisabled();
+      catchCheckedKeys();
+      catchInitVisible();
     },
     {
-      immediate: true
+      immediate: true,
+      deep: true
     }
   );
 
@@ -54,15 +61,15 @@ export const useInitTree = ({ columns, nodeKey }: initProps) => {
   const setTreeNodeSelect = () => {
     const allChild = getAllChild(state.treeData);
     const visibles = allChild
-      .filter((el) => el.visible !== false && el[nodeKey])
-      .map((el) => el[nodeKey]);
+      .filter((el) => el.visible !== false && el[nodeKey.value])
+      .map((el) => el[nodeKey.value]);
     treeRef.value && treeRef.value.setCheckedKeys(visibles);
   };
 
   const setDisabled = () => {
     const allColumns = getAllChild(state.treeData);
     for (const item of allColumns) {
-      if (["operate", "serial"].includes(item[nodeKey])) {
+      if (["operate", "serial"].includes(item[nodeKey.value])) {
         Reflect.set(item, "disabled", true);
       }
     }
@@ -76,19 +83,12 @@ export const useInitTree = ({ columns, nodeKey }: initProps) => {
   const catchInitVisible = () => {
     for (const item of allChild.value) {
       const value = item.visible !== false;
-      Reflect.set(state.catchVisible, item[nodeKey], value);
+      Reflect.set(state.catchVisible, item[nodeKey.value], value);
     }
   };
 
   const isAllChecked = computed(() => {
     return state.catchTreeCheckedKeys.length === allChild.value.length;
-  });
-
-  onMounted(() => {
-    setTreeNodeSelect();
-    setDisabled();
-    catchCheckedKeys();
-    catchInitVisible();
   });
 
   return {
