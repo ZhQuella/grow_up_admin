@@ -36,8 +36,8 @@
           <div
             class="md:w-[340px] md:h-[340px] sm:w-[200px] sm:h-[200px] relative enter-x shrink-0 grow-0 sm:mx-auto lg:mx-0"
           >
-            <img class="block w-full blur-[80px]" :src="getImageUrl(systemConfig.logUrl)" />
-            <img class="block w-full translate-y-[-100%]" :src="getImageUrl(systemConfig.logUrl)" />
+            <img class="block w-full blur-[80px]" :src="getImageUrl(setting.logUrl)" />
+            <img class="block w-full translate-y-[-100%]" :src="getImageUrl(setting.logUrl)" />
           </div>
         </div>
         <div class="lg:py-[80px] sm:py-[30px] -enter-y">
@@ -76,7 +76,7 @@ import SwitchLanguage from "components/base/SwitchLanguage/index.vue";
 import SwitchTheme from "components/base/SwitchTheme/index.vue";
 
 import { getImageUrl } from "util/System";
-import systemConfig from "@/systemConfig";
+import setting from "@/setting";
 
 const { onPageContentScroll, opacityNum, isShowBorder, traitIntroduces } = useContainer();
 </script>

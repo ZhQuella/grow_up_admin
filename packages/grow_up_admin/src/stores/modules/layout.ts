@@ -2,8 +2,9 @@ import { defineStore } from "pinia";
 import { LAYOUT_KEY } from "@/assets/enums/cacheEnum";
 import { storageExample } from "grow_utils";
 import type { LayoutState, LayoutTypes } from "types/layout";
+import setting from "@/setting";
 
-const defaultValue = "side";
+const defaultValue = setting.layoutType;
 
 export const useLayoutStore = defineStore({
   id: "layout",

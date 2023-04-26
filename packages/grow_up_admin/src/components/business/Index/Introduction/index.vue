@@ -4,7 +4,7 @@
       <h2
         class="lg:text-[85px] sm:text-[50px] font-bold text-MAIN_TEXT bg-gradient-to-r -enter-x from-violet-500 to-fuchsia-500 bg-clip-text text-[transparent] lg:text-left sm:text-center"
       >
-        <span> Grow Admin </span>
+        <span>{{ setting.systemName }}</span>
         <el-tag class="translate-y-[-10px]">
           {{ version }}
         </el-tag>
@@ -50,6 +50,7 @@
 import { ChevronRight } from "@vicons/carbon";
 import { useRouter } from "vue-router";
 import { version } from "../../../../../package.json";
+import setting from "@/setting";
 
 const router = useRouter();
 

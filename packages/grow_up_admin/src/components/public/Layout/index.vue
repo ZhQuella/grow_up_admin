@@ -56,7 +56,8 @@
           height: `calc(100% - ${!isFullScreen ? 90 : 40}px)`
         }"
       >
-        <WerterMark class="absolute top-0 left-0 right-0 bottom-0 z-[3000] pointer-events-none" />
+        <WerterMark v-if="setting.watermark" 
+                    class="absolute top-0 left-0 right-0 bottom-0 z-[3000] pointer-events-none" />
         <slot name="view" />
       </div>
     </div>
@@ -69,6 +70,7 @@ import { useLayoutStore } from "store/modules/layout";
 import { useMenuStore } from "store/modules/menu";
 import { useAppStore } from "store/modules/app";
 import WerterMark from "components/public/Watermark/index.vue";
+import setting from "@/setting";
 
 const appStore = useAppStore();
 const menuStore = useMenuStore();
