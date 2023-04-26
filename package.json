@@ -23,8 +23,6 @@
     "grow_rule:build": "pnpm --filter grow_rule_engine build",
     "grow_flow:dev": "pnpm --filter grow_flow dev",
     "grow_flow:build": "pnpm --filter grow_flow build",
-    "grow_doc:dev": "pnpm --filter grow_admin_docs docs:dev",
-    "grow_doc:build": "pnpm --filter grow_admin_docs docs:build",
     "grow_utils:dev": "pnpm --filter grow_utils dev",
     "grow_utils:build": "pnpm --filter grow_utils build",
     "bea": "npx prettier -w -u .",
