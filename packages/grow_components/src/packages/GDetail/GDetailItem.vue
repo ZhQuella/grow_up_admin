@@ -11,48 +11,66 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { inject, toRefs, computed } from "vue";
-import { getObjectValue } from "util/System";
-
-const props = defineProps({
-  prop: {
-    type: String,
-    default: ""
-  },
-  label: {
-    type: String,
-    default: ""
-  },
-  labelWidth: {
-    type: String,
-    default: ""
-  },
-  align: {
-    type: String,
-    default: ""
-  }
-});
-const parentProps = inject("g-detail") as any;
-
-const { prop, label, labelWidth, align } = toRefs(props);
-const { model, labelWidth: pLabelWidth, align: pAlign } = toRefs(parentProps);
-
-const value = computed(() => {
-  return getObjectValue(model.value, prop.value);
-});
-
-const labelStyle = computed(() => {
-  return {
-    width: labelWidth.value || pLabelWidth.value,
-    "text-align": align.value || pAlign.value
-  };
-});
-</script>
-
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, inject, toRefs, computed } from "vue";
 export default defineComponent({
-  name: "GDetailItem"
+  name: "GDetailItem",
+  props: {
+    prop: {
+      type: String,
+      default: ""
+    },
+    label: {
+      type: String,
+      default: ""
+    },
+    labelWidth: {
+      type: String,
+      default: ""
+    },
+    align: {
+      type: String,
+      default: ""
+    }
+  },
+  setup(props){
+    const parentProps = inject("g-detail") as any;
+
+    const { labelWidth, align, prop } = toRefs(props);
+    const { model, labelWidth: pLabelWidth, align: pAlign } = toRefs(parentProps);
+
+    const getElType = (arg: any) => {
+      return Object.prototype.toString.call(arg).slice(8, -1);
+    };
+
+    const getObjectValue = (from: any, selector: string) => {
+      if (getElType(from) !== "Object") {
+        throw new Error("Parameter is not an object.");
+      }
+
+      return selector
+        .replace(/\[(\w+)\]/g, ".$1")
+        .split(".")
+        .reduce((prev, cur) => {
+          return prev && prev[cur];
+        }, from);
+    };
+
+    const value = computed(() => {
+      return getObjectValue(model.value, prop.value);
+    });
+
+    const labelStyle = computed(() => {
+      return {
+        width: labelWidth.value || pLabelWidth.value,
+        "text-align": align.value || pAlign.value
+      };
+    });
+    
+    return {
+      value,
+      labelStyle
+    }
+  }
 });
 </script>
