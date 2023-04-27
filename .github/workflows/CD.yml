@@ -28,24 +28,22 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
         uses: actions/checkout@v3
-      - name: Set up Node
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v2
+      - uses: pnpm/action-setup@v2.1.0
         with:
-          node-version: 18
-          cache: "npm"
-      - name: Install dependencies
-        run: npm install
+          version: 8.3.1
+      - name: Install modules
+        run: pnpm install
       - name: Build
-        run: npm run build
+        run: pnpm run build
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload dist repository
-          path: "./dist"
+          path: "./packages/grow_up_admin/dist"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1

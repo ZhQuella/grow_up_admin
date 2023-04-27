@@ -6,7 +6,6 @@
   "[javascript]": {
     "editor.defaultFormatter": "HookyQR.beautify"
   },
-  "vetur.format.options.tabSize": 2,
   "workbench.tree.indent": 16,
   "diffEditor.ignoreTrimWhitespace": false,
   "files.associations": {
@@ -62,10 +61,7 @@
   "editor.formatOnType": true,
   "fileheader.configObj": {
     "autoAdd": false,
-    "prohibitAutoAdd": [
-      "json",
-      "md"
-    ],
+    "prohibitAutoAdd": ["json", "md"],
     "wideSame": false,
     "wideNum": 13
   },
@@ -75,7 +71,7 @@
     "source.fixAll.eslint": false
   },
   "editor.tabSize": 2,
-  "editor.detectIndentation":false,
+  "editor.detectIndentation": false,
   "window.zoomLevel": -1,
   "auto-close-tag.activationOnLanguage": [
     "xml",
