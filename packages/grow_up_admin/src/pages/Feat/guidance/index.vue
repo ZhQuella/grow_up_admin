@@ -1,16 +1,18 @@
 <template>
   <div>
-    <div class="bg-BG_COLOR3 text-MAIN_TEXT py-[50px] px-[20px] text-[17px] mb-[10px]">
-      引导示例
+    <div>
+      <div class="bg-BG_COLOR3 text-MAIN_TEXT py-[50px] px-[20px] text-[17px] mb-[10px]">
+        引导示例
+      </div>
+      <div class="mx-[10px] mb-[10px]">
+        <el-button @click="onStartGuide"> 开始引导 </el-button>
+        <el-button id="intro_title"> 第一步 </el-button>
+        <el-button id="intro_mine"> 第二步 </el-button>
+        <el-button id="intro_save"> 第三步 </el-button>
+      </div>
     </div>
-    <div class="mx-[10px] mb-[10px]">
-      <el-button @click="onStartGuide"> 开始引导 </el-button>
-      <el-button id="intro_title"> 第一步 </el-button>
-      <el-button id="intro_mine"> 第二步 </el-button>
-      <el-button id="intro_save"> 第三步 </el-button>
-    </div>
+    <v-tour name="myTour" :steps="reactData.steps" :options="reactData.myOptions" />
   </div>
-  <v-tour name="myTour" :steps="reactData.steps" :options="reactData.myOptions" />
 </template>
 
 <script setup lang="ts">

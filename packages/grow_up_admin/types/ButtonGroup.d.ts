@@ -1,3 +1,4 @@
+import { Fn } from "types/index";
 const type = "primary" | "success" | "warning" | "danger" | "info";
 
 export interface GroupBtn {

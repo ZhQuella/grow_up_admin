@@ -25,6 +25,7 @@ export default {
   MessagePrompt: ["admin"],
   SystemManagement: ["admin"],
   AccountManagement: ["admin"],
+  RoleManagement: ["admin"],
   CountToExample: ["admin"],
   "customPage1-1": ["minor"],
   "customPage2-2": ["role"]

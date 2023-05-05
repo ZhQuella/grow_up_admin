@@ -1,3 +1,4 @@
+import type { GroupBtn } from "types/ButtonGroup";
 import to from "await-to-js";
 import { computed, reactive, ref } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -166,7 +167,7 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
       },
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
     }
-  ]);
+  ] as GroupBtn[]);
 
   // ~ 表格批量操作配置
   const optionGroup = computed(() => [
@@ -175,7 +176,7 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
       type: "success",
       icon: "Add",
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
-      func: () => {
+      func: ():void => {
         dialogConfig.visible = true;
         dialogConfig.title = `新增账号`;
         dialogConfig.conmponetName = "AccountCreate";
@@ -186,7 +187,7 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
       title: "批量删除",
       type: "danger",
       icon: "Delete",
-      func: async () => {
+      func: async ():Promise<void> => {
         const ids = state.selectList.map((el) => el.id);
         await onDeleteAccountByIds(ids);
         state.selectList = [];
@@ -201,7 +202,7 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
       title: "批量解绑",
       type: "warning",
       icon: "HeatMap02",
-      func: async () => {
+      func: async ():Promise<void> => {
         const ids = state.selectList.map((el) => el.id);
         await onAccountUnbind(ids);
         state.selectList = [];

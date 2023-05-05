@@ -1,10 +1,9 @@
-import type { RequestItem } from "types/Request";
 import axios from "api/index";
 
 import UserInfoConfig from "./UserInfo";
 import MenuListConfig from "./MenuList";
 
-axios.setConfig("userInfo", UserInfoConfig as RequestItem[]);
-axios.setConfig("menuList", MenuListConfig as RequestItem[]);
+axios.setConfig("userInfo", UserInfoConfig);
+axios.setConfig("menuList", MenuListConfig);
 
 export default axios;
