@@ -61,7 +61,7 @@
         </PerfectTable>
       </template>
       <template #footer>
-        <div :span="12" class="flex justify-end pt-[10px]">
+        <div class="flex justify-end pt-[10px]">
           <el-pagination
             v-model:current-page="page"
             v-model:page-size="size"
@@ -150,7 +150,7 @@ const {
   getAccountList
 });
 
-const { deptTreeList, deptSearchValue, filterResult, onDeptInput } = useDeptTree();
+const { deptTreeList, deptSearchValue, filterResult, onDeptInput, defaultProps } = useDeptTree();
 
 // ~ 查询条件配置
 const searchList = [
@@ -198,11 +198,6 @@ const searchList = [
     ]
   }
 ];
-
-const defaultProps = {
-  children: "children",
-  label: "label"
-};
 
 const onTableSeach = (data: any) => {
   searchData.value = data;

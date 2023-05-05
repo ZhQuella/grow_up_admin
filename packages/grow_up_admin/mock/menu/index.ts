@@ -110,6 +110,13 @@ const menuList = [
         icon: "GroupAccount",
         path: "account-management",
         component: "System/Account/index.vue"
+      },
+      {
+        label: "角色管理",
+        name: "RoleManagement",
+        icon: "Events",
+        path: "role-management",
+        component: "System/Role/index.vue"
       }
     ]
   }

@@ -5,6 +5,12 @@ import request from "api/systemMent";
 export const useDeptTree = () => {
   const deptMethods = request.create("deptMent");
   const deptSearchValue = ref("");
+
+  const defaultProps = {
+    children: "children",
+    label: "label"
+  };
+
   const state = reactive({
     deptTreeList: [],
     filterResult: []
@@ -73,6 +79,7 @@ export const useDeptTree = () => {
   });
 
   return {
+    defaultProps,
     onDeptInput,
     deptSearchValue,
     deptTreeList,
