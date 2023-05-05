@@ -3,7 +3,7 @@
     <div
       v-loading="systemLoading"
       class="h-full bg-BG_COLOR overflow-hidden"
-      :element-loading-text="$t('PUBLIC.SYSTEM_LOADING')"
+      :element-loading-text="t('PUBLIC.SYSTEM_LOADING')"
     >
       <Layout>
         <template #logo>
@@ -35,7 +35,7 @@
       v-model="settingActive"
       size="400px"
       placement="right"
-      :title="$t('APP_OPTION.SETTING_TITLE')"
+      :title="t('APP_OPTION.SETTING_TITLE')"
     >
       <SettingContent />
     </el-drawer>
@@ -43,7 +43,7 @@
     <el-dialog
       v-model="searchActive"
       destroy-on-close
-      :title="$t('APP_SEARCH.SEARCH_MENU')"
+      :title="t('APP_SEARCH.SEARCH_MENU')"
       width="650px"
     >
       <div class="p-[20px]">
@@ -70,7 +70,10 @@ import { useMenuStore } from "store/modules/menu";
 import { useVariable } from "./use/useVariable";
 import { useInteRouter } from "./use/useInteRouter";
 import { useOption } from "./use/useOption";
+import { useI18n } from "vue-i18n";
 
+
+const { t } = useI18n();
 const homePath = ref("");
 
 const menuStore = useMenuStore();

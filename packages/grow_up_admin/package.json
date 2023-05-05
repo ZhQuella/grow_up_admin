@@ -25,6 +25,7 @@
     "@vicons/antd": "^0.12.0",
     "@vicons/carbon": "^0.12.0",
     "@vueuse/core": "^10.0.2",
+    "vue-router": "^4.1.6",
     "animate.css": "^4.1.1",
     "await-to-js": "^3.0.0",
     "echarts": "^5.4.2",
@@ -43,7 +44,6 @@
     "splitpanes": "^3.1.5",
     "v3-tour": "^3.1.2",
     "vue-i18n": "^9.2.2",
-    "vue-router": "4",
     "vue3-grid-layout": "^1.0.0"
   }
 }

@@ -5,13 +5,17 @@
     </div>
     <div class="pt-[20px] enter-x">
       <el-button size="large" class="w-full" @click="onBackClick">
-        {{ $t("PUBLIC.BACK_TEXT") }}
+        {{ t("PUBLIC.BACK_TEXT") }}
       </el-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
+
+
+const { t } = useI18n();
 const emit = defineEmits(["back"]);
 
 const onBackClick = () => {

@@ -9,7 +9,7 @@
   >
     <el-table-column v-if="isSerial" width="60px" v-bind="serialColumn">
       <template #header>
-        {{ $t("TABLE.SERIAL") }}
+        {{ t("TABLE.SERIAL") }}
       </template>
       <template #default="scope">
         <div class="h-[28px] leading-[28px]">
@@ -37,7 +37,10 @@ import { computed } from "vue";
 import Column from "./Column.vue";
 import { useEvent } from "./use/useEvent";
 import { useInitColumns } from "./use/useInitColumns";
+import { useI18n } from "vue-i18n";
 
+
+const { t } = useI18n();
 const emit = defineEmits(["select"]);
 
 const props = defineProps({
