@@ -3,7 +3,7 @@ import { computed, ref, onMounted, reactive, watch, nextTick } from "vue";
 import { deepCopy } from "util/index";
 
 interface initProps {
-  columns: any[];
+  columns: Ref<any[]>;
   nodeKey: Ref<string>;
 }
 

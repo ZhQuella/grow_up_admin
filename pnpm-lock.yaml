@@ -46,9 +46,6 @@ importers:
       vue-i18n:
         specifier: ^9.2.2
         version: 9.2.2(vue@3.2.45)
-      vue-router:
-        specifier: '4'
-        version: 4.1.6(vue@3.2.45)
       vue3-grid-layout:
         specifier: ^1.0.0
         version: 1.0.0(@interactjs/core@1.10.17)(@interactjs/utils@1.10.17)
@@ -209,6 +206,9 @@ importers:
       vue:
         specifier: 3.2.45
         version: 3.2.45
+      vue-router:
+        specifier: ^4.1.6
+        version: 4.1.6(vue@3.2.45)
       yorkie:
         specifier: ^2.0.0
         version: 2.0.0
@@ -295,9 +295,6 @@ importers:
       vue-i18n:
         specifier: ^9.2.2
         version: 9.2.2(vue@3.2.45)
-      vue-router:
-        specifier: '4'
-        version: 4.1.6(vue@3.2.45)
       vue3-grid-layout:
         specifier: ^1.0.0
         version: 1.0.0(@interactjs/core@1.10.17)(@interactjs/utils@1.10.17)
@@ -323,6 +320,9 @@ importers:
       vite-plugin-mock:
         specifier: ^2.9.8
         version: 2.9.8(mockjs@1.1.0)(vite@4.2.1)
+      vue-router:
+        specifier: ^4.1.6
+        version: 4.1.6(vue@3.2.45)
 
   packages/grow_utils:
     dependencies:
@@ -2714,7 +2714,6 @@ packages:
 
   /@vue/devtools-api@6.5.0:
     resolution: {integrity: sha512-o9KfBeaBmCKl10usN4crU53fYtC1r7jJwdGKjPT24t348rHxgfpZ0xL3Xm/gLUYnc0oTp8LAmrxOeLyu6tbk2Q==}
-    dev: false
 
   /@vue/eslint-config-prettier@7.1.0(eslint@8.38.0)(prettier@2.8.7):
     resolution: {integrity: sha512-Pv/lVr0bAzSIHLd9iz0KnvAr4GKyCEl+h52bc4e5yWuDVtLgFwycF7nrbWTAQAS+FU6q1geVd07lc6EWfJiWKQ==}
@@ -8882,7 +8881,7 @@ packages:
     dependencies:
       '@vue/devtools-api': 6.5.0
       vue: 3.2.45
-    dev: false
+    dev: true
 
   /vue3-grid-layout@1.0.0(@interactjs/core@1.10.17)(@interactjs/utils@1.10.17):
     resolution: {integrity: sha512-rFiHnlBFxkY9ojh0YB+cSKCE9A9/mhdbgaPARWD7r2yHPWxV9tHDPbMAN+uycsIDF7ikBpNgeQ9PfeiGaXHUWw==}

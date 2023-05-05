@@ -8,7 +8,7 @@ interface propsArg {
   getAllChild: Fn;
   emit: Fn;
   visible: Ref<boolean>;
-  nodeKey: string;
+  nodeKey: Ref<string>;
 }
 
 export const useEvent = ({

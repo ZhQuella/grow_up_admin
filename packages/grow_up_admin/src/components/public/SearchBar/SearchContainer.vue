@@ -12,7 +12,7 @@
         :disabled="state.currentSelect.length === search.length"
         @click="onAddSearchList"
       >
-        {{ $t("SEARCH_BAR.ADD_SEARCH") }}
+        {{ t("SEARCH_BAR.ADD_SEARCH") }}
       </el-button>
     </div>
   </div>
@@ -27,7 +27,7 @@
             filterable
             clearable
             :teleported="false"
-            :placeholder="$t('SEARCH_BAR.SEARCH_TYPE_PLACEHOLDER')"
+            :placeholder="t('SEARCH_BAR.SEARCH_TYPE_PLACEHOLDER')"
             @change="onSelectListTypeChange($event, index)"
             @clear="onSearchListTypeClear(index)"
           >
@@ -57,7 +57,7 @@
       </li>
     </ul>
     <div v-else class="h-full w-full">
-      <el-empty :image-size="200" :description="$t('PUBLIC.NOT_DATA_TEXT')" />
+      <el-empty :image-size="200" :description="t('PUBLIC.NOT_DATA_TEXT')" />
     </div>
   </el-scrollbar>
 </template>
@@ -66,7 +66,10 @@
 import { toRefs, computed, reactive, watch } from "vue";
 import { Delete, AddComment } from "@vicons/carbon";
 import AbstractEle from "components/public/AbstractEle/index.vue";
+import { useI18n } from "vue-i18n";
 
+
+const { t } = useI18n();
 const props = defineProps({
   search: {
     type: Array,
