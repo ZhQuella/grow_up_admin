@@ -111,11 +111,12 @@ export default [
     }
   },
   {
-    url: "/account/list",
+    url: "/account/list/:page/:size",
     method: "post",
     response() {
       const data = [];
-      for (let i = 0; i < 20; i++) {
+      const total = 20;
+      for (let i = 0; i < total; i++) {
         data.push({
           // 属性 id 是一个自增数，起始值为 1，每次增 1
           "id|+1": i + 1,
@@ -136,7 +137,7 @@ export default [
         code: 10000,
         message: "成功",
         result: {
-          total: 20,
+          total,
           accountList: data
         }
       };

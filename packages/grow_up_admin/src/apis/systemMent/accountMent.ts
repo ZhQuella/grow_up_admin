@@ -1,7 +1,7 @@
 export default [
   {
     key: "getAccountList",
-    url: "/account/list",
+    url: "/account/list/{page}/{size}",
     method: "post"
   },
   {

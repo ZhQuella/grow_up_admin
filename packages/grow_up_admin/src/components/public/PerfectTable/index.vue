@@ -12,12 +12,15 @@
         {{ t("TABLE.SERIAL") }}
       </template>
       <template #default="scope">
-        <div class="h-[28px] leading-[28px]">
+        <div class="h-[28px] leading-[28px]" v-if="!onlyIndex">
           <span
             v-if="mouseKey !== scope.row[onlyKey] && !selectOnlyKeys.includes(scope.row[onlyKey])"
             >{{ scope.$index + 1 }}</span
           >
           <el-checkbox v-else size="small" @change="onTableCheckboxSelect($event, scope)" />
+        </div>
+        <div class="h-[28px] leading-[28px]" v-if="onlyIndex">
+          <span>{{ scope.$index + 1 }}</span>
         </div>
       </template>
     </el-table-column>
@@ -61,6 +64,10 @@ const props = defineProps({
     default: () => []
   },
   loading: {
+    type: Boolean,
+    default: false
+  },
+  onlyIndex: {
     type: Boolean,
     default: false
   }
