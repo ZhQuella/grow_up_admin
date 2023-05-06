@@ -36,14 +36,16 @@
             123123
           </div>
           <div class="pt-[3px]">
-            123123
+            <ColumnBar :columns="tableColumns" @confirm="onColumnsBarConfirm" />
           </div>
         </div>
       </template>
 
       <template #main="{ height }">
         <PerfectTable ref="tableRef"
-                      :height="height">
+                      :height="height"
+                      :columns="tableColumns"
+                      :data="tableList">
           <template #btnOption="btnOption">
             <ButtonGroup :max="4" :data="btnOption" />
           </template>
@@ -57,7 +59,9 @@
                         :page-sizes="pageSizes"
                         :layout="layout"
                         :total="total"
-                        small/>
+                        small
+                        @size-change="onSizeChange"
+                        @current-change="onCurrentChange"/>
         </div>
       </template>
     </pageLayout>
@@ -66,12 +70,36 @@
 
 <script setup lang="ts">
 import PerfectTable from "components/public/PerfectTable/index.vue";
+import ColumnBar from "components/public/ColumnBar/index.vue";
 import { useTable } from "hooks/useTable";
 import { useDeptTree } from "hooks/useBusiness/useDeptTree";
+import { useDict } from "./use/useDict";
+import { useTableOption } from "./use/useTableOption";
+import { useTableFunc } from "./use/useTableFunc";
 
+const { accountStates } = useDict();
 const { pageSizes, page, size, layout, total } = useTable();
 const { deptTreeList, deptSearchValue, filterResult, onDeptInput, defaultProps } = useDeptTree();
+const { tableColumns, tableList, getRoleList } = useTableOption({
+  tableTotal: total,
+  accountStates,
+  size,
+  page
+});
+const {
+  tableRef,
+  onSizeChange,
+  onCurrentChange
+} = useTableFunc({
+  getRoleList,
+  page,
+  size
+});
 
+
+const onColumnsBarConfirm = (columns: any[]) => {
+  tableRef.value.setColumns(columns);
+};
 </script>
 
 <script lang="ts">

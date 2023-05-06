@@ -69,6 +69,8 @@
             :layout="layout"
             :total="total"
             small
+            @size-change="onSizeChange"
+            @current-change="onCurrentChange"
           />
         </div>
       </template>
@@ -106,11 +108,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, reactive } from "vue";
 import { useTable } from "hooks/useTable";
 import ColumnBar from "components/public/ColumnBar/index.vue";
-import { Delete, DataViewAlt } from "@vicons/carbon";
-
 import SearchBar from "components/public/SearchBar/index.vue";
 import PerfectTable from "components/public/PerfectTable/index.vue";
 import ButtonGroup from "components/public/ButtonGroup/index.vue";
@@ -133,7 +132,9 @@ const {
   tableLoading 
 } = useTableOption({
   tableTotal: total,
-  accountStates
+  accountStates,
+  page,
+  size
 });
 
 const {
@@ -145,9 +146,13 @@ const {
   onDrawerClose,
   onDialogClose,
   onAccountSuccess,
-  onPerfectTableSelect
+  onPerfectTableSelect,
+  onSizeChange,
+  onCurrentChange
 } = useTableFunc({
-  getAccountList
+  getAccountList,
+  page,
+  size
 });
 
 const { deptTreeList, deptSearchValue, filterResult, onDeptInput, defaultProps } = useDeptTree();

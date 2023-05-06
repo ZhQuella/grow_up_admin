@@ -25,6 +25,7 @@ export const useEvent = ({ onlyKey, emit, state }: argProp) => {
 
   const onTableCheckboxSelect = (value: boolean, rowConfig: any) => {
     const { row } = rowConfig;
+    console.log(rowConfig);
     const cellValue = row[onlyKey];
     if (value) {
       selectData.value.push(row);

@@ -1,17 +1,21 @@
 import type { Tree } from "types/Tree";
 import type { Ref } from "vue";
-import { reactive, onMounted, computed, h, ref } from "vue";
+import { reactive, onMounted, computed, ref, unref } from "vue";
 import request from "api/systemMent";
 import { ElTag } from "element-plus";
 
 interface props {
   tableTotal: Ref<number>;
   accountStates: Ref<any[]>;
+  page: Ref<number>,
+  size: Ref<number>
 }
 
 export const useTableOption = ({ 
   tableTotal, 
-  accountStates
+  accountStates,
+  page,
+  size
 }: props) => {
   const tableLoading = ref(false);
   const accountMethod = request.create("accountMent");
@@ -42,13 +46,9 @@ export const useTableOption = ({
         const item = accountStates.value.find((el) => el.code === space.state);
         const type = ["danger", "success"][item.code] as "success" | "danger";
         return [
-          h(
-            ElTag,
-            {
-              type
-            },
-            item.label
-          )
+          <ElTag type={ type }>
+            { item.label }
+          </ElTag>
         ];
       }
     },
@@ -130,7 +130,8 @@ export const useTableOption = ({
   const getAccountList = async () => {
     tableLoading.value = true;
     const { accountList, total } = await accountMethod.getAccountList({
-      data: searchData.value
+      data: searchData.value,
+      params: { page: unref(page), size: unref(size) }
     });
     state.tableList = accountList;
     tableTotal.value = total;

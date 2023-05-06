@@ -1,3 +1,4 @@
+import type { Ref } from "vue";
 import type { GroupBtn } from "types/ButtonGroup";
 import to from "await-to-js";
 import { computed, reactive, ref } from "vue";
@@ -6,9 +7,15 @@ import axios from "api/systemMent";
 
 interface Prop {
   getAccountList: Fn;
+  page: Ref<number>;
+  size: Ref<number>;
 }
 
-export const useTableFunc = ({ getAccountList }: Prop) => {
+export const useTableFunc = ({
+  getAccountList,
+  page,
+  size
+}: Prop) => {
   const tableRef = ref();
   const systemMentMethod = axios.create("accountMent");
 
@@ -176,7 +183,7 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
       type: "success",
       icon: "Add",
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
-      func: ():void => {
+      func: (): void => {
         dialogConfig.visible = true;
         dialogConfig.title = `新增账号`;
         dialogConfig.conmponetName = "AccountCreate";
@@ -187,7 +194,7 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
       title: "批量删除",
       type: "danger",
       icon: "Delete",
-      func: async ():Promise<void> => {
+      func: async (): Promise<void> => {
         const ids = state.selectList.map((el) => el.id);
         await onDeleteAccountByIds(ids);
         state.selectList = [];
@@ -202,7 +209,7 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
       title: "批量解绑",
       type: "warning",
       icon: "HeatMap02",
-      func: async ():Promise<void> => {
+      func: async (): Promise<void> => {
         const ids = state.selectList.map((el) => el.id);
         await onAccountUnbind(ids);
         state.selectList = [];
@@ -292,6 +299,17 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
     drawerConfig.data = {};
   };
 
+  const onCurrentChange = (_page: number) => {
+    page.value = _page;
+    getAccountList();
+  };
+
+  const onSizeChange = (_size: number) => { 
+    size.value = _size;
+    page.value = 1;
+    getAccountList();
+  };
+
   return {
     tableRef,
     dialogConfig,
@@ -302,6 +320,8 @@ export const useTableFunc = ({ getAccountList }: Prop) => {
     onDialogClose,
     onAccountSuccess,
     onPerfectTableSelect,
-    onAccountUnbind
+    onAccountUnbind,
+    onCurrentChange,
+    onSizeChange
   };
 };
