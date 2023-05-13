@@ -1,11 +1,11 @@
 <template>
   <div class="p-[10px]">
-    <pageLayout>
+    <PageLayout>
       <template #aside>
         <div class="h-full">
           <div class="p-[5px] border-b-[1px] border-[var(--el-border-color)] border-solid">
             <el-input placeholder="请输入部门名称"
-                      clearable 
+                      clearable
                       v-model="deptSearchValue"
                       @input="onDeptInput"/>
           </div>
@@ -15,6 +15,7 @@
                 :data="deptTreeList"
                 :props="defaultProps"
                 default-expand-all
+                @node-click="onTreeNodeClick"
               />
             </div>
             <div v-show="deptSearchValue">
@@ -22,6 +23,7 @@
                 v-for="item of filterResult"
                 :key="item.id"
                 class="px-[10px] py-[8px] text-[14px] text-[var(--el-text-color-regular)] cursor-pointer"
+                @click="onTreeNodeClick"
               >
                 {{ item.label }}
               </div>
@@ -33,9 +35,10 @@
       <template #header>
         <div class="flex justify-between">
           <div class="pt-[8px]">
-            123123
+            <ButtonGroup :button-group="optionGroup" :max="5" show-text />
           </div>
           <div class="pt-[3px]">
+            <!-- <SearchBar :search="searchList" @search="onTableSeach" /> -->
             <ColumnBar :columns="tableColumns" @confirm="onColumnsBarConfirm" />
           </div>
         </div>
@@ -47,7 +50,7 @@
                       :columns="tableColumns"
                       :data="tableList">
           <template #btnOption="btnOption">
-            <ButtonGroup :max="4" :data="btnOption" />
+            <ButtonGroup :button-group="buttonGroup" :max="4" :data="btnOption" />
           </template>
         </PerfectTable>
       </template>
@@ -64,29 +67,48 @@
                         @current-change="onCurrentChange"/>
         </div>
       </template>
-    </pageLayout>
+    </PageLayout>
+
+    <el-drawer v-model="drawerConfig.visible"
+               :title="drawerConfig.title"
+              size="800px">
+      <component :is="drawerConfig.conmponetName" />
+    </el-drawer>
+
   </div>
 </template>
 
 <script setup lang="ts">
 import PerfectTable from "components/public/PerfectTable/index.vue";
 import ColumnBar from "components/public/ColumnBar/index.vue";
+import ButtonGroup from "components/public/ButtonGroup/index.vue";
 import { useTable } from "hooks/useTable";
 import { useDeptTree } from "hooks/useBusiness/useDeptTree";
 import { useDict } from "./use/useDict";
 import { useTableOption } from "./use/useTableOption";
 import { useTableFunc } from "./use/useTableFunc";
+import PageLayout from "components/public/PageLayout/index.vue";
 
 const { accountStates } = useDict();
 const { pageSizes, page, size, layout, total } = useTable();
 const { deptTreeList, deptSearchValue, filterResult, onDeptInput, defaultProps } = useDeptTree();
-const { tableColumns, tableList, getRoleList } = useTableOption({
+
+const {
+  tableColumns,
+  tableList,
+  getRoleList,
+  onTreeNodeClick
+} = useTableOption({
   tableTotal: total,
   accountStates,
   size,
-  page
+  page,
 });
+
 const {
+  drawerConfig,
+  buttonGroup,
+  optionGroup,
   tableRef,
   onSizeChange,
   onCurrentChange
@@ -104,7 +126,14 @@ const onColumnsBarConfirm = (columns: any[]) => {
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import CreatePermission from "components/business/Permission/CreatePermission/index.vue";
+import ModifyPermission from "components/business/Permission/ModifyPermission/index.vue";
+
 export default defineComponent({
-  name: "RoleManagement"
+  name: "RoleManagement",
+  components: {
+    CreatePermission,
+    ModifyPermission
+  }
 });
 </script>

@@ -1,4 +1,5 @@
 import type { Ref } from "vue";
+import type { Tree } from "types/Tree";
 import { computed, reactive, onMounted, unref } from "vue";
 import * as ElementPlus from "element-plus";
 import request from "api/systemMent";
@@ -19,6 +20,7 @@ export const useTableOption = ({
 }: props) => { 
 
   const roleRequest = request.create("roleMent");
+  const searchData = reactive<any>({});
   const state = reactive({
     tableList: []
   });
@@ -40,6 +42,13 @@ export const useTableOption = ({
       width: 120
     },
     {
+      field: "roleCode",
+      title: "角色编码",
+      visible: false,
+      "show-overflow-tooltip": true,
+      width: 200
+    },
+    {
       field: "state",
       title: "状态",
       "show-overflow-tooltip": true,
@@ -53,12 +62,6 @@ export const useTableOption = ({
           </ElementPlus.ElTag>
         ];
       }
-    },
-    {
-      field: "roleCode",
-      title: "角色编码",
-      "show-overflow-tooltip": true,
-      width: 200
     },
     {
       field: "memberNum",
@@ -106,11 +109,17 @@ export const useTableOption = ({
     tableTotal.value = total;
   };
 
+  const onTreeNodeClick = (item: Tree) => { 
+    searchData.deptId = item.id;
+    getRoleList();
+  };
+
   onMounted(async () => {
     await getRoleList();
   });
 
   return {
+    onTreeNodeClick,
     tableList,
     tableColumns,
     getRoleList

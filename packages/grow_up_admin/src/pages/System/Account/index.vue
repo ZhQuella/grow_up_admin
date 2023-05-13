@@ -1,6 +1,6 @@
 <template>
   <div class="p-[10px]">
-    <pageLayout>
+    <PageLayout>
       <template #aside>
         <div class="h-full">
           <div class="p-[5px] border-b-[1px] border-[var(--el-border-color)] border-solid">
