@@ -82,7 +82,7 @@ const buttonVisibles = computed(() => {
   return props.buttonGroup.filter((el) => {
     let isShow = true;
     if (el.show) {
-      isShow = el.show(props.data);
+      isShow = el.show(props.data) as boolean;
     }
     return authorityList.value.includes(el.authority) && isShow;
   });
@@ -93,7 +93,7 @@ const showBtns = computed(() => {
 });
 
 const hidenBtns = computed(() => {
-  return buttonVisibles.value.filter((_, index) => index >= props.max);
+  return buttonVisibles.value.filter((_, index) => index > props.max);
 });
 
 const onGroupClick = (item: GroupBtn) => {

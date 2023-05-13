@@ -127,10 +127,10 @@ export const useInteRouter = async ({ systemLoading }: { systemLoading: Ref<bool
     defaultPath.value = `/home/${defaultView.path}`;
     if (!catchViews.length) {
       const { name } = defaultView;
-      router.push({ name });
+      router.replace({ name });
     } else {
       multipleTableStore.visitedViews = catchViews;
-      router.push({ path: multipleTableStore.activeKey });
+      router.replace({ path: multipleTableStore.activeKey });
     }
     systemLoading.value = false;
   };
