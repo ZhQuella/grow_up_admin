@@ -87,7 +87,7 @@ export const useTableFunc = ({
       type: "danger",
       icon: "AiStatusFailed",
       func: async ({ row }: any) => {
-        await await ElMessageBox.confirm("账号停用后将无法继续使用，是否继续？", "温馨提示", {
+        await ElMessageBox.confirm("账号停用后将无法继续使用，是否继续？", "温馨提示", {
           confirmButtonText: "停用",
           cancelButtonText: "取消",
           type: "warning"
@@ -202,7 +202,8 @@ export const useTableFunc = ({
       },
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
       disabled: () => {
-        return !state.selectList.length;
+        const disableAccount = state.selectList.filter((el) => el.state === "0");
+        return !(disableAccount.length === state.selectList.length) || !state.selectList.length;
       }
     },
     {
@@ -217,7 +218,8 @@ export const useTableFunc = ({
       },
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
       disabled: () => {
-        return !state.selectList.length;
+        const disableAccount = state.selectList.filter((el) => el.state === "0");
+        return !(disableAccount.length === state.selectList.length) || !state.selectList.length;
       }
     }
   ]);
@@ -304,7 +306,7 @@ export const useTableFunc = ({
     getAccountList();
   };
 
-  const onSizeChange = (_size: number) => { 
+  const onSizeChange = (_size: number) => {
     size.value = _size;
     page.value = 1;
     getAccountList();

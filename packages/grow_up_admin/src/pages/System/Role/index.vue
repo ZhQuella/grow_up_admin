@@ -69,11 +69,23 @@
       </template>
     </PageLayout>
 
-    <el-drawer v-model="drawerConfig.visible"
+    <GDialog v-model="dialogConfig.visible"
+              :title="dialogConfig.title"
+            :width="dialogConfig.width"
+            @close="onCloseDialog">
+      <component :is="dialogConfig.conmponetName"
+                  :data="dialogConfig.data"
+                 @close="onCloseDialog"/>
+    </GDialog>
+
+    <ElDrawer v-model="drawerConfig.visible"
                :title="drawerConfig.title"
-              size="800px">
-      <component :is="drawerConfig.conmponetName" />
-    </el-drawer>
+              :size="drawerConfig.size"
+              @close="onCloseDrawer">
+      <component :is="drawerConfig.conmponetName"
+                  :data="drawerConfig.data"
+                 @close="onCloseDrawer"/>
+    </ElDrawer>
 
   </div>
 </template>
@@ -107,9 +119,12 @@ const {
 
 const {
   drawerConfig,
+  dialogConfig,
   buttonGroup,
   optionGroup,
   tableRef,
+  onCloseDialog,
+  onCloseDrawer,
   onSizeChange,
   onCurrentChange
 } = useTableFunc({
@@ -126,14 +141,18 @@ const onColumnsBarConfirm = (columns: any[]) => {
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import CreatePermission from "components/business/Permission/CreatePermission/index.vue";
-import ModifyPermission from "components/business/Permission/ModifyPermission/index.vue";
+import permissionControl from "components/business/Permission/index.vue";
+import InfoRole from "./component/infoRole/index.vue";
+import CreateRole from "./component/createRole/index.vue";
+import ModifyRole from "./component/modifyRole/index.vue";
 
 export default defineComponent({
   name: "RoleManagement",
   components: {
-    CreatePermission,
-    ModifyPermission
+    permissionControl,
+    CreateRole,
+    ModifyRole,
+    InfoRole
   }
 });
 </script>

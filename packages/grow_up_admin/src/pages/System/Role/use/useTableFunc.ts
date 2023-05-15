@@ -9,16 +9,24 @@ interface Prop {
   size: Ref<number>;
 }
 
-export const useTableFunc = ({ 
+export const useTableFunc = ({
   getRoleList,
   page,
   size
-}: Prop) => { 
+}: Prop) => {
 
   const tableRef = ref(null);
   const drawerConfig = reactive({
     visible: false,
     conmponetName: "",
+    size: "",
+    title: "",
+    data: {}
+  });
+  const dialogConfig = reactive({
+    visible: false,
+    conmponetName: "",
+    width: "",
     title: "",
     data: {}
   });
@@ -29,11 +37,12 @@ export const useTableFunc = ({
       type: "primary",
       icon: "DataViewAlt",
       func: ({ row }: any) => {
-        // const { roleName } = row;
-        // drawerConfig.visible = true;
-        // drawerConfig.title = `${roleName} 详情`;
-        // drawerConfig.conmponetName = "";
-        // drawerConfig.data = row;
+        const { roleName } = row;
+        drawerConfig.visible = true;
+        drawerConfig.title = `${roleName} 详情`;
+        drawerConfig.conmponetName = "InfoRole";
+        drawerConfig.data = row;
+        drawerConfig.size = "800px";
       },
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
     },
@@ -43,11 +52,12 @@ export const useTableFunc = ({
       icon: "EditOutlined",
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
       func: ({ row }): void => {
-        // const { roleName } = row;
-        // drawerConfig.visible = true;
-        // drawerConfig.title = `${roleName} 数据权限`;
-        // drawerConfig.conmponetName = "CreatePermission";
-        // drawerConfig.data = null;
+        const { roleName } = row;
+        dialogConfig.visible = true;
+        dialogConfig.title = `${roleName} 数据权限`;
+        dialogConfig.conmponetName = "ModifyRole";
+        dialogConfig.data = row;
+        dialogConfig.width = "600px";
       }
     },
     {
@@ -103,9 +113,10 @@ export const useTableFunc = ({
       func: ({ row }): void => {
         const { roleName } = row;
         drawerConfig.visible = true;
-        drawerConfig.title = `${roleName} 角色权限`;
-        drawerConfig.conmponetName = "CreatePermission";
+        drawerConfig.title = `${roleName} 功能权限`;
+        drawerConfig.conmponetName = "permissionControl";
         drawerConfig.data = null;
+        drawerConfig.size = "800px";
       }
     },
     {
@@ -143,25 +154,17 @@ export const useTableFunc = ({
       icon: "Add",
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
       func: (): void => {
-        // drawerConfig.visible = true;
-        // drawerConfig.title = `新增角色`;
-        // drawerConfig.conmponetName = "CreatePermission";
-        // drawerConfig.data = null;
+        dialogConfig.visible = true;
+        dialogConfig.title = `新增角色`;
+        dialogConfig.conmponetName = "CreateRole";
+        dialogConfig.data = null;
+        dialogConfig.width = "600px";
       }
     },
     {
       title: "批量删除",
       type: "danger",
       icon: "Delete",
-      func: async (): Promise<void> => {
-
-      },
-      authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
-    },
-    {
-      title: "批量解绑",
-      type: "warning",
-      icon: "HeatMap02",
       func: async (): Promise<void> => {
 
       },
@@ -176,6 +179,14 @@ export const useTableFunc = ({
     drawerConfig.data = null;
   };
 
+  const onCloseDialog = () => {
+    dialogConfig.visible = false;
+    dialogConfig.title = ``;
+    dialogConfig.conmponetName = "";
+    dialogConfig.data = null;
+    dialogConfig.width = "0px";
+  };
+
   const onCurrentChange = (_page: number):void => {
     page.value = _page;
     getRoleList();
@@ -188,9 +199,12 @@ export const useTableFunc = ({
   };
 
   return {
+    dialogConfig,
     drawerConfig,
     buttonGroup,
     optionGroup,
+    onCloseDialog,
+    onCloseDrawer,
     onCurrentChange,
     onSizeChange,
     tableRef
