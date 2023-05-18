@@ -55,6 +55,13 @@ const menuList = [
         icon: "NumberOutlined",
         path: "CountToExample",
         component: "Feat/CountToExample/index.vue"
+      },
+      {
+        label: "分屏展示",
+        name: "SplitPaneTest",
+        icon: "NumberOutlined",
+        path: "SplitPaneTest",
+        component: "Feat/SplitPaneTest/index.vue"
       }
     ]
   },

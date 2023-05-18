@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { inject, toRefs, computed } from "vue";
 import { getObjectValue } from "util/System";
-
+console.log('这是啥getObjectValue',getObjectValue)
 const props = defineProps({
   prop: {
     type: String,

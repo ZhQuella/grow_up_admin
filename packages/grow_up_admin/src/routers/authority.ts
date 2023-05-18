@@ -26,6 +26,7 @@ export default {
   SystemManagement: ["admin"],
   AccountManagement: ["admin"],
   CountToExample: ["admin"],
+  SplitPaneTest:['admin'],
   "customPage1-1": ["minor"],
-  "customPage2-2": ["role"]
+  "customPage2-2": ["role"],
 };
