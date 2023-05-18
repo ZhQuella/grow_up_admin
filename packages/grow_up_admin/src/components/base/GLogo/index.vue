@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-between">
-    <div class="h-[40px] min-w-[40px]">
+    <!-- <div class="h-[40px] min-w-[40px]">
       <img class="block h-[100%]" :src="getImageUrl(setting?.logUrl)" />
     </div>
     <h1
@@ -8,7 +8,7 @@
       class="leading-[40px] pl-[10px] text-[18px] text-MAIN_TEXT transition ease-in"
     >
       {{ setting?.systemName }}
-    </h1>
+    </h1> -->
   </div>
 </template>
 

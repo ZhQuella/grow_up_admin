@@ -3,7 +3,7 @@
     <GDetail :model="row" label-width="100px">
       <el-row>
         <el-col :span="12">
-          <GDetailItem label="账号" prop="account" />
+          <GDetailItem label="账222号" prop="account" />
         </el-col>
         <el-col :span="12">
           <GDetailItem label="角色名称" prop="roleName" />

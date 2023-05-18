@@ -23,7 +23,7 @@ export default defineComponent({
 import { Splitpanes, Pane } from "splitpanes";
 import PaneCom from './PaneCom.vue'
 import { watch, toRefs, unref, reactive,ref,PropType,defineAsyncComponent } from "vue";
-// 定义
+// 定义aaaaaaa
 const props = defineProps({
     treeData: {
         type: Array,
