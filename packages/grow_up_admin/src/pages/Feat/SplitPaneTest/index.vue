@@ -4,101 +4,92 @@
   -- @date 2023-05-05 18:24:54 星期五
   -->
   <div class="">
-      <SplitPane :treeData="treeData">
-        <!-- <template v-for="(name,i) in treeData.components">
-          <template v-slot:[name]>
-            
-          </template>
-        </template> -->
+      <SplitPane :treeData="treeData"  :rootHorizontal="false">
+        <template #ComA="slotProps">
+          <ComA :slotProps="slotProps"></ComA>
+        </template>
+        <template #ComB1="slotProps">
+          <ComB1 :slotProps="slotProps"></ComB1>
+        </template>
+        <template #ComB2="slotProps">
+          <ComB2 :slotProps="slotProps"></ComB2>
+        </template>
+        <template #ComA1="slotProps">
+          <ComA1 :slotProps="slotProps"></ComA1>
+        </template>
+        <template #ComA2="slotProps">
+          <ComA2 :slotProps="slotProps"></ComA2>
+        </template>
+        <template #ComC="slotProps">
+          <ComC :slotProps="slotProps"></ComC>
+        </template>
+        <template #ComB="slotProps">
+          <ComB :slotProps="slotProps"></ComB>
+        </template>
       </SplitPane>
   </div>
 </template>
 <script lang="ts" setup>
-const treeData:any = [
+import ComA from './ComA.vue'
+import ComB1 from './ComB1.vue'
+import ComB2 from './ComB2.vue'
+import ComC from './ComC.vue'
+import ComB from './ComB.vue'
+import ComA1 from './ComA1.vue'
+import ComA2 from './ComA2.vue'
+// 数组中每一个对象都是一个pane,pane里面的child代表新的pane
+const treeData: any = [
   {
-    id: 1,
-    horizontal: 'row',
-    slotkey: '',
-    height: 500,
-    color: 'blue',
-    components: ['ComA','ComC'],
-    panes: [
+    horizontal: true,// true：竖着分布，false：横着分布
+    size: 65,
+    slotKey: '',
+    id:'a',
+    child: [
       {
-        id: 11,
-        slotkey:'ComA',
-        height:200,
-        color:'pink',
-        name: 'ComA',
-        comName:'ComA'
+        size: 50,
+        horizontal: true,
+        slotKey: 'ComA',
+        id:'a-1',
       },
       {
-        id: 22,
-        slotkey:'',
-        height:200,
-        color:'yellow',
-        name: 'B',
-        splits:[
+        size: 50,
+        horizontal: false,
+        id:'a-2',
+        child: [
           {
-            id: 2,
-            horizontal: 'col',// 竖着排列
-            slotkey:'',
-            height:200,
-            color: '#213741',
-            components: ['ComB1','ComB2'],
-            panes:[
-              {
-                id: 111,
-                slotkey:'ComB1',
-                height:50,
-                color:'#ededed',
-                name: 'B-1',
-                comName:'ComB1'
-              },
-              {
-                id: 222,
-                slotkey:'ComB2',
-                height:50,
-                color:'#1cd66c',
-                name:'B-2',
-                comName:'ComB2'
-              },
-            ]
+            size: 50,
+            horizontal: false,
+            slotKey: 'ComA2',
+            id:'a-2-1',
           },
           {
-            id: 4,
-            horizontal: 'col',// 竖着排列
-            slotkey:'',
-            height:100,
-            color: '#213741',
-            panes:[
-              {
-                id: 111,
-                slotkey:'',
-                height:50,
-                color:'#e13a2d',
-                name:'B-4'
-              },
-              {
-                id: 222,
-                slotkey:'',
-                height:50,
-                color:'#2979ea',
-                name:'B-5'
-              },
-            ]
-          },
+            size: 50,
+            horizontal: false,
+            slotKey: 'ComA1',
+            id:'a-2-2',
+          }
         ]
-      },
-      {
-        id: 33,
-        slotkey:'ComC',
-        height:200,
-        color:'#ccc',
-        name:'C',
-        comName:'ComC'
       }
     ]
   },
+  {
+    horizontal: false,// true：竖着分布，false：横着分布
+    size: 15,
+    slotKey: 'ComB',
+    id:'b',
+    child: [
+      
+    ]
+  },
+  {
+    horizontal: false,// true：竖着分布，false：横着分布
+    size: 20,
+    slotKey: 'ComC',
+    id:'c',
+    child: [
+      
+    ]
+  }
 ]
 </script>
 <style  lang="scss">

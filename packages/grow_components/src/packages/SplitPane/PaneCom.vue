@@ -3,17 +3,23 @@
     -- @author wanghan
     -- @date 2023-05-09 16:44:51 星期二
     -->
-    <Splitpanes v-for="(paneItem,i) in treeData" :key="paneItem.id" class="default-theme" :horizontal="isHor(paneItem)" :style="`height: ${paneItem.height}px`">
-        <Pane v-for="(item) in paneItem.panes" :key="item.id" :style="`border:1px solid ${item.color};`">
-            <template v-if="item.slotkey">
-              <slot :name="item.slotkey" :data='item'></slot>
+    <Splitpanes  :horizontal="rootHorizontal" class="default-theme">
+      <Pane  v-for="(pItem,i) in treeData" :key="pItem.id" :size="pItem.size">
+        <template v-if="pItem.slotKey">
+          <slot ref="aaa" :name="pItem.slotKey" v-bind="pItem"></slot>
+        </template>
+        <template v-if="pItem.child">
+          <PaneCom :treeData="pItem.child"  :rootHorizontal="pItem.horizontal">
+            <template v-for="(row) in getAllChild(pItem)" v-slot:[row]="slotData">
+              <slot :name="row" v-bind="slotData"></slot>
             </template>
-            <PaneCom v-if="item.splits" :treeData='item.splits'></PaneCom>
-        </Pane>
+          </PaneCom>
+        </template>
+      </Pane> 
     </Splitpanes>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent,ref } from "vue";
 
 export default defineComponent({
   name: "SplitPane",
@@ -22,36 +28,29 @@ export default defineComponent({
 <script lang="ts" setup>
 import { Splitpanes, Pane } from "splitpanes";
 import PaneCom from './PaneCom.vue'
-import { watch, toRefs, unref, reactive,ref,PropType,defineAsyncComponent } from "vue";
-// 定义aaaaaaa
 const props = defineProps({
-    treeData: {
-        type: Array,
-        required: false,
-        default: () => []
-    },
-})
-let allComs = reactive({})
+  treeData: {
+    type: Array,
+    required: false,
+    default: () => []
+  },
+  rootHorizontal: {
+    type: Boolean,
+    default: false
+  },
+});
 
-function init() {
-  let arr = props.treeData;
-  arr.forEach((el:any) => {
-    if (el.components) {
-      el.components.forEach((name:string) => {
-        let url = `./${name}.vue`;
-        allComs[`${name}`] = defineAsyncComponent(() => import(url))
-      })
-    }
-    console.log('allComs',allComs)
-  })
-}
-init();
-//! horizontal:true 竖着分布
-const isHor = (paneItem:object) => {
-    return paneItem.horizontal === 'col'
-}
-const getComName = (item:any) => {
-  return allComs[item.comName]
+function getAllChild (item) {
+  let whileArr = [item];
+  let result = [item];
+  while (whileArr.length){
+    let ele = whileArr.shift();
+    if(ele.child && Array.isArray(ele.child)){
+      whileArr.push(...ele.child);
+      result.push(...ele.child);
+    };
+  }
+  return result.filter(el => el.slotKey).map(el => el.slotKey);
 }
 </script>
 <style scoped>
