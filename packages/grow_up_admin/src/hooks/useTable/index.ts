@@ -1,6 +1,7 @@
 import { ref } from "vue";
+import { PageInfo } from "types/pagination";
 
-export const useTable = () => {
+export const useTable = ():PageInfo => {
   const pageSizes = [20, 50, 100, 200];
   const page = ref(1);
   const size = ref(pageSizes[0]);

@@ -7,7 +7,9 @@
     @hide="onSetColumns"
   >
     <template #reference>
-      <el-button :icon="DataTableReference" circle />
+      <el-button :icon="DataTableReference"
+                 circle
+      />
     </template>
     <div>
       <div
@@ -84,7 +86,7 @@ const { onTreeChange, onAllSelectChange, onSetColumns, onResetColumns } = useEve
   treeRef,
   state,
   catchCheckedKeys,
-  allChild: allChild.value,
+  allChild,
   getAllChild,
   emit,
   visible,

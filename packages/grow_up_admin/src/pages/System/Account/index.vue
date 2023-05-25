@@ -40,7 +40,7 @@
             <ButtonGroup :button-group="optionGroup" :max="5" show-text />
           </div>
           <div class="pt-[3px]">
-            <SearchBar :search="searchList" @search="onTableSeach" />
+            <SearchBar :search="searchList" @search="onTableSearch" />
             <ColumnBar :columns="tableColumns" @confirm="onColumnsBarConfirm" />
           </div>
         </div>
@@ -108,6 +108,8 @@
 </template>
 
 <script setup lang="ts">
+import type { TableOption, TableOptionProps } from "./use/useTableOption";
+import { PageInfo } from "types/pagination";
 import { useTable } from "hooks/useTable";
 import ColumnBar from "components/public/ColumnBar/index.vue";
 import SearchBar from "components/public/SearchBar/index.vue";
@@ -119,23 +121,25 @@ import { useDict } from "./use/useDict";
 import { useTableOption } from "./use/useTableOption";
 import { useTableFunc } from "./use/useTableFunc";
 
-const { pageSizes, page, size, layout, total } = useTable();
+const { pageSizes, page, size, layout, total }:PageInfo = useTable();
 
 const { accountStates } = useDict();
 
-const { 
-  searchData, 
-  tableList, 
-  tableColumns, 
-  getAccountList, 
-  onTreeNodeClick, 
-  tableLoading 
-} = useTableOption({
+const tableOption: TableOptionProps = {
   tableTotal: total,
   accountStates,
   page,
   size
-});
+};
+
+const {
+  searchData,
+  tableList,
+  tableColumns,
+  getAccountList,
+  onTreeNodeClick,
+  tableLoading
+}:TableOption = useTableOption(tableOption);
 
 const {
   tableRef,
@@ -158,7 +162,7 @@ const {
 const { deptTreeList, deptSearchValue, filterResult, onDeptInput, defaultProps } = useDeptTree();
 
 // ~ 查询条件配置
-const searchList = [
+const searchList:any[] = [
   {
     labelText: "账号",
     placeholder: "请输入账号",
@@ -204,9 +208,9 @@ const searchList = [
   }
 ];
 
-const onTableSeach = (data: any) => {
+const onTableSearch = (data: any) => {
   searchData.value = data;
-  getAccountList();
+  getAccountList && getAccountList();
 };
 
 const onColumnsBarConfirm = (columns: any[]) => {

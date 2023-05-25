@@ -1,31 +1,56 @@
 import type { Tree } from "types/Tree";
-import type { Ref } from "vue";
+import type { DictItem } from "types/Dict";
+import type { Column } from "types/TableColumn";
+import type { Ref, ComputedRef, UnwrapNestedRefs } from "vue";
+import type { Fn } from "types/index";
+import type { AccountItem } from "../types/index";
 import { reactive, onMounted, computed, ref, unref } from "vue";
 import request from "api/systemMent";
 import { ElTag } from "element-plus";
 
-interface props {
+export interface TableOptionProps {
   tableTotal: Ref<number>;
-  accountStates: Ref<any[]>;
+  accountStates: Ref<DictItem[]>;
   page: Ref<number>,
   size: Ref<number>
-}
+};
 
-export const useTableOption = ({ 
-  tableTotal, 
+interface SearchType {
+  account?: string;
+  cleanSignList?: ("0"|"1")[];
+  createDate?: string[];
+  deptId?: string;
+};
+
+export interface TableOption {
+  searchData: Ref<SearchType>;
+  tableLoading: Ref<boolean>;
+  tableList: ComputedRef<AccountItem[]>;
+  tableColumns: ComputedRef<Column[]>;
+  onTreeNodeClick: Fn;
+  getAccountList: Fn;
+};
+
+export interface TableState {
+  tableList: ComputedRef<AccountItem[]>
+};
+
+export const useTableOption = ({
+  tableTotal,
   accountStates,
   page,
   size
-}: props) => {
-  const tableLoading = ref(false);
+}: TableOptionProps):TableOption => {
+
+  const tableLoading: Ref<boolean> = ref(false);
   const accountMethod = request.create("accountMent");
-  const searchData = reactive<any>({});
-  const state = reactive({
+  const searchData: Ref<SearchType> = ref<SearchType>({});
+  const state:UnwrapNestedRefs<{ tableList: any[] }> = reactive({
     tableList: []
   });
 
   // ~ 表头配置
-  const tableColumns = computed(() => [
+  const tableColumns:ComputedRef<Column[]> = computed(() => [
     {
       field: "serial",
       title: "序号",
@@ -34,17 +59,17 @@ export const useTableOption = ({
     {
       field: "account",
       title: "账号",
-      "show-overflow-tooltip": true,
+      showOverflowTooltip: true,
       width: 120
     },
     {
       field: "state",
       title: "状态",
-      "show-overflow-tooltip": true,
+      showOverflowTooltip: true,
       width: 120,
       formatter: (space: any): any[] => {
-        const item = accountStates.value.find((el) => el.code === space.state);
-        const type = ["danger", "success"][item.code] as "success" | "danger";
+        const item:DictItem = accountStates.value.find((el: DictItem):boolean => el.code === space.state);
+        const type:"danger" | "success" = ["danger", "success"][Number(item.code)] as "success" | "danger";
         return [
           <ElTag type={ type }>
             { item.label }
@@ -55,39 +80,39 @@ export const useTableOption = ({
     {
       field: "forbidCause",
       title: "停用原因",
-      "show-overflow-tooltip": true,
+      showOverflowTooltip: true,
       width: 100,
       visible: false
     },
     {
       field: "roleName",
       title: "角色名称",
-      "show-overflow-tooltip": true
+      showOverflowTooltip: true
     },
     {
       field: "belong",
       title: "归属",
-      "show-overflow-tooltip": true,
+      showOverflowTooltip: true,
       visible: false,
       children: [
         {
           field: "belong.person",
           title: "归属人",
-          "show-overflow-tooltip": true,
+          showOverflowTooltip: true,
           width: 150,
           visible: false
         },
         {
           field: "belong.department",
           title: "所属部门",
-          "show-overflow-tooltip": true,
+          showOverflowTooltip: true,
           width: 150,
           visible: false
         },
         {
           field: "belong.post",
           title: "所属岗位",
-          "show-overflow-tooltip": true,
+          showOverflowTooltip: true,
           width: 150,
           visible: false
         }
@@ -96,38 +121,33 @@ export const useTableOption = ({
     {
       field: "createType",
       title: "创建方式",
-      "show-overflow-tooltip": true,
+      showOverflowTooltip: true,
       width: 100
     },
     {
       field: "createDate",
       title: "创建日期",
-      "show-overflow-tooltip": true
+      showOverflowTooltip: true
     },
     {
       field: "remarks",
       title: "备注",
-      "show-overflow-tooltip": true,
+      showOverflowTooltip: true,
       width: 140
     },
     {
       field: "operate",
       title: "操作",
       fixed: "right",
-      width: "200px"
+      width: 200
     }
   ]);
 
-  const tableList = computed(() => {
+  const tableList: ComputedRef<AccountItem[]> = computed(() => {
     return state.tableList;
   });
 
-  const onTreeNodeClick = (item: Tree) => {
-    searchData.deptId = item.id;
-    getAccountList();
-  };
-
-  const getAccountList = async () => {
+  const getAccountList = async ():Promise<void> => {
     tableLoading.value = true;
     const { accountList, total } = await accountMethod.getAccountList({
       data: searchData.value,
@@ -138,7 +158,12 @@ export const useTableOption = ({
     tableLoading.value = false;
   };
 
-  onMounted(async () => {
+  const onTreeNodeClick = async (item: Tree):Promise<void> => {
+    searchData.value.deptId = item.id;
+    await getAccountList();
+  };
+
+  onMounted(async ():Promise<void> => {
     await getAccountList();
   });
 
