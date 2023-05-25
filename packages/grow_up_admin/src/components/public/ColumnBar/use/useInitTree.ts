@@ -1,5 +1,5 @@
 import type { Ref } from "vue";
-import { computed, ref, onMounted, reactive, watch, nextTick } from "vue";
+import { computed, ref, reactive, watch, nextTick } from "vue";
 import { deepCopy } from "util/index";
 
 interface initProps {
@@ -60,10 +60,10 @@ export const useInitTree = ({ columns, nodeKey }: initProps) => {
 
   const setTreeNodeSelect = () => {
     const allChild = getAllChild(state.treeData);
-    const visibles = allChild
+    const visible = allChild
       .filter((el) => el.visible !== false && el[nodeKey.value])
       .map((el) => el[nodeKey.value]);
-    treeRef.value && treeRef.value.setCheckedKeys(visibles);
+    treeRef.value && treeRef.value.setCheckedKeys(visible);
   };
 
   const setDisabled = () => {
@@ -75,7 +75,8 @@ export const useInitTree = ({ columns, nodeKey }: initProps) => {
     }
   };
 
-  const catchCheckedKeys = () => {
+  const catchCheckedKeys = async () => {
+    await nextTick();
     const keys = treeRef.value.getCheckedKeys();
     state.catchTreeCheckedKeys = keys.filter((el: string) => el);
   };
