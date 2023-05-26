@@ -5,6 +5,5 @@ declare module "element-plus/dist/locale/en.mjs";
 declare module "sortablejs";
 declare module "vue3-grid-layout";
 declare module "exceljs";
-declare module "splitpanes";
 declare module "nprogress";
 declare module "grow_utils";

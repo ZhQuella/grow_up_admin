@@ -219,6 +219,10 @@ importers:
   packages/grow_admin_icons: {}
 
   packages/grow_components:
+    dependencies:
+      splitpanes:
+        specifier: ^3.1.5
+        version: 3.1.5
     devDependencies:
       '@vicons/antd':
         specifier: ^0.12.0
@@ -289,9 +293,6 @@ importers:
       sortablejs:
         specifier: ^1.15.0
         version: 1.15.0
-      splitpanes:
-        specifier: ^3.1.5
-        version: 3.1.5
       v3-tour:
         specifier: ^3.1.2
         version: 3.1.2
