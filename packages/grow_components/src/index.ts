@@ -4,14 +4,14 @@ import { version } from "../package.json";
 import { GCountTo } from "./packages/GCountTo";
 import { GDetail, GDetailItem } from "./packages/GDetail";
 import { GDialog } from "./packages/GDialog";
-import { SplitPane } from "./packages/SplitPane";
+import { GSplitPane } from "./packages/GSplitPane";
 
 const components: Component[] = [
   GCountTo,
   GDetail,
   GDetailItem,
   GDialog,
-  SplitPane
+  GSplitPane
 ];
 
 const install = (app: App) => {
@@ -34,7 +34,7 @@ const GrowConponent = {
   GDetail,
   GDetailItem,
   GDialog,
-  SplitPane
+  GSplitPane
 };
 
 export { 
@@ -43,7 +43,7 @@ export {
   GDetail,
   GDetailItem,
   GDialog,
-  SplitPane
+  GSplitPane
 };
 
 export default GrowConponent;

@@ -8,7 +8,7 @@
       分屏组件
     </div>
     <div class="split-content mx-[10px]">
-      <SplitPane :treeData="treeData"  :rootHorizontal="false">
+      <GSplitPane :treeData="treeData"  :rootHorizontal="false">
         <template #ComA="slotProps">
           <ComA :slotProps="slotProps"></ComA>
         </template>
@@ -30,7 +30,7 @@
         <template #ComB="slotProps">
           <ComB :slotProps="slotProps"></ComB>
         </template>
-      </SplitPane>
+      </GSplitPane>
     </div>
   </div>
 </template>

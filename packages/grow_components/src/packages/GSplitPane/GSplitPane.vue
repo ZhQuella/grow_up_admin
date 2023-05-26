@@ -9,11 +9,11 @@
           <slot :name="pItem.slotKey" v-bind="pItem"></slot>
         </template>
         <template v-if="pItem.child">
-          <PaneCom :treeData="pItem.child"  :rootHorizontal="pItem.horizontal">
+          <GSplitPane :treeData="pItem.child"  :rootHorizontal="pItem.horizontal">
             <template v-for="(row) in getAllChild(pItem)" v-slot:[row]="slotData">
               <slot :name="row" v-bind="slotData"></slot>
             </template>
-          </PaneCom>
+          </GSplitPane>
         </template>
       </Pane> 
     </Splitpanes>
@@ -22,12 +22,12 @@
 import { defineComponent, } from "vue";
 
 export default defineComponent({
-  name: "SplitPane",
+  name: "GSplitPane",
 });
 </script>
 <script lang="ts" setup>
 import { Splitpanes, Pane } from "splitpanes";
-import PaneCom from './PaneCom.vue'
+import GSplitPane from './GSplitPane.vue'
 const props = defineProps({
   treeData: {
     type: Array,
