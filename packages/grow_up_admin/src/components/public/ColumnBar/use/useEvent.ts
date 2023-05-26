@@ -2,13 +2,13 @@ import { Ref } from "vue";
 
 interface propsArg {
   catchCheckedKeys: Fn;
-  allChild: any[];
+  allChild: Ref<any[]>;
   treeRef: any;
   state: any;
   getAllChild: Fn;
   emit: Fn;
   visible: Ref<boolean>;
-  nodeKey: string;
+  nodeKey: Ref<string>;
 }
 
 export const useEvent = ({
@@ -27,11 +27,13 @@ export const useEvent = ({
 
   const onAllSelectChange = (value: boolean) => {
     if (value) {
-      const keys = allChild.map((el) => el[nodeKey.value]);
+      const keys = allChild.value.map((el) => el[nodeKey.value]);
       treeRef.value.setCheckedKeys(keys);
       state.catchTreeCheckedKeys = keys;
     } else {
-      const keys = allChild.filter((el) => el.disabled).map((el) => el[nodeKey.value]);
+      const keys = allChild.value
+        .filter((el) => el.disabled)
+        .map((el) => el[nodeKey.value]);
       treeRef.value.setCheckedKeys(keys);
       state.catchTreeCheckedKeys = keys;
     }

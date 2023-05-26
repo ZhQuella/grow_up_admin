@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     ref="gDialog"
-    :model-value="modelValue"
+    :model-value="visible"
     :show-close="false"
     append-to-body
     v-bind="$attrs"
@@ -35,34 +35,36 @@
 </template>
 
 <script setup lang="ts">
-import { toRefs, computed, ref } from "vue";
+import { computed, ref, watch, toRefs } from "vue";
 
 const emit = defineEmits(["update:modelValue", "open", "close"]);
 const isFullscreen = ref(false);
 const gDialog = ref();
 
-const porps = defineProps({
-  modelValue: {
-    type: Boolean,
-    default: false
-  },
-  destroyOnClose: {
-    type: Boolean,
-    default: true
-  },
-  title: {
-    type: String,
-    default: ""
-  }
+
+const props = defineProps<{
+  modelValue: boolean;
+  destroyOnClose: boolean;
+  title: string;
+}>();
+
+const { modelValue, title } = toRefs(props);
+const visible = ref(false);
+
+watch(() => modelValue.value, (newValue) => {
+  visible.value = newValue;
+},{
+  immediate: true
 });
-const { modelValue } = toRefs(porps);
 
 const onDialogOpen = () => {
-  emit("update:modelValue", true);
+  visible.value = true;
+  emit("update:modelValue", visible.value);
   emit("open");
 };
 
 const onDialogClose = () => {
+  visible.value = false;
   emit("update:modelValue", false);
   emit("close");
 };

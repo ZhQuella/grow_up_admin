@@ -1,0 +1,34 @@
+import Mock from "mockjs";
+
+export default [
+  {
+    url: "/role/list/:page/:size",
+    method: "post",
+    response() { 
+      const data = [];
+      const total = 20;
+      for (let i = 0; i < total; i++) {
+        data.push({
+          // 属性 id 是一个自增数，起始值为 1，每次增 1
+          "id|+1": i + 1,
+          roleName: Mock.mock("@ctitle(3, 5)"),
+          "state|1": ["0", "1"],
+          roleCode: Mock.mock('@word'),
+          memberNum: Mock.mock('@integer(0, 10)'),
+          roleMark: Mock.mock("@ctitle(10, 30)"),
+          createTime: Mock.mock("@now()"),
+          updataTime: Mock.mock("@now()")
+        });
+      };
+
+      return {
+        code: 10000,
+        message: "成功",
+        result: {
+          total,
+          data
+        }
+      }
+    }
+  }
+];

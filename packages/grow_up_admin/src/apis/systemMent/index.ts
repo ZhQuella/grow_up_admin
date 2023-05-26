@@ -1,10 +1,11 @@
-import type { RequestItem } from "types/Request";
 import axios from "api/index";
 
 import deptMentConfig from "./deptMent";
 import accountMentConfig from "./accountMent";
+import roleMentConfig from "./roleMent";
 
-axios.setConfig("deptMent", deptMentConfig as RequestItem[]);
-axios.setConfig("accountMent", accountMentConfig as RequestItem[]);
+axios.setConfig("deptMent", deptMentConfig);
+axios.setConfig("accountMent", accountMentConfig);
+axios.setConfig("roleMent", roleMentConfig);
 
 export default axios;

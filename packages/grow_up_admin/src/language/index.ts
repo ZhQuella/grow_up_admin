@@ -11,12 +11,6 @@ import { storageExample } from "grow_utils";
 import ch from "./ch";
 import en from "./en";
 
-declare module "@vue/runtime-core" {
-  interface ComponentCustomProperties {
-    $t: any
-  }
-}
-
 const i18n: I18n = createI18n({
   locale: storageExample.get(LOCALE_KEY, "ch"),
   legacy: false,
@@ -32,3 +26,5 @@ export default (app: App) => {
     locale: elEn
   });
 };
+
+export { i18n };

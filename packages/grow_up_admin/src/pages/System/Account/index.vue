@@ -1,6 +1,6 @@
 <template>
   <div class="p-[10px]">
-    <pageLayout>
+    <PageLayout>
       <template #aside>
         <div class="h-full">
           <div class="p-[5px] border-b-[1px] border-[var(--el-border-color)] border-solid">
@@ -40,7 +40,7 @@
             <ButtonGroup :button-group="optionGroup" :max="5" show-text />
           </div>
           <div class="pt-[3px]">
-            <SearchBar :search="searchList" @search="onTableSeach" />
+            <SearchBar :search="searchList" @search="onTableSearch" />
             <ColumnBar :columns="tableColumns" @confirm="onColumnsBarConfirm" />
           </div>
         </div>
@@ -61,7 +61,7 @@
         </PerfectTable>
       </template>
       <template #footer>
-        <div :span="12" class="flex justify-end pt-[10px]">
+        <div class="flex justify-end pt-[10px]">
           <el-pagination
             v-model:current-page="page"
             v-model:page-size="size"
@@ -69,6 +69,8 @@
             :layout="layout"
             :total="total"
             small
+            @size-change="onSizeChange"
+            @current-change="onCurrentChange"
           />
         </div>
       </template>
@@ -106,11 +108,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, reactive } from "vue";
+import type { TableOption, TableOptionProps } from "./use/useTableOption";
+import { PageInfo } from "types/pagination";
 import { useTable } from "hooks/useTable";
 import ColumnBar from "components/public/ColumnBar/index.vue";
-import { Delete, DataViewAlt } from "@vicons/carbon";
-
 import SearchBar from "components/public/SearchBar/index.vue";
 import PerfectTable from "components/public/PerfectTable/index.vue";
 import ButtonGroup from "components/public/ButtonGroup/index.vue";
@@ -120,21 +121,25 @@ import { useDict } from "./use/useDict";
 import { useTableOption } from "./use/useTableOption";
 import { useTableFunc } from "./use/useTableFunc";
 
-const { pageSizes, page, size, layout, total } = useTable();
+const { pageSizes, page, size, layout, total }:PageInfo = useTable();
 
 const { accountStates } = useDict();
 
-const { 
-  searchData, 
-  tableList, 
-  tableColumns, 
-  getAccountList, 
-  onTreeNodeClick, 
-  tableLoading 
-} = useTableOption({
+const tableOption: TableOptionProps = {
   tableTotal: total,
-  accountStates
-});
+  accountStates,
+  page,
+  size
+};
+
+const {
+  searchData,
+  tableList,
+  tableColumns,
+  getAccountList,
+  onTreeNodeClick,
+  tableLoading
+}:TableOption = useTableOption(tableOption);
 
 const {
   tableRef,
@@ -145,15 +150,19 @@ const {
   onDrawerClose,
   onDialogClose,
   onAccountSuccess,
-  onPerfectTableSelect
+  onPerfectTableSelect,
+  onSizeChange,
+  onCurrentChange
 } = useTableFunc({
-  getAccountList
+  getAccountList,
+  page,
+  size
 });
 
-const { deptTreeList, deptSearchValue, filterResult, onDeptInput } = useDeptTree();
+const { deptTreeList, deptSearchValue, filterResult, onDeptInput, defaultProps } = useDeptTree();
 
 // ~ 查询条件配置
-const searchList = [
+const searchList:any[] = [
   {
     labelText: "账号",
     placeholder: "请输入账号",
@@ -199,14 +208,9 @@ const searchList = [
   }
 ];
 
-const defaultProps = {
-  children: "children",
-  label: "label"
-};
-
-const onTableSeach = (data: any) => {
+const onTableSearch = (data: any) => {
   searchData.value = data;
-  getAccountList();
+  getAccountList && getAccountList();
 };
 
 const onColumnsBarConfirm = (columns: any[]) => {

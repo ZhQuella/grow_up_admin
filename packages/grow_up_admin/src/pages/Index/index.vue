@@ -54,13 +54,13 @@
           </div>
         </div>
         <div class="text-[24px] text-center py-[24px] text-MAIN_TEXT font-bold">
-          {{ $t("INDEX_SYETEM_DESCRIBE.SPONSOR_TITLE") }}
+          {{ t("INDEX_SYETEM_DESCRIBE.SPONSOR_TITLE") }}
         </div>
         <div class="p-[20px]" />
       </div>
       <el-divider border-style="double" />
       <div class="max-w-[1200px] mx-[auto] pb-[20px] text-center text-[12px] text-TEXT_LIGHT2">
-        <p>{{ $t("RECORD_INFO.DESCRIBE") }}</p>
+        <p>{{ t("RECORD_INFO.DESCRIBE") }}</p>
         <p>Copyright © 2022-present **************</p>
       </div>
     </el-scrollbar>
@@ -77,7 +77,10 @@ import SwitchTheme from "components/base/SwitchTheme/index.vue";
 
 import { getImageUrl } from "util/System";
 import setting from "@/setting";
+import { useI18n } from "vue-i18n";
 
+
+const { t } = useI18n();
 const { onPageContentScroll, opacityNum, isShowBorder, traitIntroduces } = useContainer();
 </script>
 

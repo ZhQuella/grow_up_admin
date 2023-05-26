@@ -25,13 +25,13 @@
         <div>
           <div class="px-[10px]">
             <h3 class="text-[30px] pl-[32px] pb-[10px] text-TEXT_LIGHT1 -enter-x">
-              {{ $t("LOIN_STATE.STATE_1") }}
+              {{ t("LOIN_STATE.STATE_1") }}
             </h3>
             <h3 class="text-[30px] pl-[64px] pb-[10px] text-TEXT_LIGHT1 -enter-x">
-              {{ $t("LOIN_STATE.STATE_2") }}
+              {{ t("LOIN_STATE.STATE_2") }}
             </h3>
             <h3 class="text-[30px] pl-[98px] text-TEXT_LIGHT1 -enter-x">
-              {{ $t("LOIN_STATE.STATE_3") }}
+              {{ t("LOIN_STATE.STATE_3") }}
             </h3>
           </div>
           <div class="w-[400px h-[400px] enter-y">
@@ -56,12 +56,12 @@
               <el-row :gutter="20">
                 <el-col :span="12" class="-enter-x">
                   <el-button class="w-full" @click="onChangeFormType('mobilePhone')">
-                    {{ $t("LOGIN_WORD.NUMBER_LOGIN") }}
+                    {{ t("LOGIN_WORD.NUMBER_LOGIN") }}
                   </el-button>
                 </el-col>
                 <el-col :span="12" class="enter-x">
                   <el-button class="w-full" @click="onChangeFormType('qrCodeLogin')">
-                    {{ $t("LOGIN_WORD.SCAN_CODE_LOGIN") }}
+                    {{ t("LOGIN_WORD.SCAN_CODE_LOGIN") }}
                   </el-button>
                 </el-col>
               </el-row>
@@ -92,7 +92,7 @@
 
             <div class="pt-[20px] enter-y">
               <el-divider>
-                {{ $t("LOGIN_WORD.OTHER_LOGIN_TITLE") }}
+                {{ t("LOGIN_WORD.OTHER_LOGIN_TITLE") }}
               </el-divider>
             </div>
             <div class="mt-[30px] w-[260px] mx-auto">
@@ -117,7 +117,10 @@ import ChangePassword from "components/business/Login/ChangePassword/index.vue";
 import SwitchTheme from "components/base/SwitchTheme/index.vue";
 import { useEvent } from "./use/useEvent";
 import { getImageUrl } from "util/System";
+import { useI18n } from "vue-i18n";
 
+
+const { t } = useI18n();
 const {
   formType,
   tagCode,

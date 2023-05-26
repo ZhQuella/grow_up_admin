@@ -7,7 +7,9 @@
     @hide="onSetColumns"
   >
     <template #reference>
-      <el-button :icon="DataTableReference" circle />
+      <el-button :icon="DataTableReference"
+                 circle
+      />
     </template>
     <div>
       <div
@@ -38,10 +40,10 @@
         class="border-t-[1px] border-[var(--el-border-color)] border-solid p-[10px] flex justify-end"
       >
         <el-button :icon="DataView" @click="onResetColumns">
-          {{ $t("SEARCH_BAR.RESET_SYETEM") }}
+          {{ t("SEARCH_BAR.RESET_SYETEM") }}
         </el-button>
         <el-button type="primary" :icon="FolderDetailsReference" @click="onSetColumns">
-          {{ $t("PUBLIC.CONFIRM_TEXT") }}
+          {{ t("PUBLIC.CONFIRM_TEXT") }}
         </el-button>
       </div>
     </div>
@@ -53,7 +55,10 @@ import { ref, toRefs } from "vue";
 import { DataTableReference, FolderDetailsReference, Reset, DataView } from "@vicons/carbon";
 import { useInitTree } from "./use/useInitTree";
 import { useEvent } from "./use/useEvent";
+import { useI18n } from "vue-i18n";
 
+
+const { t } = useI18n();
 const emit = defineEmits(["confirm"]);
 
 const props = defineProps({
@@ -81,7 +86,7 @@ const { onTreeChange, onAllSelectChange, onSetColumns, onResetColumns } = useEve
   treeRef,
   state,
   catchCheckedKeys,
-  allChild: allChild.value,
+  allChild,
   getAllChild,
   emit,
   visible,
