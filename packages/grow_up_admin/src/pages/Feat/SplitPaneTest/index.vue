@@ -109,13 +109,5 @@ const treeData: any = [
   .split-content {
     height: calc(100% - 200px);
   }
-  .default-theme {
-    height: 100%;
-    .splitpanes__pane {
-      // padding: 5px;
-      // background: #8aceff;
-    }
-  }
 }
-
 </style>

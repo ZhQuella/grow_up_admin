@@ -3,7 +3,7 @@
     -- @author wanghan
     -- @date 2023-05-09 16:44:51 星期二
     -->
-    <Splitpanes  :horizontal="rootHorizontal" class="default-theme">
+    <Splitpanes  :horizontal="rootHorizontal" class="default-theme h-full">
       <Pane  v-for="(pItem,i) in treeData" :class="pItem.class" :key="pItem.id" :size="pItem.size">
         <template v-if="pItem.slotKey">
           <slot :name="pItem.slotKey" v-bind="pItem"></slot>
@@ -19,7 +19,7 @@
     </Splitpanes>
 </template>
 <script lang="ts">
-import { defineComponent,ref } from "vue";
+import { defineComponent, } from "vue";
 
 export default defineComponent({
   name: "SplitPane",
