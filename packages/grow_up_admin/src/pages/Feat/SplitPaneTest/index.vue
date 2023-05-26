@@ -3,7 +3,11 @@
   -- @author wanghan
   -- @date 2023-05-05 18:24:54 星期五
   -->
-  <div class="">
+  <div id="splitPaneTest">
+    <div class="bg-BG_COLOR3 text-MAIN_TEXT py-[50px] px-[20px] text-[17px] mb-[10px]">
+      分屏组件
+    </div>
+    <div class="split-content mx-[10px]">
       <SplitPane :treeData="treeData"  :rootHorizontal="false">
         <template #ComA="slotProps">
           <ComA :slotProps="slotProps"></ComA>
@@ -27,6 +31,7 @@
           <ComB :slotProps="slotProps"></ComB>
         </template>
       </SplitPane>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -44,29 +49,34 @@ const treeData: any = [
     size: 65,
     slotKey: '',
     id:'a',
+    class:'pane-a',
     child: [
       {
         size: 50,
         horizontal: true,
         slotKey: 'ComA',
         id:'a-1',
+        class:'pane-a-1',
       },
       {
         size: 50,
         horizontal: false,
         id:'a-2',
+        class:'pane-a-2',
         child: [
           {
             size: 50,
             horizontal: false,
             slotKey: 'ComA2',
             id:'a-2-1',
+            class:'pane-a-2-1',
           },
           {
             size: 50,
             horizontal: false,
             slotKey: 'ComA1',
             id:'a-2-2',
+            class:'pane-a-2-2',
           }
         ]
       }
@@ -77,6 +87,7 @@ const treeData: any = [
     size: 15,
     slotKey: 'ComB',
     id:'b',
+    class:'pane-b',
     child: [
       
     ]
@@ -86,6 +97,7 @@ const treeData: any = [
     size: 20,
     slotKey: 'ComC',
     id:'c',
+    class:'pane-c',
     child: [
       
     ]
@@ -93,5 +105,17 @@ const treeData: any = [
 ]
 </script>
 <style  lang="scss">
+#splitPaneTest {
+  .split-content {
+    height: calc(100% - 200px);
+  }
+  .default-theme {
+    height: 100%;
+    .splitpanes__pane {
+      // padding: 5px;
+      // background: #8aceff;
+    }
+  }
+}
 
 </style>

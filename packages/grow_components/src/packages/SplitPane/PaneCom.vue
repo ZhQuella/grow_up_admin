@@ -4,9 +4,9 @@
     -- @date 2023-05-09 16:44:51 星期二
     -->
     <Splitpanes  :horizontal="rootHorizontal" class="default-theme">
-      <Pane  v-for="(pItem,i) in treeData" :key="pItem.id" :size="pItem.size">
+      <Pane  v-for="(pItem,i) in treeData" :class="pItem.class" :key="pItem.id" :size="pItem.size">
         <template v-if="pItem.slotKey">
-          <slot ref="aaa" :name="pItem.slotKey" v-bind="pItem"></slot>
+          <slot :name="pItem.slotKey" v-bind="pItem"></slot>
         </template>
         <template v-if="pItem.child">
           <PaneCom :treeData="pItem.child"  :rootHorizontal="pItem.horizontal">
@@ -54,7 +54,5 @@ function getAllChild (item) {
 }
 </script>
 <style scoped>
-.PaneCom1 {
-    border: 1px solid blue;
-}
+
 </style>

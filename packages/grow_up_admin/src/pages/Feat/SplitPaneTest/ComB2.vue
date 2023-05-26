@@ -1,5 +1,5 @@
 <template>
-  ComB2组件---{{ slotProps }}
+  ComB2组件
   
 </template>
 <script setup>

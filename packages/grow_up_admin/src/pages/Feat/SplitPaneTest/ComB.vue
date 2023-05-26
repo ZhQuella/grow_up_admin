@@ -1,5 +1,5 @@
 <template>
-  comB组件---{{ slotProps }}
+  comB组件
 </template>
 <script setup>
 const pros = defineProps({
