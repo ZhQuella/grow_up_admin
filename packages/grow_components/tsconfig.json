@@ -1,25 +1,35 @@
 {
   "compilerOptions": {
-    "sourceMap": false,
-    "target": "esnext",
+    "skipLibCheck": true,
+    "target": "es2022",
     "module": "esnext",
+    "useDefineForClassFields": true,
+    "moduleResolution": "Node",
+    "strict": true,
     "jsx": "preserve",
-    "moduleResolution": "node",
-    "strictNullChecks": true,
-    "declaration": true,
-    "noUnusedLocals": true,
+    "sourceMap": false,
+    "noImplicitAny": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "rootDir": ".",
-    "baseUrl": ".",
+    "strictNullChecks": false,
+    "noEmit": true,
     "lib": ["esnext", "dom"],
-    "types": ["node"],
+    "types": ["vite/client"],
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "types/*": ["types/*"]
     }
   },
-  "include": ["./shims.d.ts", "src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "types/**/*.d.ts",
+    "types/**/*.ts",
+    "build/**/*.ts",
+    "build/**/*.d.ts"
+  ],
+  "exclude": ["node_modules", "dist", "**/*.js"]
 }

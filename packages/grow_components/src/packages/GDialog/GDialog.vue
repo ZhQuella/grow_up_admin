@@ -11,7 +11,7 @@
     @open="onDialogOpen"
     @close="onDialogClose"
   >
-    <template #header="{ close, titleId, titleClass }">
+    <template #header="{ close, titleId, titleClass }: any">
       <div class="flex justify-between">
         <h4 :id="titleId" class="text-[14px]" :class="titleClass">
           {{ title }}
@@ -86,7 +86,7 @@ import { Close } from "@vicons/carbon";
 export default defineComponent({
   name: "GDialog",
   components: {
-    FullscreenExitOutlined, 
+    FullscreenExitOutlined,
     FullscreenOutlined,
     Close
   }

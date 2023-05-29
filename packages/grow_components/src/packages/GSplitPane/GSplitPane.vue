@@ -1,46 +1,37 @@
 <template>
-<!-- @name 
+<!-- @name
     -- @author wanghan
     -- @date 2023-05-09 16:44:51 星期二
     -->
     <Splitpanes  :horizontal="rootHorizontal" class="default-theme h-full">
-      <Pane  v-for="(pItem,i) in treeData" :class="pItem.class" :key="pItem.id" :size="pItem.size">
+      <Pane  v-for="(pItem, i) in treeData"
+            :key="i"
+            :size="pItem.size">
         <template v-if="pItem.slotKey">
           <slot :name="pItem.slotKey" v-bind="pItem"></slot>
         </template>
         <template v-if="pItem.child">
           <GSplitPane :treeData="pItem.child"  :rootHorizontal="pItem.horizontal">
-            <template v-for="(row) in getAllChild(pItem)" v-slot:[row]="slotData">
+            <template v-for="(row, j) in getAllChild(pItem)" v-slot:[row]="slotData">
               <slot :name="row" v-bind="slotData"></slot>
             </template>
           </GSplitPane>
         </template>
-      </Pane> 
+      </Pane>
     </Splitpanes>
 </template>
-<script lang="ts">
-import { defineComponent, } from "vue";
 
-export default defineComponent({
-  name: "GSplitPane",
-});
-</script>
-<script lang="ts" setup>
+<script lang="ts" setup name="GSplitPane">
 import { Splitpanes, Pane } from "splitpanes";
-import GSplitPane from './GSplitPane.vue'
-const props = defineProps({
-  treeData: {
-    type: Array,
-    required: false,
-    default: () => []
-  },
-  rootHorizontal: {
-    type: Boolean,
-    default: false
-  },
+
+withDefaults(defineProps<{
+  treeData: any[];
+  rootHorizontal?: boolean;
+}>(), {
+  rootHorizontal: false
 });
 
-function getAllChild (item) {
+function getAllChild (item: any) {
   let whileArr = [item];
   let result = [item];
   while (whileArr.length){
@@ -53,6 +44,3 @@ function getAllChild (item) {
   return result.filter(el => el.slotKey).map(el => el.slotKey);
 }
 </script>
-<style scoped>
-
-</style>
