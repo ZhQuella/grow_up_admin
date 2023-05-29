@@ -9,6 +9,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
+import vueSetupExtend from "vite-plugin-vue-setup-extend";
 
 import pkg from "./package.json" assert { type: "json" };
 const createBanner = () => {
@@ -43,22 +44,17 @@ export default defineConfig({
   plugins: [
     peerDepsExternal(),
     resolve(),
+    ts(),
+    vue(),
+    vueSetupExtend(),
+    json(),
+    commonjs(),
+    jsx(),
     babel({
       exclude: "node_modules/**",
       presets: ["@vue/babel-preset-jsx"],
       babelHelpers: "bundled"
     }),
-    commonjs(),
-    ts(),
-    jsx(),
-    vue({
-      target: 'browser',
-      preprocessStyles: true,
-      template: {
-        isProduction: true
-      }
-    }),
-    json(),
     terser(),
     postcss()
   ],
