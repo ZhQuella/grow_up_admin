@@ -59,7 +59,7 @@ const menuList = [
       {
         label: "分屏展示",
         name: "SplitPaneTest",
-        icon: "NumberOutlined",
+        icon: "PanelExpansion",
         path: "SplitPaneTest",
         component: "Feat/SplitPaneTest/index.vue"
       }
