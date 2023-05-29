@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
     "skipLibCheck": true,
-    "target": "es2022",
+    "target": "esnext",
     "module": "esnext",
     "useDefineForClassFields": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "node",
     "strict": false,
     "jsx": "preserve",
     "sourceMap": false,
@@ -15,7 +15,7 @@
     "noEmit": true,
     "lib": ["esnext", "dom"],
     "types": ["vite/client"],
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
       "types/*": ["types/*"]

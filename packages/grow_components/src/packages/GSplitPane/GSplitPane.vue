@@ -18,18 +18,18 @@
 </template>
 
 <script lang="ts" setup>
+import type { SplitPane } from "types/GSplitPane";
 import { Splitpanes, Pane } from "splitpanes";
-// import GSplitPane from './GSplitPane.vue'
-const props = defineProps({
-  treeData: {
-    type: Array,
-    required: false,
-    default: () => []
-  },
-  rootHorizontal: {
-    type: Boolean,
-    default: false
-  },
+
+defineOptions({ name: "GSplitPane" });
+
+interface propsType {
+  treeData?: SplitPane[];
+  rootHorizontal?: boolean;
+};
+
+withDefaults(defineProps<propsType>(),{
+  rootHorizontal: false
 });
 
 function getAllChild (item: any) {
@@ -44,11 +44,4 @@ function getAllChild (item: any) {
   }
   return result.filter(el => el.slotKey).map(el => el.slotKey);
 }
-</script>
-
-<script lang="ts">
-import { defineComponent } from "vue";
-export default defineComponent({
-  name: "GSplitPane"
-});
 </script>

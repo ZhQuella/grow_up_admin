@@ -15,6 +15,7 @@ const components: Component[] = [
   GDialog,
   GSplitPane
 ];
+
 const install:PluginInstallFunction = (app: App) => {
   const useComponent = (component: Component) => {
     if (component.name) {
@@ -24,6 +25,7 @@ const install:PluginInstallFunction = (app: App) => {
     }
   };
   components.forEach((component: Component) => {
+    console.log(component, 123123);
     useComponent(component);
   });
 };

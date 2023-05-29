@@ -29,10 +29,10 @@
 
 <script setup lang="ts">
 import type { Ref } from "vue";
-import { ref, onMounted, onUnmounted } from "vue";
-import { addEventResize, removeResizeListener } from "grow_utils";
-// ! 待开发
-import { Splitpanes, Pane } from "splitpanes";
+import { ref, onMounted } from "vue";
+import { addEventResize } from "grow_utils";
+
+defineOptions({ name: "PageLayout" });
 
 const mainRef: Ref = ref();
 const mainHeight = ref(0);
@@ -61,9 +61,9 @@ defineProps({
 });
 </script>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-export default defineComponent({
-  name: "PageLayout"
-});
-</script>
+<!--<script lang="ts">-->
+<!--import { defineComponent } from "vue";-->
+<!--export default defineComponent({-->
+<!--  name: "PageLayout"-->
+<!--});-->
+<!--</script>-->
