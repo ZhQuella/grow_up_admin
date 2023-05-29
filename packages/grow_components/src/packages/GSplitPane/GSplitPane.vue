@@ -28,7 +28,7 @@ interface propsType {
   rootHorizontal?: boolean;
 };
 
-withDefaults(defineProps<T, propsType>(),{
+withDefaults(defineProps<propsType>(),{
   treeData: [],
   rootHorizontal: false
 });

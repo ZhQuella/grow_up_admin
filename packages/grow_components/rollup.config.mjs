@@ -1,7 +1,7 @@
 import { defineConfig } from "rollup";
 import babel from "@rollup/plugin-babel";
 import resolve from "@rollup/plugin-node-resolve";
-import ts from "rollup-plugin-typescript2";
+import esbuild from 'rollup-plugin-esbuild';
 import vue from "@vitejs/plugin-vue";
 import jsx from "@vitejs/plugin-vue-jsx";
 import json from "@rollup/plugin-json";
@@ -49,7 +49,7 @@ export default defineConfig({
     vue({
       reactivityTransform: true
     }),
-    ts(),
+    esbuild(),
     json(),
     terser(),
     postcss()

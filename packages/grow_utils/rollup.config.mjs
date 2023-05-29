@@ -2,7 +2,7 @@ import { defineConfig } from "rollup";
 import { terser } from "rollup-plugin-terser";
 import json from "@rollup/plugin-json";
 import resolve from "@rollup/plugin-node-resolve";
-import ts from "rollup-plugin-typescript2";
+import esbuild from 'rollup-plugin-esbuild';
 import commonjs from "@rollup/plugin-commonjs";
 import babel from "@rollup/plugin-babel";
 
@@ -37,5 +37,5 @@ export default defineConfig({
       name: "w"
     }
   ],
-  plugins: [resolve(), commonjs(), json(), ts({ tsconfig: "tsconfig.json" }), babel(), terser()]
+  plugins: [resolve(), commonjs(), json(), esbuild(), babel(), terser()]
 });
