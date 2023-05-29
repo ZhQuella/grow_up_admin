@@ -1,20 +1,21 @@
-import { App, Component } from "vue";
+import type { App, Component } from "vue";
 import { version } from "../package.json";
 
 import { GCountTo } from "./packages/GCountTo";
 import { GDetail, GDetailItem } from "./packages/GDetail";
 import { GDialog } from "./packages/GDialog";
-import { SplitPane } from "./packages/SplitPane";
+import { GSplitPane } from "./packages/GSplitPane";
+
+declare type PluginInstallFunction = (app: App, ...options: any[]) => any
 
 const components: Component[] = [
   GCountTo,
   GDetail,
   GDetailItem,
   GDialog,
-  SplitPane
+  GSplitPane
 ];
-
-const install = (app: App) => {
+const install:PluginInstallFunction = (app: App) => {
   const useComponent = (component: Component) => {
     if (component.name) {
       app.component(component.name, component);
@@ -34,16 +35,16 @@ const GrowConponent = {
   GDetail,
   GDetailItem,
   GDialog,
-  SplitPane
+  GSplitPane
 };
 
-export { 
-  version, 
+export {
+  version,
   GCountTo,
   GDetail,
   GDetailItem,
   GDialog,
-  SplitPane
+  GSplitPane
 };
 
 export default GrowConponent;

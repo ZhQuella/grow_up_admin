@@ -8,7 +8,7 @@
       分屏组件
     </div>
     <div class="split-content mx-[10px]">
-      <SplitPane :treeData="treeData"  :rootHorizontal="false">
+      <GSplitPane :treeData="treeData"  :rootHorizontal="false">
         <template #ComA>
           ComA
         </template>
@@ -30,18 +30,11 @@
         <template #ComB="slotProps">
           {{ slotProps }}
         </template>
-      </SplitPane>
+      </GSplitPane>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import ComA from './ComA.vue'
-import ComB1 from './ComB1.vue'
-import ComB2 from './ComB2.vue'
-import ComC from './ComC.vue'
-import ComB from './ComB.vue'
-import ComA1 from './ComA1.vue'
-import ComA2 from './ComA2.vue'
 // 数组中每一个对象都是一个pane,pane里面的child代表新的pane
 const treeData: any[] = [
   {
