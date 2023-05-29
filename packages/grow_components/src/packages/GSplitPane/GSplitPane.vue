@@ -17,18 +17,19 @@
     </Splitpanes>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup generic="T extends SplitPane">
 import type { SplitPane } from "types/GSplitPane";
 import { Splitpanes, Pane } from "splitpanes";
 
 defineOptions({ name: "GSplitPane" });
 
 interface propsType {
-  treeData?: SplitPane[];
+  treeData?: T[];
   rootHorizontal?: boolean;
 };
 
-withDefaults(defineProps<propsType>(),{
+withDefaults(defineProps<T, propsType>(),{
+  treeData: [],
   rootHorizontal: false
 });
 

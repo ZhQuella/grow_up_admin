@@ -46,7 +46,9 @@ export default defineConfig({
     resolve(),
     babel(),
     jsx(),
-    vue(),
+    vue({
+      reactivityTransform: true
+    }),
     ts(),
     json(),
     terser(),
