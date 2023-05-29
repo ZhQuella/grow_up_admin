@@ -17,13 +17,19 @@
     </Splitpanes>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup generic="T extends SplitPane">
+import type { SplitPane } from "types/GSplitPane";
 import { Splitpanes, Pane } from "splitpanes";
 
-withDefaults(defineProps<{
-  treeData: any[];
+defineOptions({ name: "GSplitPane" });
+
+interface propsType {
+  treeData?: T[];
   rootHorizontal?: boolean;
-}>(), {
+};
+
+withDefaults(defineProps<propsType>(),{
+  treeData: [],
   rootHorizontal: false
 });
 
@@ -39,11 +45,4 @@ function getAllChild (item: any) {
   }
   return result.filter(el => el.slotKey).map(el => el.slotKey);
 }
-</script>
-
-<script lang="ts">
-import { defineComponent } from "vue";
-export default defineComponent({
-  name: "GSplitPane"
-});
 </script>

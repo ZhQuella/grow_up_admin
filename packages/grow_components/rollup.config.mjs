@@ -1,7 +1,7 @@
 import { defineConfig } from "rollup";
 import babel from "@rollup/plugin-babel";
 import resolve from "@rollup/plugin-node-resolve";
-import ts from "rollup-plugin-typescript2";
+import esbuild from 'rollup-plugin-esbuild';
 import vue from "@vitejs/plugin-vue";
 import jsx from "@vitejs/plugin-vue-jsx";
 import json from "@rollup/plugin-json";
@@ -9,7 +9,6 @@ import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
-import vueSetupExtend from "vite-plugin-vue-setup-extend";
 
 import pkg from "./package.json" assert { type: "json" };
 const createBanner = () => {
@@ -43,18 +42,15 @@ export default defineConfig({
   ],
   plugins: [
     peerDepsExternal(),
-    resolve(),
-    ts(),
-    vue(),
-    vueSetupExtend(),
-    json(),
     commonjs(),
+    resolve(),
+    babel(),
     jsx(),
-    babel({
-      exclude: "node_modules/**",
-      presets: ["@vue/babel-preset-jsx"],
-      babelHelpers: "bundled"
+    vue({
+      reactivityTransform: true
     }),
+    esbuild(),
+    json(),
     terser(),
     postcss()
   ],

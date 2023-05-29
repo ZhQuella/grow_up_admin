@@ -1,8 +1,4 @@
 <template>
-<!-- @name
-  -- @author wanghan
-  -- @date 2023-05-05 18:24:54 星期五
-  -->
   <div id="splitPaneTest">
     <div class="bg-BG_COLOR3 text-MAIN_TEXT py-[50px] px-[20px] text-[17px] mb-[10px]">
       分屏组件
@@ -41,30 +37,25 @@ const treeData: any[] = [
     horizontal: true,// true：竖着分布，false：横着分布
     size: 65,
     slotKey: '',
-    id:'a',
     child: [
       {
         size: 50,
         horizontal: true,
         slotKey: 'ComA',
-        id:'a-1',
       },
       {
         size: 50,
         horizontal: false,
-        id:'a-2',
         child: [
           {
             size: 50,
             horizontal: false,
-            slotKey: 'ComA2',
-            id:'a-2-1',
+            slotKey: 'ComA2'
           },
           {
             size: 50,
             horizontal: false,
             slotKey: 'ComA1',
-            id:'a-2-2',
           }
         ]
       }
@@ -73,14 +64,12 @@ const treeData: any[] = [
   {
     horizontal: false,// true：竖着分布，false：横着分布
     size: 15,
-    slotKey: 'ComB',
-    id:'b'
+    slotKey: 'ComB'
   },
   {
     horizontal: false,// true：竖着分布，false：横着分布
     size: 20,
-    slotKey: 'ComC',
-    id:'c'
+    slotKey: 'ComC'
   }
 ]
 </script>
