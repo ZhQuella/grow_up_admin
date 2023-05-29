@@ -17,14 +17,19 @@
     </Splitpanes>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Splitpanes, Pane } from "splitpanes";
-
-withDefaults(defineProps<{
-  treeData: any[];
-  rootHorizontal?: boolean;
-}>(), {
-  rootHorizontal: false
+// import GSplitPane from './GSplitPane.vue'
+const props = defineProps({
+  treeData: {
+    type: Array,
+    required: false,
+    default: () => []
+  },
+  rootHorizontal: {
+    type: Boolean,
+    default: false
+  },
 });
 
 function getAllChild (item: any) {

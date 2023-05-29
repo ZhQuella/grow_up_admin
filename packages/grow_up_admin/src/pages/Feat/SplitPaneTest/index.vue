@@ -1,8 +1,4 @@
 <template>
-<!-- @name
-  -- @author wanghan
-  -- @date 2023-05-05 18:24:54 星期五
-  -->
   <div id="splitPaneTest">
     <div class="bg-BG_COLOR3 text-MAIN_TEXT py-[50px] px-[20px] text-[17px] mb-[10px]">
       分屏组件
