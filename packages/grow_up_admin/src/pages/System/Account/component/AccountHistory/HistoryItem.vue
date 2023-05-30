@@ -12,6 +12,7 @@
     <g-detail-item
       label="备注"
       class="text-[var(--el-text-color-secondary)] text-[12px] leading-[20px]"
+      v-if="config.remark"
     >
       <p>{{ config.remark }}</p>
     </g-detail-item>

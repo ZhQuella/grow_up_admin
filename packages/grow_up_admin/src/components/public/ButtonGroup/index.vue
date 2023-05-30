@@ -93,7 +93,7 @@ const showBtns = computed(() => {
 });
 
 const hidenBtns = computed(() => {
-  return buttonVisibles.value.filter((_, index) => index > props.max);
+  return buttonVisibles.value.filter((_, index) => index >= props.max);
 });
 
 const onGroupClick = (item: GroupBtn) => {

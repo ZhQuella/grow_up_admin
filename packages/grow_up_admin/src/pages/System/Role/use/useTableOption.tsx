@@ -12,12 +12,12 @@ interface props {
 }
 
 
-export const useTableOption = ({ 
+export const useTableOption = ({
   tableTotal,
   accountStates,
   page,
   size
-}: props) => { 
+}: props) => {
 
   const roleRequest = request.create("roleMent");
   const searchData = reactive<any>({});
@@ -49,11 +49,17 @@ export const useTableOption = ({
       width: 200
     },
     {
+      field: "authorityChart",
+      title: "权限字符",
+      "show-overflow-tooltip": true,
+      width: 200
+    },
+    {
       field: "state",
       title: "状态",
       "show-overflow-tooltip": true,
       width: 120,
-      formatter: (space: any) => { 
+      formatter: (space: any) => {
         const item = accountStates.value.find((el) => el.code === space.state);
         const type = ["danger", "success"][item.code] as "success" | "danger";
         return [
@@ -68,7 +74,7 @@ export const useTableOption = ({
       title: "角色成员数",
       "show-overflow-tooltip": true,
       width: 120,
-      formatter: (row: any) => { 
+      formatter: (row: any) => {
         return [
           <ElementPlus.ElLink>{ row.memberNum }</ElementPlus.ElLink>
         ]
@@ -109,7 +115,7 @@ export const useTableOption = ({
     tableTotal.value = total;
   };
 
-  const onTreeNodeClick = (item: Tree) => { 
+  const onTreeNodeClick = (item: Tree) => {
     searchData.deptId = item.id;
     getRoleList();
   };
