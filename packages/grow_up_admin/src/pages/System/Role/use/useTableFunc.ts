@@ -54,7 +54,7 @@ export const useTableFunc = ({
       func: ({ row }): void => {
         const { roleName } = row;
         dialogConfig.visible = true;
-        dialogConfig.title = `${roleName} 数据权限`;
+        dialogConfig.title = `${roleName} 角色修改`;
         dialogConfig.conmponetName = "ModifyRole";
         dialogConfig.data = row;
         dialogConfig.width = "600px";
@@ -107,7 +107,7 @@ export const useTableFunc = ({
     },
     {
       title: "功能权限",
-      type: "warning",
+      type: "primary",
       icon: "IdManagement",
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
       func: ({ row }): void => {
@@ -121,7 +121,7 @@ export const useTableFunc = ({
     },
     {
       title: "数据权限",
-      type: "warning",
+      type: "primary",
       icon: "DataViewAlt",
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
       func: ({ row }): void => {
