@@ -29,7 +29,9 @@
     "types/**/*.d.ts",
     "types/**/*.ts",
     "build/**/*.ts",
-    "build/**/*.d.ts"
+    "build/**/*.d.ts",
+    "tests/**/*.ts",
+    "tests/**/*.d.ts"
   ],
   "exclude": ["node_modules", "dist", "**/*.js"]
 }

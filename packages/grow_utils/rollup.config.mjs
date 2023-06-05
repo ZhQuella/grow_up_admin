@@ -37,5 +37,14 @@ export default defineConfig({
       name: "w"
     }
   ],
-  plugins: [resolve(), commonjs(), json(), esbuild(), babel(), terser()]
+  plugins: [
+    resolve({
+      preferBuiltins: true
+    }),
+    commonjs(),
+    json(),
+    esbuild(),
+    babel(),
+    terser()
+  ]
 });

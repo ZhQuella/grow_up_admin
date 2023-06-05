@@ -1,3 +1,4 @@
+import path from "path";
 import { defineConfig } from "rollup";
 import babel from "@rollup/plugin-babel";
 import resolve from "@rollup/plugin-node-resolve";
@@ -9,6 +10,9 @@ import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
+import alias from "@rollup/plugin-alias";
+
+const __dirname = path.resolve();
 
 import pkg from "./package.json" assert { type: "json" };
 const createBanner = () => {
@@ -43,7 +47,9 @@ export default defineConfig({
   plugins: [
     peerDepsExternal(),
     commonjs(),
-    resolve(),
+    resolve({
+      preferBuiltins: true
+    }),
     babel(),
     jsx(),
     vue({
@@ -52,7 +58,10 @@ export default defineConfig({
     esbuild(),
     json(),
     terser(),
-    postcss()
+    postcss(),
+    alias({
+      entries: [{ find: "@", replacement: path.resolve(__dirname, "src") }]
+    })
   ],
   external: ["Vue", "element-plus"]
 });

@@ -1,11 +1,11 @@
 <template>
   <div class="flex leading-[32px]">
-    <div class="grow-0 shrink-0" :style="labelStyle">
+    <div class="g-detail-label grow-0 shrink-0" :style="labelStyle">
       {{ label }}
     </div>
     <span class="px-[2px]">:</span>
     <div class="w-full">
-      <span v-if="!$slots.default">{{ value }}</span>
+      <span class="g-detail-value" v-if="!$slots.default">{{ value }}</span>
       <slot :value="value" />
     </div>
   </div>
@@ -47,7 +47,6 @@ export default defineComponent({
       if (getElType(from) !== "Object") {
         throw new Error("Parameter is not an object.");
       }
-
       return selector
         .replace(/\[(\w+)\]/g, ".$1")
         .split(".")
@@ -66,7 +65,7 @@ export default defineComponent({
         "text-align": align.value || pAlign.value
       };
     });
-    
+
     return {
       value,
       labelStyle
