@@ -43,7 +43,9 @@ export default defineConfig({
   ],
   plugins: [
     peerDepsExternal(),
-    resolve(),
+    resolve({
+      preferBuiltins: true
+    }),
     babel({
       exclude: "node_modules/**",
       presets: ["@vue/babel-preset-jsx"],
