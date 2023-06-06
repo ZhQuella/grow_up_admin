@@ -11,11 +11,7 @@ interface Prop {
   size: Ref<number>;
 }
 
-export const useTableFunc = ({
-  getAccountList,
-  page,
-  size
-}: Prop) => {
+export const useTableFunc = ({ getAccountList, page, size }: Prop) => {
   const tableRef = ref();
   const systemMentMethod = axios.create("accountMent");
 
@@ -38,143 +34,146 @@ export const useTableFunc = ({
   });
 
   // ~ 表格操作配置
-  const buttonGroup = computed(() => [
-    {
-      title: "详情",
-      type: "primary",
-      icon: "DataViewAlt",
-      func: ({ row }: any) => {
-        const { account } = row;
-        dialogConfig.visible = true;
-        dialogConfig.title = `${account} 详情`;
-        dialogConfig.conmponetName = "AccountInfo";
-        dialogConfig.data = row;
-      },
-      authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
-    },
-    {
-      title: "修改",
-      type: "warning",
-      icon: "EditOutlined",
-      func: ({ row }: any) => {
-        const { account } = row;
-        dialogConfig.visible = true;
-        dialogConfig.title = `${account} 修改`;
-        dialogConfig.conmponetName = "AccountModify";
-        dialogConfig.data = row;
-      },
-      color: "#626aef",
-      authority: "LIST_PAGE:EL_BASE_LIST:REPORT",
-      disabled: (space: any): boolean => {
-        return space.row.state !== "0";
-      }
-    },
-    {
-      title: "删除",
-      type: "danger",
-      icon: "Delete",
-      func: ({ row }: any) => {
-        const { id } = row;
-        onDeleteAccountByIds([`${id}`]);
-      },
-      disabled: (space: any): boolean => {
-        return space.row.state !== "0";
-      },
-      authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
-    },
-    {
-      title: "停用",
-      type: "danger",
-      icon: "AiStatusFailed",
-      func: async ({ row }: any) => {
-        await ElMessageBox.confirm("账号停用后将无法继续使用，是否继续？", "温馨提示", {
-          confirmButtonText: "停用",
-          cancelButtonText: "取消",
-          type: "warning"
-        });
-        const ids = [row.id];
-        const data = { ids, state: "0" };
-        await onAccountChangeState(data);
-        getAccountList();
-        ElMessage({
+  const buttonGroup = computed(
+    () =>
+      [
+        {
+          title: "详情",
+          type: "primary",
+          icon: "DataViewAlt",
+          func: ({ row }: any) => {
+            const { account } = row;
+            dialogConfig.visible = true;
+            dialogConfig.title = `${account} 详情`;
+            dialogConfig.conmponetName = "AccountInfo";
+            dialogConfig.data = row;
+          },
+          authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
+        },
+        {
+          title: "修改",
+          type: "warning",
+          icon: "EditOutlined",
+          func: ({ row }: any) => {
+            const { account } = row;
+            dialogConfig.visible = true;
+            dialogConfig.title = `${account} 修改`;
+            dialogConfig.conmponetName = "AccountModify";
+            dialogConfig.data = row;
+          },
+          color: "#626aef",
+          authority: "LIST_PAGE:EL_BASE_LIST:REPORT",
+          disabled: (space: any): boolean => {
+            return space.row.state !== "0";
+          }
+        },
+        {
+          title: "删除",
+          type: "danger",
+          icon: "Delete",
+          func: ({ row }: any) => {
+            const { id } = row;
+            onDeleteAccountByIds([`${id}`]);
+          },
+          disabled: (space: any): boolean => {
+            return space.row.state !== "0";
+          },
+          authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
+        },
+        {
+          title: "停用",
+          type: "danger",
+          icon: "AiStatusFailed",
+          func: async ({ row }: any) => {
+            await ElMessageBox.confirm("账号停用后将无法继续使用，是否继续？", "温馨提示", {
+              confirmButtonText: "停用",
+              cancelButtonText: "取消",
+              type: "warning"
+            });
+            const ids = [row.id];
+            const data = { ids, state: "0" };
+            await onAccountChangeState(data);
+            getAccountList();
+            ElMessage({
+              type: "success",
+              message: "账号停用成功"
+            });
+          },
+          authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
+          show: (space: any): boolean => {
+            return space.row.state !== "0";
+          }
+        },
+        {
+          title: "启用",
           type: "success",
-          message: "账号停用成功"
-        });
-      },
-      authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
-      show: (space: any): boolean => {
-        return space.row.state !== "0";
-      }
-    },
-    {
-      title: "启用",
-      type: "success",
-      icon: "AiStatusComplete",
-      func: async (row: any) => {
-        const ids = [row.id];
-        const data = { ids, state: "1" };
-        await onAccountChangeState(data);
-        getAccountList();
-        ElMessage({
-          type: "success",
-          message: "账号启用成功"
-        });
-      },
-      authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
-      show: (space: any): boolean => {
-        return space.row.state === "0";
-      }
-    },
-    {
-      title: "重置密码",
-      type: "danger",
-      icon: "ResetAlt",
-      func: ({ row }: any) => {
-        const { account } = row;
-        dialogConfig.visible = true;
-        dialogConfig.title = `${account} 重置密码`;
-        dialogConfig.conmponetName = "AccountResetPassword";
-        dialogConfig.data = row;
-      },
-      authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
-    },
-    {
-      title: "解绑",
-      type: "warning",
-      icon: "HeatMap02",
-      func: ({ row }: any) => {
-        const { id } = row;
-        onAccountUnbind([id]);
-      },
-      authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
-    },
-    {
-      title: "账号历史",
-      type: "primary",
-      icon: "ChartHistogram",
-      func: ({ row }: any) => {
-        const { account } = row;
-        drawerConfig.visible = true;
-        drawerConfig.title = `${account} 历史`;
-        drawerConfig.conmponetName = "AccountHistory";
-        drawerConfig.data = row;
-      },
-      authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
-    },
-    {
-      title: "使用记录",
-      type: "primary",
-      icon: "DirectoryDomain",
-      func: ({ row }: any) => {
-        const { account } = row;
-        drawerConfig.visible = true;
-        drawerConfig.title = `${account} 使用记录`;
-        drawerConfig.conmponetName = "AccountUseRecord";
-        drawerConfig.data = row;
-      },
-      authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
-    }
-  ] as GroupBtn[]);
+          icon: "AiStatusComplete",
+          func: async (row: any) => {
+            const ids = [row.id];
+            const data = { ids, state: "1" };
+            await onAccountChangeState(data);
+            getAccountList();
+            ElMessage({
+              type: "success",
+              message: "账号启用成功"
+            });
+          },
+          authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
+          show: (space: any): boolean => {
+            return space.row.state === "0";
+          }
+        },
+        {
+          title: "重置密码",
+          type: "danger",
+          icon: "ResetAlt",
+          func: ({ row }: any) => {
+            const { account } = row;
+            dialogConfig.visible = true;
+            dialogConfig.title = `${account} 重置密码`;
+            dialogConfig.conmponetName = "AccountResetPassword";
+            dialogConfig.data = row;
+          },
+          authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
+        },
+        {
+          title: "解绑",
+          type: "warning",
+          icon: "HeatMap02",
+          func: ({ row }: any) => {
+            const { id } = row;
+            onAccountUnbind([id]);
+          },
+          authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
+        },
+        {
+          title: "账号历史",
+          type: "primary",
+          icon: "ChartHistogram",
+          func: ({ row }: any) => {
+            const { account } = row;
+            drawerConfig.visible = true;
+            drawerConfig.title = `${account} 历史`;
+            drawerConfig.conmponetName = "AccountHistory";
+            drawerConfig.data = row;
+          },
+          authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
+        },
+        {
+          title: "使用记录",
+          type: "primary",
+          icon: "DirectoryDomain",
+          func: ({ row }: any) => {
+            const { account } = row;
+            drawerConfig.visible = true;
+            drawerConfig.title = `${account} 使用记录`;
+            drawerConfig.conmponetName = "AccountUseRecord";
+            drawerConfig.data = row;
+          },
+          authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
+        }
+      ] as GroupBtn[]
+  );
 
   // ~ 表格批量操作配置
   const optionGroup = computed(() => [

@@ -22,9 +22,9 @@ const emit = defineEmits(["close"]);
 
 interface propsType {
   row: AccountItem;
-};
+}
 
-const props = withDefaults(defineProps<propsType>(),{
+const props = withDefaults(defineProps<propsType>(), {
   row: {}
 });
 

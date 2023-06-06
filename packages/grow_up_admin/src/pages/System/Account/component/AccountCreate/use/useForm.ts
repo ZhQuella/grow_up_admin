@@ -1,22 +1,22 @@
 import type { FormInstance, FormRules } from "element-plus";
 import type { AccontForm } from "../../../types/index";
-import {reactive, computed, ref, ComputedRef} from "vue";
+import { reactive, computed, ref, ComputedRef } from "vue";
 import axios from "api/systemMent";
 import to from "await-to-js";
-import {ElMessage} from "element-plus";
-import {Ref} from "vue/dist/vue";
+import { ElMessage } from "element-plus";
+import { Ref } from "vue/dist/vue";
 
 interface Prop {
   emit: Fn;
-};
+}
 
 export interface UseForm {
-  accountForm: Ref<FormInstance>,
-  formData: AccontForm,
-  rules: ComputedRef<FormRules>,
-  buttonLoading: Ref<boolean>,
-  onCreateAccount: Fn
-};
+  accountForm: Ref<FormInstance>;
+  formData: AccontForm;
+  rules: ComputedRef<FormRules>;
+  buttonLoading: Ref<boolean>;
+  onCreateAccount: Fn;
+}
 
 export const useForm = ({ emit }: Prop): UseForm => {
   const accountForm: Ref<FormInstance> = ref();

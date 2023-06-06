@@ -2,7 +2,7 @@ import { onMounted, reactive, toRefs, computed } from "vue";
 import axios from "api/Dictionary";
 
 export const useDict = () => {
-  const dictMethods = axios.create("dicts", ["getPublicState","getRoleType"]);
+  const dictMethods = axios.create("dicts", ["getPublicState", "getRoleType"]);
   const state: any = reactive({
     roleStates: [],
     roleTypes: []

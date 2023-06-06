@@ -1,20 +1,19 @@
 import type { Ref } from "vue";
 import { GDetail, GDetailItem } from "@/packages/GDetail";
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from "vitest";
 import { reactive, ref } from "vue";
-import { mount } from '@vue/test-utils';
+import { mount } from "@vue/test-utils";
 
 interface mockData {
   name: string;
-};
+}
 
-describe('GDetail 功能测试', () => {
-
-  let model: Ref<mockData> = ref({
+describe("GDetail 功能测试", () => {
+  const model: Ref<mockData> = ref({
     name: "张三"
   });
-  let label: string = "姓名";
-  let prop: string = "name";
+  const label = "姓名";
+  const prop = "name";
 
   it("render provide/inject", () => {
     const wrapper = mount(GDetailItem, {
@@ -25,7 +24,7 @@ describe('GDetail 功能测试', () => {
             align: "left",
             labelWidth: "100px"
           })
-        },
+        }
       },
       props: {
         label,
@@ -34,7 +33,7 @@ describe('GDetail 功能测试', () => {
         labelWidth: "100px"
       }
     });
-    console.log(wrapper.find(".g-detail-label").attributes().hasOwnProperty("text-align"))
+    console.log(wrapper.find(".g-detail-label").attributes().hasOwnProperty("text-align"));
     expect(label).toBe(wrapper.find(".g-detail-label").text());
     expect(model.value[prop]).toBe(wrapper.find(".g-detail-value").text());
   });
@@ -48,7 +47,7 @@ describe('GDetail 功能测试', () => {
             align: "left",
             labelWidth: "100px"
           })
-        },
+        }
       },
       slots: {
         default: (item) => `<b>${item.value}</b>`
@@ -60,7 +59,6 @@ describe('GDetail 功能测试', () => {
         labelWidth: "100px"
       }
     });
-    expect(`<b>${model.value[prop]}</b>`).toBe(wrapper.find(".w-full").text())
+    expect(`<b>${model.value[prop]}</b>`).toBe(wrapper.find(".w-full").text());
   });
-
 });

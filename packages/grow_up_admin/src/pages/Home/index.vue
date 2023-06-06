@@ -72,7 +72,6 @@ import { useInteRouter } from "./use/useInteRouter";
 import { useOption } from "./use/useOption";
 import { useI18n } from "vue-i18n";
 
-
 const { t } = useI18n();
 const homePath = ref("");
 

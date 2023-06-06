@@ -1,4 +1,3 @@
-
 export interface SplitPane {
   horizontal?: boolean;
   size?: number;

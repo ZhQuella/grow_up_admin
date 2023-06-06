@@ -4,10 +4,12 @@
       <template #aside>
         <div class="h-full">
           <div class="p-[5px] border-b-[1px] border-[var(--el-border-color)] border-solid">
-            <el-input placeholder="请输入部门名称"
-                      clearable
-                      v-model="deptSearchValue"
-                      @input="onDeptInput"/>
+            <el-input
+              placeholder="请输入部门名称"
+              clearable
+              v-model="deptSearchValue"
+              @input="onDeptInput"
+            />
           </div>
           <el-scrollbar style="height: calc(100% - 43px)">
             <div v-show="!deptSearchValue">
@@ -45,10 +47,7 @@
       </template>
 
       <template #main="{ height }">
-        <PerfectTable ref="tableRef"
-                      :height="height"
-                      :columns="tableColumns"
-                      :data="tableList">
+        <PerfectTable ref="tableRef" :height="height" :columns="tableColumns" :data="tableList">
           <template #btnOption="btnOption">
             <ButtonGroup :button-group="buttonGroup" :max="4" :data="btnOption" />
           </template>
@@ -57,36 +56,45 @@
 
       <template #footer>
         <div class="flex justify-end pt-[10px]">
-          <el-pagination v-model:current-page="page"
-                        v-model:page-size="size"
-                        :page-sizes="pageSizes"
-                        :layout="layout"
-                        :total="total"
-                        small
-                        @size-change="onSizeChange"
-                        @current-change="onCurrentChange"/>
+          <el-pagination
+            v-model:current-page="page"
+            v-model:page-size="size"
+            :page-sizes="pageSizes"
+            :layout="layout"
+            :total="total"
+            small
+            @size-change="onSizeChange"
+            @current-change="onCurrentChange"
+          />
         </div>
       </template>
     </PageLayout>
 
-    <GDialog v-model="dialogConfig.visible"
-              :title="dialogConfig.title"
-            :width="dialogConfig.width"
-            @close="onCloseDialog">
-      <component :is="dialogConfig.conmponetName"
-                  :data="dialogConfig.data"
-                 @close="onCloseDialog"/>
+    <GDialog
+      v-model="dialogConfig.visible"
+      :title="dialogConfig.title"
+      :width="dialogConfig.width"
+      @close="onCloseDialog"
+    >
+      <component
+        :is="dialogConfig.conmponetName"
+        :data="dialogConfig.data"
+        @close="onCloseDialog"
+      />
     </GDialog>
 
-    <ElDrawer v-model="drawerConfig.visible"
-               :title="drawerConfig.title"
-              :size="drawerConfig.size"
-              @close="onCloseDrawer">
-      <component :is="drawerConfig.conmponetName"
-                  :data="drawerConfig.data"
-                 @close="onCloseDrawer"/>
+    <ElDrawer
+      v-model="drawerConfig.visible"
+      :title="drawerConfig.title"
+      :size="drawerConfig.size"
+      @close="onCloseDrawer"
+    >
+      <component
+        :is="drawerConfig.conmponetName"
+        :data="drawerConfig.data"
+        @close="onCloseDrawer"
+      />
     </ElDrawer>
-
   </div>
 </template>
 
@@ -105,12 +113,7 @@ const { roleStates, roleTypes } = useDict();
 const { pageSizes, page, size, layout, total } = useTable();
 const { deptTreeList, deptSearchValue, filterResult, onDeptInput, defaultProps } = useDeptTree();
 
-const {
-  tableColumns,
-  tableList,
-  getRoleList,
-  onTreeNodeClick
-} = useTableOption({
+const { tableColumns, tableList, getRoleList, onTreeNodeClick } = useTableOption({
   tableTotal: total,
   roleStates,
   size,
@@ -133,7 +136,6 @@ const {
   page,
   size
 });
-
 
 const onColumnsBarConfirm = (columns: any[]) => {
   tableRef.value.setColumns(columns);

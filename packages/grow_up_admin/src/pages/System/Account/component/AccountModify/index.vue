@@ -54,9 +54,9 @@ import { useForm } from "./use/useForm";
 
 interface propsType {
   row: AccountItem;
-};
+}
 
-const props = withDefaults(defineProps<propsType>(),{
+const props = withDefaults(defineProps<propsType>(), {
   row: {}
 });
 

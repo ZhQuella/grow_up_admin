@@ -37,9 +37,9 @@ const emit = defineEmits(["close"]);
 
 interface propsType {
   row: AccountItem;
-};
+}
 
-withDefaults(defineProps<propsType>(),{
+withDefaults(defineProps<propsType>(), {
   row: {}
 });
 

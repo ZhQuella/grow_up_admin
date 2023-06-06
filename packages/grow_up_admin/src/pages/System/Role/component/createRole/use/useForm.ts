@@ -5,23 +5,20 @@ import { computed, reactive, ref } from "vue";
 import to from "await-to-js";
 
 export interface Props {
-  emit: Fn
-};
+  emit: Fn;
+}
 
 export interface UseForm {
   rules: ComputedRef<any>;
-  formData: RoleForm,
-  formRef: Ref<FormInstance>
-  onCreateRole:Fn
-};
+  formData: RoleForm;
+  formRef: Ref<FormInstance>;
+  onCreateRole: Fn;
+}
 
-export const useForm = ({
-  emit
-}: Props):UseForm => {
-
+export const useForm = ({ emit }: Props): UseForm => {
   const formRef: Ref<FormInstance> = ref();
 
-  const formData:RoleForm = reactive({
+  const formData: RoleForm = reactive({
     roleName: "",
     roleCode: "",
     authorityChart: "",
@@ -62,7 +59,7 @@ export const useForm = ({
   }));
 
   const onCreateRole = async (): Promise<void> => {
-    try{
+    try {
       await formRef.value.validate();
       // const [error] = await to(accountMethod.createAccount({ data: formData }));
     } catch {}

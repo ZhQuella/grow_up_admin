@@ -13,14 +13,14 @@ interface props {
   roleTypes: Ref<DictItem[]>;
   page: Ref<number>;
   size: Ref<number>;
-};
+}
 
 interface tableOption {
   onTreeNodeClick: Fn;
   tableList: ComputedRef<RoleItem[]>;
   tableColumns: ComputedRef<Column[]>;
   getRoleList: Fn;
-};
+}
 
 type stateType = "success" | "danger";
 type roleType = "" | "warning";
@@ -31,11 +31,10 @@ export const useTableOption = ({
   page,
   size,
   roleTypes
-}: props):tableOption => {
-
+}: props): tableOption => {
   const roleRequest = request.create("roleMent");
   const searchData = reactive<any>({});
-  const state:{ tableList: RoleItem[] } = reactive({
+  const state: { tableList: RoleItem[] } = reactive({
     tableList: []
   });
 
@@ -43,7 +42,7 @@ export const useTableOption = ({
     return state.tableList;
   });
 
-  const tableColumns:ComputedRef<Column[]> = computed(() => [
+  const tableColumns: ComputedRef<Column[]> = computed(() => [
     {
       field: "serial",
       title: "序号",
@@ -76,11 +75,7 @@ export const useTableOption = ({
       formatter: (space: any) => {
         const item = roleTypes.value.find((el) => el.code === space.state);
         const type = ["", "warning"][Number(item?.code)] as roleType;
-        return [
-          <ElementPlus.ElTag type={ type }>
-            { item.label }
-          </ElementPlus.ElTag>
-        ];
+        return [<ElementPlus.ElTag type={type}>{item.label}</ElementPlus.ElTag>];
       }
     },
     {
@@ -91,11 +86,7 @@ export const useTableOption = ({
       formatter: (space: any) => {
         const item = roleStates.value.find((el) => el.code === space.state);
         const type = ["danger", "success"][Number(item?.code)] as stateType;
-        return [
-          <ElementPlus.ElTag type={ type }>
-            { item.label }
-          </ElementPlus.ElTag>
-        ];
+        return [<ElementPlus.ElTag type={type}>{item.label}</ElementPlus.ElTag>];
       }
     },
     {
@@ -104,9 +95,7 @@ export const useTableOption = ({
       showOverflowTooltip: true,
       width: 120,
       formatter: (row: any) => {
-        return [
-          <ElementPlus.ElLink>{ row.memberNum }</ElementPlus.ElLink>
-        ]
+        return [<ElementPlus.ElLink>{row.memberNum}</ElementPlus.ElLink>];
       }
     },
     {
@@ -158,5 +147,5 @@ export const useTableOption = ({
     tableList,
     tableColumns,
     getRoleList
-  }
+  };
 };

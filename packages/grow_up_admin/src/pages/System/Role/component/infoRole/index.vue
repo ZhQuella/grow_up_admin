@@ -1,12 +1,8 @@
 <template>
-  <div>
-
-  </div>
+  <div></div>
 </template>
 
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <script lang="ts">
 import { defineComponent } from "vue";

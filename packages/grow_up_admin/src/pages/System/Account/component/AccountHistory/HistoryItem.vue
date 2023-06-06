@@ -25,9 +25,9 @@ import { toRefs, computed } from "vue";
 
 interface propsType {
   config: HistoryItem;
-};
+}
 
-const prpos = withDefaults(defineProps<propsType>(),{
+const prpos = withDefaults(defineProps<propsType>(), {
   config: {}
 });
 

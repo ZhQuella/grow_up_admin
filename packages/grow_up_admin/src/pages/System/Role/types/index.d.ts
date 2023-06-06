@@ -1,4 +1,3 @@
-
 type roleState = "0" | "1";
 
 export interface RoleItem {
@@ -12,7 +11,7 @@ export interface RoleItem {
   roleMark: string;
   createTime: string;
   updataTime: string;
-};
+}
 
 export interface RoleForm {
   roleName: string;
@@ -21,4 +20,4 @@ export interface RoleForm {
   roleType: string;
   state: roleState;
   roleMark?: string;
-};
+}

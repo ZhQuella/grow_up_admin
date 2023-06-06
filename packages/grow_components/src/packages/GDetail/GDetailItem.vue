@@ -33,7 +33,7 @@ export default defineComponent({
       default: ""
     }
   },
-  setup(props){
+  setup(props) {
     const parentProps = inject("g-detail") as any;
 
     const { labelWidth, align, prop } = toRefs(props);
@@ -69,7 +69,7 @@ export default defineComponent({
     return {
       value,
       labelStyle
-    }
+    };
   }
 });
 </script>

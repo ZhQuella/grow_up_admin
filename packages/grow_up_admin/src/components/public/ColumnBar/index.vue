@@ -7,9 +7,7 @@
     @hide="onSetColumns"
   >
     <template #reference>
-      <el-button :icon="DataTableReference"
-                 circle
-      />
+      <el-button :icon="DataTableReference" circle />
     </template>
     <div>
       <div
@@ -56,7 +54,6 @@ import { DataTableReference, FolderDetailsReference, Reset, DataView } from "@vi
 import { useInitTree } from "./use/useInitTree";
 import { useEvent } from "./use/useEvent";
 import { useI18n } from "vue-i18n";
-
 
 const { t } = useI18n();
 const emit = defineEmits(["confirm"]);

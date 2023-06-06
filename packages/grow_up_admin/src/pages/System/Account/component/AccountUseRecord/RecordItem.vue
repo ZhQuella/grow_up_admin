@@ -38,9 +38,9 @@ import { toRefs } from "vue";
 
 interface propsType {
   config: RecordItem;
-};
+}
 
-const props = withDefaults(defineProps<propsType>(),{
+const props = withDefaults(defineProps<propsType>(), {
   config: {}
 });
 

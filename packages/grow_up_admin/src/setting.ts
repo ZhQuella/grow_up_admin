@@ -1,4 +1,3 @@
-
 export default {
   //  系统名称
   systemName: "Grow Admin",
