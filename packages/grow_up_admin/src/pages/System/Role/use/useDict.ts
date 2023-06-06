@@ -2,20 +2,27 @@ import { onMounted, reactive, toRefs, computed } from "vue";
 import axios from "api/Dictionary";
 
 export const useDict = () => {
-  const dictMethods = axios.create("dicts");
+  const dictMethods = axios.create("dicts", ["getPublicState","getRoleType"]);
   const state: any = reactive({
-    accountStates: []
+    roleStates: [],
+    roleTypes: []
   });
 
-  const getAccountState = async () => {
-    const { dictList } = await dictMethods.getAccountState();
-    state.accountStates = dictList;
+  const getRoleState = async () => {
+    const { dictList } = await dictMethods.getPublicState();
+    state.roleStates = dictList;
+  };
+
+  const getRoleType = async () => {
+    const { dictList } = await dictMethods.getRoleType();
+    state.roleTypes = dictList;
   };
 
   const dictMap = computed(() => state);
 
   onMounted(() => {
-    getAccountState();
+    getRoleState();
+    getRoleType();
   });
 
   return {

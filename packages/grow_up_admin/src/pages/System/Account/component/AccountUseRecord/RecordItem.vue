@@ -33,16 +33,18 @@
 </template>
 
 <script setup lang="ts">
+import type { RecordItem } from "../../types/index";
 import { toRefs } from "vue";
 
-const porp = defineProps({
-  config: {
-    type: Object,
-    default: () => ({})
-  }
+interface propsType {
+  config: RecordItem;
+};
+
+const props = withDefaults(defineProps<propsType>(),{
+  config: {}
 });
 
-const { config } = toRefs(porp);
+const { config } = toRefs(props);
 </script>
 
 <script lang="ts">

@@ -16,12 +16,12 @@ export default [
           authorityChart: Mock.mock('@word(10, 15)'),
           roleCode: Mock.mock('@word'),
           memberNum: Mock.mock('@integer(0, 10)'),
+          'roleType|1': ["0","1"],
           roleMark: Mock.mock("@ctitle(10, 30)"),
           createTime: Mock.mock("@now()"),
           updataTime: Mock.mock("@now()")
         });
       };
-
       return {
         code: 10000,
         message: "成功",

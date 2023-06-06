@@ -1,18 +1,29 @@
-import { reactive, computed, ref } from "vue";
+import type { FormInstance, FormRules } from "element-plus";
+import type { AccontForm } from "../../../types/index";
+import {reactive, computed, ref, ComputedRef} from "vue";
 import axios from "api/systemMent";
 import to from "await-to-js";
-import { ElMessage } from "element-plus";
+import {ElMessage} from "element-plus";
+import {Ref} from "vue/dist/vue";
 
 interface Prop {
   emit: Fn;
-}
+};
 
-export const useForm = ({ emit }: Prop) => {
-  const accountForm = ref();
+export interface UseForm {
+  accountForm: Ref<FormInstance>,
+  formData: AccontForm,
+  rules: ComputedRef<FormRules>,
+  buttonLoading: Ref<boolean>,
+  onCreateAccount: Fn
+};
+
+export const useForm = ({ emit }: Prop): UseForm => {
+  const accountForm: Ref<FormInstance> = ref();
   const buttonLoading = ref(false);
   const accountMethod = axios.create("accountMent");
 
-  const formData = reactive({
+  const formData: AccontForm = reactive({
     account: "",
     password: "g123987",
     personnel: "",
@@ -20,7 +31,7 @@ export const useForm = ({ emit }: Prop) => {
   });
 
   //  /^[A-Za-z0-9]{6,12}$/
-  const rules = computed(() => ({
+  const rules: ComputedRef<FormRules> = computed(() => ({
     account: [
       {
         required: true,

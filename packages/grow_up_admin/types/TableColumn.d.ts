@@ -1,10 +1,10 @@
 
-type fixed = true | 'left' | 'right';
+type fixedType = true | 'left' | 'right';
 
 export interface Column {
   field: string;
   title: string;
-  fixed?:fixed;
+  fixed?:fixedType;
   showOverflowTooltip?: boolean;
   formatter?: Fn;
   visible?: boolean;

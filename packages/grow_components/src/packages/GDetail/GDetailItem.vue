@@ -3,7 +3,7 @@
     <div class="g-detail-label grow-0 shrink-0" :style="labelStyle">
       {{ label }}
     </div>
-    <span class="px-[2px]">:</span>
+    <span class="px-[4px]">:</span>
     <div class="w-full">
       <span class="g-detail-value" v-if="!$slots.default">{{ value }}</span>
       <slot :value="value" />

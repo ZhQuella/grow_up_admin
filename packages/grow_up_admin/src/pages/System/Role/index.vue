@@ -101,7 +101,7 @@ import { useTableOption } from "./use/useTableOption";
 import { useTableFunc } from "./use/useTableFunc";
 import PageLayout from "components/public/PageLayout/index.vue";
 
-const { accountStates } = useDict();
+const { roleStates, roleTypes } = useDict();
 const { pageSizes, page, size, layout, total } = useTable();
 const { deptTreeList, deptSearchValue, filterResult, onDeptInput, defaultProps } = useDeptTree();
 
@@ -112,9 +112,10 @@ const {
   onTreeNodeClick
 } = useTableOption({
   tableTotal: total,
-  accountStates,
+  roleStates,
   size,
   page,
+  roleTypes
 });
 
 const {

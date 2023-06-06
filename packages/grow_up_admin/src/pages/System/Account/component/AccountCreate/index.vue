@@ -37,15 +37,16 @@
 </template>
 
 <script setup lang="ts">
+import type { UseForm } from "./use/useForm";
 import PasswordIntensity from "components/public/PasswordIntensity/index.vue";
-import { useDict } from "../use/useDict";
+import { useDict } from "../../use/useDict";
 import { useForm } from "./use/useForm";
 
 const emit = defineEmits(["close", "success"]);
 
 const { accountStates } = useDict();
 
-const { rules, formData, accountForm, buttonLoading, onCreateAccount } = useForm({
+const { rules, formData, accountForm, buttonLoading, onCreateAccount }: UseForm = useForm({
   emit
 });
 

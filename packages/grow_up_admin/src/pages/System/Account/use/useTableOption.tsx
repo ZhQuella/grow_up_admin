@@ -45,7 +45,7 @@ export const useTableOption = ({
   const tableLoading: Ref<boolean> = ref(false);
   const accountMethod = request.create("accountMent");
   const searchData: Ref<SearchType> = ref<SearchType>({});
-  const state:UnwrapNestedRefs<{ tableList: any[] }> = reactive({
+  const state:UnwrapNestedRefs<{ tableList: AccountItem[] }> = reactive({
     tableList: []
   });
 
