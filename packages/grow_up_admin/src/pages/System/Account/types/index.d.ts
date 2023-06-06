@@ -11,7 +11,7 @@ export interface AccountItem {
   belong: Belong;
   createDate: string;
   createType: string;
-  id: number;
+  id: string;
   roleName: string;
   state: stateType;
 }

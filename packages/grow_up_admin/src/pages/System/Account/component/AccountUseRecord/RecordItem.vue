@@ -40,9 +40,7 @@ interface propsType {
   config: RecordItem;
 }
 
-const props = withDefaults(defineProps<propsType>(), {
-  config: {}
-});
+const props = defineProps<propsType>();
 
 const { config } = toRefs(props);
 </script>

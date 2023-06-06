@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<propsType>(), {
 });
 
 const { usedRecordList } = useInit({
-  id: props.row.id,
+  id: props.row?.id,
   emit
 });
 </script>

@@ -27,9 +27,7 @@ interface propsType {
   config: HistoryItem;
 }
 
-const prpos = withDefaults(defineProps<propsType>(), {
-  config: {}
-});
+const prpos = defineProps<propsType>();
 
 const { config } = toRefs(prpos);
 
