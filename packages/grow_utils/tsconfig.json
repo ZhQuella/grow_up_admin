@@ -1,26 +1,30 @@
 {
   "compilerOptions": {
-    "sourceMap": false,
-    "target": "esnext",
-    "module": "es2015",
-    "jsx": "preserve",
+    "skipLibCheck": true,
+    "target": "es2022",
+    "module": "esnext",
+    "useDefineForClassFields": true,
     "moduleResolution": "Node",
-    "strictNullChecks": true,
-    "declaration": true,
-    "noUnusedLocals": true,
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": false,
+    "noImplicitAny": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "rootDir": ".",
-    "baseUrl": ".",
+    "strictNullChecks": false,
+    "noEmit": true,
     "lib": ["esnext", "dom"],
-    "types": ["node"],
+    "types": ["vite/client"],
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "types/*": ["types/*"]
+      "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "types/**/*.d.ts", "types/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "types/**/*.d.ts",
+    "types/**/*.ts"
+  ],
+  "exclude": ["node_modules", "dist", "**/*.js"]
 }
