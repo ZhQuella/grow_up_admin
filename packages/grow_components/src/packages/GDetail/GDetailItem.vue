@@ -3,7 +3,7 @@
     <div class="g-detail-label grow-0 shrink-0" :style="labelStyle">
       {{ label }}
     </div>
-    <span class="px-[2px]">:</span>
+    <span class="px-[4px]">:</span>
     <div class="w-full">
       <span class="g-detail-value" v-if="!$slots.default">{{ value }}</span>
       <slot :value="value" />
@@ -33,7 +33,7 @@ export default defineComponent({
       default: ""
     }
   },
-  setup(props){
+  setup(props) {
     const parentProps = inject("g-detail") as any;
 
     const { labelWidth, align, prop } = toRefs(props);
@@ -69,7 +69,7 @@ export default defineComponent({
     return {
       value,
       labelStyle
-    }
+    };
   }
 });
 </script>

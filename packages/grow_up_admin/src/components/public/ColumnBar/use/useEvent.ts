@@ -31,9 +31,7 @@ export const useEvent = ({
       treeRef.value.setCheckedKeys(keys);
       state.catchTreeCheckedKeys = keys;
     } else {
-      const keys = allChild.value
-        .filter((el) => el.disabled)
-        .map((el) => el[nodeKey.value]);
+      const keys = allChild.value.filter((el) => el.disabled).map((el) => el[nodeKey.value]);
       treeRef.value.setCheckedKeys(keys);
       state.catchTreeCheckedKeys = keys;
     }

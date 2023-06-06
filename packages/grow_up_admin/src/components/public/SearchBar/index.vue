@@ -32,7 +32,6 @@ import SearchContainer from "components/public/SearchBar/SearchContainer.vue";
 import { formatConversion } from "util/System/index";
 import { useI18n } from "vue-i18n";
 
-
 const { t } = useI18n();
 const visible = ref(false);
 const container = ref();

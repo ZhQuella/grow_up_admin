@@ -20,7 +20,7 @@ export default defineComponent({
       default: "right"
     }
   },
-  setup(props){
+  setup(props) {
     provide("g-detail", props);
   }
 });

@@ -74,7 +74,7 @@
           />
         </div>
       </template>
-    </pageLayout>
+    </PageLayout>
 
     <g-dialog
       v-model="dialogConfig.visible"
@@ -121,7 +121,7 @@ import { useDict } from "./use/useDict";
 import { useTableOption } from "./use/useTableOption";
 import { useTableFunc } from "./use/useTableFunc";
 
-const { pageSizes, page, size, layout, total }:PageInfo = useTable();
+const { pageSizes, page, size, layout, total }: PageInfo = useTable();
 
 const { accountStates } = useDict();
 
@@ -139,7 +139,7 @@ const {
   getAccountList,
   onTreeNodeClick,
   tableLoading
-}:TableOption = useTableOption(tableOption);
+}: TableOption = useTableOption(tableOption);
 
 const {
   tableRef,
@@ -162,7 +162,7 @@ const {
 const { deptTreeList, deptSearchValue, filterResult, onDeptInput, defaultProps } = useDeptTree();
 
 // ~ 查询条件配置
-const searchList:any[] = [
+const searchList: any[] = [
   {
     labelText: "账号",
     placeholder: "请输入账号",

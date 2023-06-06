@@ -4,25 +4,13 @@
       分屏组件
     </div>
     <div class="split-content mx-[10px]">
-      <GSplitPane :treeData="treeData"  :rootHorizontal="false">
-        <template #ComA>
-          ComA
-        </template>
-        <template #ComB1="slotProps">
-          ComA
-        </template>
-        <template #ComB2>
-          ComB2
-        </template>
-        <template #ComA1>
-          ComA1
-        </template>
-        <template #ComA2>
-          ComA2
-        </template>
-        <template #ComC="slotProps">
-          ComC
-        </template>
+      <GSplitPane :treeData="treeData" :rootHorizontal="false">
+        <template #ComA> ComA </template>
+        <template #ComB1="slotProps"> ComA </template>
+        <template #ComB2> ComB2 </template>
+        <template #ComA1> ComA1 </template>
+        <template #ComA2> ComA2 </template>
+        <template #ComC="slotProps"> ComC </template>
         <template #ComB="slotProps">
           {{ slotProps }}
         </template>
@@ -34,14 +22,14 @@
 // 数组中每一个对象都是一个pane,pane里面的child代表新的pane
 const treeData: any[] = [
   {
-    horizontal: true,// true：竖着分布，false：横着分布
+    horizontal: true, // true：竖着分布，false：横着分布
     size: 65,
-    slotKey: '',
+    slotKey: "",
     child: [
       {
         size: 50,
         horizontal: true,
-        slotKey: 'ComA',
+        slotKey: "ComA"
       },
       {
         size: 50,
@@ -50,30 +38,30 @@ const treeData: any[] = [
           {
             size: 50,
             horizontal: false,
-            slotKey: 'ComA2'
+            slotKey: "ComA2"
           },
           {
             size: 50,
             horizontal: false,
-            slotKey: 'ComA1',
+            slotKey: "ComA1"
           }
         ]
       }
     ]
   },
   {
-    horizontal: false,// true：竖着分布，false：横着分布
+    horizontal: false, // true：竖着分布，false：横着分布
     size: 15,
-    slotKey: 'ComB'
+    slotKey: "ComB"
   },
   {
-    horizontal: false,// true：竖着分布，false：横着分布
+    horizontal: false, // true：竖着分布，false：横着分布
     size: 20,
-    slotKey: 'ComC'
+    slotKey: "ComC"
   }
-]
+];
 </script>
-<style  lang="scss">
+<style lang="scss">
 #splitPaneTest {
   .split-content {
     height: calc(100% - 200px);

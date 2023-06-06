@@ -56,8 +56,10 @@
           height: `calc(100% - ${!isFullScreen ? 90 : 40}px)`
         }"
       >
-        <WerterMark v-if="setting.watermark" 
-                    class="absolute top-0 left-0 right-0 bottom-0 z-[3000] pointer-events-none" />
+        <WerterMark
+          v-if="setting.watermark"
+          class="absolute top-0 left-0 right-0 bottom-0 z-[3000] pointer-events-none"
+        />
         <slot name="view" />
       </div>
     </div>

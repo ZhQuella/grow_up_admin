@@ -1,16 +1,12 @@
 <template>
-  <div>
-
-  </div>
+  <div></div>
 </template>
 
-<script setup>
-
-</script>
+<script setup></script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "CreatePermission",
+  name: "CreatePermission"
 });
 </script>

@@ -17,25 +17,17 @@
         <el-select class="w-full"></el-select>
       </el-form-item>
       <el-form-item label="角色描述" prop="roleName">
-        <el-input type="textarea"
-                  resize="none"
-                  rows="3"
-                  maxlength="120"
-                  show-word-limit></el-input>
+        <el-input type="textarea" resize="none" rows="3" maxlength="120" show-word-limit></el-input>
       </el-form-item>
     </el-form>
     <div class="flex justify-end pt-[10px]">
-      <el-button type="primary">
-        提交
-      </el-button>
+      <el-button type="primary"> 提交 </el-button>
       <el-button> 取消 </el-button>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <script lang="ts">
 import { defineComponent } from "vue";

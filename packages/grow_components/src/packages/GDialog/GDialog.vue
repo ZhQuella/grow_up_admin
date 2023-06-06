@@ -41,7 +41,6 @@ const emit = defineEmits(["update:modelValue", "open", "close"]);
 const isFullscreen = ref(false);
 const gDialog = ref();
 
-
 const props = defineProps<{
   modelValue: boolean;
   destroyOnClose: boolean;
@@ -51,11 +50,15 @@ const props = defineProps<{
 const { modelValue, title } = toRefs(props);
 const visible = ref(false);
 
-watch(() => modelValue.value, (newValue) => {
-  visible.value = newValue;
-},{
-  immediate: true
-});
+watch(
+  () => modelValue.value,
+  (newValue) => {
+    visible.value = newValue;
+  },
+  {
+    immediate: true
+  }
+);
 
 const onDialogOpen = () => {
   visible.value = true;

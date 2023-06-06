@@ -11,16 +11,16 @@ import { ElTag } from "element-plus";
 export interface TableOptionProps {
   tableTotal: Ref<number>;
   accountStates: Ref<DictItem[]>;
-  page: Ref<number>,
-  size: Ref<number>
-};
+  page: Ref<number>;
+  size: Ref<number>;
+}
 
 interface SearchType {
   account?: string;
-  cleanSignList?: ("0"|"1")[];
+  cleanSignList?: ("0" | "1")[];
   createDate?: string[];
   deptId?: string;
-};
+}
 
 export interface TableOption {
   searchData: Ref<SearchType>;
@@ -29,28 +29,27 @@ export interface TableOption {
   tableColumns: ComputedRef<Column[]>;
   onTreeNodeClick: Fn;
   getAccountList: Fn;
-};
+}
 
 export interface TableState {
-  tableList: ComputedRef<AccountItem[]>
-};
+  tableList: ComputedRef<AccountItem[]>;
+}
 
 export const useTableOption = ({
   tableTotal,
   accountStates,
   page,
   size
-}: TableOptionProps):TableOption => {
-
+}: TableOptionProps): TableOption => {
   const tableLoading: Ref<boolean> = ref(false);
   const accountMethod = request.create("accountMent");
   const searchData: Ref<SearchType> = ref<SearchType>({});
-  const state:UnwrapNestedRefs<{ tableList: any[] }> = reactive({
+  const state: UnwrapNestedRefs<{ tableList: AccountItem[] }> = reactive({
     tableList: []
   });
 
   // ~ 表头配置
-  const tableColumns:ComputedRef<Column[]> = computed(() => [
+  const tableColumns: ComputedRef<Column[]> = computed(() => [
     {
       field: "serial",
       title: "序号",
@@ -68,13 +67,13 @@ export const useTableOption = ({
       showOverflowTooltip: true,
       width: 120,
       formatter: (space: any): any[] => {
-        const item:DictItem = accountStates.value.find((el: DictItem):boolean => el.code === space.state);
-        const type:"danger" | "success" = ["danger", "success"][Number(item.code)] as "success" | "danger";
-        return [
-          <ElTag type={ type }>
-            { item.label }
-          </ElTag>
-        ];
+        const item: DictItem = accountStates.value.find(
+          (el: DictItem): boolean => el.code === space.state
+        );
+        const type: "danger" | "success" = ["danger", "success"][Number(item.code)] as
+          | "success"
+          | "danger";
+        return [<ElTag type={type}>{item.label}</ElTag>];
       }
     },
     {
@@ -147,7 +146,7 @@ export const useTableOption = ({
     return state.tableList;
   });
 
-  const getAccountList = async ():Promise<void> => {
+  const getAccountList = async (): Promise<void> => {
     tableLoading.value = true;
     const { accountList, total } = await accountMethod.getAccountList({
       data: searchData.value,
@@ -158,12 +157,12 @@ export const useTableOption = ({
     tableLoading.value = false;
   };
 
-  const onTreeNodeClick = async (item: Tree):Promise<void> => {
+  const onTreeNodeClick = async (item: Tree): Promise<void> => {
     searchData.value.deptId = item.id;
     await getAccountList();
   };
 
-  onMounted(async ():Promise<void> => {
+  onMounted(async (): Promise<void> => {
     await getAccountList();
   });
 

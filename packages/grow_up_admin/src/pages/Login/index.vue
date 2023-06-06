@@ -119,7 +119,6 @@ import { useEvent } from "./use/useEvent";
 import { getImageUrl } from "util/System";
 import { useI18n } from "vue-i18n";
 
-
 const { t } = useI18n();
 const {
   formType,

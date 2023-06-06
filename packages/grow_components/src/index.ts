@@ -6,17 +6,11 @@ import { GDetail, GDetailItem } from "./packages/GDetail";
 import { GDialog } from "./packages/GDialog";
 import { GSplitPane } from "./packages/GSplitPane";
 
-declare type PluginInstallFunction = (app: App, ...options: any[]) => any
+declare type PluginInstallFunction = (app: App, ...options: any[]) => any;
 
-const components: Component[] = [
-  GCountTo,
-  GDetail,
-  GDetailItem,
-  GDialog,
-  GSplitPane
-];
+const components: Component[] = [GCountTo, GDetail, GDetailItem, GDialog, GSplitPane];
 
-const install:PluginInstallFunction = (app: App) => {
+const install: PluginInstallFunction = (app: App) => {
   const useComponent = (component: Component) => {
     if (component.name) {
       app.component(component.name, component);
@@ -40,13 +34,6 @@ const GrowConponent = {
   GSplitPane
 };
 
-export {
-  version,
-  GCountTo,
-  GDetail,
-  GDetailItem,
-  GDialog,
-  GSplitPane
-};
+export { version, GCountTo, GDetail, GDetailItem, GDialog, GSplitPane };
 
 export default GrowConponent;

@@ -14,20 +14,22 @@
 </template>
 
 <script setup lang="ts">
+import type { AccountItem } from "../../types/index";
 import RecordItem from "./RecordItem.vue";
 import { useInit } from "./use/useInit";
 
 const emit = defineEmits(["close"]);
 
-const porps = defineProps({
-  row: {
-    type: Object,
-    default: () => ({})
-  }
+interface propsType {
+  row: AccountItem;
+}
+
+const props = withDefaults(defineProps<propsType>(), {
+  row: {}
 });
 
 const { usedRecordList } = useInit({
-  id: porps.row.id,
+  id: props.row?.id,
   emit
 });
 </script>

@@ -46,16 +46,18 @@
 </template>
 
 <script setup lang="ts">
+import type { AccountItem } from "../../types/index";
 import { onMounted, toRefs } from "vue";
 import PasswordIntensity from "components/public/PasswordIntensity/index.vue";
-import { useDict } from "../use/useDict";
+import { useDict } from "../../use/useDict";
 import { useForm } from "./use/useForm";
 
-const props = defineProps({
-  row: {
-    type: Object,
-    default: () => ({})
-  }
+interface propsType {
+  row: AccountItem;
+}
+
+const props = withDefaults(defineProps<propsType>(), {
+  row: {}
 });
 
 const { row } = toRefs(props);

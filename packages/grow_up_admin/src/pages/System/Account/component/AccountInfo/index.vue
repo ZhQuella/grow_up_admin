@@ -32,13 +32,15 @@
 </template>
 
 <script setup lang="ts">
+import type { AccountItem } from "../../types/index";
 const emit = defineEmits(["close"]);
 
-const prop = defineProps({
-  row: {
-    type: Object,
-    default: () => ({})
-  }
+interface propsType {
+  row: AccountItem;
+}
+
+withDefaults(defineProps<propsType>(), {
+  row: {}
 });
 
 const onClose = () => {

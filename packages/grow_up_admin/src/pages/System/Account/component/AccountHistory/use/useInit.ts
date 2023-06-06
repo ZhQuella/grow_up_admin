@@ -22,7 +22,6 @@ export const useInit = ({ id, emit }: prop) => {
       emit("close");
       return;
     }
-    console.log(result);
     historyList.value = result;
   };
 

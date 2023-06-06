@@ -68,7 +68,6 @@ import { Delete, AddComment } from "@vicons/carbon";
 import AbstractEle from "components/public/AbstractEle/index.vue";
 import { useI18n } from "vue-i18n";
 
-
 const { t } = useI18n();
 const props = defineProps({
   search: {
@@ -136,7 +135,7 @@ const onSelectListTypeChange = (value: any, index: number) => {
 
 const onSearchListTypeClear = (index: number, isReset = true) => {
   const current = state.currentSelect[index];
-  if (current.model) { 
+  if (current.model) {
     Reflect.set(state.searchData, current.model, null);
     isReset && state.currentSelect.splice(index, 1, {});
   }

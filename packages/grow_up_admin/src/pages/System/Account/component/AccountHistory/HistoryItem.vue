@@ -20,16 +20,16 @@
 </template>
 
 <script setup lang="ts">
+import type { HistoryItem } from "../../types/index";
 import { toRefs, computed } from "vue";
 
-const porp = defineProps({
-  config: {
-    type: Object,
-    default: () => ({})
-  }
-});
+interface propsType {
+  config: HistoryItem;
+}
 
-const { config } = toRefs(porp);
+const prpos = defineProps<propsType>();
+
+const { config } = toRefs(prpos);
 
 const tagType = computed(() => {
   let type = "";

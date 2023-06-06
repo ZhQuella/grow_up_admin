@@ -1,5 +1,5 @@
 import type { App } from "vue";
-import { GDetail, GDetailItem, GDialog,GSplitPane } from "grow_components";
+import { GDetail, GDetailItem, GDialog, GSplitPane } from "grow_components";
 import PageLayout from "components/public/PageLayout/index.vue";
 
 export default (app: App) => {

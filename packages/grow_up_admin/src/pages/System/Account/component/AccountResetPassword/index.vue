@@ -22,7 +22,6 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from "vue";
 import PasswordIntensity from "components/public/PasswordIntensity/index.vue";
 
 import { useForm } from "./use/useForm";
