@@ -66,15 +66,23 @@ const emit = defineEmits(["close", "success"]);
 
 const { accountStates } = useDict();
 
-const { rules, formData, accountForm, buttonLoading, onCreateAccount } = useForm({
+const {
+  getAcconutInfo,
+  rules,
+  formData,
+  accountForm,
+  buttonLoading,
+  onCreateAccount
+} = useForm({
   emit
 });
 
-const initFormData = () => {
-  formData.account = row.value.account;
-  formData.state = row.value.state;
-  formData.personnel = row.value.belong.person;
-  formData.id = row.value.id;
+const initFormData = async () => {
+ const { data } = await getAcconutInfo(row.value.id);
+  formData.account = data.account;
+  formData.state = data.state;
+  formData.personnel = data.belong.person;
+  formData.id = data.id;
 };
 
 onMounted(() => {

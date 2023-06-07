@@ -1,39 +1,22 @@
-import type { ComputedRef, Ref } from "vue";
-import type { RoleForm } from "../../../types/index";
-import type { FormInstance } from "element-plus";
-import { computed, reactive, ref } from "vue";
+import type { Ref } from "vue";
+import type { RoleItem } from "../../../types/index";
+import {computed, ComputedRef, ref} from "vue";
 import axios from "api/systemMent";
+import {roleState} from "../../../types/index";
 import to from "await-to-js";
 import {ElMessage} from "element-plus";
 
-export interface Props {
-  emit: Fn;
-}
-
-export interface UseForm {
-  rules: ComputedRef<any>;
-  formData: RoleForm;
-  formRef: Ref<FormInstance>;
-  onCreateRole: Fn;
+interface Props {
+  emit: Fn
 };
 
-interface RequestMethod {
-  createRole: Fn
-};
+export const useForm = ({
+  emit
+}: Props) => {
 
-export const useForm = ({ emit }: Props): UseForm => {
-  const formRef: Ref<FormInstance> = ref();
-  const request: RequestMethod = axios.create("roleMent", ["createRole"]);
+  const roleMethod = axios.create("roleMent");
+  const formRef = ref(null);
   const buttonLoading: Ref<boolean> = ref(false);
-
-  const formData: RoleForm = reactive({
-    roleName: "",
-    roleCode: "",
-    authorityChart: "",
-    roleType: "0",
-    state: "1",
-    roleMark: ""
-  });
 
   const rules: ComputedRef<any> = computed(() => ({
     roleName: [
@@ -63,18 +46,36 @@ export const useForm = ({ emit }: Props): UseForm => {
     ]
   }));
 
-  const onCreateRole = async (): Promise<void> => {
+  const formData: Ref<RoleItem> = ref({
+    id: -1,
+    roleName: "",
+    state: "0",
+    authorityChart: "",
+    roleType: "0",
+    roleCode: "",
+    memberNum: "",
+    roleMark: "",
+    createTime: "",
+    updataTime: ""
+  });
+
+  const getRoleInfo = async (id: number): Promise<void> => {
+    const { data } = await roleMethod.getRoleInfo({ params: { id } });
+    formData.value = data;
+  };
+
+  const onModifyRole = async () => {
     buttonLoading.value = true;
     try {
       await formRef.value.validate();
-      const [error] = await to(request.createRole({ data: formData }));
+      const [error] = await to(roleMethod.modifyRoleInfo({ data: formData.value }));
       if(error){
         const { message } = error;
         ElMessage.error(message);
         buttonLoading.value = false;
         return;
       };
-      emit("success", "角色新增成功");
+      emit("success", "角色修改成功");
       buttonLoading.value = false;
     } catch {
       buttonLoading.value = false;
@@ -82,9 +83,12 @@ export const useForm = ({ emit }: Props): UseForm => {
   };
 
   return {
-    rules,
     formData,
+    rules,
     formRef,
-    onCreateRole
+    getRoleInfo,
+    buttonLoading,
+    onModifyRole
   };
+
 };

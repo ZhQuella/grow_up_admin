@@ -47,7 +47,11 @@
       </template>
 
       <template #main="{ height }">
-        <PerfectTable ref="tableRef" :height="height" :columns="tableColumns" :data="tableList">
+        <PerfectTable ref="tableRef"
+                      :height="height"
+                      :columns="tableColumns"
+                      :data="tableList"
+                      @select="onPerfectTableSelect">
           <template #btnOption="btnOption">
             <ButtonGroup :button-group="buttonGroup" :max="4" :data="btnOption" />
           </template>
@@ -80,6 +84,7 @@
         :is="dialogConfig.conmponetName"
         :data="dialogConfig.data"
         @close="onCloseDialog"
+        @success="onRoleSuccess"
       />
     </GDialog>
 
@@ -130,7 +135,9 @@ const {
   onCloseDialog,
   onCloseDrawer,
   onSizeChange,
-  onCurrentChange
+  onCurrentChange,
+  onRoleSuccess,
+  onPerfectTableSelect
 } = useTableFunc({
   getRoleList,
   page,

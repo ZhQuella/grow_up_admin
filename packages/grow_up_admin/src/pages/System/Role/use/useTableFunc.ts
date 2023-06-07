@@ -1,7 +1,10 @@
 import type { Ref } from "vue";
 import type { GroupBtn } from "types/ButtonGroup";
+import type { RoleItem } from "../types/index";
 import { ref, computed, reactive } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
+import axios from "api/systemMent";
+import to from "await-to-js";
 
 interface Prop {
   getRoleList: Fn;
@@ -10,7 +13,11 @@ interface Prop {
 }
 
 export const useTableFunc = ({ getRoleList, page, size }: Prop) => {
+
   const tableRef = ref(null);
+  const systemMentMethod = axios.create("roleMent");
+  const selectList = ref([]);
+
   const drawerConfig = reactive({
     visible: false,
     conmponetName: "",
@@ -61,7 +68,10 @@ export const useTableFunc = ({ getRoleList, page, size }: Prop) => {
           title: "删除",
           type: "danger",
           icon: "Delete",
-          func: ({ row }: any) => {},
+          func: async ({ row }: any) => {
+            const { id } = row as RoleItem;
+            await onDeleteAccountByIds([id]);
+          },
           disabled: (space: any): boolean => {
             return space.row.state !== "0";
           },
@@ -155,8 +165,17 @@ export const useTableFunc = ({ getRoleList, page, size }: Prop) => {
       title: "批量删除",
       type: "danger",
       icon: "Delete",
-      func: async (): Promise<void> => {},
-      authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
+      func: async (): Promise<void> => {
+        const ids: number[] = selectList.value.map((el) => el.id);
+        await onDeleteAccountByIds(ids);
+        selectList.value = [];
+        tableRef.value.clearSelect();
+      },
+      authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
+      disabled: () => {
+        const disableAccount = selectList.value.filter((el) => el.state === "0");
+        return !(disableAccount.length === selectList.value.length) || !selectList.value.length;
+      }
     }
   ]);
 
@@ -186,15 +205,50 @@ export const useTableFunc = ({ getRoleList, page, size }: Prop) => {
     getRoleList();
   };
 
+  const onRoleSuccess = (message: string) => {
+    onCloseDialog();
+    ElMessage({
+      message,
+      type: "success"
+    });
+    page.value = 1;
+    getRoleList();
+  };
+
+  const onDeleteAccountByIds = async (ids: number[]) => {
+    await ElMessageBox.confirm("删除内容无法恢复，是否继续？", "温馨提示", {
+      confirmButtonText: "删除",
+      cancelButtonText: "取消",
+      type: "warning"
+    });
+    const [error] = await to(systemMentMethod.deleteRoleIds({ data: { ids } }));
+    if (error) {
+      const { message } = error;
+      ElMessage.error(message);
+      return;
+    }
+    ElMessage({
+      type: "success",
+      message: "删除成功"
+    });
+    getRoleList();
+  };
+
+  const onPerfectTableSelect = (data: RoleItem[]) => {
+    selectList.value = [...data];
+  };
+
   return {
     dialogConfig,
     drawerConfig,
     buttonGroup,
     optionGroup,
+    tableRef,
     onCloseDialog,
     onCloseDrawer,
     onCurrentChange,
     onSizeChange,
-    tableRef
+    onRoleSuccess,
+    onPerfectTableSelect
   };
 };

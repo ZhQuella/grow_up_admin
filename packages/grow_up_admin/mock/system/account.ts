@@ -144,6 +144,33 @@ export default [
     }
   },
   {
+    url: "/account/info/:id",
+    method: "get",
+    response() {
+      const data = {
+        "id|+1": 1,
+        account: Mock.mock('@string("lower",7, 10)'),
+        roleName: Mock.mock("@ctitle(3, 5)"),
+        "state|1": ["0", "1"],
+        belong: {
+          person: Mock.mock("@cname()"),
+          department: Mock.mock("@region()"),
+          post: Mock.mock("@ctitle(3, 5)")
+        },
+        "createType|1": ["自动生成", "手动添加"],
+        createDate: Mock.mock("@now()")
+      };
+
+      return {
+        code: 10000,
+        message: "成功",
+        result: {
+          data
+        }
+      };
+    }
+  },
+  {
     url: "/account/info",
     method: "post",
     response() {

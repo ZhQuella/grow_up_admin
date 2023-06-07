@@ -1,6 +1,6 @@
 <template>
   <div class="p-[20px]">
-    <GDetail :model="row" label-width="100px">
+    <GDetail :model="formInfo" label-width="100px">
       <el-row>
         <el-col :span="12">
           <GDetailItem label="账号" prop="account" />
@@ -33,19 +33,34 @@
 
 <script setup lang="ts">
 import type { AccountItem } from "../../types/index";
+import { ref, onMounted } from "vue";
+import axios from "api/systemMent";
+
 const emit = defineEmits(["close"]);
+const formInfo = ref({});
+
+const accountMethod = axios.create("accountMent");
+
+const getAcconutInfo = async (id: string) => {
+  const { data } = await accountMethod.getAccountInfo({ params: { id } });
+  formInfo.value = data;
+};
 
 interface propsType {
   row: AccountItem;
-}
+};
 
-withDefaults(defineProps<propsType>(), {
+const props = withDefaults(defineProps<propsType>(), {
   row: {}
 });
 
 const onClose = () => {
   emit("close");
 };
+
+onMounted(() => {
+  getAcconutInfo(props.row.id);
+});
 </script>
 
 <script lang="ts">
