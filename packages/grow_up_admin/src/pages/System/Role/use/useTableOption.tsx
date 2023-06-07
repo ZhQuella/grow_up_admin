@@ -75,7 +75,7 @@ export const useTableOption = ({
       formatter: (space: any) => {
         const item = roleTypes.value.find((el) => el.code === space.state);
         const type = ["", "warning"][Number(item?.code)] as roleType;
-        return [<ElementPlus.ElTag type={type}>{item.label}</ElementPlus.ElTag>];
+        return [<ElementPlus.ElTag type={type}>{item?.label}</ElementPlus.ElTag>];
       }
     },
     {
@@ -86,7 +86,7 @@ export const useTableOption = ({
       formatter: (space: any) => {
         const item = roleStates.value.find((el) => el.code === space.state);
         const type = ["danger", "success"][Number(item?.code)] as stateType;
-        return [<ElementPlus.ElTag type={type}>{item.label}</ElementPlus.ElTag>];
+        return [<ElementPlus.ElTag type={type}>{item?.label}</ElementPlus.ElTag>];
       }
     },
     {

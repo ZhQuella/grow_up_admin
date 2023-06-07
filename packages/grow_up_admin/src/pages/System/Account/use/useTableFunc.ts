@@ -108,7 +108,7 @@ export const useTableFunc = ({ getAccountList, page, size }: Prop) => {
           title: "启用",
           type: "success",
           icon: "AiStatusComplete",
-          func: async (row: any) => {
+          func: async ({ row }: any) => {
             const ids = [row.id];
             const data = { ids, state: "1" };
             await onAccountChangeState(data);
@@ -255,6 +255,7 @@ export const useTableFunc = ({ getAccountList, page, size }: Prop) => {
         type: "success",
         message
       });
+    page.value = 1;
     onDialogClose();
     getAccountList();
   };

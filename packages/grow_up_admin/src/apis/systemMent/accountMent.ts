@@ -15,6 +15,11 @@ export default [
     method: "put"
   },
   {
+    key: "getAccountInfo",
+    url: "/account/info/{id}",
+    method: "get"
+  },
+  {
     key: "deleteAccount",
     url: "/account/info",
     method: "delete"

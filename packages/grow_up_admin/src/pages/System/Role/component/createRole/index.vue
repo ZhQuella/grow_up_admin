@@ -19,7 +19,6 @@
           placeholder="请选择角色类型"
           class="w-full"
           v-model="formData.roleType"
-          clearable
         >
           <el-option
             v-for="(item, index) of roleTypes"

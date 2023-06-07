@@ -12,6 +12,10 @@ export const useForm = ({ emit }: Prop) => {
   const buttonLoading = ref(false);
   const accountMethod = axios.create("accountMent");
 
+  const getAcconutInfo = async (id: string) => {
+    return accountMethod.getAccountInfo({ params: { id } });
+  };
+
   const formData = reactive({
     id: "",
     account: "",
@@ -65,6 +69,7 @@ export const useForm = ({ emit }: Prop) => {
     formData,
     accountForm,
     buttonLoading,
-    onCreateAccount
+    onCreateAccount,
+    getAcconutInfo
   };
 };
