@@ -6,7 +6,7 @@
     <span class="px-[4px]">:</span>
     <div class="w-full">
       <span class="g-detail-value" v-if="!$slots.default">{{ value }}</span>
-      <slot :value="value" />
+      <slot v-else :value="value" />
     </div>
   </div>
 </template>

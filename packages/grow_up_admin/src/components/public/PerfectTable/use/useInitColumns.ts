@@ -29,7 +29,7 @@ export const useInitColumns = ({ props }: argProp) => {
   });
 
   const isOperate = computed(() => {
-    return state.columns.map((el) => el.field).includes("serial");
+    return state.columns.map((el) => el.field).includes("operate");
   });
 
   const serialColumn = computed(() => {

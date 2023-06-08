@@ -1,3 +1,5 @@
+import {stateType} from "pages/System/Account/types";
+
 type roleState = "0" | "1";
 
 export interface RoleItem {
@@ -22,3 +24,22 @@ export interface RoleForm {
   roleMark?: string;
   id?: string;
 }
+
+export interface OutServiceData {
+  id: number;
+  state: stateType
+};
+
+export interface RolePersonItem {
+  id: number;
+  personName: string;
+  roles: string[];
+  department: string;
+  boundDate: string;
+  operator: string;
+};
+
+export interface UntieRoleData {
+  personIds: number[];
+  roleId: number;
+};

@@ -75,6 +75,7 @@
     "jsdom": "^22.1.0",
     "mockjs": "^1.1.0",
     "postcss": "^8.4.21",
+    "postcss-import": "^15.1.0",
     "prettier": "^2.8.7",
     "reset-css": "^5.0.1",
     "rollup": "^3.20.2",

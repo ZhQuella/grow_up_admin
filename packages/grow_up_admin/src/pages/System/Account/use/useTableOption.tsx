@@ -84,7 +84,7 @@ export const useTableOption = ({
       visible: false
     },
     {
-      field: "roleName",
+      field: "roleNames",
       title: "角色名称",
       showOverflowTooltip: true
     },

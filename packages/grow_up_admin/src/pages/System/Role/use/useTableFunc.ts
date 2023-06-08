@@ -1,6 +1,6 @@
 import type { Ref } from "vue";
 import type { GroupBtn } from "types/ButtonGroup";
-import type { RoleItem } from "../types/index";
+import type { RoleItem, OutServiceData } from "../types/index";
 import { ref, computed, reactive } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import axios from "api/systemMent";
@@ -25,6 +25,7 @@ export const useTableFunc = ({ getRoleList, page, size }: Prop) => {
     title: "",
     data: {}
   });
+
   const dialogConfig = reactive({
     visible: false,
     conmponetName: "",
@@ -33,8 +34,7 @@ export const useTableFunc = ({ getRoleList, page, size }: Prop) => {
     data: {}
   });
 
-  const buttonGroup = computed(
-    () =>
+  const buttonGroup = computed(() =>
       [
         {
           title: "详情",
@@ -56,7 +56,7 @@ export const useTableFunc = ({ getRoleList, page, size }: Prop) => {
           icon: "EditOutlined",
           authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
           func: ({ row }): void => {
-            const { roleName } = row;
+            const { roleName } = row as RoleItem;
             dialogConfig.visible = true;
             dialogConfig.title = `${roleName} 角色修改`;
             dialogConfig.conmponetName = "ModifyRole";
@@ -81,7 +81,20 @@ export const useTableFunc = ({ getRoleList, page, size }: Prop) => {
           title: "停用",
           type: "danger",
           icon: "AiStatusFailed",
-          func: async ({ row }: any) => {},
+          func: async ({ row }: any) => {
+            await ElMessageBox.confirm("角色停用所绑定人员将失去所有权限，是否继续？", "温馨提示", {
+              confirmButtonText: "删除",
+              cancelButtonText: "取消",
+              type: "warning"
+            });
+            const { id } = row as RoleItem;
+            const data: OutServiceData = { id, state: "0" };
+            await onRoleOutService(data);
+            ElMessage({
+              type: "success",
+              message: "角色停用成功"
+            });
+          },
           authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
           show: (space: any): boolean => {
             return space.row.state !== "0";
@@ -91,17 +104,33 @@ export const useTableFunc = ({ getRoleList, page, size }: Prop) => {
           title: "启用",
           type: "success",
           icon: "AiStatusComplete",
-          func: async (row: any) => {},
+          func: async (row: any) => {
+            await ElMessageBox.confirm("角色启用在使用人员将会赋予其权限，是否继续？", "温馨提示", {
+              confirmButtonText: "删除",
+              cancelButtonText: "取消",
+              type: "warning"
+            });
+            const { id } = row as RoleItem;
+            const data: OutServiceData = { id, state: "0" };
+            await onRoleOutService(data);
+            ElMessage({
+              type: "success",
+              message: "角色启用成功"
+            });
+          },
           authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
           show: (space: any): boolean => {
             return space.row.state === "0";
           }
         },
         {
-          title: "解绑",
+          title: "解绑全部",
           type: "warning",
           icon: "HeatMap02",
-          func: ({ row }: any) => {},
+          func: async ({ row }: any) => {
+            const { id } = row as RoleItem;
+            await onRoleUniteAll(id);
+          },
           authority: "LIST_PAGE:EL_BASE_LIST:VIEW"
         },
         {
@@ -232,6 +261,36 @@ export const useTableFunc = ({ getRoleList, page, size }: Prop) => {
       message: "删除成功"
     });
     getRoleList();
+  };
+
+  const onRoleUniteAll = async (roleId: number) => {
+    await ElMessageBox.confirm("解绑所有人员将失去对应角色权限，是否继续？", "温馨提示", {
+      confirmButtonText: "删除",
+      cancelButtonText: "取消",
+      type: "warning"
+    });
+    const [error] = await to(systemMentMethod.roleUntieAll({ data: { roleId } }));
+    if (error) {
+      const { message } = error;
+      ElMessage.error(message);
+      return;
+    }
+    ElMessage({
+      type: "success",
+      message: "全部解绑成功"
+    });
+    await getRoleList();
+  }
+
+  const onRoleOutService = async (data: OutServiceData): Promise<void> => {
+    const { id, state } = data;
+    const [error] = await to(systemMentMethod.roleChangeState({ params: { id }, data: { state } }));
+    if (error) {
+      const { message } = error;
+      ElMessage.error(message);
+      return;
+    }
+    await getRoleList();
   };
 
   const onPerfectTableSelect = (data: RoleItem[]) => {

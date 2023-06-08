@@ -12,7 +12,7 @@ export interface AccountItem {
   createDate: string;
   createType: string;
   id: string;
-  roleName: string;
+  roleNames: string[];
   state: stateType;
 }
 
@@ -40,3 +40,4 @@ export interface RecordItem {
   personnel: string;
   errorMessage?: string;
 }
+

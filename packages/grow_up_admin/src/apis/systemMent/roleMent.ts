@@ -23,5 +23,25 @@ export default [
     key: "deleteRoleIds",
     url: "/role/info",
     method: "delete"
+  },
+  {
+    key: "roleChangeState",
+    url: "/role/seate/{id}",
+    method: "put"
+  },
+  {
+    key: "roleUntieAll",
+    url: `/role/untie/all/{roleId}`,
+    method: "put"
+  },
+  {
+    key: "roleBoundPersons",
+    url: "/role/persons/{roleId}",
+    method: "get"
+  },
+  {
+    key: "roleUntieById",
+    url: "/role/untie/{roleId}",
+    method: "put"
   }
 ];
