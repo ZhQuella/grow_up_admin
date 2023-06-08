@@ -36,10 +36,10 @@
         </el-form-item>
       </el-form>
       <div class="flex justify-end pt-[10px]">
+        <el-button @click="onClose"> 取消 </el-button>
         <el-button type="primary" :loading="buttonLoading" @click="onCreateAccount">
           提交
         </el-button>
-        <el-button @click="onClose"> 取消 </el-button>
       </div>
     </div>
   </div>

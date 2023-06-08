@@ -113,17 +113,33 @@ import { useDict } from "./use/useDict";
 import { useTableOption } from "./use/useTableOption";
 import { useTableFunc } from "./use/useTableFunc";
 import PageLayout from "components/public/PageLayout/index.vue";
+import {RoleItem} from "pages/System/Role/types";
 
 const { roleStates, roleTypes } = useDict();
 const { pageSizes, page, size, layout, total } = useTable();
 const { deptTreeList, deptSearchValue, filterResult, onDeptInput, defaultProps } = useDeptTree();
 
-const { tableColumns, tableList, getRoleList, onTreeNodeClick } = useTableOption({
+const onShowBoundPersons = (row: RoleItem) => {
+  const { roleName } = row;
+  dialogConfig.visible = true;
+  dialogConfig.title = `${roleName} 绑定人员`;
+  dialogConfig.conmponetName = "BoundPersonList";
+  dialogConfig.data = row;
+  dialogConfig.width = "800px";
+};
+
+const {
+  tableColumns,
+  tableList,
+  getRoleList,
+  onTreeNodeClick
+} = useTableOption({
   tableTotal: total,
   roleStates,
   size,
   page,
-  roleTypes
+  roleTypes,
+  onShowBoundPersons
 });
 
 const {
@@ -152,6 +168,7 @@ const onColumnsBarConfirm = (columns: any[]) => {
 <script lang="ts">
 import { defineComponent } from "vue";
 import permissionControl from "components/business/Permission/index.vue";
+import BoundPersonList from "./component/BoundPersonList/index.vue";
 import InfoRole from "./component/infoRole/index.vue";
 import CreateRole from "./component/createRole/index.vue";
 import ModifyRole from "./component/modifyRole/index.vue";
@@ -159,6 +176,7 @@ import ModifyRole from "./component/modifyRole/index.vue";
 export default defineComponent({
   name: "RoleManagement",
   components: {
+    BoundPersonList,
     permissionControl,
     CreateRole,
     ModifyRole,

@@ -51,8 +51,8 @@
       </el-form-item>
     </el-form>
     <div class="flex justify-end pt-[10px]">
-      <el-button type="primary" @click="onCreateRole"> 提交 </el-button>
       <el-button @click="onClose">取消</el-button>
+      <el-button type="primary" @click="onCreateRole"> 提交 </el-button>
     </div>
   </div>
 </template>

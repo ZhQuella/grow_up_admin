@@ -51,16 +51,16 @@
       </el-form-item>
     </el-form>
     <div class="flex justify-end pt-[10px]">
+      <el-button @click="onClose">取消</el-button>
       <el-button type="primary"
                  @click="onModifyRole"
-                 :loading="buttonLoading">提交</el-button>
-      <el-button @click="onClose">取消</el-button>
+      :loading="buttonLoading">提交</el-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { RoleItem } from "../../../types/index";
+import type { RoleItem } from "../../types/index";
 import { onMounted } from "vue";
 import { useForm } from "./use/useForm";
 import { useDict } from "../../use/useDict";

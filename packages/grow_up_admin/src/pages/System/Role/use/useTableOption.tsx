@@ -13,6 +13,7 @@ interface props {
   roleTypes: Ref<DictItem[]>;
   page: Ref<number>;
   size: Ref<number>;
+  onShowBoundPersons: Fn
 }
 
 interface tableOption {
@@ -30,7 +31,8 @@ export const useTableOption = ({
   roleStates,
   page,
   size,
-  roleTypes
+  roleTypes,
+  onShowBoundPersons
 }: props): tableOption => {
   const roleRequest = request.create("roleMent");
   const searchData = reactive<any>({});
@@ -95,7 +97,11 @@ export const useTableOption = ({
       showOverflowTooltip: true,
       width: 120,
       formatter: (row: any) => {
-        return [<ElementPlus.ElLink>{row.memberNum}</ElementPlus.ElLink>];
+        return [<ElementPlus.ElLink type="primary"
+                                    onClick={ () => {
+                                      onShowBoundPersons(row)
+                                    }}
+                                    disabled={ !Number(row.memberNum) }>{row.memberNum}</ElementPlus.ElLink>];
       }
     },
     {

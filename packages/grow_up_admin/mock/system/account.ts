@@ -121,7 +121,14 @@ export default [
           // 属性 id 是一个自增数，起始值为 1，每次增 1
           "id|+1": i + 1,
           account: Mock.mock('@string("lower",7, 10)'),
-          roleName: Mock.mock("@ctitle(3, 5)"),
+          roleNames: function() {
+            const num = Math.floor(Math.random() * 6) + 2;
+            let arr = [];
+            for(let i = 0; i < num; i++){
+              arr.push(Mock.mock("@ctitle(3, 5)"));
+            };
+            return arr;
+          },
           "state|1": ["0", "1"],
           belong: {
             person: Mock.mock("@cname()"),
@@ -150,7 +157,14 @@ export default [
       const data = {
         "id|+1": 1,
         account: Mock.mock('@string("lower",7, 10)'),
-        roleName: Mock.mock("@ctitle(3, 5)"),
+        roleNames: function() {
+          const num = Math.floor(Math.random() * 6) + 2;
+          let arr = [];
+          for(let i = 0; i < num; i++){
+            arr.push(Mock.mock("@ctitle(3, 5)"));
+          };
+          return arr;
+        },
         "state|1": ["0", "1"],
         belong: {
           person: Mock.mock("@cname()"),

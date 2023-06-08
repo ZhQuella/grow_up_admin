@@ -6,9 +6,6 @@
           <GDetailItem label="账号" prop="account" />
         </el-col>
         <el-col :span="12">
-          <GDetailItem label="角色名称" prop="roleName" />
-        </el-col>
-        <el-col :span="12">
           <GDetailItem label="归属人" prop="belong.person" />
         </el-col>
         <el-col :span="12">
@@ -16,6 +13,15 @@
         </el-col>
         <el-col :span="12">
           <GDetailItem label="归属岗位" prop="belong.post" />
+        </el-col>
+        <el-col :span="24">
+          <GDetailItem label="角色" prop="roleNames">
+            <template #default="{ value }">
+              <el-tag v-for="(item,index) of (value || [])"
+                      class="mr-[5px]"
+                      :key="index">{{ item }}</el-tag>
+            </template>
+          </GDetailItem>
         </el-col>
         <el-col :span="12">
           <GDetailItem label="创建方式" prop="createType" />
