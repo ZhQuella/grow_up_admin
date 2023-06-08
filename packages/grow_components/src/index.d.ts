@@ -1,4 +1,5 @@
 import { App } from "vue";
+// @ts-ignore
 import { version } from "../package.json";
 declare const GrowConponent: {
   version: string;

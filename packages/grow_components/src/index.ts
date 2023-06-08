@@ -1,10 +1,11 @@
 import type { App, Component } from "vue";
 import { version } from "../package.json";
-
 import { GCountTo } from "./packages/GCountTo";
 import { GDetail, GDetailItem } from "./packages/GDetail";
 import { GDialog } from "./packages/GDialog";
 import { GSplitPane } from "./packages/GSplitPane";
+
+import "./styles/tailwindcss/index.css";
 
 declare type PluginInstallFunction = (app: App, ...options: any[]) => any;
 

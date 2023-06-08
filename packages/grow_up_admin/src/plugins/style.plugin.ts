@@ -1,5 +1,6 @@
 import "reset-css";
 import "style/tailwindcss/index.scss";
+import "grow_components/dist/index.css";
 import "animate.css";
 import "hover.css";
 import "nprogress/nprogress.css";

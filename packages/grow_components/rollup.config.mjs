@@ -11,6 +11,8 @@ import { terser } from "rollup-plugin-terser";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
 import alias from "@rollup/plugin-alias";
+import postcssImport from 'postcss-import';
+import tailwindcss from 'tailwindcss';
 
 const __dirname = path.resolve();
 
@@ -46,19 +48,23 @@ export default defineConfig({
   ],
   plugins: [
     peerDepsExternal(),
+    vue({
+      reactivityTransform: true
+    }),
+    postcss({
+      extensions: [".css"],
+      extract: true,
+      plugins: [postcssImport(), tailwindcss()]
+    }),
     commonjs(),
     resolve({
       preferBuiltins: true
     }),
     babel(),
     jsx(),
-    vue({
-      reactivityTransform: true
-    }),
     esbuild(),
     json(),
     terser(),
-    postcss(),
     alias({
       entries: [{ find: "@", replacement: path.resolve(__dirname, "src") }]
     })
