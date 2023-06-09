@@ -107,7 +107,7 @@ export const useTableOption = ({
     {
       field: "roleMark",
       title: "角色描述",
-      showOverflowTooltip: true
+        showOverflowTooltip: true
     },
     {
       field: "createTime",

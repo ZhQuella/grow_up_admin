@@ -16,7 +16,7 @@ export const useTableFunc = ({ getRoleList, page, size }: Prop) => {
 
   const tableRef = ref(null);
   const systemMentMethod = axios.create("roleMent");
-  const selectList = ref([]);
+  const selectList: Ref<RoleItem[]> = ref([]);
 
   const drawerConfig = reactive({
     visible: false,
@@ -71,6 +71,9 @@ export const useTableFunc = ({ getRoleList, page, size }: Prop) => {
           func: async ({ row }: any) => {
             const { id } = row as RoleItem;
             await onDeleteAccountByIds([id]);
+            selectList.value = selectList.value.filter(el => {
+              return el.id !== id;
+            });
           },
           disabled: (space: any): boolean => {
             return space.row.state !== "0";
@@ -83,7 +86,7 @@ export const useTableFunc = ({ getRoleList, page, size }: Prop) => {
           icon: "AiStatusFailed",
           func: async ({ row }: any) => {
             await ElMessageBox.confirm("角色停用所绑定人员将失去所有权限，是否继续？", "温馨提示", {
-              confirmButtonText: "删除",
+              confirmButtonText: "确认",
               cancelButtonText: "取消",
               type: "warning"
             });
@@ -195,10 +198,9 @@ export const useTableFunc = ({ getRoleList, page, size }: Prop) => {
       type: "danger",
       icon: "Delete",
       func: async (): Promise<void> => {
-        const ids: number[] = selectList.value.map((el) => el.id);
+        const ids: string[] = selectList.value.map((el) => el.id);
         await onDeleteAccountByIds(ids);
         selectList.value = [];
-        tableRef.value.clearSelect();
       },
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
       disabled: () => {
@@ -244,7 +246,7 @@ export const useTableFunc = ({ getRoleList, page, size }: Prop) => {
     getRoleList();
   };
 
-  const onDeleteAccountByIds = async (ids: number[]) => {
+  const onDeleteAccountByIds = async (ids: string[]) => {
     await ElMessageBox.confirm("删除内容无法恢复，是否继续？", "温馨提示", {
       confirmButtonText: "删除",
       cancelButtonText: "取消",
@@ -260,10 +262,10 @@ export const useTableFunc = ({ getRoleList, page, size }: Prop) => {
       type: "success",
       message: "删除成功"
     });
-    getRoleList();
+    await getRoleList();
   };
 
-  const onRoleUniteAll = async (roleId: number) => {
+  const onRoleUniteAll = async (roleId: string) => {
     await ElMessageBox.confirm("解绑所有人员将失去对应角色权限，是否继续？", "温馨提示", {
       confirmButtonText: "删除",
       cancelButtonText: "取消",
@@ -293,10 +295,6 @@ export const useTableFunc = ({ getRoleList, page, size }: Prop) => {
     await getRoleList();
   };
 
-  const onPerfectTableSelect = (data: RoleItem[]) => {
-    selectList.value = [...data];
-  };
-
   return {
     dialogConfig,
     drawerConfig,
@@ -308,6 +306,6 @@ export const useTableFunc = ({ getRoleList, page, size }: Prop) => {
     onCurrentChange,
     onSizeChange,
     onRoleSuccess,
-    onPerfectTableSelect
+    selectList
   };
 };

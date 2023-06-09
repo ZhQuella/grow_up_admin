@@ -3,7 +3,7 @@ import {stateType} from "pages/System/Account/types";
 type roleState = "0" | "1";
 
 export interface RoleItem {
-  id: number;
+  id: string;
   roleName: string;
   state: roleState;
   authorityChart: string;
@@ -26,12 +26,12 @@ export interface RoleForm {
 }
 
 export interface OutServiceData {
-  id: number;
+  id: string;
   state: stateType
 };
 
 export interface RolePersonItem {
-  id: number;
+  id: string;
   personName: string;
   roles: string[];
   department: string;
@@ -41,5 +41,5 @@ export interface RolePersonItem {
 
 export interface UntieRoleData {
   personIds: number[];
-  roleId: number;
+  roleId: string;
 };

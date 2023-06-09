@@ -15,9 +15,7 @@ export const useTableFunc = ({ getAccountList, page, size }: Prop) => {
   const tableRef = ref();
   const systemMentMethod = axios.create("accountMent");
 
-  const state = reactive({
-    selectList: []
-  });
+  const selectList = ref([]);
 
   const dialogConfig = reactive({
     visible: false,
@@ -71,9 +69,12 @@ export const useTableFunc = ({ getAccountList, page, size }: Prop) => {
           title: "删除",
           type: "danger",
           icon: "Delete",
-          func: ({ row }: any) => {
+          func: async ({ row }: any) => {
             const { id } = row;
-            onDeleteAccountByIds([`${id}`]);
+            await onDeleteAccountByIds([`${id}`]);
+            selectList.value = selectList.value.filter(el => {
+              return el.id !== id;
+            });
           },
           disabled: (space: any): boolean => {
             return space.row.state !== "0";
@@ -194,15 +195,14 @@ export const useTableFunc = ({ getAccountList, page, size }: Prop) => {
       type: "danger",
       icon: "Delete",
       func: async (): Promise<void> => {
-        const ids = state.selectList.map((el) => el.id);
+        const ids = selectList.value.map((el) => el.id);
         await onDeleteAccountByIds(ids);
-        state.selectList = [];
-        tableRef.value.clearSelect();
+        selectList.value = [];
       },
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
       disabled: () => {
-        const disableAccount = state.selectList.filter((el) => el.state === "0");
-        return !(disableAccount.length === state.selectList.length) || !state.selectList.length;
+        const disableAccount = selectList.value.filter((el) => el.state === "0");
+        return !(disableAccount.length === selectList.value.length) || !selectList.value.length;
       }
     },
     {
@@ -210,15 +210,15 @@ export const useTableFunc = ({ getAccountList, page, size }: Prop) => {
       type: "warning",
       icon: "HeatMap02",
       func: async (): Promise<void> => {
-        const ids = state.selectList.map((el) => el.id);
+        const ids = selectList.value.map((el) => el.id);
         await onAccountUnbind(ids);
-        state.selectList = [];
+        selectList.value = [];
         tableRef.value.clearSelect();
       },
       authority: "LIST_PAGE:EL_BASE_LIST:VIEW",
       disabled: () => {
-        const disableAccount = state.selectList.filter((el) => el.state === "0");
-        return !(disableAccount.length === state.selectList.length) || !state.selectList.length;
+        const disableAccount = selectList.value.filter((el) => el.state === "0");
+        return !(disableAccount.length === selectList.value.length) || !selectList.value.length;
       }
     }
   ]);
@@ -246,7 +246,7 @@ export const useTableFunc = ({ getAccountList, page, size }: Prop) => {
       type: "success",
       message: "删除成功"
     });
-    getAccountList();
+    await getAccountList();
   };
 
   const onAccountSuccess = (message: string) => {
@@ -260,9 +260,6 @@ export const useTableFunc = ({ getAccountList, page, size }: Prop) => {
     getAccountList();
   };
 
-  const onPerfectTableSelect = (data: any[]) => {
-    state.selectList = data;
-  };
 
   const onAccountChangeState = async (data: any) => {
     const [error] = await to(systemMentMethod.accountChangeState({ data }));
@@ -318,10 +315,10 @@ export const useTableFunc = ({ getAccountList, page, size }: Prop) => {
     drawerConfig,
     buttonGroup,
     optionGroup,
+    selectList,
     onDrawerClose,
     onDialogClose,
     onAccountSuccess,
-    onPerfectTableSelect,
     onAccountUnbind,
     onCurrentChange,
     onSizeChange
