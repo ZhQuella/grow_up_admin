@@ -51,7 +51,7 @@
                       :height="height"
                       :columns="tableColumns"
                       :data="tableList"
-                      @select="onPerfectTableSelect">
+                      v-model:select="selectList">
           <template #btnOption="btnOption">
             <ButtonGroup :button-group="buttonGroup" :max="4" :data="btnOption" />
           </template>
@@ -148,12 +148,12 @@ const {
   buttonGroup,
   optionGroup,
   tableRef,
+  selectList,
   onCloseDialog,
   onCloseDrawer,
   onSizeChange,
   onCurrentChange,
-  onRoleSuccess,
-  onPerfectTableSelect
+  onRoleSuccess
 } = useTableFunc({
   getRoleList,
   page,

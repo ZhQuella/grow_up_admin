@@ -11,7 +11,7 @@ export default [
         const authorityChart = `${Mock.mock("@word(5, 10)")}:${Mock.mock("@word(5, 10)")}:${Mock.mock("@word(5, 10)")}`;
         data.push({
           // 属性 id 是一个自增数，起始值为 1，每次增 1
-          "id|+1": i + 1,
+          "id|+1": `${i+1}`,
           roleName: Mock.mock("@ctitle(3, 5)"),
           "state|1": ["0", "1"],
           authorityChart,
@@ -50,7 +50,7 @@ export default [
       const authorityChart = `${Mock.mock("@word(5, 10)")}:${Mock.mock("@word(5, 10)")}:${Mock.mock("@word(5, 10)")}`;
       const data = {
         // 属性 id 是一个自增数，起始值为 1，每次增 1
-        "id|+1": 1,
+        "id|+1": "1",
         roleName: Mock.mock("@ctitle(3, 5)"),
         "state|1": ["0", "1"],
         authorityChart,
@@ -119,7 +119,7 @@ export default [
       for (let i = 0; i < total; i++) {
         data.push({
           // 属性 id 是一个自增数，起始值为 1，每次增 1
-          "id|+1": i + 1,
+          "id|+1": "1",
           personName: Mock.mock("@cname()"),
           roles: function() {
             const num = Math.floor(Math.random() * 6) + 2;

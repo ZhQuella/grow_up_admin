@@ -15,9 +15,11 @@
         <div class="h-[28px] leading-[28px]" v-if="!onlyIndex">
           <span
             v-if="mouseKey !== scope.row[onlyKey] && !selectOnlyKeys.includes(scope.row[onlyKey])"
-            >{{ scope.$index + 1 }}</span
-          >
-          <el-checkbox v-else size="small" @change="onTableCheckboxSelect($event, scope)" />
+            >{{ scope.$index + 1 }}</span>
+          <el-checkbox v-else
+                       size="small"
+                       @change="onTableCheckboxSelect($event, scope)"
+                      :checked="selectOnlyKeys.includes(scope.row[onlyKey])"/>
         </div>
         <div class="h-[28px] leading-[28px]" v-if="onlyIndex">
           <span>{{ scope.$index + 1 }}</span>
@@ -69,10 +71,14 @@ const props = defineProps({
   onlyIndex: {
     type: Boolean,
     default: false
+  },
+  select: {
+    type: Array,
+    default: () => []
   }
 });
 
-const { isSerial, isOperate, allColumns, serialColumn, operateColumn, currentColumns, state } =
+const { isSerial, isOperate, allColumns, serialColumn, operateColumn, state } =
   useInitColumns({
     props
   });
@@ -89,7 +95,8 @@ const {
 } = useEvent({
   emit,
   state,
-  onlyKey: props.onlyKey
+  onlyKey: props.onlyKey,
+  props
 });
 
 defineExpose({

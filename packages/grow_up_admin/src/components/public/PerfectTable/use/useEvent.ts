@@ -1,15 +1,27 @@
 import type { Ref } from "vue";
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 
 interface argProp {
   onlyKey: string;
   emit: any;
   state: any;
+  props: any
 }
 
-export const useEvent = ({ onlyKey, emit, state }: argProp) => {
+export const useEvent = ({ onlyKey, emit, state, props }: argProp) => {
   const mouseKey = ref("");
   const selectData: Ref<any[]> = ref([]);
+
+  const selectList = computed(() => {
+    return props.select;
+  });
+
+  watch(() => selectList.value, (newValue) => {
+    selectData.value = [...newValue];
+  }, {
+    deep: true,
+    immediate: true
+  });
 
   const onRowMouseEnter = (row: any, column: any, cell: any, event: Event) => {
     mouseKey.value = row[onlyKey];
@@ -33,8 +45,9 @@ export const useEvent = ({ onlyKey, emit, state }: argProp) => {
       if (index !== -1) {
         selectData.value.splice(index, 1);
       }
-    }
+    };
     emit("select", [...selectData.value]);
+    emit("update:select", [...selectData.value]);
   };
 
   const rowClassName = ({ row }: any): string => {
@@ -50,6 +63,7 @@ export const useEvent = ({ onlyKey, emit, state }: argProp) => {
   const clearSelect = () => {
     selectData.value = [];
     emit("select", []);
+    emit("update:select", []);
   };
 
   return {

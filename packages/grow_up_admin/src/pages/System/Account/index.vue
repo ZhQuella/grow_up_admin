@@ -53,7 +53,7 @@
           :data="tableList"
           only-key="id"
           :loading="tableLoading"
-          @select="onPerfectTableSelect"
+          v-model:select="selectList"
         >
           <template #btnOption="btnOption">
             <ButtonGroup :button-group="buttonGroup" :max="4" :data="btnOption" />
@@ -147,10 +147,10 @@ const {
   optionGroup,
   dialogConfig,
   drawerConfig,
+  selectList,
   onDrawerClose,
   onDialogClose,
   onAccountSuccess,
-  onPerfectTableSelect,
   onSizeChange,
   onCurrentChange
 } = useTableFunc({
