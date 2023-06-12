@@ -24,6 +24,7 @@
                     ref="tableRef"
                     :columns="tableColumns"
                     :data="personList"
+                    only-key="id"
                     @select="onTableSelect">
         <template #btnOption="btnOption">
           <ButtonGroup :button-group="buttonGroup" :max="4" :data="btnOption" />

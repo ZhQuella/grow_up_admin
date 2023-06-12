@@ -11,7 +11,7 @@ interface RequestMethod {
 };
 
 interface Props {
-  roleId: ComputedRef<number>,
+  roleId: ComputedRef<string>,
   emit: Fn
 };
 
@@ -31,8 +31,13 @@ export const useTable = ({
       title: "序号",
     },
     {
+      field: "account",
+      title: "账号",
+      showOverflowTooltip: true
+    },
+    {
       field: "personName",
-      title: "人员姓名",
+      title: "所属人员",
     },
     {
       field: "roles",
@@ -50,7 +55,7 @@ export const useTable = ({
     },
     {
       field: "operator",
-      title: "操作人",
+      title: "最近操作人",
     },
     {
       field: "operate",
@@ -71,7 +76,7 @@ export const useTable = ({
     }
   ]);
 
-  const getRoleBoundPersonList = async (roleId:number) => {
+  const getRoleBoundPersonList = async (roleId: string) => {
     const { data } = await request.roleBoundPersons({ params: { roleId } });
     personList.value = data;
   };

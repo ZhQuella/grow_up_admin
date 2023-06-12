@@ -32,6 +32,7 @@ export interface OutServiceData {
 
 export interface RolePersonItem {
   id: string;
+  account: string;
   personName: string;
   roles: string[];
   department: string;
@@ -40,6 +41,6 @@ export interface RolePersonItem {
 };
 
 export interface UntieRoleData {
-  personIds: number[];
+  personIds: string[];
   roleId: string;
 };
