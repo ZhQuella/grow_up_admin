@@ -93,7 +93,7 @@ export const useTableOption = ({
     },
     {
       field: "memberNum",
-      title: "角色成员数",
+      title: "应用数量",
       showOverflowTooltip: true,
       width: 120,
       formatter: (row: any) => {
