@@ -266,7 +266,7 @@ export const useTableFunc = ({ getRoleList, page, size }: Prop) => {
   };
 
   const onRoleUniteAll = async (roleId: string) => {
-    await ElMessageBox.confirm("解绑所有人员将失去对应角色权限，是否继续？", "温馨提示", {
+    await ElMessageBox.confirm("解绑后所有账号将失去对应角色权限，是否继续？", "温馨提示", {
       confirmButtonText: "删除",
       cancelButtonText: "取消",
       type: "warning"

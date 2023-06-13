@@ -40,7 +40,7 @@
             <ButtonGroup :button-group="optionGroup" :max="5" show-text />
           </div>
           <div class="pt-[3px]">
-            <!-- <SearchBar :search="searchList" @search="onTableSeach" /> -->
+             <SearchBar :search="searchList" @search="onTableSearch"/>
             <ColumnBar :columns="tableColumns" @confirm="onColumnsBarConfirm" />
           </div>
         </div>
@@ -104,20 +104,77 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import PerfectTable from "components/public/PerfectTable/index.vue";
 import ColumnBar from "components/public/ColumnBar/index.vue";
 import ButtonGroup from "components/public/ButtonGroup/index.vue";
+import SearchBar from "components/public/SearchBar/index.vue";
+import PageLayout from "components/public/PageLayout/index.vue";
 import { useTable } from "hooks/useTable";
 import { useDeptTree } from "hooks/useBusiness/useDeptTree";
 import { useDict } from "./use/useDict";
 import { useTableOption } from "./use/useTableOption";
 import { useTableFunc } from "./use/useTableFunc";
-import PageLayout from "components/public/PageLayout/index.vue";
 import {RoleItem} from "pages/System/Role/types";
 
 const { roleStates, roleTypes } = useDict();
 const { pageSizes, page, size, layout, total } = useTable();
 const { deptTreeList, deptSearchValue, filterResult, onDeptInput, defaultProps } = useDeptTree();
+
+const searchList = computed(() => [
+  {
+    labelText: "角色名称",
+    placeholder: "请输入角色名称",
+    elType: "el-input",
+    isDefault: true,
+    model: "roleName",
+    noDelete: true
+  },
+  {
+    labelText: "权限标识",
+    placeholder: "请输入权限标识",
+    elType: "el-input",
+    isDefault: true,
+    model: "authorityChart",
+    noDelete: true
+  },
+  {
+    labelText: "创建日期",
+    elType: "el-date-picker",
+    isDefault: true,
+    startPlaceholder: "请选择开始日期",
+    endPlaceholder: "请结束开始日期",
+    type: "daterange",
+    model: "createDate",
+    valueFormat: "YYYY-DD-MM"
+  },
+  {
+    isDefault: true,
+    collapseTags: true,
+    elType: "el-select",
+    labelText: "角色状态",
+    multiple: true,
+    model: "cleanSignList",
+    label: "label",
+    placeholder: "请选择角色状态",
+    value: "code",
+    noDataText: "暂无数据",
+    options: roleStates
+  },
+  {
+    isDefault: true,
+    collapseTags: true,
+    elType: "el-select",
+    labelText: "角色类型",
+    multiple: true,
+    model: "roleType",
+    label: "label",
+    placeholder: "请选择角色类型",
+    value: "code",
+    noDataText: "暂无数据",
+    options: roleTypes
+  }
+]);
 
 const onShowBoundPersons = (row: RoleItem) => {
   const { roleName } = row;
@@ -132,7 +189,8 @@ const {
   tableColumns,
   tableList,
   getRoleList,
-  onTreeNodeClick
+  onTreeNodeClick,
+  searchData
 } = useTableOption({
   tableTotal: total,
   roleStates,
@@ -159,6 +217,11 @@ const {
   page,
   size
 });
+
+const onTableSearch = (data: any) => {
+  searchData.value = data;
+  getRoleList && getRoleList();
+};
 
 const onColumnsBarConfirm = (columns: any[]) => {
   tableRef.value.setColumns(columns);
