@@ -44,6 +44,7 @@ export const useTableOption = ({
   const tableLoading: Ref<boolean> = ref(false);
   const accountMethod = request.create("accountMent");
   const searchData: Ref<SearchType> = ref<SearchType>({});
+  const treeValue: Ref<string> = ref("");
   const state: UnwrapNestedRefs<{ tableList: AccountItem[] }> = reactive({
     tableList: []
   });
@@ -149,7 +150,10 @@ export const useTableOption = ({
   const getAccountList = async (): Promise<void> => {
     tableLoading.value = true;
     const { accountList, total } = await accountMethod.getAccountList({
-      data: searchData.value,
+      data: {
+        ...searchData.value,
+        deptId: treeValue.value
+      },
       params: { page: unref(page), size: unref(size) }
     });
     state.tableList = accountList;
@@ -158,7 +162,11 @@ export const useTableOption = ({
   };
 
   const onTreeNodeClick = async (item: Tree): Promise<void> => {
-    searchData.value.deptId = item.id;
+    if(treeValue.value !== item.id){
+      treeValue.value = item.id;
+    }else{
+      treeValue.value = "";
+    };
     await getAccountList();
   };
 

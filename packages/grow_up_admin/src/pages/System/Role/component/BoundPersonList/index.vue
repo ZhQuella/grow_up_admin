@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-alert title="解绑所有人员将失去对应角色权限" type="warning" show-icon :closable="false"/>
+    <el-alert title="解绑后账号将失去对应角色权限" type="warning" show-icon :closable="false"/>
     <div class="p-[20px]">
       <el-from>
         <el-row :gutter="20">

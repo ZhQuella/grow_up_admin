@@ -3,7 +3,7 @@ import type { Tree } from "types/Tree";
 import type { Column } from "types/TableColumn";
 import type { DictItem } from "types/Dict";
 import type { RoleItem } from "../types/index";
-import { computed, reactive, onMounted, unref } from "vue";
+import { computed, reactive, onMounted, unref, ref } from "vue";
 import * as ElementPlus from "element-plus";
 import request from "api/systemMent";
 
@@ -21,6 +21,7 @@ interface tableOption {
   tableList: ComputedRef<RoleItem[]>;
   tableColumns: ComputedRef<Column[]>;
   getRoleList: Fn;
+  searchData: Ref<any>
 }
 
 type stateType = "success" | "danger";
@@ -35,7 +36,8 @@ export const useTableOption = ({
   onShowBoundPersons
 }: props): tableOption => {
   const roleRequest = request.create("roleMent");
-  const searchData = reactive<any>({});
+  const searchData: Ref<any> = ref({});
+  const treeValue: Ref<string> = ref("");
   const state: { tableList: RoleItem[] } = reactive({
     tableList: []
   });
@@ -130,9 +132,11 @@ export const useTableOption = ({
   ]);
 
   const getRoleList = async () => {
-    const searchDdata = {};
     const { data, total } = await roleRequest.getRoleList({
-      data: searchDdata,
+      data: {
+        ...searchData.value,
+        deptId: treeValue.value
+      },
       params: { page: unref(page), size: unref(size) }
     });
     state.tableList = data;
@@ -140,7 +144,11 @@ export const useTableOption = ({
   };
 
   const onTreeNodeClick = async (item: Tree) => {
-    searchData.deptId = item.id;
+    if(treeValue.value !== item.id){
+      treeValue.value = item.id;
+    }else{
+      treeValue.value = "";
+    };
     await getRoleList();
   };
 
@@ -149,6 +157,7 @@ export const useTableOption = ({
   });
 
   return {
+    searchData,
     onTreeNodeClick,
     tableList,
     tableColumns,

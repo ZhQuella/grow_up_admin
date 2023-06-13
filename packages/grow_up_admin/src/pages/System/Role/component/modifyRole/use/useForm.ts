@@ -2,7 +2,6 @@ import type { Ref } from "vue";
 import type { RoleItem } from "../../../types/index";
 import {computed, ComputedRef, ref} from "vue";
 import axios from "api/systemMent";
-import {roleState} from "../../../types/index";
 import to from "await-to-js";
 import {ElMessage} from "element-plus";
 
@@ -47,7 +46,7 @@ export const useForm = ({
   }));
 
   const formData: Ref<RoleItem> = ref({
-    id: -1,
+    id: "",
     roleName: "",
     state: "0",
     authorityChart: "",
@@ -59,7 +58,7 @@ export const useForm = ({
     updataTime: ""
   });
 
-  const getRoleInfo = async (id: number): Promise<void> => {
+  const getRoleInfo = async (id: string): Promise<void> => {
     const { data } = await roleMethod.getRoleInfo({ params: { id } });
     formData.value = data;
   };
