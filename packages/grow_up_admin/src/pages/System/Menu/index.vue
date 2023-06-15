@@ -8,14 +8,18 @@
           </div>
           <div class="pt-[3px]">
             <SearchBar />
-            <ColumnBar />
+            <ColumnBar :columns="tableColumns"/>
           </div>
         </div>
       </template>
 
       <template #main="{ height }">
         <PerfectTable ref="tableRef"
-                      :height="height">
+                      :height="height"
+                      :data="[{ menuName: '1111', children: [{ menuName: '1111-11' }] }]"
+                      default-expand-all
+                      row-key="menuName"
+                      :columns="tableColumns">
           <template #btnOption="btnOption">
             <ButtonGroup :button-group="[]" :max="4" :data="btnOption" />
           </template>
@@ -38,6 +42,11 @@ import ColumnBar from "components/public/ColumnBar/index.vue";
 import ButtonGroup from "components/public/ButtonGroup/index.vue";
 import SearchBar from "components/public/SearchBar/index.vue";
 import PageLayout from "components/public/PageLayout/index.vue";
-
+import { useTableOption } from "./use/useTableOption";
 defineOptions({ name: "MenuManagement" });
+
+const {
+  tableColumns
+} = useTableOption();
+
 </script>

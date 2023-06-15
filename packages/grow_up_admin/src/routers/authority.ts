@@ -8,6 +8,7 @@ export default {
   workbench: ["admin"],
   ExternalPage: ["admin"],
   elementPlusDoc: ["admin"],
+  GrowAdminDoc: ["admin"],
   ComponentDocument: ["admin"],
   ListPage: ["admin"],
   ElementListPage: ["admin"],
