@@ -131,6 +131,13 @@ const menuList = [
         icon: "Events",
         path: "role-management",
         component: "System/Role/index.vue"
+      },
+      {
+        label: "菜单管理",
+        name: "MenuManagement",
+        icon: "Menu",
+        path: "menu-management",
+        component: "System/Menu/index.vue"
       }
     ]
   }

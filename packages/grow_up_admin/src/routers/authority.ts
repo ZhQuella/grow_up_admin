@@ -26,6 +26,7 @@ export default {
   SystemManagement: ["admin"],
   AccountManagement: ["admin"],
   RoleManagement: ["admin"],
+  MenuManagement: ["admin"],
   CountToExample: ["admin"],
   SplitPaneTest: ["admin"],
   "customPage1-1": ["minor"],

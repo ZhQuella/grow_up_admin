@@ -168,7 +168,8 @@ const searchList: any[] = [
     placeholder: "请输入账号",
     elType: "el-input",
     isDefault: true,
-    model: "account"
+    model: "account",
+    noDelete: true
   },
   {
     labelText: "创建日期",
@@ -183,28 +184,15 @@ const searchList: any[] = [
   {
     isDefault: true,
     collapseTags: true,
-    requestConfig: {
-      method: "get",
-      url: "/system/dict/data/type/sys_yes_no_number"
-    },
     elType: "el-select",
     labelText: "账号状态",
     multiple: true,
     model: "cleanSignList",
-    label: "dictLabel",
+    label: "label",
     placeholder: "请选择账号状态",
-    value: "dictValue",
+    value: "code",
     noDataText: "暂无数据",
-    options: [
-      {
-        dictLabel: "启用",
-        dictValue: "1"
-      },
-      {
-        dictLabel: "停用",
-        dictValue: "0"
-      }
-    ]
+    options: accountStates
   }
 ];
 
