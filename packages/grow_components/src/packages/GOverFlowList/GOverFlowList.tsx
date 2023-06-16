@@ -11,7 +11,6 @@ import {
   getCurrentInstance
 } from 'vue';
 import type { VNode } from 'vue';
-import './GOverFlowList.scss'
 import { getAllElements } from '../../../types/vue-utils'
 export default defineComponent({
   name: 'GOverFlowList',
