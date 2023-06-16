@@ -62,6 +62,13 @@ const menuList = [
         icon: "PanelExpansion",
         path: "SplitPaneTest",
         component: "Feat/SplitPaneTest/index.vue"
+      },
+      {
+        label: "折叠列表",
+        name: "OverflowList",
+        icon: "PanelExpansion",
+        path: "OverflowList",
+        component: "Feat/OverflowList/index.vue"
       }
     ]
   },
