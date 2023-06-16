@@ -16,6 +16,11 @@
   </div>
 </template>
 <script setup lang="ts">
+import {ref,onMounted} from 'vue';
+let num = ref(10);
+let width = ref(500);
+onMounted(async() => {
+})
 </script>
 <style lang='scss' scoped>
 
