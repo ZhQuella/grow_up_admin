@@ -4,6 +4,7 @@ import { GCountTo } from "./packages/GCountTo";
 import { GDetail, GDetailItem } from "./packages/GDetail";
 import { GDialog } from "./packages/GDialog";
 import { GSplitPane } from "./packages/GSplitPane";
+import { GOverFlowList } from "./packages/GOverFlowList";
 
 import "./styles/tailwindcss/index.css";
 
@@ -32,9 +33,10 @@ const GrowConponent = {
   GDetail,
   GDetailItem,
   GDialog,
-  GSplitPane
+  GSplitPane,
+  GOverFlowList
 };
 
-export { version, GCountTo, GDetail, GDetailItem, GDialog, GSplitPane };
+export { version, GCountTo, GDetail, GDetailItem, GDialog, GSplitPane,GOverFlowList };
 
 export default GrowConponent;

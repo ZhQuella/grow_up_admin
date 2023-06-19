@@ -89,6 +89,7 @@ export const useTableOption = ({
       width: 120,
       formatter: (space: any) => {
         const item = roleStates.value.find((el) => el.code === space.state);
+        if(!item) return [];
         const type = ["danger", "success"][Number(item?.code)] as stateType;
         return [<ElementPlus.ElTag type={type}>{item?.label}</ElementPlus.ElTag>];
       }
