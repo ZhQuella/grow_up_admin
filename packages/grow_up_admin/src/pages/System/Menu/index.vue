@@ -8,7 +8,7 @@
           </div>
           <div class="pt-[3px]">
             <SearchBar />
-            <ColumnBar />
+            <ColumnBar :columns="tableColumns"/>
           </div>
         </div>
       </template>

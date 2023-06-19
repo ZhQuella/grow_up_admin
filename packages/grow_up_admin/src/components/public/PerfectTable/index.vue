@@ -6,6 +6,7 @@
     :row-class-name="rowClassName"
     @cell-mouse-enter="onRowMouseEnter"
     @cell-mouse-leave="onRowMouseLeave"
+    v-bind="$attrs"
   >
     <el-table-column v-if="isSerial" width="60px" v-bind="serialColumn">
       <template #header>
