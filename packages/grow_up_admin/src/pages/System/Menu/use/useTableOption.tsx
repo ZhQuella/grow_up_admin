@@ -32,7 +32,8 @@ export const useTableOption = ({
       field: "label",
       title: "菜单名称",
       showOverflowTooltip: true,
-      minWidth: 220
+      minWidth: 220,
+      fixed: "left"
     },
     {
       field: "menuType",
@@ -51,7 +52,7 @@ export const useTableOption = ({
       }
     },
     {
-      field: "menuIcon",
+      field: "icon",
       title: "图标",
       showOverflowTooltip: true,
       width: 80,
