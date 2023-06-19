@@ -71,6 +71,7 @@ export const useTableOption = ({
         const item: DictItem = accountStates.value.find(
           (el: DictItem): boolean => el.code === space.state
         );
+        if(!item) return [];
         const type: "danger" | "success" = ["danger", "success"][Number(item.code)] as
           | "success"
           | "danger";
