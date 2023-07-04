@@ -4,7 +4,7 @@
       <template #header>
         <div class="flex justify-between">
           <div class="pt-[8px]">
-            <ButtonGroup :button-group="[]" :max="5" show-text />
+            <ButtonGroup :button-group="optionGroup" :max="5" show-text />
           </div>
           <div class="pt-[3px]">
             <SearchBar />
@@ -23,7 +23,7 @@
                       row-key="name"
                       only-key="name">
           <template #btnOption="btnOption">
-            <ButtonGroup :button-group="[]" :max="4" :data="btnOption" />
+            <ButtonGroup :button-group="buttonGroup" :max="4" :data="btnOption" />
           </template>
         </PerfectTable>
       </template>
@@ -40,6 +40,18 @@
       </template>
 
     </PageLayout>
+
+    <g-dialog
+      v-model="dialogConfig.visible"
+      width="600px"
+      :title="dialogConfig.title"
+    >
+      <component
+        :is="dialogConfig.conmponetName"
+        :row="dialogConfig.data"
+      />
+    </g-dialog>
+
   </div>
 </template>
 
@@ -52,6 +64,7 @@ import PageLayout from "components/public/PageLayout/index.vue";
 import { useTable } from "hooks/useTable";
 import { useTableOption } from "./use/useTableOption";
 import { useDict } from "./use/useDict";
+import { useTableFunc } from "./use/useTableFunc";
 
 const {  pageSizes, page, size, layout, total } = useTable();
 
@@ -72,7 +85,22 @@ const {
   stateList
 });
 
-
-
-
+const {
+  dialogConfig,
+  buttonGroup,
+  optionGroup
+} = useTableFunc();
 </script>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+import createMenu from "./components/createMenu.vue";
+
+export default defineComponent({
+  name: "MenuManagement",
+  components: {
+    createMenu
+  }
+});
+</script>
+
