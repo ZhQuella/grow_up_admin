@@ -1,7 +1,16 @@
 import { App, Component } from "vue";
 import { version } from "../package.json";
+import { GRenderer } from "./packages/GRenderer";
+import { GDesigner } from "./packages/GDesigner";
 
-const components: Component[] = [];
+import "animate.css";
+import "./styles/tailwindcss/index.css";
+import "./styles/animate/index.css";
+
+const components: Component[] = [
+  GRenderer,
+  GDesigner
+];
 
 const install = (app: App) => {
   const useComponent = (component: Component) => {
@@ -18,9 +27,11 @@ const install = (app: App) => {
 
 const GrowConponent = {
   version,
-  install
+  install,
+  GDesigner,
+  GRenderer
 };
 
-export { version };
+export { version, GRenderer, GDesigner };
 
 export default GrowConponent;
