@@ -60,9 +60,12 @@
 </template>
 
 <script setup lang="ts">
+import { VueDraggableNext } from "vue-draggable-next";
 import { FlowLogsVpc, Tag, TagNone, Close } from "@vicons/carbon";
 
 import { useOption } from "./use/useOption";
+
+console.log(VueDraggableNext);
 
 const {
   optionConfig,
