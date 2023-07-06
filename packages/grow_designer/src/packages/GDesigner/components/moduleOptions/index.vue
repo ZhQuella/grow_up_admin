@@ -8,13 +8,38 @@
       </el-tabs>
     </div>
     <el-scrollbar class="h-full flex-1">
-      <h1 v-for="(item) of 100" :key="item">{{ item }}</h1>
+      <VueDraggableNext :list="list"
+                        :group="{
+                          name: 'draggable-group',
+                          pull: 'clone',
+                          put: false
+                        }"
+                        :animation="180"
+                        :sort="false">
+        <div
+          class="select-none bg-gray-300 m-1 p-3 rounded-md text-center"
+          v-for="element in list"
+          :key="element.name"
+        >
+          {{ element.name }}
+        </div>
+      </VueDraggableNext>
     </el-scrollbar>
   </div>
 </template>
 
 <script setup lang="ts">
+import { VueDraggableNext } from "vue-draggable-next";
 import { ref } from "vue";
+
+const list = ref([
+  { name: 'John', id: 1 },
+  { name: 'Joao', id: 2 },
+  { name: 'Jean', id: 3 },
+  { name: 'Gerard', id: 4 },
+  { name: 'Tom', id: 5 },
+  { name: 'Aaron', id: 6 },
+]);
 
 const activeName = ref("BaseComponent");
 

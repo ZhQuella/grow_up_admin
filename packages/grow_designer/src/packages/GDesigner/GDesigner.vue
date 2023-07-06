@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="flex-1 bg-BG_COLOR2">
-        操作区域
+        <DraggableView />
       </div>
       <div class="grow-0 shrink-0 w-[300px] bg-BG_COLOR3 border-l-[1px] border-BORDER_COLOR2 border-solid">
         配置区域
@@ -60,12 +60,10 @@
 </template>
 
 <script setup lang="ts">
-import { VueDraggableNext } from "vue-draggable-next";
 import { FlowLogsVpc, Tag, TagNone, Close } from "@vicons/carbon";
+import DraggableView from "./components/draggableView/index.vue";
 
 import { useOption } from "./use/useOption";
-
-console.log(VueDraggableNext);
 
 const {
   optionConfig,
