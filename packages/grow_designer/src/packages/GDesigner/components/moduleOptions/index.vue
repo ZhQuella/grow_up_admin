@@ -8,41 +8,47 @@
       </el-tabs>
     </div>
     <el-scrollbar class="h-full flex-1">
-      <VueDraggableNext :list="list"
-                        :group="{
-                          name: 'draggable-group',
-                          pull: 'clone',
-                          put: false
-                        }"
-                        :animation="180"
-                        :sort="false">
-        <div
-          class="select-none bg-gray-300 m-1 p-3 rounded-md text-center"
-          v-for="element in list"
-          :key="element.name"
-        >
-          {{ element.name }}
-        </div>
-      </VueDraggableNext>
+      <el-collapse v-model="collapseModel">
+        <el-collapse-item v-for="item in drageMap"
+                          :title="item[1].title"
+                          :name="item[0]">
+          <VueDraggableNext :list="item[1].group"
+                            :group="{
+                              name: 'draggable-group',
+                              pull: 'clone',
+                              put: false
+                            }"
+                            :animation="180"
+                            :sort="false"
+                            class="flex flex-wrap">
+            <div class="draggable-item w-1/3 h-[90px] box-border p-[10px] cursor-pointer hover:bg-slate-50 transition ease-in"
+                v-for="ele in item[1].group"
+                :key="ele.elType">
+              <div class="text-center pt-[10px]">
+                <el-icon :size="22">
+                  <component :is="ele.elIcon"/>
+                </el-icon>
+              </div>
+              <p class="text-center">{{ ele.elName }}</p>
+            </div>
+          </VueDraggableNext>
+        </el-collapse-item>
+      </el-collapse>
     </el-scrollbar>
   </div>
 </template>
 
 <script setup lang="ts">
 import { VueDraggableNext } from "vue-draggable-next";
-import { ref } from "vue";
+import { useInit } from "./use/useInit";
 
-const list = ref([
-  { name: 'John', id: 1 },
-  { name: 'Joao', id: 2 },
-  { name: 'Jean', id: 3 },
-  { name: 'Gerard', id: 4 },
-  { name: 'Tom', id: 5 },
-  { name: 'Aaron', id: 6 },
-]);
+defineOptions({ name: "moduleOptions" });
 
-const activeName = ref("BaseComponent");
+const {
+  drageMap,
+  activeName,
+  collapseModel
+} = useInit();
 
-defineOptions({ name: "moduleOptions" })
 
 </script>

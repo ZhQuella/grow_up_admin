@@ -6,7 +6,7 @@ export const useOption = () => {
     title: "",
     visible: true,
     componentName: "moduleOptions",
-    type: "BaseComponent",
+    type: "module",
     isFixed: true
   });
 

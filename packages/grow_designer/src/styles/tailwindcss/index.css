@@ -30,3 +30,7 @@
     --border-color2: 48, 48, 48;
   }
 }
+
+.el-collapse-item__content {
+  padding-bottom: 0px !important;
+}
