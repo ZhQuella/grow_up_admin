@@ -1,6 +1,8 @@
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 
 export const useOption = () => {
+
+  const draggableStructures = ref([]);
 
   const optionConfig = reactive({
     title: "",
@@ -48,6 +50,7 @@ export const useOption = () => {
 
   return {
     optionConfig,
+    draggableStructures,
     onLeftOptionClick,
     onLeftOptionClose,
     onChangeOptionFixed,

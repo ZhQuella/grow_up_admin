@@ -9,7 +9,7 @@
     </div>
     <el-scrollbar class="h-full flex-1">
       <el-collapse v-model="collapseModel">
-        <el-collapse-item v-for="item in drageMap"
+        <el-collapse-item v-for="(item) in drageMap"
                           :title="item[1].title"
                           :name="item[0]">
           <VueDraggableNext :list="item[1].group"
@@ -20,9 +20,11 @@
                             }"
                             :animation="180"
                             :sort="false"
-                            class="flex flex-wrap">
+                            class="flex flex-wrap"
+                            @start="onDraggableStart($event, item[1].group)"
+                            @end="onDraggableEnd($event, item[1].group)">
             <div class="draggable-item w-1/3 h-[90px] box-border p-[10px] cursor-pointer hover:bg-slate-50 transition ease-in"
-                v-for="ele in item[1].group"
+                v-for="(ele,index) in item[1].group"
                 :key="ele.elType">
               <div class="text-center pt-[10px]">
                 <el-icon :size="22">
@@ -44,11 +46,11 @@ import { useInit } from "./use/useInit";
 
 defineOptions({ name: "moduleOptions" });
 
+const emit = defineEmits(["dragstart","dragend","start"]);
+
 const {
   drageMap,
   activeName,
   collapseModel
 } = useInit();
-
-
 </script>

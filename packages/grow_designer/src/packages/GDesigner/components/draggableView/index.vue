@@ -1,26 +1,37 @@
 <template>
-    <VueDraggableNext group="draggable-group"
-                      :animation="180"
-                      :modelValue="draggableList"
-                      class="draggable-grop-wrap h-full bg-BG_COLOR2">
-      <transition-group type="transition">
-        <div v-for="ele in draggableList"
-             :key="ele.elName + Math.random()">{{ ele.elName }}</div>
-      </transition-group>
-    </VueDraggableNext>
+  {{ structures }}
+  <VueDraggableNext group="draggable-group"
+                    :animation="180"
+                    :modelValue="structures"
+                    class="draggable-grop-wrap h-full bg-BG_COLOR2"
+                    @add="onDraggableAdd">
+    <transition-group type="transition">
+      <div v-for="ele in structures"
+           :key="ele.uuid">{{ ele.elName }}</div>
+    </transition-group>
+  </VueDraggableNext>
 </template>
 
 <script setup lang="ts">
 import { VueDraggableNext } from "vue-draggable-next";
 
+import { useEvents } from "./use/useEvents";
+
+const emits = defineEmits(["add"]);
+
+defineOptions({ name: "draggableView" });
+
 interface Props {
-  draggableList: any[]
+  structures: any[]
 };
 
 const props = defineProps<Props>();
 
-defineOptions({ name: "draggableView" })
-
+const {
+  onDraggableAdd
+} = useEvents({
+  emits
+});
 </script>
 
 <style lang="scss">
