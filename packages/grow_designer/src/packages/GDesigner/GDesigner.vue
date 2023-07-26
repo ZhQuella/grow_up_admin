@@ -21,7 +21,7 @@
           </div>
         </el-tooltip>
       </div>
-      <div class="h-full w-[300px] left-[50px] top-[0px] bg-BG_COLOR3 flex flex-col"
+      <div class="h-full w-[300px] left-[50px] top-[0px] bg-BG_COLOR3 flex flex-col z-10"
            :class="[
              {
                'absolute': !optionConfig.isFixed
@@ -52,7 +52,7 @@
         </div>
       </div>
       <div class="flex-1 bg-BG_COLOR2">
-        <DraggableView :structures="draggableStructures"
+        <DraggableView :draggableConfig="draggableConfig"
                        @add="onDraggableViewAdd"/>
       </div>
       <div class="grow-0 shrink-0 w-[300px] bg-BG_COLOR3 border-l-[1px] border-BORDER_COLOR2 border-solid">
@@ -71,7 +71,7 @@ import { useOption } from "./use/useOption";
 import { useEvents } from "./use/useEvents";
 
 const {
-  draggableStructures,
+  draggableConfig,
   optionConfig,
   onLeftOptionClick,
   onLeftOptionClose,
@@ -84,7 +84,7 @@ const {
   onDraggableStart,
   onDraggableViewAdd
 } = useEvents({
-  structures:draggableStructures
+  draggableConfig
 });
 </script>
 

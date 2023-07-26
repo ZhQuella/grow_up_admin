@@ -21,10 +21,10 @@
                             :animation="180"
                             :sort="false"
                             class="flex flex-wrap"
-                            @start="onDraggableStart($event, item[1].group)"
-                            @end="onDraggableEnd($event, item[1].group)">
+                            @start="onDragStart($event, item[1].group)"
+                            @end="onDragEnd($event, item[1].group)">
             <div class="draggable-item w-1/3 h-[90px] box-border p-[10px] cursor-pointer hover:bg-slate-50 transition ease-in"
-                v-for="(ele,index) in item[1].group"
+                v-for="(ele) in item[1].group"
                 :key="ele.elType">
               <div class="text-center pt-[10px]">
                 <el-icon :size="22">
@@ -43,6 +43,7 @@
 <script setup lang="ts">
 import { VueDraggableNext } from "vue-draggable-next";
 import { useInit } from "./use/useInit";
+import { nanoid } from "nanoid";
 
 defineOptions({ name: "moduleOptions" });
 
@@ -53,4 +54,13 @@ const {
   activeName,
   collapseModel
 } = useInit();
+
+const onDragStart = (event, list) => {
+  const uuid:string = nanoid();
+  list[event.oldIndex].uuid = uuid;
+};
+
+const onDragEnd = (event, list) => {
+  Reflect.deleteProperty(list[event.oldIndex], "uuid");
+};
 </script>

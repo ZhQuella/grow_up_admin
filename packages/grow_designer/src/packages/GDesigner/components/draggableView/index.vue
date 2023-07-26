@@ -1,19 +1,12 @@
 <template>
-  {{ structures }}
-  <VueDraggableNext group="draggable-group"
-                    :animation="180"
-                    :modelValue="structures"
-                    class="draggable-grop-wrap h-full bg-BG_COLOR2"
-                    @add="onDraggableAdd">
-    <transition-group type="transition">
-      <div v-for="ele in structures"
-           :key="ele.uuid">{{ ele.elName }}</div>
-    </transition-group>
-  </VueDraggableNext>
+  <div class="h-full p-[5px]">
+    <draggableContent @add="onDraggableAdd"
+                      :draggableConfig="draggableConfig"/>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { VueDraggableNext } from "vue-draggable-next";
+import draggableContent from "../draggableContent/index.vue";
 
 import { useEvents } from "./use/useEvents";
 
@@ -22,7 +15,7 @@ const emits = defineEmits(["add"]);
 defineOptions({ name: "draggableView" });
 
 interface Props {
-  structures: any[]
+  draggableConfig: any
 };
 
 const props = defineProps<Props>();

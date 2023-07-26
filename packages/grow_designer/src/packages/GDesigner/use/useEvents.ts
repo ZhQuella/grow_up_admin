@@ -1,13 +1,10 @@
-import type { Ref } from "vue";
-// import { reactive } from "vue";
-import { nanoid } from "nanoid";
 
 interface props {
-  structures: Ref<any[]>
+  draggableConfig: any
 };
 
 export const useEvents = ({
-  structures
+  draggableConfig
 }: props) => {
 
 
@@ -21,9 +18,14 @@ export const useEvents = ({
     console.log(item, "DraggableStart");
   };
 
-  const onDraggableViewAdd = (event) => {
-    const uuid:string = nanoid();
-    structures.value.push({ uuid, elName: Math.random() });
+  const onDraggableViewAdd = ({ event, list }) => {
+    const newIndex = event.newIndex;
+    const config = list[newIndex];
+    const { uuid, ...otherConfig } = config;
+    list[newIndex] = { uuid };
+    draggableConfig.renderArgument[uuid] = { ...otherConfig };
+    draggableConfig.styles[uuid] = {};
+    draggableConfig.events[uuid] = {};
   };
 
   return {
