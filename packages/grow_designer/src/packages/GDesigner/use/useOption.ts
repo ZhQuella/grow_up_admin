@@ -2,6 +2,17 @@ import { reactive } from "vue";
 
 export const useOption = () => {
 
+  const draggableConfig = reactive({
+    //  结构
+    structures: [],
+    //  附属信息  model/类型/props
+    renderArgument: {},
+    //  纯样式相关
+    styles: {},
+    //  事件相关
+    events: {}
+  });
+
   const optionConfig = reactive({
     title: "",
     visible: true,
@@ -48,6 +59,7 @@ export const useOption = () => {
 
   return {
     optionConfig,
+    draggableConfig,
     onLeftOptionClick,
     onLeftOptionClose,
     onChangeOptionFixed,

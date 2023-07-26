@@ -21,7 +21,7 @@
           </div>
         </el-tooltip>
       </div>
-      <div class="h-full w-[300px] left-[50px] top-[0px] bg-BG_COLOR3 flex flex-col"
+      <div class="h-full w-[300px] left-[50px] top-[0px] bg-BG_COLOR3 flex flex-col z-10"
            :class="[
              {
                'absolute': !optionConfig.isFixed
@@ -45,11 +45,15 @@
           </div>
         </div>
         <div class="flex-1 h-[1px]">
-          <component :is="optionConfig.componentName" class="flex-1 h-full"/>
+          <component :is="optionConfig.componentName"
+                     class="flex-1 h-full"
+                     @dragstart="onGenerateKey"
+                     @start="onDraggableStart"/>
         </div>
       </div>
       <div class="flex-1 bg-BG_COLOR2">
-        <DraggableView />
+        <DraggableView :draggableConfig="draggableConfig"
+                       @add="onDraggableViewAdd"/>
       </div>
       <div class="grow-0 shrink-0 w-[300px] bg-BG_COLOR3 border-l-[1px] border-BORDER_COLOR2 border-solid">
         配置区域
@@ -64,8 +68,10 @@ import { FlowLogsVpc, Tag, TagNone, Close } from "@vicons/carbon";
 import DraggableView from "./components/draggableView/index.vue";
 
 import { useOption } from "./use/useOption";
+import { useEvents } from "./use/useEvents";
 
 const {
+  draggableConfig,
   optionConfig,
   onLeftOptionClick,
   onLeftOptionClose,
@@ -73,7 +79,13 @@ const {
   onLeftClose
 } = useOption();
 
-
+const {
+  onGenerateKey,
+  onDraggableStart,
+  onDraggableViewAdd
+} = useEvents({
+  draggableConfig
+});
 </script>
 
 <script lang="ts">
