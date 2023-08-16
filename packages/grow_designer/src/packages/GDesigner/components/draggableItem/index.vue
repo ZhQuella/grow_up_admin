@@ -3,7 +3,7 @@
        :class="{
         'border-PUBLIC_MAIN_COLOR': active
        }">
-    <div class="draggable-content-bar absolute top-0 left-0 w-[20px] h-[20px] bg-PUBLIC_MAIN_COLOR text-center rounded-br-[5px] overflow-hidden">
+    <div class="draggable-content-bar z-10 absolute top-0 left-0 w-[20px] h-[20px] bg-PUBLIC_MAIN_COLOR text-center rounded-br-[5px] overflow-hidden">
       <el-icon>
         <Move class="text-white"/>
       </el-icon>
@@ -19,7 +19,7 @@ import { Move } from "@vicons/carbon";
 
 interface Props {
   active: boolean
-};
+}
 
 defineProps<Props>();
 

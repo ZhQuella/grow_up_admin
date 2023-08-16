@@ -9,7 +9,7 @@
                       type="transition">
       <DraggableItem v-for="ele in draggableConfig.structures"
                      :key="ele.uuid">
-        {{ draggableConfig.renderArgument[ele.uuid] }}
+        <abstractionComponent :config="draggableConfig.renderArgument[ele.uuid]"/>
       </DraggableItem>
     </transition-group>
   </VueDraggableNext>
@@ -18,12 +18,13 @@
 <script setup lang="ts">
 import { VueDraggableNext } from "vue-draggable-next";
 import DraggableItem from "../draggableItem/index.vue";
+import abstractionComponent from "../abstractionComponent/index.vue";
 
 const emit = defineEmits(['add']);
 
 interface Props {
   draggableConfig: any
-};
+}
 const props = defineProps<Props>();
 
 const onDraggableAdd = (event) => {
