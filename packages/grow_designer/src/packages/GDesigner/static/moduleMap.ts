@@ -6,22 +6,26 @@ export const BaseComponent = new Map([
       elName: "图片",
       elType: "basic",
       elTagName: "img",
-      elIcon: "Image"
+      elIcon: "Image",
+      isChild: false
     },{
       elName: "标题",
       elType: "basic",
       elTagName: "h5",
-      elIcon: "FontColorsOutlined"
+      elIcon: "FontColorsOutlined",
+      isChild: false
     },{
       elName: "正文",
       elType: "basic",
       elTagName: "p",
-      elIcon: "FontSizeOutlined"
+      elIcon: "FontSizeOutlined",
+      isChild: false
     },{
       elName: "短语",
       elType: "basic",
       elTagName: "span",
-      elIcon: "ItalicOutlined"
+      elIcon: "ItalicOutlined",
+      isChild: false
     }]
   }],
   ["layoutElement", {
@@ -30,22 +34,26 @@ export const BaseComponent = new Map([
       elName: "卡片",
       elType: "eleModule",
       elTagName: "el-card",
-      elIcon: "IdcardOutlined"
+      elIcon: "IdcardOutlined",
+      isChild: true
     },{
       elName: "选项卡",
       elType: "eleModule",
       elTagName: "el-tabs",
-      elIcon: "DataBaseAlt"
+      elIcon: "DataBaseAlt",
+      isChild: true
     },{
       elName: "布局",
       elType: "eleModule",
       elTagName: "el-row",
-      elIcon: "OpenPanelRight"
+      elIcon: "OpenPanelRight",
+      isChild: true
     },{
       elName: "分割线",
       elType: "eleModule",
       elTagName: "el-divider",
-      elIcon: "BorderVerticleOutlined"
+      elIcon: "BorderVerticleOutlined",
+      isChild: false
     }]
   }]
 ]);
