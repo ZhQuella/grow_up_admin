@@ -1,4 +1,4 @@
-import { reactive } from "vue";
+import { reactive, provide } from "vue";
 
 export const useOption = () => {
 
@@ -10,8 +10,12 @@ export const useOption = () => {
     //  纯样式相关
     styles: {},
     //  事件相关
-    events: {}
+    events: {},
+    //  组件参数相关
+    props: {}
   });
+
+  provide('__draggableConfig__', draggableConfig);
 
   const optionConfig = reactive({
     title: "",

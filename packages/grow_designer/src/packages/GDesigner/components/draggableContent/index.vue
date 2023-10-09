@@ -9,7 +9,9 @@
                       type="transition">
       <DraggableItem v-for="ele in draggableConfig.structures"
                      :key="ele.uuid">
-        <abstractionComponent :config="draggableConfig.renderArgument[ele.uuid]"/>
+        <abstractionComponent :config="draggableConfig.renderArgument[ele.uuid]"
+                              :structure="ele"
+                              @add="onChildAdd"/>
       </DraggableItem>
     </transition-group>
   </VueDraggableNext>
@@ -31,6 +33,10 @@ const onDraggableAdd = (event) => {
   const list = props.draggableConfig.structures;
   emit("add", { event, list });
 };
+
+const onChildAdd = (event) => {
+  emit("add", event);
+}
 </script>
 
 <style lang="scss" space>
