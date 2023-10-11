@@ -54,7 +54,8 @@
       <div class="flex-1 bg-BG_COLOR2">
         <el-scrollbar class="h-full draggable-content">
           <DraggableView :draggableConfig="draggableConfig"
-                         @add="onDraggableViewAdd"/>
+                         @add="onDraggableViewAdd"
+                        @special="onSpecialAdd"/>
         </el-scrollbar>
       </div>
       <div class="grow-0 shrink-0 w-[300px] bg-BG_COLOR3 border-l-[1px] border-BORDER_COLOR2 border-solid">
@@ -84,7 +85,8 @@ const {
 const {
   onGenerateKey,
   onDraggableStart,
-  onDraggableViewAdd
+  onDraggableViewAdd,
+  onSpecialAdd
 } = useEvents({
   draggableConfig
 });

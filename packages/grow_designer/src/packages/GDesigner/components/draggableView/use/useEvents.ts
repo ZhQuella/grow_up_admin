@@ -12,9 +12,13 @@ export const useEvents = ({
     emits("add", event);
   };
 
+  const onSpecialAdd = (event) => {
+    emits('special', event);
+  };
 
   return {
-    onDraggableAdd
+    onDraggableAdd,
+    onSpecialAdd
   }
 };
 

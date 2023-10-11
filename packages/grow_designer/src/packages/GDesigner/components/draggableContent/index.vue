@@ -8,7 +8,9 @@
     <transition-group name="list"
                       type="transition">
       <DraggableItem v-for="ele in draggableConfig.structures"
-                     :key="ele.uuid">
+                     :key="ele.uuid"
+                     :structure="ele"
+                     @special="onSpecialAdd">
         <abstractionComponent :config="draggableConfig.renderArgument[ele.uuid]"
                               :structure="ele"
                               @add="onChildAdd"/>
@@ -22,7 +24,7 @@ import { VueDraggableNext } from "vue-draggable-next";
 import DraggableItem from "../draggableItem/index.vue";
 import abstractionComponent from "../abstractionComponent/index.vue";
 
-const emit = defineEmits(['add']);
+const emit = defineEmits(['add','special']);
 
 interface Props {
   draggableConfig: any
@@ -35,7 +37,12 @@ const onDraggableAdd = (event) => {
 };
 
 const onChildAdd = (event) => {
+  console.log(">>>> 这里没有执行？");
   emit("add", event);
+}
+
+const onSpecialAdd = (event) => {
+  emit('special',event)
 }
 </script>
 
@@ -44,10 +51,10 @@ const onChildAdd = (event) => {
   transition: all .35s;
 }
 .list-enter-active {
-  transition: all .5s;
+  transition: all .35s;
 }
 .list-leave-active {
-  transition: all .3s;
+  transition: all .35s;
 }
 .list-enter, .list-leave-to{
   opacity  : 0;

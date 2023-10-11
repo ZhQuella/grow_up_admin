@@ -23,15 +23,16 @@
                             class="flex flex-wrap"
                             @start="onDragStart($event, item[1].group)"
                             @end="onDragEnd($event, item[1].group)">
-            <div class="draggable-item w-1/3 h-[90px] box-border p-[10px] cursor-pointer hover:bg-slate-50 transition ease-in"
-                v-for="(ele) in item[1].group"
+            <div class="draggable-item w-1/3 h-[90px] box-border p-[10px] cursor-pointer hover:bg-[var(--el-text-color-disabled)] transition ease-in"
+                 style="transition: all .35s;"
+                 v-for="(ele) in item[1].group"
                 :key="ele.elType">
               <div class="text-center pt-[10px]">
                 <el-icon :size="22">
                   <component :is="ele.elIcon"/>
                 </el-icon>
               </div>
-              <p class="text-center">{{ ele.elName }}</p>
+              <p class="text-center text-[var(--el-text-color-regular)]">{{ ele.elName }}</p>
             </div>
           </VueDraggableNext>
         </el-collapse-item>
@@ -47,7 +48,7 @@ import { nanoid } from "nanoid";
 
 defineOptions({ name: "moduleOptions" });
 
-const emit = defineEmits(["dragstart","dragend","start"]);
+defineEmits(["dragstart","dragend","start"]);
 
 const {
   drageMap,
