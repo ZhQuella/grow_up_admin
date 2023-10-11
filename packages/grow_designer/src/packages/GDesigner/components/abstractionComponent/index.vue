@@ -21,7 +21,7 @@
       </template>
       <VueDraggableNext group="draggable-group"
                         :animation="180"
-                        class="draggable-grop-wrap h-full bg-BG_COLOR2"
+                        class="draggable-grop-wrap h-full bg-BG_COLOR2 relative border-[1px] border-slate-300 border-dashed rounded-[5px] overflow-hidden min-h-[50px] duration-350"
                         handle=".draggable-content-bar"
                         v-model="structure.children"
                         @add="onChildAdd">
@@ -33,6 +33,7 @@
         </DraggableItem>
       </VueDraggableNext>
     </el-card>
+
   </template>
 
 </template>
