@@ -8,6 +8,29 @@
   </template>
 
   <template v-if="config.isChild">
+    <component v-if="['el-col','el-tab-pane'].includes(config.elTagName)"
+               :is="config.elTagName"
+               label="User"
+               :span="12"
+               :name="Math.random()">
+      <VueDraggableNext group="draggable-group"
+                        :animation="180"
+                        class="draggable-grop-wrap h-full bg-BG_COLOR2 relative border-[1px] border-slate-300 border-dashed rounded-[5px] overflow-hidden min-h-[50px] duration-350"
+                        handle=".draggable-content-bar"
+                        v-model="structure.children"
+                        @add="onChildAdd">
+        <!-- todo 这里需要处理一下 special 事件，否则里面添加选项卡、弹性盒子无法新增 -->
+        <!-- todo 事件才看draggableItem中的special事件 -->
+        <DraggableItem v-for="ele in structure.children"
+                       :structure="ele"
+                       :key="ele.uuid">
+          <abstractionComponent :config="draggableConfig.renderArgument[ele.uuid]"
+                                :structure="ele"
+                                @add="onAbstractionAdd"/>
+        </DraggableItem>
+      </VueDraggableNext>
+    </component>
+
     <el-card v-if="config.elTagName === 'el-card'">
       <template #header>
         <div class="flex justify-between">
@@ -26,6 +49,7 @@
                         v-model="structure.children"
                         @add="onChildAdd">
         <DraggableItem v-for="ele in structure.children"
+                       :structure="ele"
                        :key="ele.uuid">
           <abstractionComponent :config="draggableConfig.renderArgument[ele.uuid]"
                                 :structure="ele"
@@ -34,6 +58,15 @@
       </VueDraggableNext>
     </el-card>
 
+    <template v-if="['el-tabs','el-row'].includes(config.elTagName)">
+      <component :is="config.elTagName">
+        <abstractionComponent v-for="ele in structure.children"
+                              :structure="ele"
+                              :config="draggableConfig.renderArgument[ele.uuid]"
+                              :key="ele.uuid"
+                              @add="onAbstractionAdd"/>
+      </component>
+    </template>
   </template>
 
 </template>
