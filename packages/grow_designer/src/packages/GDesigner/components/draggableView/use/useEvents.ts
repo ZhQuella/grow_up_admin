@@ -16,9 +16,14 @@ export const useEvents = ({
     emits('special', event);
   };
 
+  const onActiveed = (event) => {
+    emits('active', event);
+  };
+
   return {
     onDraggableAdd,
-    onSpecialAdd
+    onSpecialAdd,
+    onActiveed
   }
 };
 

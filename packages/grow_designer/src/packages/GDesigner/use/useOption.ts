@@ -1,4 +1,5 @@
-import { reactive, provide } from "vue";
+import { reactive, provide, ref } from "vue";
+import { ACTIVE_UUID, DRAGGABLE_CONGIG } from "../config/designation";
 
 export const useOption = () => {
 
@@ -15,7 +16,10 @@ export const useOption = () => {
     props: {}
   });
 
-  provide('__draggableConfig__', draggableConfig);
+  const activeUUID = ref("");
+
+  provide(DRAGGABLE_CONGIG, draggableConfig);
+  provide(ACTIVE_UUID, activeUUID);
 
   const optionConfig = reactive({
     title: "",
@@ -62,6 +66,7 @@ export const useOption = () => {
   };
 
   return {
+    activeUUID,
     optionConfig,
     draggableConfig,
     onLeftOptionClick,

@@ -1,5 +1,7 @@
 <template>
-  <div class="h-full relative" @mouseup="onLeftOptionClose">
+  <div class="h-full relative"
+       @mouseup="onLeftOptionClose"
+       @click="onActivated('')">
     <div class="flex h-full rounded-[4px] overflow-hidden">
       <div class="grow-0 shrink-0 w-[50px] bg-BG_COLOR3 box-border p-[5px] border-r-[1px] border-BORDER_COLOR2 border-solid"
            @mouseup.stop>
@@ -47,19 +49,20 @@
         <div class="flex-1 h-[1px]">
           <component :is="optionConfig.componentName"
                      class="flex-1 h-full"
-                     @dragstart="onGenerateKey"
-                     @start="onDraggableStart"/>
+                     @dragstart="onGenerateKey"/>
         </div>
       </div>
       <div class="flex-1 bg-BG_COLOR2">
         <el-scrollbar class="h-full draggable-content">
           <DraggableView :draggableConfig="draggableConfig"
                          @add="onDraggableViewAdd"
-                        @special="onSpecialAdd"/>
+                         @special="onSpecialAdd"
+                        @active="onActivated"/>
         </el-scrollbar>
       </div>
       <div class="grow-0 shrink-0 w-[300px] bg-BG_COLOR3 border-l-[1px] border-BORDER_COLOR2 border-solid">
         配置区域
+        {{ activeUUID }}
       </div>
     </div>
 
@@ -79,16 +82,18 @@ const {
   onLeftOptionClick,
   onLeftOptionClose,
   onChangeOptionFixed,
-  onLeftClose
+  onLeftClose,
+  activeUUID
 } = useOption();
 
 const {
   onGenerateKey,
-  onDraggableStart,
   onDraggableViewAdd,
-  onSpecialAdd
+  onSpecialAdd,
+  onActivated
 } = useEvents({
-  draggableConfig
+  draggableConfig,
+  activeUUID
 });
 </script>
 

@@ -18,15 +18,18 @@
                         class="draggable-grop-wrap h-full bg-BG_COLOR2 relative border-[1px] border-slate-300 border-dashed rounded-[5px] overflow-hidden min-h-[50px] duration-350"
                         handle=".draggable-content-bar"
                         v-model="structure.children"
-                        @add="onChildAdd">
-        <!-- todo 这里需要处理一下 special 事件，否则里面添加选项卡、弹性盒子无法新增 -->
-        <!-- todo 事件才看draggableItem中的special事件 -->
+                        @add="onChildAdd"
+                        @special="onDraggableAdd">
         <DraggableItem v-for="ele in structure.children"
                        :structure="ele"
-                       :key="ele.uuid">
+                       :key="ele.uuid"
+                       @special="onDraggableAdd"
+                       @active="onActive">
           <abstractionComponent :config="draggableConfig.renderArgument[ele.uuid]"
                                 :structure="ele"
-                                @add="onAbstractionAdd"/>
+                                @add="onAbstractionAdd"
+                                @special="onDraggableAdd"
+                                @active="onActive"/>
         </DraggableItem>
       </VueDraggableNext>
     </component>
@@ -50,10 +53,13 @@
                         @add="onChildAdd">
         <DraggableItem v-for="ele in structure.children"
                        :structure="ele"
-                       :key="ele.uuid">
+                       :key="ele.uuid"
+                       @active="onActive"
+                       @special="onDraggableAdd">
           <abstractionComponent :config="draggableConfig.renderArgument[ele.uuid]"
                                 :structure="ele"
-                                @add="onAbstractionAdd"/>
+                                @add="onAbstractionAdd"
+                                @active="onActive"/>
         </DraggableItem>
       </VueDraggableNext>
     </el-card>
@@ -64,7 +70,9 @@
                               :structure="ele"
                               :config="draggableConfig.renderArgument[ele.uuid]"
                               :key="ele.uuid"
-                              @add="onAbstractionAdd"/>
+                              @add="onAbstractionAdd"
+                              @special="onDraggableAdd"
+                              @active="onActive"/>
       </component>
     </template>
   </template>
@@ -72,17 +80,18 @@
 </template>
 
 <script lang="ts" setup>
-import { inject } from "vue"
+import { DRAGGABLE_CONGIG } from "../../config/designation";
+import { inject, toRefs } from "vue"
 import { VueDraggableNext } from "vue-draggable-next";
 import basicComponent from "./component/basicComponent/index.vue";
 import eleModuleComponent from "./component/eleModuleComponent/index.vue";
 import DraggableItem from "../draggableItem/index.vue";
 
-const draggableConfig:any = inject("__draggableConfig__");
+const draggableConfig:any = inject(DRAGGABLE_CONGIG);
 
 defineOptions({ name: "abstractionComponent" });
 
-const emit = defineEmits(['add'])
+const emit = defineEmits(['add','special','active'])
 
 interface PropsType {
   config: any;
@@ -94,6 +103,8 @@ const props = withDefaults(defineProps<PropsType>(), {
   structure: () => ({})
 });
 
+const { structure } = toRefs(props);
+
 const onAbstractionAdd = (event) => {
   emit('add', event);
 }
@@ -101,5 +112,13 @@ const onAbstractionAdd = (event) => {
 const onChildAdd = (event) => {
   const list = props.structure.children;
   emit('add', { event, list });
+}
+
+const onDraggableAdd = (event) => {
+  emit('special', event);
+}
+
+const onActive = (event) => {
+  emit('active', event);
 }
 </script>

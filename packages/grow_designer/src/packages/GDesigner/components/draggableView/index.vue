@@ -2,6 +2,7 @@
   <div class="h-full p-[5px]">
     <draggableContent @add="onDraggableAdd"
                       @special="onSpecialAdd"
+                      @active="onActiveed"
                       :draggableConfig="draggableConfig"/>
   </div>
 </template>
@@ -11,7 +12,7 @@ import draggableContent from "../draggableContent/index.vue";
 
 import { useEvents } from "./use/useEvents";
 
-const emits = defineEmits(["add",'special']);
+const emits = defineEmits(["add",'special','active']);
 
 defineOptions({ name: "draggableView" });
 
@@ -23,7 +24,8 @@ defineProps<Props>();
 
 const {
   onDraggableAdd,
-  onSpecialAdd
+  onSpecialAdd,
+  onActiveed
 } = useEvents({
   emits
 });
