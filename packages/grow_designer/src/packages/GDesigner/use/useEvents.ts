@@ -1,22 +1,25 @@
+import type { Ref } from "vue";
 import { specificComponent } from "../static/moduleMap";
 import { nanoid } from "nanoid";
 
 interface props {
-  draggableConfig: any
+  draggableConfig: any;
+  activeUUID: Ref<string>;
 };
 
 export const useEvents = ({
-  draggableConfig
+  draggableConfig,
+  activeUUID
 }: props) => {
 
+  const onActivated = (uuid: string) => {
+    activeUUID.value = uuid;
+  };
 
   const onGenerateKey = (list, index) => {
     console.log(list, index);
   };
 
-  const onDraggableStart = (item) => {
-    console.log(item, "DraggableStart");
-  };
 
   const setChildren = (isChild: boolean, structure: any, children: any[]): any => {
     if(isChild){
@@ -63,8 +66,8 @@ export const useEvents = ({
   return {
     onSpecialAdd,
     onDraggableViewAdd,
-    onDraggableStart,
-    onGenerateKey
+    onGenerateKey,
+    onActivated
   };
 };
 

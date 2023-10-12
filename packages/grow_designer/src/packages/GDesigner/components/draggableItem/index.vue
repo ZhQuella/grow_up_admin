@@ -1,16 +1,17 @@
 <template>
-  <div class="relative pt-[30px] border-[1px] border-slate-300 border-dashed rounded-[5px] overflow-hidden min-h-[50px] duration-350"
-       :class="[
-         {
-          'border-PUBLIC_MAIN_COLOR': active
-         }
-       ]">
+  <div class="relative transition-all pt-[30px] border-[1px] hover:border-PUBLIC_MAIN_COLOR border-dashed rounded-[5px] overflow-hidden min-h-[50px] duration-350"
+       :class="{
+          'border-PUBLIC_MAIN_COLOR': isActived,
+          'border-slate-300': !isActived
+         }"
+       @click.stop="onActiveStructure">
     <!-- todo 这里需要点击显示 根据active的值进行判断 -->
     <transition appear
                 name="animate__animated animate__bounce"
-                enter-active-class="animate__backInLeft"
-                leave-active-class="animate__backOutRight">
-      <div class="z-20 absolute top-0 left-0 pr-[4px] h-[26px] bg-PUBLIC_MAIN_COLOR text-center rounded-br-[5px] overflow-hidden">
+                enter-active-class="animate__lightSpeedInLeft"
+                leave-active-class="animate__lightSpeedOutLeft">
+      <div class="z-20 absolute top-0 left-0 pr-[4px] h-[26px] bg-PUBLIC_MAIN_COLOR text-center rounded-br-[5px] overflow-hidden"
+          v-if="isActived">
         <el-icon class="draggable-content-bar cursor-pointer w-[26px] h-[26px]">
           <Move class="text-white"/>
         </el-icon>
@@ -34,17 +35,19 @@
 </template>
 
 <script setup lang="ts">
+import type { Ref } from "vue";
+import { ACTIVE_UUID, DRAGGABLE_CONGIG } from "../../config/designation";
 import { Move, Delete, Copy, AddAlt } from "@vicons/carbon";
 import { inject, computed, toRefs } from "vue";
 
-const draggableConfig:any = inject("__draggableConfig__");
+const draggableConfig:any = inject(DRAGGABLE_CONGIG);
+const activeUUID = inject(ACTIVE_UUID) as Ref<string>;
 
 interface Props {
-  active: boolean;
   structure: any;
 }
 
-const emit = defineEmits(['special'])
+const emit = defineEmits(['special','active'])
 
 const props = defineProps<Props>();
 const { structure } = toRefs(props);
@@ -62,6 +65,12 @@ const currentArgument = computed(() => {
 const isAdd = computed(() => {
   return currentArgument?.value?.isAdd;
 });
+
+const isActived = computed(() => activeUUID.value === uuid.value);
+
+const onActiveStructure = () => {
+  emit("active", uuid.value);
+};
 
 const onAddSpecificChild = () => {
   emit('special', {

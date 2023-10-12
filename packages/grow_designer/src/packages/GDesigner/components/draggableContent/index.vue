@@ -10,10 +10,13 @@
       <DraggableItem v-for="ele in draggableConfig.structures"
                      :key="ele.uuid"
                      :structure="ele"
-                     @special="onSpecialAdd">
+                     @special="onSpecialAdd"
+                     @active="onActive">
         <abstractionComponent :config="draggableConfig.renderArgument[ele.uuid]"
                               :structure="ele"
-                              @add="onChildAdd"/>
+                              @add="onChildAdd"
+                              @special="onSpecialAdd"
+                              @active="onActive"/>
       </DraggableItem>
     </transition-group>
   </VueDraggableNext>
@@ -24,7 +27,7 @@ import { VueDraggableNext } from "vue-draggable-next";
 import DraggableItem from "../draggableItem/index.vue";
 import abstractionComponent from "../abstractionComponent/index.vue";
 
-const emit = defineEmits(['add','special']);
+const emit = defineEmits(['add','special','active']);
 
 interface Props {
   draggableConfig: any
@@ -37,13 +40,16 @@ const onDraggableAdd = (event) => {
 };
 
 const onChildAdd = (event) => {
-  console.log(">>>> 这里没有执行？");
   emit("add", event);
 }
 
 const onSpecialAdd = (event) => {
-  emit('special',event)
+  emit('special',event);
 }
+
+const onActive = (event) => {
+  emit('active', event);
+};
 </script>
 
 <style lang="scss" space>
