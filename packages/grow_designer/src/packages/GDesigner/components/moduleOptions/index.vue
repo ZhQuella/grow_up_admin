@@ -1,7 +1,8 @@
 <template>
   <div class="flex flex-col">
     <div class="px-[5px]">
-      <el-tabs v-model="activeName">
+      <el-tabs v-model="activeName"
+               @tab-change="onTableChange">
         <el-tab-pane label="基础组件" name="BaseComponent"></el-tab-pane>
         <el-tab-pane label="业务组件" name="BusinessComponent"></el-tab-pane>
         <el-tab-pane label="原子组件" name="AtomicComponent"></el-tab-pane>
@@ -53,7 +54,8 @@ defineEmits(["dragstart","dragend","start"]);
 const {
   drageMap,
   activeName,
-  collapseModel
+  collapseModel,
+  onTableChange
 } = useInit();
 
 const onDragStart = (event, list) => {
