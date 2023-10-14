@@ -8,9 +8,30 @@
   </template>
 
   <template v-if="config.isChild">
-    <component v-if="['el-col','el-tab-pane'].includes(config.elTagName)"
+    <template v-if="['div'].includes(config.elTagName)">
+      <VueDraggableNext group="draggable-group"
+                        :animation="180"
+                        class="draggable-grop-wrap h-full bg-BG_COLOR2 relative min-h-[50px]"
+                        handle=".draggable-content-bar"
+                        v-model="structure.children"
+                        @add="onChildAdd">
+        <DraggableItem v-for="ele in structure.children"
+                       :structure="ele"
+                       :key="ele.uuid"
+                       @active="onActive"
+                       @special="onDraggableAdd">
+          <abstractionComponent :config="draggableConfig.renderArgument[ele.uuid]"
+                                :structure="ele"
+                                @add="onAbstractionAdd"
+                                @active="onActive"/>
+        </DraggableItem>
+      </VueDraggableNext>
+    </template>
+
+    <component v-if="['el-col','el-tab-pane','el-collapse-item','el-timeline-item'].includes(config.elTagName)"
                :is="config.elTagName"
                label="User"
+               title="Consistency"
                :span="12"
                :name="Math.random()">
       <VueDraggableNext group="draggable-group"
@@ -33,6 +54,27 @@
         </DraggableItem>
       </VueDraggableNext>
     </component>
+
+    <el-badge v-if="config.elTagName === 'el-badge'"
+              class="w-full">
+      <VueDraggableNext group="draggable-group"
+                        :animation="180"
+                        class="draggable-grop-wrap w-full h-full bg-BG_COLOR2 relative border-[1px] border-slate-300 border-dashed rounded-[5px] overflow-hidden min-h-[50px] duration-350"
+                        handle=".draggable-content-bar"
+                        v-model="structure.children"
+                        @add="onChildAdd">
+        <DraggableItem v-for="ele in structure.children"
+                       :structure="ele"
+                       :key="ele.uuid"
+                       @active="onActive"
+                       @special="onDraggableAdd">
+          <abstractionComponent :config="draggableConfig.renderArgument[ele.uuid]"
+                                :structure="ele"
+                                @add="onAbstractionAdd"
+                                @active="onActive"/>
+        </DraggableItem>
+      </VueDraggableNext>
+    </el-badge>
 
     <el-card v-if="config.elTagName === 'el-card'">
       <template #header>
@@ -64,7 +106,20 @@
       </VueDraggableNext>
     </el-card>
 
-    <template v-if="['el-tabs','el-row'].includes(config.elTagName)">
+    <template v-if="['el-tabs','el-row','el-collapse','el-timeline'].includes(config.elTagName)">
+      <component :is="config.elTagName">
+        <abstractionComponent v-for="ele in structure.children"
+                              :structure="ele"
+                              :config="draggableConfig.renderArgument[ele.uuid]"
+                              :key="ele.uuid"
+                              @add="onAbstractionAdd"
+                              @special="onDraggableAdd"
+                              @active="onActive"/>
+      </component>
+    </template>
+
+    <template v-if="['el-drawer','el-dialog'].includes(config.elTagName)">
+      <!--todo 需要后续增加事件之后才能添加-->
       <component :is="config.elTagName">
         <abstractionComponent v-for="ele in structure.children"
                               :structure="ele"

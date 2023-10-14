@@ -1,6 +1,6 @@
 import { Ref } from "vue";
 import { ref, computed, onMounted } from "vue";
-import { BaseComponent } from "../../../static/moduleMap";
+import { AtomicComponent, BaseComponent, BusinessComponent } from "../../../static/moduleMap";
 
 export const useInit = () => {
 
@@ -11,13 +11,19 @@ export const useInit = () => {
 
   const drageMap = computed(() => {
     const drageConfig = {
-      BaseComponent
+      BaseComponent,
+      AtomicComponent,
+      BusinessComponent
     };
     return drageConfig[activeName.value] || new Map();
   });
 
-  onMounted(() => {
+  const onTableChange = () => {
     collapseModel.value = [...drageMap.value.keys()];
+  }
+
+  onMounted(() => {
+    onTableChange();
   });
 
   return {
@@ -25,7 +31,8 @@ export const useInit = () => {
     currentUse,
     activeName,
     drageMap,
-    collapseModel
+    collapseModel,
+    onTableChange
   };
 };
 
