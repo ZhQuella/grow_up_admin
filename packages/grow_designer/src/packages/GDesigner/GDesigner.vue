@@ -23,7 +23,7 @@
           </div>
         </el-tooltip>
       </div>
-      <div class="h-full w-[300px] z-40 left-[50px] top-[0px] bg-BG_COLOR3 flex flex-col z-10"
+      <div class="h-full w-[300px] left-[50px] top-[0px] bg-BG_COLOR3 flex flex-col z-10"
            :class="[
              {
                'absolute': !optionConfig.isFixed
