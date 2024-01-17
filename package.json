@@ -103,8 +103,8 @@
     "yorkie": "^2.0.0"
   },
   "engines": {
-    "node": ">=16.20.0",
-    "npm": ">=8.19.4"
+    "node": ">=20.10.0",
+    "npm": ">=10.2.3"
   },
   "gitHooks": {
     "commit-msg": "node scripts/commitMessage.js"
