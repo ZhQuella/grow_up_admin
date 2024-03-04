@@ -28,9 +28,10 @@ export default {
   AccountManagement: ["admin"],
   RoleManagement: ["admin"],
   MenuManagement: ["admin"],
+  DictManagement: ["admin"],
   CountToExample: ["admin"],
   SplitPaneTest: ["admin"],
   "customPage1-1": ["minor"],
   "customPage2-2": ["role"],
-  OverflowList:["admin"],
+  OverflowList: ["admin"],
 };

@@ -3,7 +3,7 @@ import Mock from "mockjs";
 
 const roleSings = ["admin", "minor"];
 
-const menuList = [
+const dictList = [
   {
     label: "Dashboard",
     name: "dashboard",
@@ -152,7 +152,7 @@ const menuList = [
   }
 ];
 
-const menuDataList: any[] = [
+const dictDataList: any[] = [
   {
     sort: 1,
     label: "Dashboard",
@@ -404,27 +404,27 @@ const menuDataList: any[] = [
 
 export default [
   {
-    url: "/menu/list",
+    url: "/dict/list",
     method: "get",
     response: () => {
       return {
         code: 10000,
         message: "成功",
         result: {
-          menuList
+          dictList
         }
       };
     }
   },
   {
-    url: "/menu/data/list/:page/:size",
+    url: "/dict/data/list/:page/:size",
     method: "post",
     response() {
       return {
         code: 10000,
         message: "成功",
         result: {
-          menuList: menuDataList
+          dictList: dictDataList
         }
       }
     }

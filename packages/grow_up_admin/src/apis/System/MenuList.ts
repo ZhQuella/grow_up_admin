@@ -8,5 +8,11 @@ export default [
     key: "getRoleSings",
     url: "/user/authority/signs",
     method: "get"
-  }
+  },
+  {
+    key: "getDictList",
+    url: "/dict/list",
+    method: "get"
+  },
+
 ];

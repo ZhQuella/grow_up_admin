@@ -16,5 +16,11 @@ export default [
     url: "/system/dict/data/menu_type",
     method: "get",
     isCatch: true
+  },
+  {
+    key: "getDictType",
+    url: "/system/dict/data/dict_type",
+    method: "get",
+    isCatch: true
   }
 ];

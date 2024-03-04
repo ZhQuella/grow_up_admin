@@ -64,5 +64,28 @@ export default [
         }
       };
     }
+  },
+
+  {
+    url: "/system/dict/data/dict_type",
+    method: "get",
+    response: ({ body }: any) => {
+      return {
+        code: 10000,
+        message: "成功",
+        result: {
+          dictList: [
+            {
+              code: "0",
+              label: "目录"
+            },
+            {
+              code: "1",
+              label: "菜单"
+            }
+          ]
+        }
+      };
+    }
   }
 ];

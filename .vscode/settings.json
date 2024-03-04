@@ -68,7 +68,7 @@
   "editor.unicodeHighlight.ambiguousCharacters": false,
   "gohome.hour": 19,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": false
+    "source.fixAll.eslint": "never"
   },
   "editor.tabSize": 2,
   "editor.detectIndentation": false,
