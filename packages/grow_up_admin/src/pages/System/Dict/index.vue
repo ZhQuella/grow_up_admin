@@ -8,13 +8,18 @@
           </div>
           <div class="pt-[3px]">
             <SearchBar />
-            <ColumnBar />
+            <ColumnBar :columns="tableColumns" />
           </div>
         </div>
       </template>
 
-      <template>
-        <PerfectTable ref="tableRef"></PerfectTable>
+      <template #main="{ height }">
+        <PerfectTable ref="tableRef" :columns="tableColumns" :height="height" :data="tableList"
+                      border default-expand-all row-key="name" only-key="name">
+          <template #btnOption="btnOption">
+            <ButtonGroup :button-group="buttonGroup" :max="4" :data="btnOption" />
+          </template>
+        </PerfectTable>
       </template>
 
       <template #footer>
