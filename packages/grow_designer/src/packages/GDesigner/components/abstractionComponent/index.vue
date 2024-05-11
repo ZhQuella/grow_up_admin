@@ -25,7 +25,7 @@
                                 @add="onAbstractionAdd"
                                 @active="onActive"/>
         </DraggableItem>
-      </VueDraggableNext>
+      </VueDraggableNext>1
     </template>
 
     <component v-if="['el-col','el-tab-pane','el-collapse-item','el-timeline-item'].includes(config.elTagName)"
@@ -101,6 +101,7 @@
           <abstractionComponent :config="draggableConfig.renderArgument[ele.uuid]"
                                 :structure="ele"
                                 @add="onAbstractionAdd"
+                                @special="onDraggableAdd"
                                 @active="onActive"/>
         </DraggableItem>
       </VueDraggableNext>

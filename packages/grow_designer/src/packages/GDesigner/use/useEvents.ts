@@ -55,7 +55,6 @@ export const useEvents = ({
     const child = { uuid };
     isChild && Reflect.set(child,"children", []);
     draggableConfig.renderArgument[uuid] = {...(childRenderArgument || {})};
-    console.log(draggableConfig.renderArgument[uuid]);
     draggableConfig.renderArgument[uuid] = {...renderArgument,...draggableConfig.renderArgument[uuid] };
     draggableConfig.styles[uuid] = draggableConfig.styles[uuid] || {};
     draggableConfig.events[uuid] = draggableConfig.events[uuid] || {};
