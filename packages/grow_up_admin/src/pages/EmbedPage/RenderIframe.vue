@@ -4,7 +4,7 @@
          :key="frame.name"
          class="h-full"
          v-show="showIframe(frame)">
-      <FramePage :src="frame.meta.iframeSrc"
+      <FramePage :src="frame!.meta.iframeSrc as string"
                  class="w-full h-full enter-y"/>
     </div>
   </div>
