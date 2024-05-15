@@ -10,7 +10,7 @@ export default [
         icon: "RadioCombat",
         path: "element-plus-doc",
         component: "EmbedPage/index.vue",
-        iframeSrc: "https://element-plus.gitee.io/zh-CN/",
+        iframeSrc: "https://element-plus.org/zh-CN/",
         custom: true
       },
       {

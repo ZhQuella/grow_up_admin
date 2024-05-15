@@ -29,8 +29,7 @@
     "test:watch": "vitest watch",
     "test:coverage": "vitest run --coverage",
     "bea": "npx prettier -w -u .",
-    "lint": "eslint --no-error-on-unmatched-pattern --ext .vue --ext .ts --ext .tsx packages/**/ --fix",
-    "clean": "pnpm turbo run clean && rimraf node_modules"
+    "lint": "eslint --no-error-on-unmatched-pattern --ext .vue --ext .ts --ext .tsx packages/**/ --fix"
   },
   "keywords": [
     "vue3",
@@ -38,7 +37,7 @@
     "admin",
     "typescript"
   ],
-  "license": "ISC",
+  "license": "GPL",
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.21.0",
     "@babel/preset-env": "^7.21.4",
@@ -104,8 +103,9 @@
     "yorkie": "^2.0.0"
   },
   "engines": {
-    "node": ">=16.20.0",
-    "npm": ">=8.19.4"
+    "node": ">=20.10.0",
+    "npm": ">=10.2.3",
+    "pnpm": ">=8.3.1"
   },
   "gitHooks": {
     "commit-msg": "node scripts/commitMessage.js"
