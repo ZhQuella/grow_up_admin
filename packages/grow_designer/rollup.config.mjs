@@ -1,4 +1,5 @@
 import path from "path";
+import { fileURLToPath } from 'url';
 import { defineConfig } from "rollup";
 import babel from "@rollup/plugin-babel";
 import resolve from "@rollup/plugin-node-resolve";
@@ -13,6 +14,8 @@ import postcss from "rollup-plugin-postcss";
 import alias from "@rollup/plugin-alias";
 import postcssImport from 'postcss-import';
 import tailwindcss from 'tailwindcss';
+const __filenameNew = fileURLToPath(import.meta.url);
+const __dirnameNew = path.dirname(__filenameNew);
 
 import pkg from "./package.json" assert { type: "json" };
 
@@ -65,7 +68,7 @@ export default defineConfig({
     json(),
     terser(),
     alias({
-      entries: [{ find: "@", replacement: path.resolve(__dirname, "src") }]
+      entries: [{ find: "@", replacement: path.resolve(__dirnameNew, "src") }]
     })
   ],
   external: ["Vue", "element-plus"]
