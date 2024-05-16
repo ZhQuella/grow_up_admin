@@ -14,9 +14,8 @@ import alias from "@rollup/plugin-alias";
 import postcssImport from 'postcss-import';
 import tailwindcss from 'tailwindcss';
 
-const __dirname = path.resolve();
-
 import pkg from "./package.json" assert { type: "json" };
+
 const createBanner = () => {
   return `/*!
   * ${pkg.name} v${pkg.version}

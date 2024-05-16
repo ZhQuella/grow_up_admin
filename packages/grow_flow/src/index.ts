@@ -1,7 +1,14 @@
 import { App, Component } from "vue";
 import { version } from "../package.json";
+import { WorkFlow } from "./packages/WorkFlow";
 
-const components: Component[] = [];
+import "animate.css";
+import "./styles/tailwindcss/index.css";
+import "./styles/animate/index.css";
+
+const components: Component[] = [
+  WorkFlow
+];
 
 const install = (app: App) => {
   const useComponent = (component: Component) => {
@@ -18,9 +25,10 @@ const install = (app: App) => {
 
 const GrowConponent = {
   version,
-  install
+  install,
+  WorkFlow
 };
 
-export { version };
+export { version, WorkFlow };
 
 export default GrowConponent;

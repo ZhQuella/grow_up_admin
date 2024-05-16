@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 importers:
 
   .:
@@ -271,7 +267,32 @@ importers:
         specifier: ^2.2.1
         version: 2.2.1(sortablejs@1.15.0)(vue@3.3.0)
 
-  packages/grow_flow: {}
+  packages/grow_flow:
+    dependencies:
+      '@antv/x6':
+        specifier: ^2.18.1
+        version: 2.18.1
+      '@antv/x6-plugin-clipboard':
+        specifier: ^2.1.6
+        version: 2.1.6(@antv/x6@2.18.1)
+      '@antv/x6-plugin-history':
+        specifier: ^2.2.4
+        version: 2.2.4(@antv/x6@2.18.1)
+      '@antv/x6-plugin-keyboard':
+        specifier: ^2.2.3
+        version: 2.2.3(@antv/x6@2.18.1)
+      '@antv/x6-plugin-selection':
+        specifier: ^2.2.2
+        version: 2.2.2(@antv/x6@2.18.1)
+      '@antv/x6-plugin-snapline':
+        specifier: ^2.1.7
+        version: 2.1.7(@antv/x6@2.18.1)
+      '@antv/x6-plugin-stencil':
+        specifier: ^2.1.5
+        version: 2.1.5(@antv/x6@2.18.1)
+      '@antv/x6-plugin-transform':
+        specifier: ^2.1.8
+        version: 2.1.8(@antv/x6@2.18.1)
 
   packages/grow_rule_engine: {}
 
@@ -394,6 +415,91 @@ packages:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.18
     dev: true
+
+  /@antv/x6-common@2.0.17:
+    resolution: {integrity: sha512-37g7vmRkNdYzZPdwjaMSZEGv/MMH0S4r70/Jwoab1mioycmuIBN73iyziX8m56BvJSDucZ3J/6DU07otWqzS6A==}
+    dependencies:
+      lodash-es: 4.17.21
+      utility-types: 3.11.0
+    dev: false
+
+  /@antv/x6-geometry@2.0.5:
+    resolution: {integrity: sha512-MId6riEQkxphBpVeTcL4ZNXL4lScyvDEPLyIafvWMcWNTGK0jgkK7N20XSzqt8ltJb0mGUso5s56mrk8ysHu2A==}
+    dev: false
+
+  /@antv/x6-plugin-clipboard@2.1.6(@antv/x6@2.18.1):
+    resolution: {integrity: sha512-roZPLnZx6PK8MBvee0QMo90fz/TXeF0WNe4EGin2NBq5M1I5XTWrYvA6N2XVIiWAAI67gjQeEE8TpkL7f8QdqA==}
+    peerDependencies:
+      '@antv/x6': ^2.x
+    dependencies:
+      '@antv/x6': 2.18.1
+    dev: false
+
+  /@antv/x6-plugin-dnd@2.1.1(@antv/x6@2.18.1):
+    resolution: {integrity: sha512-v0szzik1RkadPDn4Qi5mOSaB2AeI78D40/YuCYbPVzplG+HydGsHwO3MLTgJPQ+R5n0eM0W5F850p1VfTOHR7g==}
+    peerDependencies:
+      '@antv/x6': ^2.x
+    dependencies:
+      '@antv/x6': 2.18.1
+    dev: false
+
+  /@antv/x6-plugin-history@2.2.4(@antv/x6@2.18.1):
+    resolution: {integrity: sha512-9gHHvEW4Fla+1hxUV49zNgJyIMoV9CjVM52MrFgAJcvyRn1Kvxz4MfxiKlG+DEZUs+/zvfjl9pS6gJOd8laRkg==}
+    peerDependencies:
+      '@antv/x6': ^2.x
+    dependencies:
+      '@antv/x6': 2.18.1
+    dev: false
+
+  /@antv/x6-plugin-keyboard@2.2.3(@antv/x6@2.18.1):
+    resolution: {integrity: sha512-pnCIC+mDyKKfkcDyLePfGxKVIqXBcldTgannITkHC1kc0IafRS1GMvzpvuDGrM5haRYd6Nwz8kjkJyHkJE4GPA==}
+    peerDependencies:
+      '@antv/x6': ^2.x
+    dependencies:
+      '@antv/x6': 2.18.1
+      mousetrap: 1.6.5
+    dev: false
+
+  /@antv/x6-plugin-selection@2.2.2(@antv/x6@2.18.1):
+    resolution: {integrity: sha512-s2gtR9Onlhr7HOHqyqg0d+4sG76JCcQEbvrZZ64XmSChlvieIPlC3YtH4dg1KMNhYIuBmBmpSum6S0eVTEiPQw==}
+    peerDependencies:
+      '@antv/x6': ^2.x
+    dependencies:
+      '@antv/x6': 2.18.1
+    dev: false
+
+  /@antv/x6-plugin-snapline@2.1.7(@antv/x6@2.18.1):
+    resolution: {integrity: sha512-AsysoCb9vES0U2USNhEpYuO/W8I0aYfkhlbee5Kt4NYiMfQfZKQyqW/YjDVaS2pm38C1NKu1LdPVk/BBr4CasA==}
+    peerDependencies:
+      '@antv/x6': ^2.x
+    dependencies:
+      '@antv/x6': 2.18.1
+    dev: false
+
+  /@antv/x6-plugin-stencil@2.1.5(@antv/x6@2.18.1):
+    resolution: {integrity: sha512-q7wx7XRMFkUKPv3WsHkvZda6O1GW+6q6H/+c1lcrwlQoEKOFv1Djc4Hu2J4SGhV2z98P2JLfVJiT5m7YoOoCHw==}
+    peerDependencies:
+      '@antv/x6': ^2.x
+    dependencies:
+      '@antv/x6': 2.18.1
+      '@antv/x6-plugin-dnd': 2.1.1(@antv/x6@2.18.1)
+    dev: false
+
+  /@antv/x6-plugin-transform@2.1.8(@antv/x6@2.18.1):
+    resolution: {integrity: sha512-GvJuiJ4BKp0H7+qx3R1I+Vzbw5gXp9+oByXo/WyVxE3urOC7LC5sqnaDfIjyYMN6ROLPYPZraLSeSyYBgMgcDw==}
+    peerDependencies:
+      '@antv/x6': ^2.x
+    dependencies:
+      '@antv/x6': 2.18.1
+    dev: false
+
+  /@antv/x6@2.18.1:
+    resolution: {integrity: sha512-FkWdbLOpN9J7dfJ+kiBxzowSx2N6syBily13NMVdMs+wqC6Eo5sLXWCZjQHateTFWgFw7ZGi2y9o3Pmdov1sXw==}
+    dependencies:
+      '@antv/x6-common': 2.0.17
+      '@antv/x6-geometry': 2.0.5
+      utility-types: 3.11.0
+    dev: false
 
   /@babel/code-frame@7.22.5:
     resolution: {integrity: sha512-Xmwn266vad+6DAqEB2A6V/CcZVp62BbwVmcOJc2RPuwih1kw02TjQvWVWlcKGbBPd+8/0V5DEkOcizRGYsspYQ==}
@@ -4707,6 +4813,10 @@ packages:
     dependencies:
       brace-expansion: 2.0.1
 
+  /mousetrap@1.6.5:
+    resolution: {integrity: sha512-QNo4kEepaIBwiT8CDhP98umTetp+JNfQYBWvC1pc6/OAibuXtRcxZ58Qz8skvEHYvURne/7R8T5VoOI7rDsEUA==}
+    dev: false
+
   /ms@2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
     dev: true
@@ -5354,10 +5464,6 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /sortablejs@1.15.0:
-    resolution: {integrity: sha512-bv9qgVMjUMf89wAvM6AxVvS/4MX3sPeN0+agqShejLU5z5GX4C75ow1O2e5k4L6XItUyAK3gH6AxSbXrOM5e8w==}
-    dev: false
-
   /source-map-js@1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
@@ -5677,6 +5783,11 @@ packages:
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
+  /utility-types@3.11.0:
+    resolution: {integrity: sha512-6Z7Ma2aVEWisaL6TvBCy7P8rm2LQoPv6dJ7ecIaIixHcwfbJ0x7mWdbcwlIM5IGQxPZSFYeqRCqlOOeKoJYMkw==}
+    engines: {node: '>= 4'}
+    dev: false
+
   /uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
@@ -5702,7 +5813,7 @@ packages:
       sortablejs: ^1.14.0
       vue: ^3.2.2
     dependencies:
-      sortablejs: 1.15.0
+      sortablejs: registry.npmjs.org/sortablejs@1.15.0
       vue: 3.3.0
     dev: false
 
@@ -12462,3 +12573,7 @@ packages:
     dependencies:
       tslib: registry.npmjs.org/tslib@2.3.0
     dev: false
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
