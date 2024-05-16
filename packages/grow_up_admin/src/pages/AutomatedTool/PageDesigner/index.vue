@@ -1,5 +1,5 @@
 <template>
-  <div class="p-[5px]">
+  <div>
     <GDesigner />
   </div>
 </template>

@@ -23,10 +23,10 @@ export const useOption = () => {
 
   const optionConfig = reactive({
     title: "",
-    visible: true,
+    visible: false,
     componentName: "moduleOptions",
-    type: "module",
-    isFixed: true
+    type: "",
+    isFixed: false
   });
 
   const optionTypeMap = {

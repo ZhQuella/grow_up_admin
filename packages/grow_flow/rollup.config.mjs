@@ -1,3 +1,5 @@
+import path from "path";
+import { fileURLToPath } from 'url';
 import { defineConfig } from "rollup";
 import babel from "@rollup/plugin-babel";
 import resolve from "@rollup/plugin-node-resolve";
@@ -9,6 +11,11 @@ import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
+import alias from "@rollup/plugin-alias";
+import postcssImport from 'postcss-import';
+import tailwindcss from 'tailwindcss';
+const __filenameNew = fileURLToPath(import.meta.url);
+const __dirnameNew = path.dirname(__filenameNew);
 
 import pkg from "./package.json" assert { type: "json" };
 
@@ -43,21 +50,26 @@ export default defineConfig({
   ],
   plugins: [
     peerDepsExternal(),
+    vue({
+      reactivityTransform: true
+    }),
+    postcss({
+      extensions: [".css"],
+      extract: true,
+      plugins: [postcssImport(), tailwindcss()]
+    }),
+    commonjs(),
     resolve({
       preferBuiltins: true
     }),
-    babel({
-      exclude: "node_modules/**",
-      presets: ["@vue/babel-preset-jsx"],
-      babelHelpers: "bundled"
-    }),
-    commonjs(),
-    esbuild(),
+    babel(),
     jsx(),
-    vue({}),
+    esbuild(),
     json(),
     terser(),
-    postcss()
+    alias({
+      entries: [{ find: "@", replacement: path.resolve(__dirnameNew, "src") }]
+    })
   ],
   external: ["Vue", "element-plus"]
 });
