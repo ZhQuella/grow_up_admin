@@ -1,11 +1,6 @@
 import { ref } from "vue";
 import { Stencil } from '@antv/x6-plugin-stencil';
-import { Transform } from '@antv/x6-plugin-transform';
-import { Selection } from '@antv/x6-plugin-selection';
-import { Snapline } from '@antv/x6-plugin-snapline';
-import { Keyboard } from '@antv/x6-plugin-keyboard';
-import { Clipboard } from '@antv/x6-plugin-clipboard';
-import { History } from '@antv/x6-plugin-history';
+import { baseCreateNodeData, approveCreateNodeData } from "./static";
 
 const ports = {
     groups: {
@@ -102,16 +97,20 @@ export const initStencil = ({
             groups: [
                 {
                     title: '基础流程图',
-                    name: 'group1',
-                    graphHeight: 250,
+                    name: 'base',
+                    graphHeight: Math.ceil(baseCreateNodeData.length / 2) * 60 + 10,
                     layoutOptions: {
-                        rowHeight: 70,
+                        rowHeight: 60,
                     },
                 },
                 {
-                    title: '系统设计图',
-                    name: 'group2'
-                },
+                    title: '审批流程',
+                    name: 'approve',
+                    graphHeight: Math.ceil(approveCreateNodeData.length / 2) * 60 + 10,
+                    layoutOptions: {
+                        rowHeight: 60,
+                    }
+                }
             ],
             layoutOptions: {
                 columns: 2,
@@ -189,79 +188,19 @@ export const initStencil = ({
     };
 
     const createNodes = (graph: any) => {
-        const r1 = graph.createNode({
-            shape: 'custom-rect',
-            label: '开始',
-            attrs: {
-                body: {
-                    rx: 20,
-                    ry: 26,
-                },
-            },
+        const baseNodes = baseCreateNodeData.map((el) => {
+            return graph.createNode(el);
         });
-        const r2 = graph.createNode({
-            shape: 'custom-rect',
-            label: '过程',
+        const approveNodes = approveCreateNodeData.map((el) => {
+            return graph.createNode(el);
         });
-        const r3 = graph.createNode({
-            shape: 'custom-rect',
-            attrs: {
-                body: {
-                    rx: 6,
-                    ry: 6,
-                },
-            },
-            label: '可选过程',
-        });
-        const r4 = graph.createNode({
-            shape: 'custom-polygon',
-            attrs: {
-                body: {
-                    refPoints: '0,10 10,0 20,10 10,20',
-                },
-            },
-            label: '决策',
-        });
-        const r5 = graph.createNode({
-            shape: 'custom-polygon',
-            attrs: {
-                body: {
-                    refPoints: '10,0 40,0 30,20 0,20',
-                },
-            },
-            label: '数据',
-        });
-        const r6 = graph.createNode({
-            shape: 'custom-circle',
-            label: '连接',
-        });
-        stencil.value.load([r1, r2, r3, r4, r5, r6], 'group1');
-    }
-
-    const initPlugins = (graph) => {
-        graph
-            .use(
-                new Transform({
-                    resizing: true,
-                    rotating: true,
-                }),
-            )
-            .use(
-                new Selection({
-                    rubberband: true,
-                    showNodeSelectionBox: true,
-                }),
-            )
-            .use(new Snapline())
-            .use(new Keyboard())
-            .use(new Clipboard())
-            .use(new History())
+        stencil.value.load(baseNodes, 'base');
+        stencil.value.load(approveNodes, 'approve');
     }
 
     return {
         createStencil,
         createNodes,
-        initNode,
-        initPlugins
+        initNode
     }
 }
