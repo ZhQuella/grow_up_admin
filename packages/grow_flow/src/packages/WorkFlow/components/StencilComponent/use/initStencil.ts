@@ -132,11 +132,11 @@ export const initStencil = ({
                     body: {
                         strokeWidth: 1,
                         stroke: '#5F95FF',
-                        fill: '#EFF4FF',
+                        fill: '#EFF4FF'
                     },
                     text: {
                         fontSize: 12,
-                        fill: '#262626',
+                        fill: '#262626'
                     },
                 },
                 ports
@@ -175,6 +175,71 @@ export const initStencil = ({
                         strokeWidth: 1,
                         stroke: '#5F95FF',
                         fill: '#EFF4FF',
+                    },
+                    text: {
+                        fontSize: 12,
+                        fill: '#262626',
+                    },
+                },
+                ports
+            },
+            true,
+        )
+
+        Graph.registerNode(
+            'custom-ellipse',
+            {
+                inherit: 'ellipse',
+                width: 65,
+                height: 45,
+                attrs: {
+                    body: {
+                        strokeWidth: 1,
+                        stroke: '#5F95FF',
+                        fill: '#EFF4FF',
+                    },
+                    text: {
+                        fontSize: 12,
+                        fill: '#262626',
+                    },
+                },
+                ports
+            },
+            true,
+        )
+
+
+        Graph.registerNode(
+            'custom-tick',
+            {
+                inherit: 'path',
+                width: 35,
+                height: 30,
+                path: "M387.072 611.328L236.6464 460.8 128 569.3952l259.072 259.1232 515.1232-515.072L793.6 204.8z",
+                attrs: {
+                    body: {
+                        strokeWidth: 1,
+                    },
+                    text: {
+                        fontSize: 12,
+                        fill: '#262626',
+                    }
+                },
+                ports
+            },
+            true,
+        )
+
+        Graph.registerNode(
+            'custom-wrong',
+            {
+                inherit: 'path',
+                width: 30,
+                height: 30,
+                path: "M617.92 516.096l272 272-101.824 101.824-272-272-272 272-101.856-101.824 272-272-275.008-275.04L241.056 139.2l275.04 275.04 275.04-275.04 101.824 101.824-275.04 275.04z",
+                attrs: {
+                    body: {
+                        strokeWidth: 1,
                     },
                     text: {
                         fontSize: 12,
