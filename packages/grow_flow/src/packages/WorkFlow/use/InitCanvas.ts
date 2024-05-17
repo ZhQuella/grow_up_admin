@@ -170,6 +170,9 @@ export const initCanvas = ({
             showPorts(ports, false);
         });
 
+        graph.value.on('edge:mouseleave', ({ cell }) => {
+            cell.removeTools()
+        })
     };
 
     const initPlugins = () => {
