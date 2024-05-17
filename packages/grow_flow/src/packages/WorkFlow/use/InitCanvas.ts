@@ -115,6 +115,12 @@ export const initCanvas = ({
                             cursor: 'move',
                         },
                     },
+                },
+                {
+                    name: 'button-remove',
+                    args: {
+                        distance: -50,
+                    }
                 }
             ])
         });
@@ -164,21 +170,6 @@ export const initCanvas = ({
             showPorts(ports, false);
         });
 
-        graph.value.on('edge:mouseenter', ({ cell }) => {
-            cell.addTools([
-                'source-arrowhead',
-                {
-                    name: 'button-remove',
-                    args: {
-                        distance: -50
-                    }
-                },
-            ])
-        })
-
-        graph.value.on('edge:mouseleave', ({ cell }) => {
-            cell.removeTools()
-        })
     };
 
     const initPlugins = () => {
