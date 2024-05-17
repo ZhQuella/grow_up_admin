@@ -60,7 +60,7 @@ export const initCanvas = ({
                 allowEdge: false,
                 createEdge(){
                     return new Shape.Edge({
-                        router: { name: 'er' },
+                        router: { name: 'manhattan' },
                         attrs: {
                             line: {
                                 stroke: '#1890ff',
@@ -172,7 +172,7 @@ export const initCanvas = ({
 
         graph.value.on('edge:mouseleave', ({ cell }) => {
             cell.removeTools()
-        })
+        });
     };
 
     const initPlugins = () => {
