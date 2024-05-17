@@ -15,7 +15,6 @@ const {
   createStencil,
   createNodes,
   initNode,
-  initPlugins
 } = initStencil({
   stencilRef
 });
@@ -23,7 +22,6 @@ const {
 defineExpose({
   createStencil,
   createNodes,
-  initNode,
-  initPlugins
+  initNode
 });
 </script>
