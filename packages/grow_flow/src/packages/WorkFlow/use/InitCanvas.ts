@@ -7,11 +7,10 @@ import { Keyboard } from "@antv/x6-plugin-keyboard";
 import { Clipboard } from "@antv/x6-plugin-clipboard";
 import { History } from "@antv/x6-plugin-history";
 import { Selection } from '@antv/x6-plugin-selection';
+import { Export } from '@antv/x6-plugin-export'
 
 
-export const initCanvas = ({
-
-}) => {
+export const initCanvas = () => {
 
     const graph: Ref<any> = ref(null);
 
@@ -189,6 +188,7 @@ export const initCanvas = ({
                     showNodeSelectionBox: true,
                 }),
             )
+            .use(new Export())
             .use(new Snapline())
             .use(new Keyboard())
             .use(new Clipboard())
