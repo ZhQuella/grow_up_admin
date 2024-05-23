@@ -1,13 +1,14 @@
 import { App, Component } from "vue";
 import { version } from "../package.json";
-import { GWorkFlow } from "./packages/GWorkFlow";
+
+import { GCodemirror } from "./packages/Codemirror";
 
 import "animate.css";
 import "./styles/tailwindcss/index.css";
 import "./styles/animate/index.css";
 
 const components: Component[] = [
-  GWorkFlow
+  GCodemirror
 ];
 
 const install = (app: App) => {
@@ -26,9 +27,9 @@ const install = (app: App) => {
 const GrowConponent = {
   version,
   install,
-  GWorkFlow
+  GCodemirror
 };
 
-export { version, GWorkFlow };
+export { version, GCodemirror };
 
 export default GrowConponent;

@@ -17,6 +17,8 @@
     "grow_com:build": "pnpm --filter grow_components build",
     "grow_icon:dev": "pnpm --filter grow_admin_icons dev",
     "grow_icon:build": "pnpm --filter grow_admin_icons build",
+    "grow_editor:dev": "pnpm --filter grow_editor dev",
+    "grow_editor:build": "pnpm --filter grow_editor build",
     "grow_des:dev": "pnpm --filter grow_designer dev",
     "grow_des:build": "pnpm --filter grow_designer build",
     "grow_rule:dev": "pnpm --filter grow_rule_engine dev",

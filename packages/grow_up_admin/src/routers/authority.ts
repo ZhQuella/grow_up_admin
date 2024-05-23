@@ -3,6 +3,7 @@ export default {
   AutomatedTool: ["admin"],
   PageDesigner: ["admin"],
   ProcessEngine: ["admin"],
+  OnlineEditor: ["admin"],
   dashboard: ["admin"],
   analysis: ["admin"],
   workbench: ["admin"],

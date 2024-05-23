@@ -32,6 +32,7 @@
     "grow_admin_icons": "workspace:*",
     "grow_components": "workspace:*",
     "grow_designer": "workspace:*",
+    "grow_editor": "workspace:^",
     "grow_flow": "workspace:*",
     "grow_rule_engine": "workspace:*",
     "grow_utils": "workspace:*",
