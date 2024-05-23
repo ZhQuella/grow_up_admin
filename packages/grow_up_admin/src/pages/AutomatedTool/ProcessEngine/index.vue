@@ -1,9 +1,9 @@
 <template>
-  <WorkFlow />
+  <GWorkFlow />
 </template>
 
 <script setup lang="ts">
-import { WorkFlow } from "grow_flow";
+import { GWorkFlow } from "grow_flow";
 
 </script>
 

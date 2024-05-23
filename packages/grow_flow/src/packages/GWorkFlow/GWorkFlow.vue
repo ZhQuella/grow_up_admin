@@ -94,7 +94,7 @@
 </template>
 
 <script setup lang="ts">
-defineOptions({ name: "WorkFlow" });
+defineOptions({ name: "GWorkFlow" });
 import type { Fn } from "types/public";
 import StencilComponent from "./components/StencilComponent/index.vue";
 import { ref, onMounted, unref, computed } from "vue";

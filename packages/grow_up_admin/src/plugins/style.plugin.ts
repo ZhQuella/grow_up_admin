@@ -3,6 +3,7 @@ import "style/tailwindcss/index.scss";
 import "grow_components/dist/index.css";
 import "grow_designer/dist/index.css";
 import "grow_flow/dist/index.css";
+import "grow_editor/dist/index.css";
 import "animate.css";
 import "hover.css";
 import "nprogress/nprogress.css";

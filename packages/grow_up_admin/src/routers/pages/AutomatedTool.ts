@@ -17,6 +17,13 @@ export default [
         icon: "FlowModeler",
         path: "process-engine",
         component: "AutomatedTool/ProcessEngine/index.vue"
+      },
+      {
+        label: "在线编辑器",
+        name: "OnlineEditor",
+        icon: "Code",
+        path: "online-editor",
+        component: "AutomatedTool/OnlineEditor/index.vue"
       }
     ]
   }
