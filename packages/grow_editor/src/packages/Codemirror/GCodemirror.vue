@@ -40,6 +40,8 @@ import { selectMap } from "../../static/dict";
 import { initEditor } from "./use/initEditor";
 import { useEvent } from "./use/useEvent";
 
+const emit = defineEmits(['change','lang-change']);
+
 const props = defineProps({
   isSelectMode: { type: Boolean, default: true },
   defaultModel: { type: String, default: "javascript" }
@@ -53,16 +55,21 @@ const codeEditor = ref();
 const {
   resetEditor,
   editorView
-} = initEditor();
+} = initEditor({
+  emit
+});
 
 const {
   onModelChange,
-  onCleanEditor
+  onCleanEditor,
+  toJSON,
+  setDoc
 } = useEvent({
   editorView,
   codeEditor,
   resetEditor,
-  editorValue
+  editorValue,
+  emit
 });
 
 onMounted(() => {
@@ -70,5 +77,10 @@ onMounted(() => {
   if(isSelectMode.value){
     editorValue.value = selectMap.find((el) => el.value === defaultModel.value) || selectMap[0];
   };
+});
+
+defineExpose({
+  toJSON,
+  setDoc
 });
 </script>
