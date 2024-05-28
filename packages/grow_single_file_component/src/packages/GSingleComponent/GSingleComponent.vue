@@ -69,6 +69,7 @@
 <script setup lang="ts">
 defineOptions({ name: "GSingleComponent" });
 import { defineAsyncComponent, onMounted, ref, nextTick } from 'vue';
+import * as vue from 'vue'
 import { GSplitPane } from "grow_components";
 import { GCodemirror } from "grow_editor";
 import { defineSFC } from "vue-sfc-component";
@@ -110,7 +111,12 @@ const {
   codemirrorRef
 });
 
-let sfc = defineAsyncComponent(() => defineSFC('App.vue', options) as any);
+let sfc = defineAsyncComponent(() => defineSFC('App.vue', {
+  ...options,
+  imports: {
+    vue
+  }
+}) as any);
 
 const onCodemirrorChange = ({ doc }) => {
   options.files[tabsActive.value] = doc;
@@ -120,7 +126,12 @@ const onPlayComponent = async () => {
   reloadVisible.value = false;
   console.log(options);
   await nextTick();
-  sfc = defineAsyncComponent(() => defineSFC('App.vue', options) as any);
+  sfc = defineAsyncComponent(() => defineSFC('App.vue', {
+    ...options,
+    imports: {
+      vue
+    }
+  }) as any);
   reloadVisible.value = true;
 };
 
