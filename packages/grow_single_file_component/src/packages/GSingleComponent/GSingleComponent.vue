@@ -50,7 +50,9 @@
         </div>
       </template>
       <template #review v-if="reloadVisible">
-        <sfc />
+        <div id="single-com">
+
+        </div>
       </template>
     </GSplitPane>
   </div>
@@ -68,8 +70,7 @@
 
 <script setup lang="ts">
 defineOptions({ name: "GSingleComponent" });
-import { defineAsyncComponent, onMounted, ref, nextTick } from 'vue';
-import * as vue from 'vue'
+import { defineAsyncComponent, onMounted, ref, createApp } from 'vue';
 import { GSplitPane } from "grow_components";
 import { GCodemirror } from "grow_editor";
 import { defineSFC } from "vue-sfc-component";
@@ -82,6 +83,17 @@ import { useTabsOption } from "./use/useTabsOption";
 import { useSFC } from "./use/useSFC";
 import { useEvent } from "./use/useEvent";
 
+const randomLetter = (length = 10)  => {
+  let result = '';
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const lettersLength = letters.length;
+  for (let i = 0; i < length; i++) {
+    result += letters[Math.floor(Math.random() * lettersLength)];
+  }
+  return result;
+};
+
+const wrapId = randomLetter();
 const codemirrorRef = ref();
 const reloadVisible = ref(true);
 
@@ -111,31 +123,34 @@ const {
   codemirrorRef
 });
 
-let sfc = defineAsyncComponent(() => defineSFC('App.vue', {
-  ...options,
-  imports: {
-    vue
-  }
-}) as any);
+// let sfc = defineAsyncComponent(() => defineSFC('App.vue', options) as any);
 
 const onCodemirrorChange = ({ doc }) => {
   options.files[tabsActive.value] = doc;
 };
 
+const addEle = () => {
+  const parent = document!.getElementById("single-com")!;
+  parent.innerHTML = "";
+  const oDiv = document.createElement("div");
+  oDiv.setAttribute("id", wrapId);
+  parent.appendChild(oDiv);
+};
+
 const onPlayComponent = async () => {
-  reloadVisible.value = false;
-  console.log(options);
-  await nextTick();
-  sfc = defineAsyncComponent(() => defineSFC('App.vue', {
-    ...options,
-    imports: {
-      vue
-    }
-  }) as any);
-  reloadVisible.value = true;
+  addEle();
+  const app = createApp({
+    components: {
+      'sfc-component': defineAsyncComponent(() => defineSFC('App.vue', options)),
+    },
+    template: `<sfc-component></sfc-component>`
+  });
+  app.mount(`#${wrapId}`);
 };
 
 onMounted(() => {
   codemirrorRef.value.setDoc(options.files[tabsActive.value]);
+  addEle();
+  onPlayComponent();
 });
 </script>
