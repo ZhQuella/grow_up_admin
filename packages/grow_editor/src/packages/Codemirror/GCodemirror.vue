@@ -44,10 +44,11 @@ const emit = defineEmits(['change','lang-change']);
 
 const props = defineProps({
   isSelectMode: { type: Boolean, default: true },
-  defaultModel: { type: String, default: "javascript" }
+  defaultModel: { type: String, default: "javascript" },
+  isReadOnly: { type: Boolean, default: false }
 });
 
-const { defaultModel, isSelectMode } = toRefs(props);
+const { defaultModel, isSelectMode, isReadOnly } = toRefs(props);
 
 const editorValue = ref(selectMap[0]);
 const codeEditor = ref();
@@ -56,7 +57,8 @@ const {
   resetEditor,
   editorView
 } = initEditor({
-  emit
+  emit,
+  isReadOnly
 });
 
 const {

@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 import { EditorState } from "@codemirror/state";
 import { basicSetup } from "codemirror";
@@ -8,10 +8,13 @@ import { insertTab, indentLess } from "@codemirror/commands";
 // import { oneDark } from "@codemirror/theme-one-dark";
 
 export const initEditor = ({
-    emit
+    emit,
+   isReadOnly
 }) => {
 
     const editorView = ref();
+
+    const readOnly = computed(() => isReadOnly.value)
 
     const getEditorState = (method, doc) => {
         return {
@@ -29,7 +32,9 @@ export const initEditor = ({
                         const state = viewUpd.state.toJSON();
                         emit("change", state);
                     }
-                })
+                }),
+                EditorView.editable.of(!readOnly.value),
+                EditorState.readOnly.of(readOnly.value),
             ]
         }
     };
