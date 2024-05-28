@@ -49,10 +49,10 @@
           </div>
         </div>
       </template>
-      <template #review v-if="reloadVisible">
-        <div id="single-com">
-
-        </div>
+      <template #review>
+        todo<br/>
+        生产环境有问题，暂时不知道什么原因，待修复
+        <div id="single-com" class="h-full"></div>
       </template>
     </GSplitPane>
   </div>
@@ -80,7 +80,7 @@ import FileName from "./components/FileName.vue";
 
 import { initView } from "./use/initView";
 import { useTabsOption } from "./use/useTabsOption";
-import { useSFC } from "./use/useSFC";
+import { useSfcOption } from "./use/useSfcOption";
 import { useEvent } from "./use/useEvent";
 
 const randomLetter = (length = 10)  => {
@@ -95,11 +95,10 @@ const randomLetter = (length = 10)  => {
 
 const wrapId = randomLetter();
 const codemirrorRef = ref();
-const reloadVisible = ref(true);
 
 const {
   options
-} = useSFC();
+} = useSfcOption();
 const {
   treeData
 } = initView();
