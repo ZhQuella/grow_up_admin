@@ -24,6 +24,13 @@ export default [
         icon: "Code",
         path: "online-editor",
         component: "AutomatedTool/OnlineEditor/index.vue"
+      },
+      {
+        label: "单文件组件",
+        name: "SingleFileComponent",
+        icon: "VolumeFileStorage",
+        path: "single-file-component",
+        component: "AutomatedTool/SingleFileComponent/index.vue"
       }
     ]
   }
