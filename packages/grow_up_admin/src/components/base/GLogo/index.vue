@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between w-[150px]">
+  <div class="flex justify-between">
     <div class="h-[40px] min-w-[40px]">
       <img class="block h-[100%]" :src="getImageUrl(setting?.logUrl)" />
     </div>
