@@ -1,0 +1,20 @@
+{
+  "name": "grow_single_file_component",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "author": "ZhQuella (Email:827265905@qq.com)",
+  "type": "module",
+  "license": "ISC",
+  "main": "./src/index.ts",
+  "scripts": {
+    "build": "rollup -c --environment NODE_ENV:production",
+    "dev": "rollup -c -w --environment NODE_ENV:development"
+  },
+  "dependencies": {
+    "@vicons/carbon": "^0.12.0",
+    "grow_components": "workspace:^",
+    "grow_editor": "workspace:^",
+    "vue-sfc-component": "^0.0.12"
+  }
+}

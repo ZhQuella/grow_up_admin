@@ -35,6 +35,7 @@
     "grow_editor": "workspace:^",
     "grow_flow": "workspace:*",
     "grow_rule_engine": "workspace:*",
+    "grow_single_file_component": "workspace:^",
     "grow_utils": "workspace:*",
     "hover.css": "^2.3.2",
     "nanoid": "^4.0.2",

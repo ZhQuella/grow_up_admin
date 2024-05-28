@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col h-full">
-    <div class="grow-0 shrink-0 h-[40px] bg-BG_COLOR2 flex justify-between">
+    <div class="grow-0 shrink-0 h-[40px] bg-BG_COLOR2 flex justify-between" v-if="!isPure">
       <div class="p-[4px] pl-[10px]">
         <ElTooltip effect="dark"
                     content="清空"
@@ -15,7 +15,7 @@
       <div class="p-[4px] pr-[10px]">
         <ElSelect v-model="editorValue"
                   @change="onModelChange"
-                  v-if="isSelectMode">
+                  v-if="isSelectMode && !isPure">
           <ElOption v-for="(item) of selectMap"
                     value-key="value"
                     :key="item.value"
@@ -45,7 +45,8 @@ const emit = defineEmits(['change','lang-change']);
 const props = defineProps({
   isSelectMode: { type: Boolean, default: true },
   defaultModel: { type: String, default: "javascript" },
-  isReadOnly: { type: Boolean, default: false }
+  isReadOnly: { type: Boolean, default: false },
+  isPure: { type: Boolean, default: false }
 });
 
 const { defaultModel, isSelectMode, isReadOnly } = toRefs(props);
@@ -75,10 +76,10 @@ const {
 });
 
 onMounted(() => {
-  resetEditor(codeEditor.value, editorValue.value.method);
   if(isSelectMode.value){
     editorValue.value = selectMap.find((el) => el.value === defaultModel.value) || selectMap[0];
   };
+  resetEditor(codeEditor.value, editorValue.value.method);
 });
 
 defineExpose({

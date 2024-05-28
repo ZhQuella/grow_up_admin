@@ -4,6 +4,7 @@ export default {
   PageDesigner: ["admin"],
   ProcessEngine: ["admin"],
   OnlineEditor: ["admin"],
+  SingleFileComponent: ["admin"],
   dashboard: ["admin"],
   analysis: ["admin"],
   workbench: ["admin"],
