@@ -128,7 +128,7 @@ const onCodemirrorChange = ({ doc }) => {
   options.files[tabsActive.value] = doc;
 };
 
-const addEle = () => {
+const resetEle = () => {
   const parent = document!.getElementById("single-com")!;
   parent.innerHTML = "";
   const oDiv = document.createElement("div");
@@ -137,10 +137,11 @@ const addEle = () => {
 };
 
 const onPlayComponent = async () => {
-  addEle();
+  resetEle();
+  console.log(options);
   const app = createApp({
     components: {
-      'sfc-component': defineAsyncComponent(() => defineSFC('App.vue', options)),
+      'sfc-component': defineAsyncComponent(() => defineSFC('App.vue', options) as any),
     },
     template: `<sfc-component></sfc-component>`
   });
@@ -149,7 +150,7 @@ const onPlayComponent = async () => {
 
 onMounted(() => {
   codemirrorRef.value.setDoc(options.files[tabsActive.value]);
-  addEle();
+  resetEle();
   onPlayComponent();
 });
 </script>

@@ -7,7 +7,7 @@
     >
       <Layout>
         <template #logo>
-          <router-link :to="homePath" class="block h-full pl-[10px] mr-[20px] pt-[5px] w-[150px]">
+          <router-link :to="homePath" class="block h-full px-[20px] pt-[5px]">
             <Logo :show-title="!collapsed" />
           </router-link>
         </template>
