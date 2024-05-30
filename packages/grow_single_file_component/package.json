@@ -12,6 +12,7 @@
     "dev": "rollup -c -w --environment NODE_ENV:development"
   },
   "dependencies": {
+    "vue": "^3.3.0",
     "@vicons/carbon": "^0.12.0",
     "grow_components": "workspace:^",
     "grow_editor": "workspace:^",

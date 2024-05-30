@@ -1,5 +1,6 @@
 import { reactive } from "vue";
 import * as vue from "vue";
+import * as ELEMENT from "element-plus";
 
 export const useSfcOption = () => {
     let options = reactive({
@@ -8,7 +9,8 @@ export const useSfcOption = () => {
             "CeShi.vue": "<template>\n\t<p class=\"pre\">测试内容</p>\n</template>\n\n<script setup>\n\n</script>\n\n<style>\n.pre {\n  color: pink;\n}\n</style>"
         },
         imports: {
-            "vue": vue
+            "vue": vue,
+            "element-plus": ELEMENT
         }
     });
 
