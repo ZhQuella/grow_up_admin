@@ -52,7 +52,7 @@
       <template #review>
         todo<br/>
         生产环境有问题，暂时不知道什么原因，待修复
-        <div id="single-com" class="h-full"></div>
+        <Test  v-if="Test"/>
       </template>
     </GSplitPane>
   </div>
@@ -70,7 +70,7 @@
 
 <script setup lang="ts">
 defineOptions({ name: "GSingleComponent" });
-import { defineAsyncComponent, onMounted, ref, createApp } from 'vue';
+import { defineAsyncComponent, onMounted, ref, nextTick } from 'vue';
 import { GSplitPane } from "grow_components";
 import { GCodemirror } from "grow_editor";
 import { defineSFC } from "vue-sfc-component";
@@ -83,17 +83,6 @@ import { useTabsOption } from "./use/useTabsOption";
 import { useSfcOption } from "./use/useSfcOption";
 import { useEvent } from "./use/useEvent";
 
-const randomLetter = (length = 10)  => {
-  let result = '';
-  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  const lettersLength = letters.length;
-  for (let i = 0; i < length; i++) {
-    result += letters[Math.floor(Math.random() * lettersLength)];
-  }
-  return result;
-};
-
-const wrapId = randomLetter();
 const codemirrorRef = ref();
 
 const {
@@ -122,35 +111,20 @@ const {
   codemirrorRef
 });
 
-// let sfc = defineAsyncComponent(() => defineSFC('App.vue', options) as any);
+const Test = ref();
 
 const onCodemirrorChange = ({ doc }) => {
   options.files[tabsActive.value] = doc;
 };
 
-const resetEle = () => {
-  const parent = document!.getElementById("single-com")!;
-  parent.innerHTML = "";
-  const oDiv = document.createElement("div");
-  oDiv.setAttribute("id", wrapId);
-  parent.appendChild(oDiv);
-};
-
 const onPlayComponent = async () => {
-  resetEle();
-  console.log(options);
-  const app = createApp({
-    components: {
-      'sfc-component': defineAsyncComponent(() => defineSFC('App.vue', options) as any),
-    },
-    template: `<sfc-component></sfc-component>`
-  });
-  app.mount(`#${wrapId}`);
+  Test.value = null;
+  await nextTick();
+  Test.value = defineAsyncComponent(() => defineSFC('App.vue', options) as any);
 };
 
 onMounted(() => {
   codemirrorRef.value.setDoc(options.files[tabsActive.value]);
-  resetEle();
   onPlayComponent();
 });
 </script>
