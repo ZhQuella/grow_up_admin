@@ -50,9 +50,9 @@
         </div>
       </template>
       <template #review>
-        todo<br/>
-        生产环境有问题，暂时不知道什么原因，待修复
-        <Test  v-if="Test"/>
+        <div v-if="Test">
+          <Test />
+        </div>
       </template>
     </GSplitPane>
   </div>
@@ -121,10 +121,11 @@ const onPlayComponent = async () => {
   Test.value = null;
   await nextTick();
   Test.value = defineAsyncComponent(() => defineSFC('App.vue', options) as any);
+  console.log(Test.value);
 };
 
-onMounted(() => {
+onMounted(async () => {
   codemirrorRef.value.setDoc(options.files[tabsActive.value]);
-  onPlayComponent();
+  await onPlayComponent();
 });
 </script>

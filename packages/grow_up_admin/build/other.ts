@@ -70,6 +70,10 @@ export const createResolve = () => {
       {
         find: "image",
         replacement: "/src/assets/images"
+      },
+      {
+        find: "vue",
+        replacement: "vue/dist/vue.esm-bundler.js"
       }
     ]
   };
