@@ -2,7 +2,7 @@ import { ref } from "vue";
 import { defaultTemplate } from "../../../static/tempalteStr";
 
 export const useEvent = ({
-   options,
+   codeOptions,
    tabsActive,
    codemirrorRef
 }) => {
@@ -14,9 +14,9 @@ export const useEvent = ({
     };
 
     const onSubmit = ({ fileName }) => {
-        options.files[fileName] = defaultTemplate;
+        codeOptions.value.files[fileName] = defaultTemplate;
         tabsActive.value = fileName;
-        codemirrorRef.value.setDoc(options.files[fileName]);
+        codemirrorRef.value.setDoc(codeOptions.value.files[fileName]);
         onClose();
     };
 

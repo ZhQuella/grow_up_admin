@@ -2,6 +2,7 @@ import { App, Component } from "vue";
 import { version } from "../package.json";
 
 import { GSingleComponent } from "./packages/GSingleComponent";
+import { GSingleRenderView } from "./packages/GSingleRenderView";
 
 import "animate.css";
 import "grow_editor/dist/index.css";
@@ -10,7 +11,8 @@ import "./styles/tailwindcss/index.css";
 import "./styles/animate/index.css";
 
 const components: Component[] = [
-  GSingleComponent
+  GSingleComponent,
+  GSingleRenderView
 ];
 
 const install = (app: App) => {
@@ -29,9 +31,10 @@ const install = (app: App) => {
 const GrowConponent = {
   version,
   install,
-  GSingleComponent
+  GSingleComponent,
+  GSingleRenderView
 };
 
-export { version, GSingleComponent };
+export { version, GSingleComponent, GSingleRenderView };
 
 export default GrowConponent;
