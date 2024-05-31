@@ -1,4 +1,4 @@
-<template>
+q<template>
   <div class="h-full">
     <GSplitPane :treeData="treeData">
       <template #redact>
@@ -15,6 +15,18 @@
               </ElTabs>
             </div>
             <div class="py-[5px]">
+              <ElTooltip effect="dark"
+                         content="Import Map"
+                         placement="top">
+                <ElButton text
+                          type="primary"
+                          size="small"
+                          @click="onShowImportMap">
+                  <ElIcon size="16">
+                    <WorkspaceImport />
+                  </ElIcon>
+                </ElButton>
+              </ElTooltip>
               <ElTooltip effect="dark"
                          content="新增"
                          placement="top">
@@ -50,9 +62,7 @@
         </div>
       </template>
       <template #review>
-        <div v-if="Test">
-          <Test />
-        </div>
+        <GSingleRenderView  ref="renderRef"/>
       </template>
     </GSplitPane>
   </div>
@@ -66,28 +76,46 @@
     <FileName @close="onClose"
               @submit="onSubmit"/>
   </ElDialog>
+
+  <ElDrawer v-model="drawerRef"
+            title="设置导入"
+            :modal="false"
+            :destroy-on-close="true">
+    <ImportMap @close="drawerRef = false"
+               @submit="onImportSubmit"
+              ref="importMapRef"/>
+  </ElDrawer>
+
 </template>
 
 <script setup lang="ts">
 defineOptions({ name: "GSingleComponent" });
-import { defineAsyncComponent, onMounted, ref, nextTick } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { GSplitPane } from "grow_components";
 import { GCodemirror } from "grow_editor";
-import { defineSFC } from "vue-sfc-component";
-import { PlayOutline, Add } from "@vicons/carbon";
+import { defaultTemplate } from "../../static/tempalteStr";
+import { PlayOutline, Add, WorkspaceImport } from "@vicons/carbon";
 
+import ImportMap from "./components/ImportMap.vue";
 import FileName from "./components/FileName.vue";
+import GSingleRenderView from "../GSingleRenderView/GSingleRenderView.vue";
 
 import { initView } from "./use/initView";
 import { useTabsOption } from "./use/useTabsOption";
-import { useSfcOption } from "./use/useSfcOption";
 import { useEvent } from "./use/useEvent";
+import { useDrawer } from "./use/useDrawer";
 
 const codemirrorRef = ref();
+const renderRef = ref();
 
-const {
-  options
-} = useSfcOption();
+const codeOptions = ref({
+  files: { 'App.vue': defaultTemplate }
+});
+
+const options = computed(() => {
+  return codeOptions.value;
+});
+
 const {
   treeData
 } = initView();
@@ -97,6 +125,7 @@ const {
   onTabChange,
   onTabsRemove
 } = useTabsOption({
+  codeOptions,
   options,
   codemirrorRef
 });
@@ -106,26 +135,50 @@ const {
   onHandleTabsAdd,
   dialogVisible
 } = useEvent({
-  options,
+  codeOptions,
   tabsActive,
   codemirrorRef
 });
-
-const Test = ref();
+const {
+  drawerRef,
+  onShowImportMap,
+  onImportSubmit,
+  importMapRef,
+  catchImportRef
+} = useDrawer();
 
 const onCodemirrorChange = ({ doc }) => {
-  options.files[tabsActive.value] = doc;
+  (options.value.files || {})[tabsActive.value] = doc || "";
 };
+
+const runOptions = computed(() => {
+  const { files, imports = {} } = options.value;
+  return {
+    files,
+    imports: {
+      ...imports,
+      ...catchImportRef.value
+    }
+  }
+});
 
 const onPlayComponent = async () => {
-  Test.value = null;
-  await nextTick();
-  Test.value = defineAsyncComponent(() => defineSFC('App.vue', options) as any);
-  console.log(Test.value);
+  renderRef!.value!.setCode(runOptions.value);
 };
 
-onMounted(async () => {
-  codemirrorRef.value.setDoc(options.files[tabsActive.value]);
+const setCode = async (option) => {
+  codeOptions.value = option;
+  await init();
+};
+
+const init = async () => {
+  codemirrorRef.value!.setDoc(options.value.files[tabsActive.value]);
   await onPlayComponent();
+}
+
+onMounted(init);
+
+defineExpose({
+  setCode
 });
 </script>
