@@ -56,7 +56,8 @@ q<template>
               <GCodemirror defaultModel="vue"
                            ref="codemirrorRef"
                            isPure
-                           @change="onCodemirrorChange"/>
+                           @change="onCodemirrorChange"
+                           @save="onPlayComponent" />
             </ElScrollbar>
           </div>
         </div>

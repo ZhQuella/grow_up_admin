@@ -25,7 +25,17 @@ export const initEditor = ({
                 method(),
                 keymap.of([
                     { key: "Tab", run: insertTab },
-                    { key: 'Shift-Tab', run: indentLess }
+                    { key: 'Shift-Tab', run: indentLess },
+                    { key: "Cmd-s", run: function (){
+                            emit("save");
+                            return true;
+                        }
+                    },
+                    { key: "Ctrl-s", run: function (){
+                            emit("save");
+                            return true;
+                        }
+                    }
                 ]),
                 EditorView.updateListener.of((viewUpd) => {
                     if (viewUpd.docChanged) {

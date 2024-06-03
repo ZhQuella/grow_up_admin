@@ -40,7 +40,7 @@ import { selectMap } from "../../static/dict";
 import { initEditor } from "./use/initEditor";
 import { useEvent } from "./use/useEvent";
 
-const emit = defineEmits(['change','lang-change']);
+const emit = defineEmits(['change','lang-change','save']);
 
 const props = defineProps({
   isSelectMode: { type: Boolean, default: true },
