@@ -90,7 +90,6 @@ const onDeleteItem = () => {
   .ghost {
     width: 100% !important;
     display: block !important;
-    transition: all .35s !important;
     height: 5px !important;
     background-color: rgb(var(--public-main-color)) !important;
     overflow: hidden !important;
