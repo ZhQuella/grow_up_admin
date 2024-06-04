@@ -33,11 +33,13 @@ const {
 
 <style lang="scss">
 .draggable-grop-wrap {
-  .draggable-item {
+  .ghost {
     width: 100% !important;
     display: block !important;
-    height: auto !important;
-    transition: all .35s !important;
+    height: 5px !important;
+    background-color: rgb(var(--public-main-color)) !important;
+    overflow: hidden !important;
+    padding: 0px !important;
   }
 }
 </style>

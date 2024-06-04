@@ -40,8 +40,8 @@ const isDark = useDark({
   valueDark: "dark",
   valueLight: "light"
 });
-const themeVlaue = isDark.value ? "dark" : "light";
-themeStore.theme = themeVlaue;
+const themeValue = isDark.value ? "dark" : "light";
+themeStore.theme = themeValue;
 </script>
 
 <script lang="ts">

@@ -10,22 +10,32 @@
   <template v-if="config.isChild">
     <template v-if="['div'].includes(config.elTagName)">
       <VueDraggableNext group="draggable-group"
-                        :animation="180"
-                        class="draggable-grop-wrap h-full bg-BG_COLOR2 relative min-h-[50px]"
+                        tag="div"
+                        :animation="200"
+                        item-key="uuid"
+                        ghostClass="ghost"
+                        :component-data="{
+                          tag: 'div',
+                          type: 'transition-group',
+                          name: !drag ? 'draggable-group' : null
+                        }"
+                        class="draggable-grop-wrap border-slate-300 border-[1px] border-dashed rounded-[5px] overflow-hidden duration-350"
                         handle=".draggable-content-bar"
                         v-model="structure.children"
                         @add="onChildAdd">
-        <DraggableItem v-for="ele in structure.children"
-                       :structure="ele"
-                       :key="ele.uuid"
+        <template #item="{element}">
+        <DraggableItem :structure="element"
                        @active="onActive"
+                       @delete="onSpecialDelete"
                        @special="onDraggableAdd">
-          <abstractionComponent :config="draggableConfig.renderArgument[ele.uuid]"
-                                :structure="ele"
+          <abstractionComponent :config="draggableConfig.renderArgument[element.uuid]"
+                                :structure="element"
                                 @add="onAbstractionAdd"
+                                @delete="onSpecialDelete"
                                 @active="onActive"/>
         </DraggableItem>
-      </VueDraggableNext>1
+        </template>
+      </VueDraggableNext>
     </template>
 
     <component v-if="['el-col','el-tab-pane','el-collapse-item','el-timeline-item'].includes(config.elTagName)"
@@ -35,44 +45,64 @@
                :span="12"
                :name="Math.random()">
       <VueDraggableNext group="draggable-group"
-                        :animation="180"
-                        class="draggable-grop-wrap h-full bg-BG_COLOR2 relative border-[1px] border-slate-300 border-dashed rounded-[5px] overflow-hidden min-h-[50px] duration-350"
+                        tag="div"
+                        :animation="200"
+                        ghostClass="ghost"
+                        item-key="uuid"
+                        :component-data="{
+                          tag: 'div',
+                          type: 'transition-group',
+                          name: !drag ? 'draggable-group' : null
+                        }"
+                        class="draggable-grop-wrap border-slate-300 border-[1px] border-dashed rounded-[5px] overflow-hidden duration-350"
                         handle=".draggable-content-bar"
                         v-model="structure.children"
                         @add="onChildAdd"
                         @special="onDraggableAdd">
-        <DraggableItem v-for="ele in structure.children"
-                       :structure="ele"
-                       :key="ele.uuid"
-                       @special="onDraggableAdd"
-                       @active="onActive">
-          <abstractionComponent :config="draggableConfig.renderArgument[ele.uuid]"
-                                :structure="ele"
-                                @add="onAbstractionAdd"
-                                @special="onDraggableAdd"
-                                @active="onActive"/>
-        </DraggableItem>
+        <template #item="{ element }">
+          <DraggableItem :structure="element"
+                         @special="onDraggableAdd"
+                         @delete="onSpecialDelete"
+                         @active="onActive">
+            <abstractionComponent :config="draggableConfig.renderArgument[element.uuid]"
+                                  :structure="element"
+                                  @add="onAbstractionAdd"
+                                  @special="onDraggableAdd"
+                                  @delete="onSpecialDelete"
+                                  @active="onActive"/>
+          </DraggableItem>
+        </template>
       </VueDraggableNext>
     </component>
 
     <el-badge v-if="config.elTagName === 'el-badge'"
               class="w-full">
       <VueDraggableNext group="draggable-group"
-                        :animation="180"
-                        class="draggable-grop-wrap w-full h-full bg-BG_COLOR2 relative border-[1px] border-slate-300 border-dashed rounded-[5px] overflow-hidden min-h-[50px] duration-350"
+                        tag="div"
+                        :animation="200"
+                        item-key="uuid"
+                        ghostClass="ghost"
+                        :component-data="{
+                          tag: 'div',
+                          type: 'transition-group',
+                          name: !drag ? 'draggable-group' : null
+                        }"
+                        class="draggable-grop-wrap border-slate-300 border-[1px] border-dashed rounded-[5px] overflow-hidden duration-350"
                         handle=".draggable-content-bar"
                         v-model="structure.children"
                         @add="onChildAdd">
-        <DraggableItem v-for="ele in structure.children"
-                       :structure="ele"
-                       :key="ele.uuid"
-                       @active="onActive"
-                       @special="onDraggableAdd">
-          <abstractionComponent :config="draggableConfig.renderArgument[ele.uuid]"
-                                :structure="ele"
-                                @add="onAbstractionAdd"
-                                @active="onActive"/>
-        </DraggableItem>
+        <template #item="{ element }">
+          <DraggableItem :structure="element"
+                         @active="onActive"
+                         @delete="onSpecialDelete"
+                         @special="onDraggableAdd">
+            <abstractionComponent :config="draggableConfig.renderArgument[element.uuid]"
+                                  :structure="element"
+                                  @add="onAbstractionAdd"
+                                  @delete="onSpecialDelete"
+                                  @active="onActive"/>
+          </DraggableItem>
+        </template>
       </VueDraggableNext>
     </el-badge>
 
@@ -80,7 +110,7 @@
       <template #header>
         <div class="flex justify-between">
           <div>
-            <span>Card name</span>
+            <span>{{ structure.uuid }}</span>
           </div>
           <div>
             <el-button class="button" text>Operation button</el-button>
@@ -88,22 +118,37 @@
         </div>
       </template>
       <VueDraggableNext group="draggable-group"
-                        :animation="180"
-                        class="draggable-grop-wrap h-full bg-BG_COLOR2 relative border-[1px] border-slate-300 border-dashed rounded-[5px] overflow-hidden min-h-[50px] duration-350"
+                        tag="div"
+                        :animation="200"
+                        item-key="uuid"
+                        ghostClass="ghost"
+                        :component-data="{
+                          tag: 'div',
+                          type: 'transition-group',
+                          name: !drag ? 'draggable-group' : null
+                        }"
+                        class="draggable-grop-wrap border-slate-300 border-[1px] border-dashed rounded-[5px] overflow-hidden duration-350"
                         handle=".draggable-content-bar"
                         v-model="structure.children"
+                        @start="emit('start')"
+                        @end="emit('end')"
                         @add="onChildAdd">
-        <DraggableItem v-for="ele in structure.children"
-                       :structure="ele"
-                       :key="ele.uuid"
-                       @active="onActive"
-                       @special="onDraggableAdd">
-          <abstractionComponent :config="draggableConfig.renderArgument[ele.uuid]"
-                                :structure="ele"
-                                @add="onAbstractionAdd"
-                                @special="onDraggableAdd"
-                                @active="onActive"/>
-        </DraggableItem>
+        <template #item="{ element }">
+          <DraggableItem :structure="element"
+                         @active="onActive"
+                         @delete="onSpecialDelete"
+                         @special="onDraggableAdd">
+            <abstractionComponent :config="draggableConfig.renderArgument[element.uuid]"
+                                  :structure="element"
+                                  :drag="drag"
+                                  @start="emit('start')"
+                                  @end="emit('end')"
+                                  @add="onAbstractionAdd"
+                                  @special="onDraggableAdd"
+                                  @delete="onSpecialDelete"
+                                  @active="onActive"/>
+          </DraggableItem>
+        </template>
       </VueDraggableNext>
     </el-card>
 
@@ -113,8 +158,10 @@
                               :structure="ele"
                               :config="draggableConfig.renderArgument[ele.uuid]"
                               :key="ele.uuid"
+                              :drag="drag"
                               @add="onAbstractionAdd"
                               @special="onDraggableAdd"
+                              @delete="onSpecialDelete"
                               @active="onActive"/>
       </component>
     </template>
@@ -126,7 +173,9 @@
                               :structure="ele"
                               :config="draggableConfig.renderArgument[ele.uuid]"
                               :key="ele.uuid"
+                              :drag="drag"
                               @add="onAbstractionAdd"
+                              @delete="onSpecialDelete"
                               @special="onDraggableAdd"
                               @active="onActive"/>
       </component>
@@ -138,7 +187,7 @@
 <script lang="ts" setup>
 import { DRAGGABLE_CONGIG } from "../../config/designation";
 import { inject, toRefs } from "vue"
-import { VueDraggableNext } from "vue-draggable-next";
+import VueDraggableNext from "vuedraggable";
 import basicComponent from "./component/basicComponent/index.vue";
 import eleModuleComponent from "./component/eleModuleComponent/index.vue";
 import DraggableItem from "../draggableItem/index.vue";
@@ -152,14 +201,16 @@ const emit = defineEmits(['add','special','active'])
 interface PropsType {
   config: any;
   structure: any;
+  drag: boolean;
 }
 
 const props = withDefaults(defineProps<PropsType>(), {
   config: () => ({}),
-  structure: () => ({})
+  structure: () => ({}),
+  drag: false
 });
 
-const { structure } = toRefs(props);
+const { structure, drag } = toRefs(props);
 
 const onAbstractionAdd = (event) => {
   emit('add', event);
@@ -177,4 +228,18 @@ const onDraggableAdd = (event) => {
 const onActive = (event) => {
   emit('active', event);
 }
+
+const onSpecialDelete = (event) => {
+  emit('specialDelete', event);
+}
 </script>
+<style lang="scss" scoped>
+.draggable-grop-wrap {
+  height: 100%;
+  background-color: rgb(var(--bg-color2));
+  position: relative;
+  min-height: 50px;
+  border-width: 1px;
+  border-style: dashed;
+}
+</style>

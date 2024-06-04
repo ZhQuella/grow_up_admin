@@ -1,5 +1,5 @@
 <template>
-  <div class="relative transition-all pt-[30px] border-[1px] hover:border-PUBLIC_MAIN_COLOR border-dashed rounded-[5px] overflow-hidden min-h-[50px] duration-350"
+  <div class="relative transition delay-0 pt-[30px] border-[1px] hover:border-PUBLIC_MAIN_COLOR border-dashed rounded-[5px] overflow-hidden duration-350"
        :class="{
           'border-PUBLIC_MAIN_COLOR': isActived,
           'border-slate-300': !isActived
@@ -15,7 +15,8 @@
         <el-icon class="draggable-content-bar cursor-pointer w-[26px] h-[26px]">
           <Move class="text-white"/>
         </el-icon>
-        <el-icon class="ml-[5px] cursor-pointer w-[26px] h-[26px]">
+        <el-icon class="ml-[5px] cursor-pointer w-[26px] h-[26px]"
+                 @click="onDeleteItem">
           <Delete class="text-white"/>
         </el-icon>
         <el-icon class="ml-[5px] cursor-pointer w-[26px] h-[26px]">
@@ -47,7 +48,7 @@ interface Props {
   structure: any;
 }
 
-const emit = defineEmits(['special','active'])
+const emit = defineEmits(['special','active', "delete"])
 
 const props = defineProps<Props>();
 const { structure } = toRefs(props);
@@ -78,4 +79,22 @@ const onAddSpecificChild = () => {
     renderArgument: currentArgument.value
   });
 };
+
+const onDeleteItem = () => {
+  console.log(props.structure);
+  emit('delete', props.structure);
+}
 </script>
+<style lang="scss">
+.draggable-grop-wrap {
+  .ghost {
+    width: 100% !important;
+    display: block !important;
+    transition: all .35s !important;
+    height: 5px !important;
+    background-color: rgb(var(--public-main-color)) !important;
+    overflow: hidden !important;
+    padding: 0px !important;
+  }
+}
+</style>

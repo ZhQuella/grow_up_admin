@@ -12,6 +12,6 @@
     "dev": "rollup -c -w --environment NODE_ENV:development"
   },
   "dependencies": {
-    "vue-draggable-next": "^2.2.1"
+    "vuedraggable": "^4.1.0"
   }
 }
