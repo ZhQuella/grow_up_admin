@@ -22,11 +22,11 @@ export const useOption = () => {
   provide(ACTIVE_UUID, activeUUID);
 
   const optionConfig = reactive({
-    title: "",
-    visible: false,
+    title: "组件库",
+    visible: true,
     componentName: "moduleOptions",
-    type: "",
-    isFixed: false
+    type: "module",
+    isFixed: true
   });
 
   const optionTypeMap = {

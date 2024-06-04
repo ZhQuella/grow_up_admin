@@ -9,15 +9,16 @@ const storage = createStorage({ prefixKey: "", storage: sessionStorage });
 const request = new Request({
   baseURL: import.meta.env.VITE_BASE_URL
 });
+
 const requestIntercept = (config: AxiosRequestConfig): AxiosRequestConfig => {
   const token = storage.get(AUTHORITY_TOKEN);
   const isToken = (config.headers || {}).isToken === false;
   if (token && !isToken) {
     config.headers["Authorization"] = "Bearer " + token;
   }
-
   return config;
 };
+
 const responseIntercept = (response: AxiosResponse): AxiosResponse => {
   const { data, status } = response;
   if (status === 200) {
@@ -31,6 +32,7 @@ const responseIntercept = (response: AxiosResponse): AxiosResponse => {
     return response;
   }
 };
+
 const processingError = (error: AxiosError): AxiosError => {
   return error;
 };

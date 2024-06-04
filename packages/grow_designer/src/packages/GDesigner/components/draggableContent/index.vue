@@ -1,38 +1,53 @@
 <template>
-  <VueDraggableNext group="draggable-group"
-                    :animation="180"
-                    v-model="draggableConfig.structures"
-                    class="draggable-grop-wrap h-full bg-BG_COLOR2"
-                    handle=".draggable-content-bar"
-                    @add="onDraggableAdd">
-    <transition-group name="list"
-                      type="transition">
-      <DraggableItem v-for="ele in draggableConfig.structures"
-                     :key="ele.uuid"
-                     :structure="ele"
+  <draggable group="draggable-group"
+             :animation="200"
+             item-key="uuid"
+             :component-data="{
+              tag: 'div',
+              type: 'transition-group',
+              name: !drag ? 'draggable-group' : null
+             }"
+             :disabled="false"
+             ghostClass="ghost"
+             v-model="draggableConfig.structures"
+             class="draggable-grop-wrap border-slate-300"
+             handle=".draggable-content-bar"
+             @start="drag = true"
+             @end="drag = false"
+             @add="onDraggableAdd">
+    <template #item="{ element }">
+      <DraggableItem :structure="element"
                      @special="onSpecialAdd"
+                     @delete="onSpecialDelete"
                      @active="onActive">
-        <abstractionComponent :config="draggableConfig.renderArgument[ele.uuid]"
-                              :structure="ele"
+        <abstractionComponent :config="draggableConfig.renderArgument[element.uuid]"
+                              :structure="element"
+                              :drag="drag"
+                              @start="drag = true"
+                              @end="drag = false"
                               @add="onChildAdd"
                               @special="onSpecialAdd"
                               @active="onActive"/>
       </DraggableItem>
-    </transition-group>
-  </VueDraggableNext>
+    </template>
+  </draggable>
 </template>
 
 <script setup lang="ts">
-import { VueDraggableNext } from "vue-draggable-next";
+import draggable from 'vuedraggable'
 import DraggableItem from "../draggableItem/index.vue";
 import abstractionComponent from "../abstractionComponent/index.vue";
+import { ref } from "vue";
+import { Move, Delete, Copy, AddAlt } from "@vicons/carbon";
 
-const emit = defineEmits(['add','special','active']);
+const emit = defineEmits(['add','special','delete','active']);
 
 interface Props {
   draggableConfig: any
 }
 const props = defineProps<Props>();
+
+const drag = ref(false);
 
 const onDraggableAdd = (event) => {
   const list = props.draggableConfig.structures;
@@ -50,11 +65,18 @@ const onSpecialAdd = (event) => {
 const onActive = (event) => {
   emit('active', event);
 };
+
+const onSpecialDelete = (event) => {
+  emit('delete', event);
+};
 </script>
 
-<style lang="scss" space>
-.draggable-item {
+<style lang="scss" scoped>
+.draggable-group-move,.draggable-item {
   transition: all .35s;
+}
+.no-move {
+  transition: transform 0s;
 }
 .list-enter-active {
   transition: all .35s;
@@ -67,6 +89,9 @@ const onActive = (event) => {
   transform: translateX(-100px);
 }
 .list-enter {
-  height: 30px;
+  height: 0px;
+}
+.draggable-grop-wrap {
+  height: 100%;
 }
 </style>

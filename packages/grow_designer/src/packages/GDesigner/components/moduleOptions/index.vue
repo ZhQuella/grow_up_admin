@@ -13,29 +13,29 @@
         <el-collapse-item v-for="(item) in drageMap"
                           :title="item[1].title"
                           :name="item[0]">
-          <VueDraggableNext :list="item[1].group"
-                            :group="{
-                              name: 'draggable-group',
-                              pull: 'clone',
-                              put: false
-                            }"
-                            :animation="180"
-                            :sort="false"
-                            class="flex flex-wrap"
-                            @start="onDragStart($event, item[1].group)"
-                            @end="onDragEnd($event, item[1].group)">
-            <div class="draggable-item w-1/3 h-[90px] box-border p-[10px] cursor-pointer hover:bg-[var(--el-text-color-disabled)] transition ease-in"
-                 style="transition: all .35s;"
-                 v-for="(ele) in item[1].group"
-                :key="ele.elType">
-              <div class="text-center pt-[10px]">
-                <el-icon :size="22">
-                  <component :is="ele.elIcon"/>
-                </el-icon>
+          <draggable v-model="item[1].group"
+                    :group="{
+                      name: 'draggable-group',
+                      pull: 'clone',
+                      put: false
+                    }"
+                    tag="div"
+                    :animation="180"
+                    :sort="false"
+                    class="flex flex-wrap"
+                    @start="onDragStart($event, item[1].group)"
+                    @end="onDragEnd($event, item[1].group)">
+            <template #item="{ element }">
+              <div class="draggable-item">
+                <div class="text-center pt-[10px]">
+                  <el-icon :size="22">
+                    <component :is="element.elIcon"/>
+                  </el-icon>
+                </div>
+                <p class="text-center text-[var(--el-text-color-regular)]">{{ element.elName }}</p>
               </div>
-              <p class="text-center text-[var(--el-text-color-regular)]">{{ ele.elName }}</p>
-            </div>
-          </VueDraggableNext>
+            </template>
+          </draggable>
         </el-collapse-item>
       </el-collapse>
     </el-scrollbar>
@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { VueDraggableNext } from "vue-draggable-next";
+import draggable from 'vuedraggable'
 import { useInit } from "./use/useInit";
 import { nanoid } from "nanoid";
 
@@ -67,3 +67,16 @@ const onDragEnd = (event, list) => {
   Reflect.deleteProperty(list[event.oldIndex], "uuid");
 };
 </script>
+
+<style lang="scss" scoped>
+.draggable-item {
+  width: 33.33%;
+  height: 90px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color .35s;
+  &:hover {
+    background-color:var(--el-text-color-disabled);
+  }
+}
+</style>

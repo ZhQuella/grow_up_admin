@@ -35,6 +35,9 @@
           <h4 class="leading-[30px] text-[14px]">{{ optionConfig.title }}</h4>
           <div>
             <el-icon class="w-[30px] h-[30px] text-center leading-[30px] cursor-pointer"
+                     :class="{
+                      'text-PUBLIC_MAIN_COLOR': optionConfig.isFixed
+                     }"
                      @click="onChangeOptionFixed"
                      size="16">
               <component :is="optionConfig.isFixed?'TagNone':'Tag'"/>
