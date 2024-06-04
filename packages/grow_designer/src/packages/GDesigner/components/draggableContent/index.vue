@@ -5,15 +5,13 @@
              :component-data="{
               tag: 'div',
               type: 'transition-group',
-              name: !drag ? 'draggable-group' : null
+              name: 'draggable-group'
              }"
              :disabled="false"
              ghostClass="ghost"
              v-model="draggableConfig.structures"
              class="draggable-grop-wrap border-slate-300"
              handle=".draggable-content-bar"
-             @start="drag = true"
-             @end="drag = false"
              @add="onDraggableAdd">
     <template #item="{ element }">
       <DraggableItem :structure="element"
@@ -22,9 +20,6 @@
                      @active="onActive">
         <abstractionComponent :config="draggableConfig.renderArgument[element.uuid]"
                               :structure="element"
-                              :drag="drag"
-                              @start="drag = true"
-                              @end="drag = false"
                               @add="onChildAdd"
                               @special="onSpecialAdd"
                               @active="onActive"/>
@@ -37,8 +32,6 @@
 import draggable from 'vuedraggable'
 import DraggableItem from "../draggableItem/index.vue";
 import abstractionComponent from "../abstractionComponent/index.vue";
-import { ref } from "vue";
-import { Move, Delete, Copy, AddAlt } from "@vicons/carbon";
 
 const emit = defineEmits(['add','special','delete','active']);
 
@@ -46,8 +39,6 @@ interface Props {
   draggableConfig: any
 }
 const props = defineProps<Props>();
-
-const drag = ref(false);
 
 const onDraggableAdd = (event) => {
   const list = props.draggableConfig.structures;
