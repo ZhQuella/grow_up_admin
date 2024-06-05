@@ -236,5 +236,7 @@ const onSpecialDelete = (event) => {
   min-height: 50px;
   border-width: 1px;
   border-style: dashed;
+  border-radius: 3px;
+  overflow: hidden;
 }
 </style>

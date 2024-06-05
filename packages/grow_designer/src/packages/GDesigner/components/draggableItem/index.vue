@@ -1,5 +1,5 @@
 <template>
-  <div class="relative transition delay-0 pt-[30px] border-[1px] hover:border-PUBLIC_MAIN_COLOR border-dashed rounded-[5px] overflow-hidden duration-350"
+  <div class="relative transition delay-0 pt-[20px] border-[1px] hover:border-PUBLIC_MAIN_COLOR border-dashed rounded-[5px] overflow-hidden duration-350"
        :class="{
           'border-PUBLIC_MAIN_COLOR': isActived,
           'border-slate-300': !isActived
@@ -11,7 +11,7 @@
                 enter-active-class="animate__lightSpeedInLeft"
                 leave-active-class="animate__lightSpeedOutLeft">
       <div class="z-20 absolute top-0 left-0 pr-[4px] h-[26px] bg-PUBLIC_MAIN_COLOR text-center rounded-br-[5px] overflow-hidden"
-          v-if="isActived">
+          v-show="isActived">
         <el-icon class="draggable-content-bar cursor-pointer w-[26px] h-[26px]">
           <Move class="text-white"/>
         </el-icon>
@@ -81,7 +81,6 @@ const onAddSpecificChild = () => {
 };
 
 const onDeleteItem = () => {
-  console.log(props.structure);
   emit('delete', props.structure);
 }
 </script>

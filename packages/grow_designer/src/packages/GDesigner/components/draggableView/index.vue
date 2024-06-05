@@ -3,6 +3,7 @@
     <draggableContent @add="onDraggableAdd"
                       @special="onSpecialAdd"
                       @active="onActiveed"
+                      @delete="onDeleteItem"
                       :draggableConfig="draggableConfig"/>
   </div>
 </template>
@@ -12,7 +13,7 @@ import draggableContent from "../draggableContent/index.vue";
 
 import { useEvents } from "./use/useEvents";
 
-const emits = defineEmits(["add",'special','active']);
+const emits = defineEmits(["add",'special','active','delete']);
 
 defineOptions({ name: "draggableView" });
 
@@ -25,7 +26,8 @@ defineProps<Props>();
 const {
   onDraggableAdd,
   onSpecialAdd,
-  onActiveed
+  onActiveed,
+  onDeleteItem
 } = useEvents({
   emits
 });
