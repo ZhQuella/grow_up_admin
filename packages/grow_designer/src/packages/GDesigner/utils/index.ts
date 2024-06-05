@@ -12,7 +12,7 @@ export const getAllChilds = (arr: any[], isOnlyChild = false) => {
         result.push(...item.children)
       }
       else{
-        result.push(...item.children)
+        result.push(...[item.children || []])
       }
      item.children && temporary.unshift(...item.children);
     };
