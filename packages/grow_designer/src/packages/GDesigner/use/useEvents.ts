@@ -1,6 +1,7 @@
 import type { Ref } from "vue";
 import { specificComponent } from "../static/moduleMap";
 import { nanoid } from "nanoid";
+import { getAllChilds, deleteByUUID } from "../utils";
 
 interface props {
   draggableConfig: any;
@@ -62,11 +63,25 @@ export const useEvents = ({
     structure.children.push(child);
   }
 
+  const onDeleteItem = (event) => {
+    const result = getAllChilds([event]);
+    const uuids: string[] = result.map(el => el.uuid);
+    draggableConfig.structures = deleteByUUID(draggableConfig.structures, event.uuid);
+    for(let i = 0, item; item = uuids[i++]; ) {
+      Reflect.deleteProperty(draggableConfig.styles, item);
+      Reflect.deleteProperty(draggableConfig.props, item);
+      Reflect.deleteProperty(draggableConfig.events, item);
+      Reflect.deleteProperty(draggableConfig.renderArgument, item);
+    };
+    console.log(draggableConfig);
+  };
+
   return {
     onSpecialAdd,
     onDraggableViewAdd,
     onGenerateKey,
-    onActivated
+    onActivated,
+    onDeleteItem
   };
 };
 

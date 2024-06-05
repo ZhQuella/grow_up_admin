@@ -21,6 +21,7 @@
         <abstractionComponent :config="draggableConfig.renderArgument[element.uuid]"
                               :structure="element"
                               @add="onChildAdd"
+                              @delete="onSpecialDelete"
                               @special="onSpecialAdd"
                               @active="onActive"/>
       </DraggableItem>

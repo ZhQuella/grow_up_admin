@@ -20,10 +20,15 @@ export const useEvents = ({
     emits('active', event);
   };
 
+  const onDeleteItem = (event) => {
+    emits('delete', event);
+  }
+
   return {
     onDraggableAdd,
     onSpecialAdd,
-    onActiveed
+    onActiveed,
+    onDeleteItem
   }
 };
 
