@@ -16,7 +16,7 @@ export const useEvents = ({
     emits('special', event);
   };
 
-  const onActiveed = (event) => {
+  const onActive = (event) => {
     emits('active', event);
   };
 
@@ -24,11 +24,16 @@ export const useEvents = ({
     emits('delete', event);
   }
 
+  const onCopyItem = (event) => {
+    emits('copy', event);
+  };
+
   return {
     onDraggableAdd,
     onSpecialAdd,
-    onActiveed,
-    onDeleteItem
+    onActive,
+    onDeleteItem,
+    onCopyItem
   }
 };
 

@@ -17,11 +17,13 @@
       <DraggableItem :structure="element"
                      @special="onSpecialAdd"
                      @delete="onSpecialDelete"
+                     @copy="onCopyItem"
                      @active="onActive">
         <abstractionComponent :config="draggableConfig.renderArgument[element.uuid]"
                               :structure="element"
                               @add="onChildAdd"
                               @delete="onSpecialDelete"
+                              @copy="onCopyItem"
                               @special="onSpecialAdd"
                               @active="onActive"/>
       </DraggableItem>
@@ -34,7 +36,7 @@ import draggable from 'vuedraggable'
 import DraggableItem from "../draggableItem/index.vue";
 import abstractionComponent from "../abstractionComponent/index.vue";
 
-const emit = defineEmits(['add','special','delete','active']);
+const emit = defineEmits(['add','special','delete','active','copy']);
 
 interface Props {
   draggableConfig: any
@@ -60,6 +62,10 @@ const onActive = (event) => {
 
 const onSpecialDelete = (event) => {
   emit('delete', event);
+};
+
+const onCopyItem = (event) => {
+  emit('copy', event);
 };
 </script>
 

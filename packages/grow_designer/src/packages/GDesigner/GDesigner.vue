@@ -61,12 +61,16 @@
                          @add="onDraggableViewAdd"
                          @special="onSpecialAdd"
                          @active="onActivated"
-                         @delete="onDeleteItem"/>
+                         @delete="onDeleteItem"
+                         @copy="onCopyItem"/>
         </el-scrollbar>
       </div>
       <div class="grow-0 shrink-0 w-[300px] bg-BG_COLOR3 border-l-[1px] border-BORDER_COLOR2 border-solid">
-        配置区域
-        {{ activeUUID }}
+        <ElScrollbar class="h-full">
+          配置区域
+          {{ activeUUID }}
+          <pre>{{ JSON.stringify(draggableConfig, null, 2) }}</pre>
+        </ElScrollbar>
       </div>
     </div>
 
@@ -95,7 +99,8 @@ const {
   onDraggableViewAdd,
   onSpecialAdd,
   onActivated,
-  onDeleteItem
+  onDeleteItem,
+  onCopyItem
 } = useEvents({
   draggableConfig,
   activeUUID
