@@ -27,11 +27,13 @@
         <DraggableItem :structure="element"
                        @active="onActive"
                        @delete="onSpecialDelete"
+                       @copy="onCopyItem"
                        @special="onDraggableAdd">
           <abstractionComponent :config="draggableConfig.renderArgument[element.uuid]"
                                 :structure="element"
                                 @add="onAbstractionAdd"
                                 @delete="onSpecialDelete"
+                                @copy="onCopyItem"
                                 @active="onActive"/>
         </DraggableItem>
         </template>
@@ -63,12 +65,14 @@
           <DraggableItem :structure="element"
                          @special="onDraggableAdd"
                          @delete="onSpecialDelete"
+                         @copy="onCopyItem"
                          @active="onActive">
             <abstractionComponent :config="draggableConfig.renderArgument[element.uuid]"
                                   :structure="element"
                                   @add="onAbstractionAdd"
                                   @special="onDraggableAdd"
                                   @delete="onSpecialDelete"
+                                  @copy="onCopyItem"
                                   @active="onActive"/>
           </DraggableItem>
         </template>
@@ -95,11 +99,13 @@
           <DraggableItem :structure="element"
                          @active="onActive"
                          @delete="onSpecialDelete"
+                         @copy="onCopyItem"
                          @special="onDraggableAdd">
             <abstractionComponent :config="draggableConfig.renderArgument[element.uuid]"
                                   :structure="element"
                                   @add="onAbstractionAdd"
                                   @delete="onSpecialDelete"
+                                  @copy="onCopyItem"
                                   @active="onActive"/>
           </DraggableItem>
         </template>
@@ -135,6 +141,7 @@
           <DraggableItem :structure="element"
                          @active="onActive"
                          @delete="onSpecialDelete"
+                         @copy="onCopyItem"
                          @special="onDraggableAdd">
             <abstractionComponent :config="draggableConfig.renderArgument[element.uuid]"
                                   :structure="element"
@@ -142,6 +149,7 @@
                                   @add="onAbstractionAdd"
                                   @special="onDraggableAdd"
                                   @delete="onSpecialDelete"
+                                  @copy="onCopyItem"
                                   @active="onActive"/>
           </DraggableItem>
         </template>
@@ -158,6 +166,7 @@
                               @add="onAbstractionAdd"
                               @special="onDraggableAdd"
                               @delete="onSpecialDelete"
+                              @copy="onCopyItem"
                               @active="onActive"/>
       </component>
     </template>
@@ -172,6 +181,7 @@
                               :drag="drag"
                               @add="onAbstractionAdd"
                               @delete="onSpecialDelete"
+                              @copy="onCopyItem"
                               @special="onDraggableAdd"
                               @active="onActive"/>
       </component>
@@ -192,7 +202,7 @@ const draggableConfig:any = inject(DRAGGABLE_CONGIG);
 
 defineOptions({ name: "abstractionComponent" });
 
-const emit = defineEmits(['add','special','active','delete'])
+const emit = defineEmits(['add','special','active','delete','copy'])
 
 interface PropsType {
   config: any;
@@ -227,6 +237,10 @@ const onActive = (event) => {
 const onSpecialDelete = (event) => {
   emit('delete', event);
 }
+
+const onCopyItem = (event) => {
+  emit('copy', event);
+};
 </script>
 <style lang="scss" scoped>
 .draggable-grop-wrap {

@@ -20,7 +20,8 @@
           <Delete class="text-white"/>
         </el-icon>
         <el-icon class="ml-[5px] cursor-pointer w-[26px] h-[26px]">
-          <Copy class="text-white"/>
+          <Copy class="text-white"
+                @click="onCopyItem"/>
         </el-icon>
         <el-icon class="ml-[5px] cursor-pointer w-[26px] h-[26px]"
                  v-if="isAdd"
@@ -48,7 +49,7 @@ interface Props {
   structure: any;
 }
 
-const emit = defineEmits(['special','active', "delete"])
+const emit = defineEmits(['special','active', 'delete','copy']);
 
 const props = defineProps<Props>();
 const { structure } = toRefs(props);
@@ -82,7 +83,11 @@ const onAddSpecificChild = () => {
 
 const onDeleteItem = () => {
   emit('delete', props.structure);
-}
+};
+
+const onCopyItem = () => {
+  emit('copy', props.structure);
+};
 </script>
 <style lang="scss">
 .draggable-grop-wrap {
