@@ -69,7 +69,6 @@
         <ElScrollbar class="h-full">
           配置区域
           {{ activeUUID }}
-          <pre>{{ JSON.stringify(draggableConfig, null, 2) }}</pre>
         </ElScrollbar>
       </div>
     </div>
