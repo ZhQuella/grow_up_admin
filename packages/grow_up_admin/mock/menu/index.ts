@@ -68,7 +68,7 @@ const menuList = [
       {
         label: "折叠列表",
         name: "OverflowList",
-        icon: "PanelExpansion",
+        icon: "FolderDetailsReference",
         path: "OverflowList",
         component: "Feat/OverflowList/index.vue"
       }
@@ -257,7 +257,7 @@ const menuDataList: any[] = [
         menuType: "1",
         label: "折叠列表",
         name: "OverflowList",
-        icon: "PanelExpansion",
+        icon: "FolderDetailsReference",
         path: "OverflowList",
         component: "Feat/OverflowList/index.vue",
         hidden: true,
