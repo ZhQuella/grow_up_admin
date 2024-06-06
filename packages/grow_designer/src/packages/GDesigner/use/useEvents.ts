@@ -80,6 +80,7 @@ export const useEvents = ({
       Reflect.deleteProperty(draggableConfig.renderArgument, item);
     }
     draggableConfig.structures = deleteByUUID(draggableConfig.structures, event.uuid);
+    activeUUID.value = "";
   };
 
   const copyObjectConfig = (oldUUID) => {

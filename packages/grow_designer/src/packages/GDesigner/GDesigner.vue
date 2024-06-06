@@ -90,7 +90,7 @@
                      @dragstart="onGenerateKey"/>
         </div>
       </div>
-      <div class="flex-1 bg-BG_COLOR2">
+      <div class="flex-1 bg-BG_COLOR2 relative">
         <el-scrollbar class="h-full draggable-content">
           <DraggableView :draggableConfig="draggableConfig"
                          @add="onDraggableViewAdd"
@@ -99,12 +99,15 @@
                          @delete="onDeleteItem"
                          @copy="onCopyItem"/>
         </el-scrollbar>
+        <div class="text-gray-400 absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] leading-full pointer-events-none text-center text-[24px]"
+             v-if="!draggableConfig.structures.length">请从左侧组件库中拖入对应组件</div>
       </div>
-      <div class="grow-0 shrink-0 w-[300px] bg-BG_COLOR3 border-l-[1px] border-BORDER_COLOR2 border-solid">
-        <ElScrollbar class="h-full">
-          配置区域
-          {{ activeUUID }}
-        </ElScrollbar>
+      <div class="grow-0 shrink-0 w-[300px] bg-BG_COLOR3 border-l-[1px] border-BORDER_COLOR2 border-solid"
+          @click.stop>
+        <EleOptions :activeUUID="activeUUID"
+                    :config="draggableConfig"
+                    v-if="activeUUID"/>
+        <PageOptions v-if="!activeUUID"/>
       </div>
     </div>
 
@@ -114,6 +117,8 @@
 <script setup lang="ts">
 import { FlowLogsVpc, Close, DataBase, TreeView } from "@vicons/carbon";
 import DraggableView from "./components/draggableView/index.vue";
+import EleOptions from "./components/eleOptions/index.vue";
+import PageOptions from "./components/pageOptions/index.vue";
 
 import { useOption } from "./use/useOption";
 import { useEvents } from "./use/useEvents";
