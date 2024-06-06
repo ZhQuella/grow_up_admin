@@ -12,6 +12,7 @@
     "dev": "rollup -c -w --environment NODE_ENV:development"
   },
   "dependencies": {
+    "grow_editor": "workspace:^",
     "vuedraggable": "^4.1.0"
   }
 }

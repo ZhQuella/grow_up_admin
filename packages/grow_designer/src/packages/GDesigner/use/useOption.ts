@@ -33,6 +33,14 @@ export const useOption = () => {
     module: {
       title: "组件库",
       componentName: "moduleOptions"
+    },
+    json: {
+      title: "查看数据",
+      componentName: "reviewData"
+    },
+    tree: {
+      title: "结构树",
+      componentName: "reviewTree"
     }
   };
 

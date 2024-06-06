@@ -22,6 +22,40 @@
             </el-icon>
           </div>
         </el-tooltip>
+        <el-tooltip class="box-item"
+                    effect="dark"
+                    content="查看数据"
+                    placement="right">
+          <div class="text-center leading-[40px] mb-[5px] cursor-pointer hover:text-PUBLIC_MAIN_COLOR transition duration-150"
+               :class="[
+                {
+                  'text-PUBLIC_MAIN_COLOR':optionConfig.type === 'json'
+                }
+              ]"
+               @click="onLeftOptionClick('json')">
+            <el-icon :size="18"
+                     @click="onLeftOptionClose">
+              <DataBase/>
+            </el-icon>
+          </div>
+        </el-tooltip>
+        <el-tooltip class="box-item"
+                    effect="dark"
+                    content="结构树"
+                    placement="right">
+          <div class="text-center leading-[40px] mb-[5px] cursor-pointer hover:text-PUBLIC_MAIN_COLOR transition duration-150"
+               :class="[
+                {
+                  'text-PUBLIC_MAIN_COLOR':optionConfig.type === 'tree'
+                }
+              ]"
+               @click="onLeftOptionClick('tree')">
+            <el-icon :size="18"
+                     @click="onLeftOptionClose">
+              <TreeView/>
+            </el-icon>
+          </div>
+        </el-tooltip>
       </div>
       <div class="h-full w-[300px] left-[50px] top-[0px] bg-BG_COLOR3 flex flex-col z-10"
            :class="[
@@ -51,6 +85,7 @@
         </div>
         <div class="flex-1 h-[1px]">
           <component :is="optionConfig.componentName"
+                     :data="draggableConfig"
                      class="flex-1 h-full"
                      @dragstart="onGenerateKey"/>
         </div>
@@ -77,7 +112,7 @@
 </template>
 
 <script setup lang="ts">
-import { FlowLogsVpc, Close } from "@vicons/carbon";
+import { FlowLogsVpc, Close, DataBase, TreeView } from "@vicons/carbon";
 import DraggableView from "./components/draggableView/index.vue";
 
 import { useOption } from "./use/useOption";
@@ -109,11 +144,15 @@ const {
 <script lang="ts">
 import { defineComponent } from "vue";
 import moduleOptions from "./components/moduleOptions/index.vue";
+import reviewData from "./components/reviewData/index.vue";
+import reviewTree from "./components/reviewTree/index.vue";
 
 export default defineComponent({
   name: "GDesigner",
   components: {
-    moduleOptions
+    moduleOptions,
+    reviewData,
+    reviewTree
   }
 });
 </script>
