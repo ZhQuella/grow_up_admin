@@ -263,6 +263,9 @@ importers:
 
   packages/grow_designer:
     dependencies:
+      grow_editor:
+        specifier: workspace:^
+        version: link:../grow_editor
       vuedraggable:
         specifier: ^4.1.0
         version: 4.1.0(vue@3.4.27)
