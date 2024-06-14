@@ -48,16 +48,16 @@ export default class Request extends CatchResult {
       const isIn = internalOnlyIn || outOnlyIn;
       const reuqestConfig: any = {};
       if (!isIn) {
-        const afterData = that.margeData(outData, internalData);
+        const afterData = that.mergeData(outData, internalData);
         reuqestConfig.data = afterData;
-        const afterQuery = that.margeData(outQuery, internalQuery);
+        const afterQuery = that.mergeData(outQuery, internalQuery);
         reuqestConfig.params = afterQuery;
       } else {
         reuqestConfig.data = internalData;
         reuqestConfig.params = internalQuery;
       }
-      const args = that.margeData(outArg, internalArg);
-      const beforeParams = isIn ? internalParams : that.margeData(outParams, internalParams);
+      const args = that.mergeData(outArg, internalArg);
+      const beforeParams = isIn ? internalParams : that.mergeData(outParams, internalParams);
       const url = that.withParam(beforeUrl, beforeParams);
       if (isCatch && isCache.call(that, key)) {
         return Promise.resolve(getCache.call(that, key));
@@ -76,7 +76,7 @@ export default class Request extends CatchResult {
     };
   }
 
-  private margeData(outData: any, innerData: any): any {
+  private mergeData(outData: any, innerData: any): any {
     return Object.assign({}, outData, innerData);
   }
 

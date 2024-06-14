@@ -7,9 +7,7 @@
         <ElTabPane label="高级" name="renderArgument"/>
       </ElTabs>
     </div>
-    <ElScrollbar class="h-full flex-1">
-      <p class="p-[10px] text-center">用爱发电中...😊</p>
-    </ElScrollbar>
+    <ElScrollbar class="h-full flex-1"></ElScrollbar>
   </div>
 </template>
 
