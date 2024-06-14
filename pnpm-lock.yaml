@@ -167,9 +167,6 @@ importers:
       prettier:
         specifier: ^2.8.7
         version: registry.npmjs.org/prettier@2.8.7
-      reset-css:
-        specifier: ^5.0.1
-        version: registry.npmjs.org/reset-css@5.0.1
       rollup:
         specifier: ^3.20.2
         version: registry.npmjs.org/rollup@3.20.2
@@ -412,9 +409,6 @@ importers:
       pinia:
         specifier: ^2.0.34
         version: 2.0.34(typescript@5.0.4)(vue@3.4.27)
-      reset-css:
-        specifier: ^5.0.1
-        version: registry.npmjs.org/reset-css@5.0.1
       sortablejs:
         specifier: ^1.15.0
         version: registry.npmjs.org/sortablejs@1.15.0
@@ -11678,11 +11672,6 @@ packages:
     name: requires-port
     version: 1.0.0
     dev: true
-
-  registry.npmjs.org/reset-css@5.0.1:
-    resolution: {integrity: sha512-VyuJdNFfp5x/W6e5wauJM59C02Vs0P22sxzZGhQMPaqu/NGTeFxlBFOOw3eq9vQd19gIDdZp7zi89ylyKOJ33Q==, registry: https://registry.npmmirror.com/, tarball: https://registry.npmjs.org/reset-css/-/reset-css-5.0.1.tgz}
-    name: reset-css
-    version: 5.0.1
 
   registry.npmjs.org/resize-observer-polyfill@1.5.1:
     resolution: {integrity: sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==, registry: https://registry.npmmirror.com/, tarball: https://registry.npmjs.org/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz}

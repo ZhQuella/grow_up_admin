@@ -41,7 +41,6 @@
     "nanoid": "^4.0.2",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.34",
-    "reset-css": "^5.0.1",
     "sortablejs": "^1.15.0",
     "v3-tour": "^3.1.2",
     "vue-i18n": "^9.2.2",
