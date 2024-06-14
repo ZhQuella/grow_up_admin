@@ -1,6 +1,13 @@
 <template>
   <div class="w-full p-[10px]">
     <div class="relative w-full h-[150px]">
+      <div class="py-[60px] px-[60px]">
+        <ElSelect :modelValue="`px`" class="w-full" size="small">
+          <ElOption label="px" name="px"></ElOption>
+          <ElOption label="%" name="%"></ElOption>
+          <ElOption label="vw" name="vw"></ElOption>
+        </ElSelect>
+      </div>
       <div class="absolute top-0 left-0 right-0 border-t-[20px] border-r-[20px] border-l-[20px] border-t-[#d6e4ff] border-solid border-l-[transparent] border-r-[transparent]">
         <span class="absolute top-[-20px] left-0 right-0 h-[20px] bg-transparent w-full">
           <input placeholder="0"
