@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full p-[10px]">
+  <div class="px-[10px] py-[5px]">
     <div class="relative w-full h-[150px]">
       <div class="py-[60px] px-[60px]">
         <ElSelect :modelValue="`px`" class="w-full" size="small">
