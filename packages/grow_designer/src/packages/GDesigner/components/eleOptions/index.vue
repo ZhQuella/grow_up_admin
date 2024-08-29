@@ -10,8 +10,8 @@
       </ElTabs>
     </div>
     <ElScrollbar class="h-full flex-1">
-      <p>布局</p>
       <ElementSize />
+      <ElementDisplay />
       <p class="p-[10px] text-center">用爱发电中...😊</p>
       {{ config[tabModel][activeUUID] }}
     </ElScrollbar>
@@ -22,6 +22,7 @@
 defineOptions({ name: "eleOptions" });
 import { toRefs, ref } from "vue";
 import ElementSize from "../../optionComponent/ElementSize/index.vue";
+import ElementDisplay from "../../optionComponent/ElementDisplay/index.vue";
 
 const props = defineProps({
   activeUUID: {
