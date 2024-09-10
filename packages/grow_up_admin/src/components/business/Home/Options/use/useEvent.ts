@@ -6,11 +6,13 @@ import { AUTHORITY_TOKEN, TABS_LIST_KEY, TABS_CURRENT_KEY } from "@/assets/enums
 import { createStorage } from "grow_utils";
 import { useRouter } from "vue-router";
 import { ElMessageBox, ElMessage } from "element-plus";
+import { useLockScreen } from "store/modules/LockScreen";
 
 type userMenuType = "profile" | "logout";
 
 export const useEvent = ({ t }: { t: Fn }) => {
   const appStore = useAppStore();
+  const lockScreenStore = useLockScreen();
   const { toggle, isFullscreen } = useFullscreen();
   const settingActive = ref(false);
   const messageActive = ref(false);
@@ -56,11 +58,16 @@ export const useEvent = ({ t }: { t: Fn }) => {
     if (value === "logout") onLoginOut();
   };
 
+  const onLockScreenHeadler = () => {
+    lockScreenStore.setIsLockScreen(true);
+  };
+
   return {
     settingActive,
     isFullscreen,
     messageActive,
     toggle,
+    onLockScreenHeadler,
     onSettingHadnler,
     onSearchHeadler,
     onDropdownClick

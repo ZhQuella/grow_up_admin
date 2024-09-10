@@ -12,3 +12,5 @@ export const TABS_LIST_KEY = "TABS_LIST__";
 export const AUTHORITY_TOKEN = "AUTHORITY_TOKEN__";
 /** 账号信息 */
 export const ACCOUNT_INFO = "ACCOUNT_INFO__";
+/** 是否锁屏 */
+export const IS_LOCK_SCREEN = "IS_LOCK_SCREEN__";

@@ -1,6 +1,14 @@
 <template>
-  <div class="flex w-[265px] grow-0 shrink-0">
+  <div class="flex w-[320px] grow-0 shrink-0">
     <div class="pt-[5px]">
+      <el-button
+          :icon="ScreenOff"
+          size="large"
+          circle
+          text
+          class="text-[18px]"
+          @click="onLockScreenHeadler"
+      />
       <el-button
         :icon="Search"
         size="large"
@@ -64,7 +72,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { Settings, Help, Notification, Search } from "@vicons/carbon";
+import { Settings, Help, Notification, Search, ScreenOff } from "@vicons/carbon";
 import { FullscreenExitOutlined, FullscreenOutlined } from "@vicons/antd";
 import MessageList from "components/business/Home/MessageList/index.vue";
 import { useEvent } from "./use/useEvent";
@@ -85,6 +93,7 @@ const {
   toggle,
   onSettingHadnler,
   onSearchHeadler,
+  onLockScreenHeadler,
   onDropdownClick,
   messageActive
 } = useEvent({
