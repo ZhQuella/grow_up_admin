@@ -4,7 +4,7 @@ q<template>
       <template #redact>
         <div class="flex flex-col h-full">
           <div class="flex justify-between grow-0 shrink-0 h-[40px] px-[10px]">
-            <div class="flex-1">
+            <div class="flex-1 w-[1px]">
               <ElTabs v-model="tabsActive"
                       @tab-change="onTabChange"
                       @tab-remove="onTabsRemove">

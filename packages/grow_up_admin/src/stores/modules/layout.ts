@@ -13,7 +13,7 @@ export const useLayoutStore = defineStore({
   }),
   getters: {
     getLayoutType(): LayoutTypes {
-      return this.layout ?? defaultValue;
+      return (this.layout ?? defaultValue) as LayoutTypes;
     }
   },
   actions: {

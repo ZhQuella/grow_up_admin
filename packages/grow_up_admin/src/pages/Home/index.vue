@@ -1,5 +1,8 @@
 <template>
-  <div class="h-[100vh]">
+  <div class="h-[100vh] transition-all duration-500"
+       :style="{
+          filter: isLock?`blur(10px)`:''
+       }">
     <div
       v-loading="systemLoading"
       class="h-full bg-BG_COLOR overflow-hidden"
@@ -50,6 +53,16 @@
         <AppSearch @select="onAppSearchSelect" />
       </div>
     </el-dialog>
+
+
+    <teleport to="body">
+      <transition appear
+                  name="animate__animated animate__bounce"
+                  enter-active-class="animate__bounceInDown"
+                  leave-active-class="animate__fadeOutUpBig">
+          <LockScreen v-if="isLock"/>
+      </transition>
+    </teleport>
   </div>
 </template>
 
@@ -64,8 +77,10 @@ import Options from "components/business/Home/Options/index.vue";
 import SettingContent from "components/business/Home/SettingContent/index.vue";
 import NavigationPath from "components/base/NavigationPath/index.vue";
 import AppSearch from "components/base/AppSearch/index.vue";
+import LockScreen from "components/business/Home/LockScreen/index.vue";
 
 import { useMenuStore } from "store/modules/menu";
+import { useLockScreen } from "store/modules/LockScreen";
 
 import { useVariable } from "./use/useVariable";
 import { useInteRouter } from "./use/useInteRouter";
@@ -76,6 +91,7 @@ const { t } = useI18n();
 const homePath = ref("");
 
 const menuStore = useMenuStore();
+const lockScreenStore = useLockScreen();
 const collapsed = computed(() => {
   return menuStore.getCollapsed;
 });
@@ -87,6 +103,11 @@ const onCreated = async () => {
   const { defaultPath } = await useInteRouter({ systemLoading });
   homePath.value = defaultPath.value;
 };
+
+const isLock = computed(() => {
+  return lockScreenStore.getLocale;
+});
+
 onCreated();
 </script>
 
