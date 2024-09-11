@@ -58,7 +58,7 @@
     <teleport to="body">
       <transition appear
                   name="animate__animated animate__bounce"
-                  enter-active-class="animate__bounceInDown"
+                  enter-active-class="animate__fadeInDownBig"
                   leave-active-class="animate__fadeOutUpBig">
           <LockScreen v-if="isLock"/>
       </transition>

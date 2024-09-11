@@ -109,5 +109,18 @@ export default {
   },
   TABLE: {
     SERIAL: "NO."
+  },
+  SYSTEM_CONTENT: {
+    UNLOCK: "Please enter the unlock password",
+    YEAR: "-",
+    MONTH: "-",
+    DAY: "",
+    MONDAY: "Monday",
+    TUESDAY: "Tuesday",
+    WEDNESDAY: "Wednesday",
+    THURSDAY: "Thursday",
+    FRIDAY: "Friday",
+    SATURDAY: "Saturday",
+    SUNDAY: "Sunday"
   }
 };
