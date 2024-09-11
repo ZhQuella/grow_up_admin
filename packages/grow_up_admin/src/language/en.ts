@@ -112,6 +112,7 @@ export default {
   },
   SYSTEM_CONTENT: {
     UNLOCK: "Please enter the unlock password",
+    BTN_UNLOCK: "Unlock",
     YEAR: "-",
     MONTH: "-",
     DAY: "",
