@@ -105,6 +105,7 @@ export default {
   },
   SYSTEM_CONTENT: {
     UNLOCK: "请输入解锁密码",
+    BTN_UNLOCK: "解锁",
     YEAR: "年",
     MONTH: "月",
     DAY: "日",

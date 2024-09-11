@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { storageExample } from "grow_utils";
-import {IS_LOCK_SCREEN, LOCALE_KEY} from "@/assets/enums/cacheEnum";
+import { IS_LOCK_SCREEN } from "@/assets/enums/cacheEnum";
 
 export const useLockScreen = defineStore({
    id: "LockScreen",
