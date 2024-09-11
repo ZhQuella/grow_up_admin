@@ -102,5 +102,18 @@ export default {
   },
   TABLE: {
     SERIAL: "序号"
+  },
+  SYSTEM_CONTENT: {
+    UNLOCK: "请输入解锁密码",
+    YEAR: "年",
+    MONTH: "月",
+    DAY: "日",
+    MONDAY: "星期一",
+    TUESDAY: "星期二",
+    WEDNESDAY: "星期三",
+    THURSDAY: "星期四",
+    FRIDAY: "星期五",
+    SATURDAY: "星期六",
+    SUNDAY: "星期日"
   }
 };

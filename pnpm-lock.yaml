@@ -370,6 +370,9 @@ importers:
       await-to-js:
         specifier: ^3.0.0
         version: registry.npmjs.org/await-to-js@3.0.0
+      dayjs:
+        specifier: ^1.11.13
+        version: 1.11.13
       echarts:
         specifier: ^5.4.2
         version: registry.npmjs.org/echarts@5.4.2
@@ -3961,8 +3964,8 @@ packages:
       time-zone: 1.0.0
     dev: true
 
-  /dayjs@1.11.8:
-    resolution: {integrity: sha512-LcgxzFoWMEPO7ggRv1Y2N31hUf2R0Vj7fuy/m+Bg1K8rr+KAs1AEy4y9jd5DXe8pbHgX+srkHNS7TH6Q6ZhYeQ==}
+  /dayjs@1.11.13:
+    resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
     dev: false
 
   /debug@2.6.9:
@@ -4065,7 +4068,7 @@ packages:
       '@types/lodash-es': 4.17.7
       '@vueuse/core': 9.13.0(vue@3.3.0)
       async-validator: 4.2.5
-      dayjs: 1.11.8
+      dayjs: 1.11.13
       escape-html: 1.0.3
       lodash: 4.17.21
       lodash-es: 4.17.21
@@ -6306,6 +6309,40 @@ packages:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
     dev: false
+
+  /vite@4.3.9(@types/node@18.15.11)(sass@1.62.0):
+    resolution: {integrity: sha512-qsTNZjO9NoJNW7KnOrgYwczm0WctJ8m/yqYAMAK9Lxt4SoySUfS5S8ia9K7JHpa3KEeMfyF8LoJ3c5NeBJy6pg==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      '@types/node': registry.npmjs.org/@types/node@18.15.11
+      esbuild: 0.17.19
+      postcss: 8.4.38
+      rollup: 3.25.1
+      sass: registry.npmjs.org/sass@1.62.0
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
 
   /vue-demi@0.14.5(vue@3.3.0):
     resolution: {integrity: sha512-o9NUVpl/YlsGJ7t+xuqJKx8EBGf1quRhCiT6D/J0pfwmk9zUwYkC7yrF4SZCe6fETvSM3UNL2edcbYrSyc4QHA==}
@@ -9092,7 +9129,7 @@ packages:
     engines: {node: '>=8.3.0'}
     dependencies:
       archiver: 5.3.1
-      dayjs: 1.11.8
+      dayjs: 1.11.13
       fast-csv: 4.3.6
       jszip: 3.10.1
       readable-stream: 3.6.2
@@ -12567,7 +12604,7 @@ packages:
       chalk: registry.npmjs.org/chalk@4.1.2
       debug: registry.npmjs.org/debug@4.3.4
       fs-extra: registry.npmjs.org/fs-extra@10.1.0
-      vite: registry.npmjs.org/vite@4.3.9(@types/node@18.15.11)(sass@1.62.0)
+      vite: 4.3.9(@types/node@18.15.11)(sass@1.62.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -12603,7 +12640,7 @@ packages:
       imagemin-webp: registry.npmjs.org/imagemin-webp@6.1.0
       jpegtran-bin: registry.npmjs.org/jpegtran-bin@6.0.1
       pathe: registry.npmjs.org/pathe@0.2.0
-      vite: registry.npmjs.org/vite@4.3.9(@types/node@18.15.11)(sass@1.62.0)
+      vite: 4.3.9(@types/node@18.15.11)(sass@1.62.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -12627,7 +12664,7 @@ packages:
       fast-glob: registry.npmjs.org/fast-glob@3.2.12
       mockjs: registry.npmjs.org/mockjs@1.1.0
       path-to-regexp: registry.npmjs.org/path-to-regexp@6.2.1
-      vite: registry.npmjs.org/vite@4.3.9(@types/node@18.15.11)(sass@1.62.0)
+      vite: 4.3.9(@types/node@18.15.11)(sass@1.62.0)
     transitivePeerDependencies:
       - supports-color
     dev: true

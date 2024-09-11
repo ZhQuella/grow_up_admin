@@ -28,6 +28,7 @@
     "@vueuse/core": "^10.0.2",
     "animate.css": "^4.1.1",
     "await-to-js": "^3.0.0",
+    "dayjs": "^1.11.13",
     "echarts": "^5.4.2",
     "grow_admin_icons": "workspace:*",
     "grow_components": "workspace:*",
