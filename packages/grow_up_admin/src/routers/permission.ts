@@ -14,17 +14,18 @@ router.beforeEach((to, from, next) => {
   const { name } = to;
   const { path: fromPath } = from;
   const token = storage.get(AUTHORITY_TOKEN);
-  console.log(name);
+  const lockScreenStore = useLockScreen();
+
   if (!token && ROUTER_WHITELIST.includes(name as string)) {
     next();
     return;
   }
   if (!token && !ROUTER_WHITELIST.includes(name as string)) {
     next({ path: fromPath });
+    lockScreenStore.setIsLockScreen(false);
     return;
   }
   if (token && ROUTER_WHITELIST.includes(name as string)) {
-    const lockScreenStore = useLockScreen();
     storage.remove(AUTHORITY_TOKEN);
     lockScreenStore.setIsLockScreen(false);
   }
