@@ -7,14 +7,14 @@
         :to="{
           path: `/home/${item.path}`
         }"
-        class="block mb-[5px] text-[14px] leading-[40px] p-[5px] overflow-hidden border-solid border-[1px] rounded-[4px] border-gray-300 text-gray-500 hover:bg-sky-700 hover:text-gray-300 transition-all"
+        class="block mb-[5px] text-[14px] leading-[40px] p-[5px] overflow-hidden border-solid border-[1px] rounded-[4px] border-gray-300 text-gray-500 hover:bg-PUBLIC_MAIN_COLOR hover:text-BG_CARD transition-all"
         @click="onSelect"
       >
         {{ item.label }}
       </router-link>
     </div>
     <p v-else class="leading-[100px] text-center text-[12px] text-gray-400">
-      {{ $t("APP_SEARCH.NOT_SEARCH_DATA") }}
+      {{ t("APP_SEARCH.NOT_SEARCH_DATA") }}
     </p>
   </div>
 </template>
@@ -24,7 +24,9 @@ import type { MenuType } from "types/menu";
 import { watch, toRefs, unref, reactive } from "vue";
 import { useMenuStore } from "store/modules/menu";
 import { debounce } from "util/index";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const debounceFn = debounce(200);
 
 const { menuList } = useMenuStore();
