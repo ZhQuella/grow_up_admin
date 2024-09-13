@@ -3,7 +3,7 @@
     v-model="searchValue"
     type="text"
     size="large"
-    :placeholder="$t('APP_SEARCH.SEARCH_PLACEHOLDER')"
+    :placeholder="t('APP_SEARCH.SEARCH_PLACEHOLDER')"
     class="enter-y"
   >
     <template #prefix>
@@ -17,7 +17,9 @@
 import { ref } from "vue";
 import { SearchOutlined } from "@vicons/antd";
 import SearchContainer from "./SearchContainer.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const searchValue = ref("");
 const emit = defineEmits(["select"]);
 
