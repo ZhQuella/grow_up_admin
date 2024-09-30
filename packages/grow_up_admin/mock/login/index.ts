@@ -23,5 +23,23 @@ export default [
         };
       }
     }
+  },
+  {
+    url: "/account/unlock",
+    method: "post",
+    response: ({ body }: any) => {
+      const { password } = body;
+      if (password === "123789456") {
+        return {
+          code: 10000,
+          message: "解锁成功"
+        };
+      } else {
+        return {
+          code: 50005,
+          message: "解锁密码错误"
+        };
+      }
+    }
   }
 ];

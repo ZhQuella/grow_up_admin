@@ -17,8 +17,8 @@ importers:
         specifier: ^5.4.2
         version: registry.npmjs.org/echarts@5.4.2
       element-plus:
-        specifier: ^2.3.3
-        version: 2.3.3(vue@3.3.0)
+        specifier: ^2.8.4
+        version: 2.8.4(vue@3.3.0)
       exceljs:
         specifier: ^4.3.0
         version: registry.npmjs.org/exceljs@4.3.0
@@ -1907,13 +1907,13 @@ packages:
       w3c-keyname: 2.2.8
     dev: false
 
-  /@ctrl/tinycolor@3.6.0:
-    resolution: {integrity: sha512-/Z3l6pXthq0JvMYdUFyX9j0MaCltlIn6mfh9jLyQwg5aPKxkyNa0PTHtU1AlFXLNk55ZuAeJRcpvq+tmLfKmaQ==}
+  /@ctrl/tinycolor@3.6.1:
+    resolution: {integrity: sha512-SITSV6aIXsuVNV3f3O0f2n/cgyEDWoSqtZMYiAmcsYHydcKrOz3gUxB/iXd/Qf08+IZX4KpgNbvUdMBmWz+kcA==}
     engines: {node: '>=10'}
     dev: false
 
-  /@element-plus/icons-vue@2.1.0(vue@3.3.0):
-    resolution: {integrity: sha512-PSBn3elNoanENc1vnCfh+3WA9fimRC7n+fWkf3rE5jvv+aBohNHABC/KAR5KWPecxWxDTVT1ERpRbOMRcOV/vA==}
+  /@element-plus/icons-vue@2.3.1(vue@3.3.0):
+    resolution: {integrity: sha512-XxVUZv48RZAd87ucGS48jPf6pKu0yV5UCg9f4FFwtrYxXOwWuVJo6wOvSLKEoMQKjv8GsX/mhP6UsC1lRwbUWg==}
     peerDependencies:
       vue: ^3.2.0
     dependencies:
@@ -2385,14 +2385,21 @@ packages:
       lodash.uniq: 4.5.0
     dev: false
 
-  /@floating-ui/core@1.3.0:
-    resolution: {integrity: sha512-vX1WVAdPjZg9DkDkC+zEx/tKtnST6/qcNpwcjeBgco3XRNHz5PUA+ivi/yr6G3o0kMR60uKBJcfOdfzOFI7PMQ==}
+  /@floating-ui/core@1.6.8:
+    resolution: {integrity: sha512-7XJ9cPU+yI2QeLS+FCSlqNFZJq8arvswefkZrYI1yQBbftw6FyrZOxYSh+9S7z7TpeWlRt9zJ5IhM1WIL334jA==}
+    dependencies:
+      '@floating-ui/utils': 0.2.8
     dev: false
 
-  /@floating-ui/dom@1.3.0:
-    resolution: {integrity: sha512-qIAwejE3r6NeA107u4ELDKkH8+VtgRKdXqtSPaKflL2S2V+doyN+Wt9s5oHKXPDo4E8TaVXaHT3+6BbagH31xw==}
+  /@floating-ui/dom@1.6.11:
+    resolution: {integrity: sha512-qkMCxSR24v2vGkhYDo/UzxfJN3D4syqSjyuTFz6C7XcpU1pASPRieNI0Kj5VP3/503mOfYiGY891ugBX1GlABQ==}
     dependencies:
-      '@floating-ui/core': 1.3.0
+      '@floating-ui/core': 1.6.8
+      '@floating-ui/utils': 0.2.8
+    dev: false
+
+  /@floating-ui/utils@0.2.8:
+    resolution: {integrity: sha512-kym7SodPp8/wloecOpcmSnWJsK7M0E5Wg8UcFA+uO4B9s5d0ywXOEro/8HM9x0rW+TljRzul/14UYz3TleT3ig==}
     dev: false
 
   /@humanwhocodes/config-array@0.11.10:
@@ -2666,14 +2673,14 @@ packages:
     resolution: {integrity: sha512-Hr5Jfhc9eYOQNPYO5WLDq/n4jqijdHNlDXjuAQkkt+mWdQR+XJToOHrsD4cPaMXpn6KO7y2+wM8AZEs8VpBLVA==}
     dev: true
 
-  /@types/lodash-es@4.17.7:
-    resolution: {integrity: sha512-z0ptr6UI10VlU6l5MYhGwS4mC8DZyYer2mCoyysZtSF7p26zOX8UpbrV0YpNYLGS8K4PUFIyEr62IMFFjveSiQ==}
+  /@types/lodash-es@4.17.12:
+    resolution: {integrity: sha512-0NgftHUcV4v34VhXm8QBSftKVXtbkBG3ViCjs6+eJ5a6y6Mi/jiFGPc1sC7QK+9BFhWrURE3EOggmWaSxL9OzQ==}
     dependencies:
-      '@types/lodash': 4.14.195
+      '@types/lodash': 4.17.9
     dev: false
 
-  /@types/lodash@4.14.195:
-    resolution: {integrity: sha512-Hwx9EUgdwf2GLarOjQp5ZH8ZmblzcbTBC2wtQWNKARBSxM9ezRIAUpeDTgoQRAFB0+8CNWXVA9+MaSOzOF3nPg==}
+  /@types/lodash@4.17.9:
+    resolution: {integrity: sha512-w9iWudx1XWOHW5lQRS9iKpK/XuRhnN+0T7HvdCCd802FYkT1AMTnxndJHGrNJwRoRHkslGr4S29tjm1cT7x/7w==}
     dev: false
 
   /@types/minimatch@5.1.2:
@@ -4055,24 +4062,24 @@ packages:
     resolution: {integrity: sha512-L7uUknyY286of0AYC8CKfgWstD0Smk2DvHDi9F0GWQhSH90Bzi7iDrmCbZKz75tYJxeGSAc7TYeKpmbjMDoh1w==}
     dev: true
 
-  /element-plus@2.3.3(vue@3.3.0):
-    resolution: {integrity: sha512-Zy61OXrG6b4FF3h29A9ZOUkaEQXjCuFwNa7DlpB3Vo+42Tw5zBbHe5a4BY7i56TVJG5xTbS9UQyA726J91pDqg==}
+  /element-plus@2.8.4(vue@3.3.0):
+    resolution: {integrity: sha512-ZlVAdUOoJliv4kW3ntWnnSHMT+u/Os7mXJjk2xzOlqNeHaI2/ozlF+R58ZCEak8ZnDi6+5A2viWEYRsq64IuiA==}
     peerDependencies:
       vue: ^3.2.0
     dependencies:
-      '@ctrl/tinycolor': 3.6.0
-      '@element-plus/icons-vue': 2.1.0(vue@3.3.0)
-      '@floating-ui/dom': 1.3.0
+      '@ctrl/tinycolor': 3.6.1
+      '@element-plus/icons-vue': 2.3.1(vue@3.3.0)
+      '@floating-ui/dom': 1.6.11
       '@popperjs/core': /@sxzz/popperjs-es@2.11.7
-      '@types/lodash': 4.14.195
-      '@types/lodash-es': 4.17.7
+      '@types/lodash': 4.17.9
+      '@types/lodash-es': 4.17.12
       '@vueuse/core': 9.13.0(vue@3.3.0)
       async-validator: 4.2.5
       dayjs: 1.11.13
       escape-html: 1.0.3
       lodash: 4.17.21
       lodash-es: 4.17.21
-      lodash-unified: 1.0.3(@types/lodash-es@4.17.7)(lodash-es@4.17.21)(lodash@4.17.21)
+      lodash-unified: 1.0.3(@types/lodash-es@4.17.12)(lodash-es@4.17.21)(lodash@4.17.21)
       memoize-one: 6.0.0
       normalize-wheel-es: 1.2.0
       vue: 3.3.0
@@ -5074,14 +5081,14 @@ packages:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
     dev: false
 
-  /lodash-unified@1.0.3(@types/lodash-es@4.17.7)(lodash-es@4.17.21)(lodash@4.17.21):
+  /lodash-unified@1.0.3(@types/lodash-es@4.17.12)(lodash-es@4.17.21)(lodash@4.17.21):
     resolution: {integrity: sha512-WK9qSozxXOD7ZJQlpSqOT+om2ZfcT4yO+03FuzAHD0wF6S0l0090LRPDx3vhTTLZ8cFKpBn+IOcVXK6qOcIlfQ==}
     peerDependencies:
       '@types/lodash-es': '*'
       lodash: '*'
       lodash-es: '*'
     dependencies:
-      '@types/lodash-es': 4.17.7
+      '@types/lodash-es': 4.17.12
       lodash: 4.17.21
       lodash-es: 4.17.21
     dev: false
@@ -6310,40 +6317,6 @@ packages:
     hasBin: true
     dev: false
 
-  /vite@4.3.9(@types/node@18.15.11)(sass@1.62.0):
-    resolution: {integrity: sha512-qsTNZjO9NoJNW7KnOrgYwczm0WctJ8m/yqYAMAK9Lxt4SoySUfS5S8ia9K7JHpa3KEeMfyF8LoJ3c5NeBJy6pg==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': '>= 14'
-      less: '*'
-      sass: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.4.0
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      less:
-        optional: true
-      sass:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-    dependencies:
-      '@types/node': registry.npmjs.org/@types/node@18.15.11
-      esbuild: 0.17.19
-      postcss: 8.4.38
-      rollup: 3.25.1
-      sass: registry.npmjs.org/sass@1.62.0
-    optionalDependencies:
-      fsevents: 2.3.2
-    dev: true
-
   /vue-demi@0.14.5(vue@3.3.0):
     resolution: {integrity: sha512-o9NUVpl/YlsGJ7t+xuqJKx8EBGf1quRhCiT6D/J0pfwmk9zUwYkC7yrF4SZCe6fETvSM3UNL2edcbYrSyc4QHA==}
     engines: {node: '>=12'}
@@ -7509,7 +7482,7 @@ packages:
       babel-helper-function-name: registry.npmjs.org/babel-helper-function-name@6.24.1
       babel-runtime: registry.npmjs.org/babel-runtime@6.26.0
       babel-types: registry.npmjs.org/babel-types@6.26.0
-      lodash: registry.npmjs.org/lodash@4.17.21
+      lodash: 4.17.21
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -7574,7 +7547,7 @@ packages:
     dependencies:
       babel-runtime: registry.npmjs.org/babel-runtime@6.26.0
       babel-types: registry.npmjs.org/babel-types@6.26.0
-      lodash: registry.npmjs.org/lodash@4.17.21
+      lodash: 4.17.21
     dev: true
 
   registry.npmjs.org/babel-helper-remap-async-to-generator@6.24.1:
@@ -7689,7 +7662,7 @@ packages:
       babel-template: registry.npmjs.org/babel-template@6.26.0
       babel-traverse: registry.npmjs.org/babel-traverse@6.26.0
       babel-types: registry.npmjs.org/babel-types@6.26.0
-      lodash: registry.npmjs.org/lodash@4.17.21
+      lodash: 4.17.21
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -7982,7 +7955,7 @@ packages:
       babel-traverse: registry.npmjs.org/babel-traverse@6.26.0
       babel-types: registry.npmjs.org/babel-types@6.26.0
       babylon: registry.npmjs.org/babylon@6.18.0
-      lodash: registry.npmjs.org/lodash@4.17.21
+      lodash: 4.17.21
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -8000,7 +7973,7 @@ packages:
       debug: 2.6.9
       globals: 9.18.0
       invariant: registry.npmjs.org/invariant@2.2.4
-      lodash: registry.npmjs.org/lodash@4.17.21
+      lodash: 4.17.21
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -8012,7 +7985,7 @@ packages:
     dependencies:
       babel-runtime: registry.npmjs.org/babel-runtime@6.26.0
       esutils: 2.0.3
-      lodash: registry.npmjs.org/lodash@4.17.21
+      lodash: 4.17.21
       to-fast-properties: 1.0.3
     dev: true
 
@@ -12604,7 +12577,7 @@ packages:
       chalk: registry.npmjs.org/chalk@4.1.2
       debug: registry.npmjs.org/debug@4.3.4
       fs-extra: registry.npmjs.org/fs-extra@10.1.0
-      vite: 4.3.9(@types/node@18.15.11)(sass@1.62.0)
+      vite: registry.npmjs.org/vite@4.3.9(@types/node@18.15.11)(sass@1.62.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -12640,7 +12613,7 @@ packages:
       imagemin-webp: registry.npmjs.org/imagemin-webp@6.1.0
       jpegtran-bin: registry.npmjs.org/jpegtran-bin@6.0.1
       pathe: registry.npmjs.org/pathe@0.2.0
-      vite: 4.3.9(@types/node@18.15.11)(sass@1.62.0)
+      vite: registry.npmjs.org/vite@4.3.9(@types/node@18.15.11)(sass@1.62.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -12664,7 +12637,7 @@ packages:
       fast-glob: registry.npmjs.org/fast-glob@3.2.12
       mockjs: registry.npmjs.org/mockjs@1.1.0
       path-to-regexp: registry.npmjs.org/path-to-regexp@6.2.1
-      vite: 4.3.9(@types/node@18.15.11)(sass@1.62.0)
+      vite: registry.npmjs.org/vite@4.3.9(@types/node@18.15.11)(sass@1.62.0)
     transitivePeerDependencies:
       - supports-color
     dev: true

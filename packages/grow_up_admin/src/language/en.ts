@@ -123,5 +123,10 @@ export default {
     FRIDAY: "Friday",
     SATURDAY: "Saturday",
     SUNDAY: "Sunday"
+  },
+  UNLOCK_TIP: {
+    TITLE: "Password error prompt",
+    BEFORE_CONTENT: "Login failed ",
+    AFTER_CONTENT: " times during the lock screen!"
   }
 };

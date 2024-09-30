@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-0 left-0 bottom-0 w-full overflow-y-auto z-[30000]"
+  <div class="fixed top-0 left-0 bottom-0 w-full overflow-y-auto"
        style="backdrop-filter: blur(20px);">
     <div class="absolute top-[40%] left-[50%] translate-y-[-50%] translate-x-[-50%]">
       <Unlock />

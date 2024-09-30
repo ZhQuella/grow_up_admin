@@ -146,6 +146,11 @@ onMounted(() => {
   };
   initEvents(graphContainer.value as HTMLDivElement);
 });
+
+
+defineExpose({
+  graphExample
+});
 </script>
 <style lang="scss">
 @keyframes running-line {
