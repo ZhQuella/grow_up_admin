@@ -116,5 +116,10 @@ export default {
     FRIDAY: "星期五",
     SATURDAY: "星期六",
     SUNDAY: "星期日"
+  },
+  UNLOCK_TIP: {
+    TITLE: "密码错误提示",
+    BEFORE_CONTENT: "锁屏期间共 ",
+    AFTER_CONTENT: " 次登陆失败"
   }
 };

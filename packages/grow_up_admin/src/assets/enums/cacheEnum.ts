@@ -14,3 +14,5 @@ export const AUTHORITY_TOKEN = "AUTHORITY_TOKEN__";
 export const ACCOUNT_INFO = "ACCOUNT_INFO__";
 /** 是否锁屏 */
 export const IS_LOCK_SCREEN = "IS_LOCK_SCREEN__";
+/** 破解次数 */
+export const CRACKING_TIMES = "CRACKING_TIMES__";

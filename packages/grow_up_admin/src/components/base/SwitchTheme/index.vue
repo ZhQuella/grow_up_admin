@@ -3,7 +3,7 @@
     :size="size"
     active-value="dark"
     inactive-value="light"
-    :value="theme"
+    :model-value="theme"
     inline-prompt
     active-color="#ffd25d"
     inactive-color="#4c4d4f"
@@ -48,7 +48,7 @@
 <script setup lang="ts">
 import type { themeType } from "types/theme";
 import { computed } from "vue";
-import { ColorSwitch, Moon, Light } from "@vicons/carbon";
+import { Moon, Light } from "@vicons/carbon";
 import { useThemeStore } from "store/modules/theme";
 import { useToggle, useDark } from "@vueuse/core";
 import { THEME_KEY } from "@/assets/enums/cacheEnum";

@@ -77,7 +77,6 @@ import { FullscreenExitOutlined, FullscreenOutlined } from "@vicons/antd";
 import MessageList from "components/business/Home/MessageList/index.vue";
 import { useEvent } from "./use/useEvent";
 import { useI18n } from "vue-i18n";
-import { getImageUrl } from "util/System";
 import { useSystemStore } from "store/modules/systemInfo";
 
 const i18n = useI18n();
@@ -88,7 +87,6 @@ const userInfo = computed(() => {
 });
 
 const {
-  settingActive,
   isFullscreen,
   toggle,
   onSettingHadnler,
