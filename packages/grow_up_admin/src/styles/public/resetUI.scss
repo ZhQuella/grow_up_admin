@@ -42,10 +42,10 @@ input[type="number"] {
 }
 .el-table__row {
   &.tr-selected {
-    background-color: rgba(245, 154, 35, 0.3) !important;
+    background-color: #fbddbc !important;
     &:hover {
       td.el-table__cell {
-        background-color: rgba(245, 154, 35, 0) !important;
+        background-color: #fbddbc !important;
       }
     }
   }

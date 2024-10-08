@@ -12,7 +12,7 @@
           </ElButton>
         </ElTooltip>
       </div>
-      <div class="p-[4px] pr-[10px]">
+      <div class="p-[4px] pr-[10px] w-[200px]">
         <ElSelect v-model="editorValue"
                   @change="onModelChange"
                   v-if="isSelectMode && !isPure">
