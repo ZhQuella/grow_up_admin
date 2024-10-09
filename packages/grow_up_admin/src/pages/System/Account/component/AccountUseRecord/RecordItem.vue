@@ -1,5 +1,5 @@
 <template>
-  <g-detail label-width="50px">
+  <g-detail label-width="60px">
     <g-detail-item
       label="登录方式"
       class="text-[var(--el-text-color-secondary)] text-[12px] leading-[20px]"
