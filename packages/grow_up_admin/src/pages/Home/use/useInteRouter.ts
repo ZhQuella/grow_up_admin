@@ -6,6 +6,7 @@ import systemUserAxios from "api/System";
 import { useRouter } from "vue-router";
 import { nanoid } from "nanoid";
 import { hasCommonElement } from "util/System";
+import settingCongig from "@/setting";
 
 import { useMenuStore } from "store/modules/menu";
 import { useMultipleTab } from "store/modules/multipleTab";
@@ -44,8 +45,7 @@ export const useInteRouter = async ({ systemLoading }: { systemLoading: Ref<bool
       const route = catchViews.find((el) => el.name === routerName);
       route && (name = (route?.meta?.componentName || name) as string);
       const authoritys = (authoritySigns as any)[routerName] || [];
-      const isAuthority = hasCommonElement(roleSings.value, authoritys);
-
+      const isAuthority = hasCommonElement(roleSings.value, authoritys) || (!settingCongig.isFrontAuthority);
       if (path && componentPath && isAuthority) {
         const component = extendComponent(`../../pages/${componentPath}`, {
           name

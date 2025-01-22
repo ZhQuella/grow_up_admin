@@ -12,5 +12,7 @@ export default {
   //  备案号
   recordNum: "*ICP备*****号",
   //  备案年份
-  recordYear: "2023"
+  recordYear: "2023",
+  //  前端权限
+  isFrontAuthority: false
 };

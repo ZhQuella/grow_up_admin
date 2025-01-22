@@ -96,7 +96,7 @@ const menuList = [
         custom: true,
         children: [
           {
-            label: "自定义2-1",
+            label: "自定义2-11",
             name: "customPage1-1",
             icon: "Development",
             path: "customPage1-1",
@@ -104,7 +104,7 @@ const menuList = [
             custom: true
           },
           {
-            label: "自定义2-2",
+            label: "自定义2-22",
             name: "customPage2-2",
             icon: "Development",
             path: "customPage2-2",
