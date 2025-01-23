@@ -7,14 +7,22 @@
         <ElTabPane label="高级" name="renderArgument"/>
       </ElTabs>
     </div>
-    <ElScrollbar class="h-full flex-1"></ElScrollbar>
+    <ElScrollbar class="h-full flex-1">
+      <configurationComponent :config="props.config"/>
+    </ElScrollbar>
   </div>
 </template>
 
 <script setup lang="ts">
+import configurationComponent from "../configurationComponent/index.vue";
 defineOptions({ name: "pageOptions" });
 import { ref } from "vue";
 
 const tabModel = ref("props");
+const props = defineProps({
+  config: {
+    type: Object
+  }
+})
 
 </script>

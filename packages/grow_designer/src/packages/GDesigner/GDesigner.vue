@@ -104,10 +104,8 @@
       </div>
       <div class="grow-0 shrink-0 w-[300px] bg-BG_COLOR3 border-l-[1px] border-BORDER_COLOR2 border-solid"
           @click.stop>
-        <EleOptions :activeUUID="activeUUID"
-                    :config="draggableConfig"
-                    v-if="activeUUID"/>
-        <PageOptions v-if="!activeUUID"/>
+        <component :is="activeUUID?'EleOptions':'PageOptions'"
+                   :config="draggableConfig"/>
       </div>
     </div>
 
@@ -117,8 +115,6 @@
 <script setup lang="ts">
 import { FlowLogsVpc, Close, DataBase, TreeView } from "@vicons/carbon";
 import DraggableView from "./components/draggableView/index.vue";
-import EleOptions from "./components/eleOptions/index.vue";
-import PageOptions from "./components/pageOptions/index.vue";
 
 import { useOption } from "./use/useOption";
 import { useEvents } from "./use/useEvents";
@@ -151,10 +147,14 @@ import { defineComponent } from "vue";
 import moduleOptions from "./components/moduleOptions/index.vue";
 import reviewData from "./components/reviewData/index.vue";
 import reviewTree from "./components/reviewTree/index.vue";
+import EleOptions from "./components/eleOptions/index.vue";
+import PageOptions from "./components/pageOptions/index.vue";
 
 export default defineComponent({
   name: "GDesigner",
   components: {
+    EleOptions,
+    PageOptions,
     moduleOptions,
     reviewData,
     reviewTree

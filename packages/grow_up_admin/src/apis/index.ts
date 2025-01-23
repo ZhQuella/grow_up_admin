@@ -45,3 +45,5 @@ request.interceptors({
 });
 
 export default request;
+
+export const axios = request.axiosInstance;

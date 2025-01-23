@@ -4,6 +4,8 @@ import { ACTIVE_UUID, DRAGGABLE_CONGIG } from "../config/designation";
 export const useOption = () => {
 
   const draggableConfig = reactive({
+    //  页面配置
+    pageConfig: {},
     //  结构
     structures: [],
     //  附属信息  model/类型/props
