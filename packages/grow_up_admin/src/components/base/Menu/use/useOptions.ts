@@ -5,6 +5,7 @@ import { useMenuStore } from "store/modules/menu";
 import { useSystemStore } from "store/modules/systemInfo";
 import { useMultipleTab, resetWhiteNameList } from "store/modules/multipleTab";
 import authoritySigns from "router/authority";
+import settingCongig from "@/setting";
 import { hasCommonElement } from "util/System";
 
 export const useOptions = () => {
@@ -33,7 +34,7 @@ export const useOptions = () => {
         const isDomain = urlReg.test(path);
         const toPaht = isDomain ? path : `/home/${path}`;
         const authoritys = (authoritySigns as any)[name] || [];
-        const isAuthority = hasCommonElement(roleSings.value, authoritys);
+        const isAuthority = hasCommonElement(roleSings.value, authoritys) || (!settingCongig.isFrontAuthority);
         if (!isAuthority) return null;
         const menu = {
           label,

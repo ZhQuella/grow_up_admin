@@ -5,7 +5,7 @@ import type { Fun } from "types/index";
 import CatchResult from "./CatchResult";
 
 export default class Request extends CatchResult {
-  private readonly axiosInstance;
+  public readonly axiosInstance;
 
   constructor(config: RawAxiosRequestConfig) {
     super();

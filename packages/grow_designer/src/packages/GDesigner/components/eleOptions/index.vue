@@ -10,10 +10,11 @@
       </ElTabs>
     </div>
     <ElScrollbar class="h-full flex-1">
-      <ElementSize />
+      <ElementSize v-model:styleOption="config.styles[activeUUID]"/>
       <ElementDisplay />
       <p class="p-[10px] text-center">用爱发电中...😊</p>
       {{ config[tabModel][activeUUID] }}
+      {{ config.styles[activeUUID] }}
     </ElScrollbar>
   </div>
 </template>

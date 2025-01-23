@@ -3,9 +3,9 @@
              :animation="200"
              item-key="uuid"
              :component-data="{
-              tag: 'div',
-              type: 'transition-group',
-              name: 'draggable-group'
+                tag: 'div',
+                type: 'transition-group',
+                name: 'draggable-group'
              }"
              :disabled="false"
              ghostClass="ghost"
