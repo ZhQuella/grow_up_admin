@@ -49,6 +49,7 @@ export default defineConfig({
   plugins: [
     peerDepsExternal(),
     vue({
+      css: true,
       reactivityTransform: true
     }),
     postcss({
@@ -60,7 +61,10 @@ export default defineConfig({
     resolve({
       preferBuiltins: true
     }),
-    babel(),
+    babel({
+      exclude: 'node_modules/**',
+      babelHelpers: 'bundled'
+    }),
     jsx(),
     esbuild(),
     json(),

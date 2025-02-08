@@ -44,7 +44,10 @@ export default defineConfig({
     commonjs(),
     json(),
     esbuild(),
-    babel(),
+    babel({
+      exclude: 'node_modules/**',
+      babelHelpers: 'bundled'
+    }),
     terser()
   ]
 });

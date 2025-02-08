@@ -44,6 +44,7 @@ export default defineConfig({
   plugins: [
     peerDepsExternal(),
     resolve({
+      css: true,
       preferBuiltins: true
     }),
     babel({

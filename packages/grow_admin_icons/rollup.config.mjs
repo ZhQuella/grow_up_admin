@@ -54,7 +54,10 @@ export default defineConfig({
     commonjs(),
     esbuild(),
     jsx(),
-    vue({}),
+    vue({
+      css: true,
+      compileTemplate: true
+    }),
     json(),
     terser(),
     postcss()
