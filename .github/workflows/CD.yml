@@ -63,9 +63,9 @@ jobs:
       - name: List build directory
         run: ls -R ${{ github.workspace }}/sample/dist
 
-      # 调试输出
-      - name: Set output for debugging
-        run: echo "Uploading path: ${{ github.workspace }}/sample/dist"
+      # 输出调试信息到环境变量
+      - name: Set debug output
+        run: echo "UPLOAD_PATH=${{ github.workspace }}/sample/dist" >> $GITHUB_ENV
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
