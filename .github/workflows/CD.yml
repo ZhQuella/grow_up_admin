@@ -61,7 +61,7 @@ jobs:
 
       # 检查目录存在性
       - name: List build directory
-        run: ls -R ./sample/dist
+        run: ls -R ${{ github.workspace }}/sample/dist/
 
       # 上传构建产物
       - name: Upload artifact
