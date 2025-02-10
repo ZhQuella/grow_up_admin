@@ -16,7 +16,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "turbo run dev",
-    "build": "node ./scripts/build.js",
+    "build": "turbo run build",
     "clean": "pnpm turbo run clean && rimraf node_modules",
     "test:run": "vitest run",
     "test:watch": "vitest watch",
