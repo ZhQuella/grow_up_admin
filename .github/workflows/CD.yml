@@ -67,11 +67,13 @@ jobs:
       - name: Set debug output
         run: echo "UPLOAD_PATH=${{ github.workspace }}/sample/dist" >> $GITHUB_ENV
 
+      # 上传构建产物
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ${{ github.workspace }}/sample/dist
           artifact_name: dist
+        continue-on-error: true
 
       # 部署到 GitHub Pages
       - name: Deploy to GitHub Pages
