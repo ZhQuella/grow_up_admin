@@ -68,8 +68,11 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ${{ github.workspace }}/sample/dist/
+          artifact_name: dist
 
       # 部署到 GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v1
+        with:
+          artifact_name: dist
