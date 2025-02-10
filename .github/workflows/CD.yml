@@ -71,12 +71,13 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          name: github-pages
+          path: ${{ github.workspace }}/sample/dist
+          artifact_name: dist
+        continue-on-error: true
 
       # 部署到 GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          artifact_name: github-pages
-          preview: true
+          artifact_name: dist
