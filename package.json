@@ -2,7 +2,7 @@
   "name": "grow_admin",
   "private": true,
   "version": "1.0.0",
-  "type": "commonjs",
+  "type": "module",
   "description": "",
   "author": "ZhQuella (Email:827265905@qq.com)",
   "main": "index.js",
@@ -16,7 +16,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "turbo run dev",
-    "build": "turbo run build",
+    "build": "node ./scripts/build.js",
     "clean": "pnpm turbo run clean && rimraf node_modules",
     "test:run": "vitest run",
     "test:watch": "vitest watch",

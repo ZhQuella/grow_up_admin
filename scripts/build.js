@@ -1,14 +1,13 @@
 import { execa } from "execa";
 
 async function buildAll() {
-  // await execa("pnpm", ["run", "grow_com:build"], { stdio: "inherit" });
-  // await execa("pnpm", ["run", "grow_des:build"], { stdio: "inherit" });
-  // await execa("pnpm", ["run", "grow_flow:build"], { stdio: "inherit" });
-  // await execa("pnpm", ["run", "grow_icon:build"], { stdio: "inherit" });
-  // await execa("pnpm", ["run", "grow_editor:build"], { stdio: "inherit" });
-  // await execa("pnpm", ["run", "grow_sfc:build"], { stdio: "inherit" });
-  // await execa("pnpm", ["run", "@grow-rock/grow-utils:build"], { stdio: "inherit" });
-  // await execa("pnpm", ["run", "grow_admin:build"], { stdio: "inherit" });
+    await execa("pnpm", ["run", "grow-component:build"], { stdio: "inherit" });
+    await execa("pnpm", ["run", "grow-designer:build"], { stdio: "inherit" });
+    await execa("pnpm", ["run", "grow-editor:build"], { stdio: "inherit" });
+    await execa("pnpm", ["run", "grow-flow:build"], { stdio: "inherit" });
+    await execa("pnpm", ["run", "grow-single-file:build"], { stdio: "inherit" });
+    await execa("pnpm", ["run", "grow-utils:build"], { stdio: "inherit" });
+    await execa("pnpm", ["run", "sample:build"], { stdio: "inherit" });
 }
 
 buildAll();
