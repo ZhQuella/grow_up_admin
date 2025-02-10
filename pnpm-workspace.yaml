@@ -1,2 +1,6 @@
 packages:
-  - "packages/*"
+  - "GrowRock/*"
+  - "GrowCornerstone/*"
+  - "services/*"
+  - "libs/*"
+  - "sample"
