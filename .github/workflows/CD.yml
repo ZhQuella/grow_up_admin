@@ -65,7 +65,7 @@ jobs:
 
       # 设置 Pages
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
 
       # 上传构建产物
       - name: Upload artifact
@@ -78,8 +78,7 @@ jobs:
       # 部署到 GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
           artifact_name: dist
           publish_dir: ./dist
