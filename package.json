@@ -2,7 +2,7 @@
   "name": "grow_admin",
   "private": true,
   "version": "1.0.0",
-  "type": "module",
+  "type": "commonjs",
   "description": "",
   "author": "ZhQuella (Email:827265905@qq.com)",
   "main": "index.js",
