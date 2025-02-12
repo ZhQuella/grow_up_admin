@@ -17,7 +17,6 @@
     "preinstall": "npx only-allow pnpm",
     "dev": "turbo run dev",
     "build": "turbo run build",
-    "clean": "pnpm turbo run clean && rimraf node_modules",
     "test:run": "vitest run",
     "test:watch": "vitest watch",
     "test:coverage": "vitest run --coverage",
