@@ -15,6 +15,8 @@
   ],
   "scripts": {
     "preinstall": "npx only-allow pnpm",
+    "clean:all": "npx rimraf ./GrowRock/*/node_modules ./GrowCornerstone/*/node_modules ./libs/*/node_modules ./node_modules ./sample/node_modules",
+    "clean:dist":  "npx rimraf ./GrowRock/*/dist ./GrowCornerstone/*/dist ./libs/*/dist ./dist ./sample/dist",
     "dev": "turbo run dev",
     "build": "turbo run build",
     "test:run": "vitest run",
@@ -85,6 +87,7 @@
     "postcss": "^8.4.21",
     "postcss-import": "^15.1.0",
     "prettier": "^2.8.7",
+    "rimraf": "^6.0.1",
     "rollup": "^3.20.2",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-esbuild": "^5.0.0",
