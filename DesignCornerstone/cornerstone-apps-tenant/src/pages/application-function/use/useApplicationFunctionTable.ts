@@ -1,0 +1,128 @@
+import { computed, ref } from 'vue'
+import type { SearchBarField } from '@grow-admin-rock/components/search-bar'
+import type { ColumnBarItem } from '@grow-admin-rock/components/column-bar'
+import { useMsg } from '@grow-admin-rock/components'
+import { fetchApplicationFunctionList } from '../../../api/applicationFunction'
+import type { ApplicationFunctionNode } from '../../../types/applicationFunction'
+import { filterApplicationFunctions, sortApplicationFunctions } from './helpers'
+
+export type ManageTableColumn = ColumnBarItem & {
+  width?: number
+  minWidth?: number
+  fixed?: string | boolean
+}
+
+function collectLeafColumns(list: ManageTableColumn[]): ManageTableColumn[] {
+  const result: ManageTableColumn[] = []
+  list.forEach((item) => {
+    if (item.visible === false) return
+    if (item.children?.length) {
+      result.push(...collectLeafColumns(item.children as ManageTableColumn[]))
+    } else if (item.field) {
+      result.push(item)
+    }
+  })
+  return result
+}
+
+export function useApplicationFunctionTable() {
+  const message = useMsg() as any
+
+  const loading = ref(false)
+  const sourceList = ref<ApplicationFunctionNode[]>([])
+  const tableKey = ref(0)
+  const query = ref<Recordable<any>>({})
+
+  const searchList: SearchBarField[] = [
+    {
+      labelText: '关键字',
+      placeholder: '标题 / 访问路径',
+      elType: 'GrowInput',
+      isDefault: true,
+      model: 'keyword',
+      noDelete: true,
+      clearable: true,
+    },
+    {
+      labelText: '显示',
+      elType: 'GrowSelect',
+      isDefault: true,
+      model: 'isVisible',
+      label: 'label',
+      value: 'value',
+      placeholder: '请选择',
+      clearable: true,
+      options: [
+        { label: '显示', value: 'true' },
+        { label: '隐藏', value: 'false' },
+      ],
+    },
+    {
+      labelText: '状态',
+      elType: 'GrowSelect',
+      model: 'enabled',
+      label: 'label',
+      value: 'value',
+      placeholder: '请选择',
+      clearable: true,
+      options: [
+        { label: '启用', value: 'true' },
+        { label: '停用', value: 'false' },
+      ],
+    },
+  ]
+
+  const tableColumns = ref<ManageTableColumn[]>([
+    { title: '标题', field: 'title', visible: true, width: 280 },
+    { title: '访问路径', field: 'path', visible: true, minWidth: 140 },
+    { title: '图标', field: 'icon', visible: true, minWidth: 180 },
+    { title: '排序', field: 'sort', visible: true, minWidth: 80 },
+    { title: '状态', field: 'enabled', visible: true, minWidth: 90 },
+    { title: '显示', field: 'isVisible', visible: true, minWidth: 80 },
+    { title: '缓存', field: 'isKeepAlive', visible: false, minWidth: 80 },
+    { title: '固定标签', field: 'affix', visible: false, minWidth: 90 },
+    { title: '默认打开', field: 'defaultShow', visible: false, minWidth: 90 },
+    { title: '外链', field: 'isExternalPage', visible: false, minWidth: 80 },
+    { title: '打开方式', field: 'openMode', visible: false, minWidth: 100 },
+    { title: '链接', field: 'link', visible: false, minWidth: 160 },
+    { title: '操作', field: 'actions', visible: true, minWidth: 170, fixed: 'right' },
+  ])
+
+  const leafColumns = computed(() => collectLeafColumns(tableColumns.value))
+
+  const tableData = computed(() => filterApplicationFunctions(sourceList.value, query.value || {}))
+
+  async function loadList() {
+    loading.value = true
+    try {
+      const data = await fetchApplicationFunctionList()
+      sourceList.value = sortApplicationFunctions(Array.isArray(data) ? data : [])
+      tableKey.value += 1
+    } catch (error) {
+      message.error(error instanceof Error ? error.message : '加载失败')
+    } finally {
+      loading.value = false
+    }
+  }
+
+  function onSearch(data: Recordable<any>) {
+    query.value = data || {}
+  }
+
+  function onColumnsConfirm(columns: ColumnBarItem[]) {
+    tableColumns.value = columns as ManageTableColumn[]
+  }
+
+  return {
+    loading,
+    sourceList,
+    tableKey,
+    tableData,
+    searchList,
+    tableColumns,
+    leafColumns,
+    loadList,
+    onSearch,
+    onColumnsConfirm,
+  }
+}

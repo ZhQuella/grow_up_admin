@@ -64,11 +64,12 @@
         />
         <GrowInput
           v-else
-          :model-value="row.value[0] || ''"
+          :model-value="row.value[0] === FILTER_CURRENT_USER ? '当前用户' : row.value[0] || ''"
           clearable
-          placeholder="请输入"
+          placeholder="输入值或选择当前用户"
           @update:model-value="(value) => patchScalar(index, value)"
         />
+        <GrowButton v-if="columnType(row.columnId) === 'string'" link type="primary" @click="patch(index, { value: [FILTER_CURRENT_USER] })">当前用户</GrowButton>
         <GrowButton link type="danger" @click="remove(index)">删除</GrowButton>
       </div>
       <GrowButton link type="primary" @click="add">+ 添加条件</GrowButton>
@@ -80,6 +81,7 @@
 import { computed } from 'vue'
 import type { ColumnType, SystemMenuColumn } from '../../../types/systemMenuColumn'
 import {
+  FILTER_CURRENT_USER,
   type FilterOperator,
   type RowFilterCondition,
   type SystemDeptTreeNode,
@@ -181,10 +183,23 @@ function remove(index: number) {
 }
 
 .row-filter__row {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) 108px minmax(0, 1fr) auto;
+  display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   align-items: center;
+}
+
+.row-filter__row > :first-child {
+  width: 140px;
+}
+
+.row-filter__row > :nth-child(2) {
+  width: 100px;
+}
+
+.row-filter__row > :nth-child(3) {
+  flex: 1;
+  min-width: 120px;
 }
 
 .row-filter__row :deep(.el-select),

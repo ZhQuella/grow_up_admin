@@ -5,14 +5,14 @@
         :model-value="modelValue.createdBySelf"
         @update:model-value="(value) => emitChange({ createdBySelf: Boolean(value) })"
       />
-      <span>成员本人创建的记录</span>
+      <span>当前账号创建的记录</span>
     </label>
     <label class="row-self__item">
       <GrowCheckbox
         :model-value="modelValue.fieldContainsSelf"
-        @update:model-value="(value) => emitChange({ fieldContainsSelf: Boolean(value) })"
+        @update:model-value="(value) => onFieldContainsSelfChange(Boolean(value))"
       />
-      <span>字段包含成员本人的记录</span>
+      <span>字段包含当前用户的记录</span>
     </label>
     <div v-if="modelValue.fieldContainsSelf" class="row-self__fields">
       <p v-if="!columns.length" class="row-self__hint">该菜单暂无可用字段，无法勾选字段</p>
@@ -58,6 +58,10 @@ function fieldLabel(col: SystemMenuColumn) {
 
 function emitChange(patch: Partial<SelfRelatedConfig>) {
   emit('update:modelValue', { ...props.modelValue, ...patch })
+}
+
+function onFieldContainsSelfChange(checked: boolean) {
+  emitChange({ fieldContainsSelf: checked, columnIds: checked ? props.modelValue.columnIds : [] })
 }
 
 function toggleColumn(id: string, checked: boolean) {

@@ -1,780 +1,235 @@
 <template>
-  <GrowDrawer
-    v-model="visible"
-    :title="role ? `数据权限 · ${role.name}` : '数据权限'"
-    size="920px"
-    append-to-body
-    destroy-on-close
-    class="role-drawer"
-  >
+  <GrowDrawer v-model="visible" :title="role ? `数据权限 · ${role.name}` : '数据权限'" size="700px" append-to-body destroy-on-close class="role-drawer">
     <GrowWatchBox class="role-drawer__watch">
       <template #default="{ height }">
-        <div v-if="height > 0 && !menus.length" class="role-data-perm__empty" :style="{ height: `${height}px` }">
-          请先在「菜单和功能」中勾选菜单，再为每个菜单配置行权限和字段权限。
-        </div>
-        <div
-          v-else-if="height > 0"
-          class="role-data-perm"
-          :style="{ height: `${height}px` }"
-        >
-          <aside class="role-data-perm__aside">
-            <div class="role-data-perm__aside-head">
-              <div class="role-data-perm__aside-title">已授权菜单</div>
-              <div class="role-data-perm__aside-count">{{ menus.length }}</div>
-            </div>
-            <GrowInput
-              v-model="menuKeyword"
-              clearable
-              placeholder="搜索菜单"
-            />
-            <div class="role-data-perm__menu-scroll">
+        <div v-if="height > 0" class="role-data" :style="{ height: `${height}px` }">
+          <aside class="role-data__aside">
+            <strong>已授权菜单</strong>
+            <div class="role-data__aside-scroll">
               <GrowScrollbar height="100%">
-                <div v-if="!filteredMenuTree.length" class="role-data-perm__hint role-data-perm__hint--pad">
-                  未找到匹配菜单
-                </div>
-                <GrowTree
-                  v-else
-                  :key="menuKeyword || 'all'"
-                  class="role-data-perm__menu-tree"
-                  :data="filteredMenuTree"
-                  node-key="key"
-                  highlight-current
-                  default-expand-all
-                  :expand-on-click-node="false"
-                  :current-node-key="menuTreeCurrentKey"
-                  :props="{ label: 'title', children: 'children', disabled: 'disabled' }"
-                  @node-click="onMenuTreeClick"
-                >
-                  <template #default="{ data }">
-                    <span
-                      class="role-data-perm__menu-label"
-                      :class="{ 'is-dir': isDirectoryNode(data) }"
-                      @click="onMenuLabelClick($event, data)"
-                    >{{ data.title }}</span>
-                  </template>
-                </GrowTree>
+                <div v-if="loading" class="role-data__hint">加载中…</div>
+                <div v-else-if="!menus.length" class="role-data__hint">请先在「角色授权」中勾选菜单</div>
+                <button
+                  v-for="menu in menus"
+                  :key="menu.name"
+                  type="button"
+                  class="role-data__menu"
+                  :class="{ 'is-active': activeMenuName === menu.name }"
+                  :aria-current="activeMenuName === menu.name ? 'page' : undefined"
+                  @click="activeMenuName = menu.name"
+                >{{ menu.title }}</button>
               </GrowScrollbar>
             </div>
           </aside>
-
-          <div v-if="activeMenu && activeDraft" class="role-data-perm__main">
+          <main class="role-data__main">
             <GrowScrollbar height="100%">
-              <div class="role-data-perm__panel">
-                <header class="role-data-perm__header">
-                  <div>
-                    <div class="role-data-perm__header-title">{{ activeMenu.title }}</div>
-                    <div class="role-data-perm__header-sub">{{ activeMenu.group }}</div>
-                  </div>
-                </header>
-
-                <section class="role-data-perm__card">
-                  <div class="role-data-perm__block">
-                    <h4 class="role-data-perm__title">可编辑和删除的记录范围</h4>
-                    <div class="role-data-perm__radios">
-                      <div
-                        v-for="item in EDIT_SCOPE_OPTIONS"
-                        :key="item.value"
-                        class="role-data-perm__radio-wrap"
-                      >
-                        <button
-                          type="button"
-                          class="role-data-perm__radio"
-                          :class="{ 'is-active': activeDraft.editScope === item.value }"
-                          @click="onEditScopeChange(item.value)"
-                        >
-                          <span class="role-data-perm__radio-dot" />
-                          <span>{{ item.label }}</span>
-                        </button>
-                        <RowSelfRelatedEditor
-                          v-if="activeDraft.editScope === item.value && item.value === 'self'"
-                          :model-value="activeDraft.selfRelated"
-                          :columns="columnsForReferences(activeDraft.selfRelated.columnIds)"
-                          @update:model-value="(value) => { activeDraft.selfRelated = value }"
-                        />
-                        <div
-                          v-if="activeDraft.editScope === item.value && item.value === 'custom'"
-                          class="role-data-perm__custom"
-                        >
-                          <div class="role-data-perm__custom-bar">
-                            <GrowInput
-                              v-model="deptKeyword"
-                              clearable
-                              placeholder="搜索部门"
-                            />
-                            <div class="role-data-perm__custom-actions">
-                              <span>已选 {{ activeDraft.deptIds.length }} 个部门</span>
-                              <GrowButton link type="primary" @click="selectAllDepts">全选</GrowButton>
-                              <GrowButton link @click="clearDepts">清空</GrowButton>
-                            </div>
-                          </div>
-                          <p v-if="!activeDraft.deptIds.length" class="role-data-perm__warn">
-                            自定义部门至少勾选一个部门
-                          </p>
-                          <GrowScrollbar
-                            v-if="filteredDeptTree.length"
-                            max-height="280px"
-                            class="role-data-perm__tree-scroll"
-                          >
-                            <div class="role-data-perm__tree">
-                              <GrowTree
-                                :key="`${activeMenuName}-${treeKey}`"
-                                :data="filteredDeptTree"
-                                node-key="id"
-                                show-checkbox
-                                default-expand-all
-                                :default-checked-keys="activeDraft.deptIds"
-                                :props="{ label: 'title', children: 'children' }"
-                                @check="onCheck"
-                              />
-                            </div>
-                          </GrowScrollbar>
-                          <p v-else class="role-data-perm__hint">未找到匹配部门</p>
-                          <div v-if="selectedDeptNames.length" class="role-data-perm__tags">
-                            <GrowTag
-                              v-for="name in selectedDeptNames"
-                              :key="name"
-                              size="small"
-                            >
-                              {{ name }}
-                            </GrowTag>
-                          </div>
-                        </div>
-                        <RowFilterEditor
-                          v-if="activeDraft.editScope === item.value && item.value === 'specified'"
-                          :model-value="activeDraft.filters"
-                          :columns="columnsForFilters(activeDraft.filters)"
-                          :dept-tree="deptTree"
-                          @update:model-value="(value) => { activeDraft.filters = value }"
-                        />
-                      </div>
+              <div v-if="activeDraft" class="role-data__form">
+                <h3>{{ activeMenu?.title }}</h3>
+                <section>
+                  <h4>可编辑和删除的记录范围</h4>
+                  <div v-for="option in EDIT_SCOPE_OPTIONS" :key="option.value" class="role-data__option" :class="{ 'is-selected': activeDraft.editScope === option.value }">
+                    <label>
+                      <input :checked="activeDraft.editScope === option.value" type="radio" :name="`edit-${activeMenuName}`" :value="option.value" @change="selectEditScope(option.value)" />
+                      {{ option.value === 'dept' ? '仅本部门' : option.label }}
+                    </label>
+                    <RowSelfRelatedEditor
+                      v-if="option.value === 'self' && activeDraft.editScope === 'self'"
+                      v-model="activeDraft.selfRelated"
+                      :columns="activeColumns"
+                    />
+                    <div v-if="option.value === 'custom' && activeDraft.editScope === 'custom'" class="role-data__sub">
+                      <GrowSelect
+                        class="role-data__dept-select"
+                        :model-value="activeDraft.deptIds"
+                        :options="deptOptions"
+                        label="label"
+                        value="value"
+                        multiple
+                        filterable
+                        clearable
+                        :disabled="!deptOptions.length"
+                        :placeholder="deptOptions.length ? '请选择部门' : '暂无部门'"
+                        @update:model-value="activeDraft.deptIds = Array.isArray($event) ? $event.map(String) : []"
+                      />
                     </div>
-                  </div>
-
-                  <div v-if="activeDraft.editScope !== 'all'" class="role-data-perm__block">
-                    <div class="role-data-perm__block-title">
-                      <h4 class="role-data-perm__title">其它记录权限</h4>
-                      <GrowTooltip
-                        content="不在上方可编辑删除范围内的记录，按此规则决定能否查看"
-                        placement="top"
-                      >
-                        <span class="role-data-perm__help-icon">
-                          <GrowIconify icon="ant-design:question-circle-outlined" :size="14" />
-                        </span>
-                      </GrowTooltip>
-                    </div>
-                    <div class="role-data-perm__radios">
-                      <div
-                        v-for="item in VIEW_OTHER_OPTIONS"
-                        :key="item.value"
-                        class="role-data-perm__radio-wrap"
-                      >
-                        <button
-                          type="button"
-                          class="role-data-perm__radio"
-                          :class="{ 'is-active': activeDraft.viewOther === item.value }"
-                          @click="onViewOtherChange(item.value)"
-                        >
-                          <span class="role-data-perm__radio-dot" />
-                          <span>{{ item.label }}</span>
-                        </button>
-                        <RowSelfRelatedEditor
-                          v-if="activeDraft.viewOther === item.value && item.value === 'self'"
-                          :model-value="activeDraft.viewSelfRelated"
-                          :columns="columnsForReferences(activeDraft.viewSelfRelated.columnIds)"
-                          @update:model-value="(value) => { activeDraft.viewSelfRelated = value }"
-                        />
-                        <RowFilterEditor
-                          v-if="activeDraft.viewOther === item.value && item.value === 'specified'"
-                          :model-value="activeDraft.viewFilters"
-                          :columns="columnsForFilters(activeDraft.viewFilters)"
-                          :dept-tree="deptTree"
-                          @update:model-value="(value) => { activeDraft.viewFilters = value }"
-                        />
-                      </div>
-                    </div>
+                    <RowFilterEditor
+                      v-if="option.value === 'specified' && activeDraft.editScope === 'specified'"
+                      v-model="activeDraft.filters"
+                      :columns="activeColumns"
+                      :dept-tree="deptTree"
+                    />
                   </div>
                 </section>
-
-                <section class="role-data-perm__card">
-                  <div class="role-data-perm__card-head">
-                    <div>
-                      <h4 class="role-data-perm__title">列权限</h4>
-                      <span class="role-data-perm__card-extra">按表配置字段可见与可编辑权限</span>
-                    </div>
-                    <div v-if="enabledColumns.length" class="role-data-perm__custom-actions">
-                      <span>可见 {{ checkedColumnCount }}/{{ enabledColumns.length }} · 可编辑 {{ editableColumnCount }}/{{ enabledColumns.length }}</span>
-                      <GrowButton link type="primary" @click="selectAllColumns">全部全选</GrowButton>
-                      <GrowButton link @click="clearColumns">全部清空</GrowButton>
-                    </div>
-                  </div>
-                  <p v-if="!columnGroups.length" class="role-data-perm__hint">
-                    该菜单暂无表定义，请先在菜单管理中按表配置。
-                  </p>
-                  <div v-else class="role-data-perm__table-list">
-                    <section
-                      v-for="group in columnGroups"
-                      :key="group.code"
-                      class="role-data-perm__table"
-                    >
-                      <div class="role-data-perm__table-head">
-                        <div>
-                          <div class="role-data-perm__table-title">{{ group.title }}</div>
-                          <div class="role-data-perm__table-code">{{ group.code }}</div>
-                        </div>
-                        <div class="role-data-perm__custom-actions">
-                          <span>可见 {{ tableCheckedCount(group) }}/{{ tableEnabledCount(group) }} · 可编辑 {{ tableEditableCount(group) }}/{{ tableEnabledCount(group) }}</span>
-                          <GrowButton link type="primary" @click="selectTableColumns(group.code)">全选</GrowButton>
-                          <GrowButton link @click="clearTableColumns(group.code)">清空</GrowButton>
-                        </div>
-                      </div>
-                      <div class="role-data-perm__columns">
-                        <div
-                          v-for="col in group.columns"
-                          :key="col.id"
-                          class="role-data-perm__column"
-                          :class="{
-                            'is-checked': activeDraft.columnIds.includes(col.id),
-                            'is-disabled': !isColumnPermissionAvailable(col),
-                          }"
-                        >
-                          <span class="role-data-perm__column-text">
-                            <span class="role-data-perm__column-title">
-                              {{ col.title }}
-                              <GrowTag v-if="!col.enabled" type="info" size="small">停用</GrowTag>
-                            </span>
-                            <span class="role-data-perm__column-code">
-                              {{ col.code }} · {{ columnTypeLabel(col.columnType) }}
-                            </span>
-                          </span>
-                          <span class="role-data-perm__column-permissions">
-                            <label>
-                              <GrowCheckbox
-                                :model-value="activeDraft.columnIds.includes(col.id)"
-                                :disabled="!isColumnPermissionAvailable(col) || activeDraft.editableColumnIds.includes(col.id)"
-                                @update:model-value="(value) => onToggleColumnVisible(col.id, Boolean(value))"
-                              />
-                              <span>可见</span>
-                            </label>
-                            <label>
-                              <GrowCheckbox
-                                :model-value="activeDraft.editableColumnIds.includes(col.id)"
-                                :disabled="!isColumnPermissionAvailable(col)"
-                                @update:model-value="(value) => onToggleColumnEditable(col.id, Boolean(value))"
-                              />
-                              <span>可编辑</span>
-                            </label>
-                          </span>
-                        </div>
-                      </div>
-                    </section>
+                <section v-if="activeDraft.editScope !== 'all'">
+                  <h4>其它记录权限</h4>
+                  <div v-for="option in VIEW_OTHER_OPTIONS" :key="option.value" class="role-data__option" :class="{ 'is-selected': activeDraft.viewOther === option.value }">
+                    <label>
+                      <input :checked="activeDraft.viewOther === option.value" type="radio" :name="`view-${activeMenuName}`" :value="option.value" @change="selectViewOther(option.value)" />
+                      {{ option.label }}
+                    </label>
+                    <RowSelfRelatedEditor
+                      v-if="option.value === 'self' && activeDraft.viewOther === 'self'"
+                      v-model="activeDraft.viewSelfRelated"
+                      :columns="activeColumns"
+                    />
+                    <RowFilterEditor
+                      v-if="option.value === 'specified' && activeDraft.viewOther === 'specified'"
+                      v-model="activeDraft.viewFilters"
+                      :columns="activeColumns"
+                      :dept-tree="deptTree"
+                    />
                   </div>
                 </section>
               </div>
+              <div v-else class="role-data__hint">{{ loading ? '加载中…' : '请选择已授权菜单' }}</div>
             </GrowScrollbar>
-          </div>
+          </main>
         </div>
       </template>
     </GrowWatchBox>
     <template #footer>
-      <div class="role-drawer__footer">
-        <GrowSpace>
-          <GrowButton @click="visible = false">取消</GrowButton>
-          <GrowButton type="primary" :loading="saving" :disabled="!menus.length" @click="submit">
-            确定
-          </GrowButton>
-        </GrowSpace>
-      </div>
+      <GrowSpace>
+        <GrowButton @click="visible = false">取消</GrowButton>
+        <GrowButton type="primary" :loading="saving" :disabled="loading || !menus.length" @click="submit">保存</GrowButton>
+      </GrowSpace>
     </template>
   </GrowDrawer>
 </template>
 
 <script lang="ts" setup>
-import { computed, nextTick, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { useMsg } from '@grow-admin-rock/components'
 import { fetchAllSystemMenuColumns } from '../../../api/systemMenuColumn'
 import { fetchSystemMenuTree } from '../../../api/systemMenu'
+import { fetchSystemDeptTree, getSystemRoleDetail, saveSystemRoleDataPerm } from '../../../api/systemRole'
+import type { SystemMenuColumn } from '../../../types/systemMenuColumn'
 import {
-  fetchSystemDeptTree,
-  getSystemRoleDetail,
-  saveSystemRoleDataPerm,
-} from '../../../api/systemRole'
-import { columnTypeLabel, type SystemMenuColumn } from '../../../types/systemMenuColumn'
-import {
-  EDIT_SCOPE_OPTIONS,
-  VIEW_OTHER_OPTIONS,
-  type EditScope,
-  type SelfRelatedConfig,
-  type SystemDeptTreeNode,
-  type SystemRoleDataPermItem,
-  type SystemRoleListItem,
-  type ViewOtherScope,
+  EDIT_SCOPE_OPTIONS, VIEW_OTHER_OPTIONS,
+  type EditScope, type RowFilterCondition, type SelfRelatedConfig,
+  type SystemDeptTreeNode, type SystemRoleDataPermItem, type SystemRoleListItem, type ViewOtherScope,
 } from '../../../types/systemRole'
-import {
-  emptyFilterCondition,
-  emptySelfRelated,
-  isEditScope,
-  isViewOther,
-  pickCheckedKeys,
-  toMessage,
-} from '../use/helpers'
+import { toMessage } from '../use/helpers'
+import { findMenuTitle } from '../use/permTree'
 import RowFilterEditor from './RowFilterEditor.vue'
 import RowSelfRelatedEditor from './RowSelfRelatedEditor.vue'
-import {
-  buildGrantedMenuTree,
-  filterGrantedMenuTree,
-  flattenGrantedMenuTree,
-  type GrantedMenuItem,
-  type GrantedMenuTreeNode,
-} from '../use/permTree'
 
-type Draft = {
-  editScope: EditScope
-  viewOther: ViewOtherScope
-  deptIds: string[]
-  selfRelated: SelfRelatedConfig
-  viewSelfRelated: SelfRelatedConfig
-  filters: SystemRoleDataPermItem['filters']
-  viewFilters: SystemRoleDataPermItem['viewFilters']
-  columnIds: string[]
-  editableColumnIds: string[]
-}
+defineOptions({ name: 'RoleDataPermDrawer' })
 
-defineOptions({
-  name: 'RoleDataPermDrawer',
-})
-
-const emit = defineEmits<{
-  success: []
-}>()
-
+const emit = defineEmits<{ success: [] }>()
 const message = useMsg()
 const visible = ref(false)
+const loading = ref(false)
 const saving = ref(false)
 const role = ref<SystemRoleListItem | null>(null)
-const menus = ref<GrantedMenuItem[]>([])
-const menuTree = ref<GrantedMenuTreeNode[]>([])
+const menus = ref<Array<{ name: string; title: string }>>([])
 const activeMenuName = ref('')
-const menuKeyword = ref('')
-const deptKeyword = ref('')
-const deptTree = ref<SystemDeptTreeNode[]>([])
 const columns = ref<SystemMenuColumn[]>([])
-const drafts = ref<Record<string, Draft>>({})
-const treeKey = ref(0)
+const queryIds = ref<string[]>([])
+const deptTree = ref<SystemDeptTreeNode[]>([])
+const drafts = ref<Record<string, SystemRoleDataPermItem>>({})
 
-const activeMenu = computed(() => menus.value.find((item) => item.name === activeMenuName.value) || null)
-const activeDraft = computed(() => drafts.value[activeMenuName.value] || null)
-const activeMenuKey = computed(() => (activeMenuName.value ? `menu:${activeMenuName.value}` : undefined))
-const menuTreeCurrentKey = ref<string | undefined>()
-const filteredMenuTree = computed(() => filterGrantedMenuTree(menuTree.value, menuKeyword.value))
-
-watch(activeMenuKey, (key) => {
-  menuTreeCurrentKey.value = key
-}, { immediate: true })
-
-const menuColumns = computed(() =>
-  columns.value
-    .filter((item) => item.menuName === activeMenuName.value)
-    .sort((a, b) => a.title.localeCompare(b.title, 'zh-CN') || a.code.localeCompare(b.code)),
-)
-
-const grantedColumnIds = computed(() => {
-  const draft = activeDraft.value
-  if (!draft) return new Set<string>()
-  return new Set(draft.columnIds)
+const activeMenu = computed(() => menus.value.find((item) => item.name === activeMenuName.value))
+const activeDraft = computed(() => drafts.value[activeMenuName.value])
+const activeColumns = computed(() => columns.value.filter((item) =>
+  item.menuName === activeMenuName.value && item.enabled && item.queryFilter && queryIds.value.includes(item.id)))
+const deptOptions = computed(() => {
+  const options: Array<{ label: string; value: string }> = []
+  const walk = (nodes: SystemDeptTreeNode[], prefix: string) => {
+    nodes.forEach((node) => {
+      const label = prefix ? `${prefix} / ${node.title}` : node.title
+      options.push({ label, value: node.id })
+      if (node.children?.length) walk(node.children, label)
+    })
+  }
+  walk(deptTree.value, '')
+  return options
 })
 
-const permissionColumns = computed(() => menuColumns.value.filter((item) => (
-  item.columnPermission !== false
-  && (item.enabled !== false || grantedColumnIds.value.has(item.id))
-)))
-const enabledColumns = computed(() => permissionColumns.value.filter(isColumnPermissionAvailable))
-const queryColumns = computed(() => menuColumns.value.filter(
-  (item) => item.enabled !== false && item.queryFilter !== false,
-))
-
-function isColumnPermissionAvailable(item: SystemMenuColumn) {
-  return item.enabled !== false && item.columnPermission !== false
+function selfRelated(createdBySelf = true): SelfRelatedConfig {
+  return { createdBySelf, fieldContainsSelf: false, columnIds: [] }
 }
 
-function columnsForReferences(columnIds: string[]) {
-  const selected = new Set(columnIds)
-  const available = new Set(queryColumns.value.map((item) => item.id))
-  return menuColumns.value.filter((item) => available.has(item.id) || selected.has(item.id))
-}
-
-function columnsForFilters(filters: SystemRoleDataPermItem['filters']) {
-  return columnsForReferences(filters.map((item) => item.columnId))
-}
-
-const columnGroups = computed(() => {
-  const groups: Array<{ code: string; title: string; columns: SystemMenuColumn[] }> = []
-  const index = new Map<string, (typeof groups)[number]>()
-  for (const col of permissionColumns.value) {
-    const code = col.tableCode || 'default'
-    const current = index.get(code)
-    if (current) {
-      current.columns.push(col)
-      continue
-    }
-    const next = {
-      code,
-      title: col.tableTitle || '未分组',
-      columns: [col],
-    }
-    index.set(code, next)
-    groups.push(next)
-  }
-  return groups.sort((a, b) => a.title.localeCompare(b.title, 'zh-CN') || a.code.localeCompare(b.code))
-})
-
-const checkedColumnCount = computed(() => {
-  const draft = activeDraft.value
-  if (!draft) return 0
-  const ids = new Set(draft.columnIds)
-  return enabledColumns.value.filter((item) => ids.has(item.id)).length
-})
-
-const editableColumnCount = computed(() => {
-  const draft = activeDraft.value
-  if (!draft) return 0
-  const ids = new Set(draft.editableColumnIds)
-  return enabledColumns.value.filter((item) => ids.has(item.id)).length
-})
-
-const deptTitleMap = computed(() => {
-  const map = new Map<string, string>()
-  const walk = (nodes: SystemDeptTreeNode[]) => {
-    for (const node of nodes) {
-      map.set(node.id, node.title)
-      if (node.children?.length) walk(node.children)
-    }
-  }
-  walk(deptTree.value)
-  return map
-})
-
-const selectedDeptNames = computed(() => {
-  const draft = activeDraft.value
-  if (!draft) return []
-  return draft.deptIds
-    .map((id) => deptTitleMap.value.get(id) || id)
-})
-
-const filteredDeptTree = computed(() => filterDeptTree(deptTree.value, deptKeyword.value))
-
-function filterDeptTree(nodes: SystemDeptTreeNode[], keyword: string): SystemDeptTreeNode[] {
-  const q = keyword.trim().toLowerCase()
-  if (!q) return nodes
-  const walk = (list: SystemDeptTreeNode[]): SystemDeptTreeNode[] => {
-    const next: SystemDeptTreeNode[] = []
-    for (const node of list) {
-      const children = node.children?.length ? walk(node.children) : []
-      if (node.title.toLowerCase().includes(q) || children.length) {
-        next.push(children.length ? { ...node, children } : { ...node, children: undefined })
-      }
-    }
-    return next
-  }
-  return walk(nodes)
-}
-
-function collectDeptIds(nodes: SystemDeptTreeNode[]): string[] {
-  const ids: string[] = []
-  const walk = (list: SystemDeptTreeNode[]) => {
-    for (const node of list) {
-      ids.push(node.id)
-      if (node.children?.length) walk(node.children)
-    }
-  }
-  walk(nodes)
-  return ids
-}
-
-function tableEnabledCount(group: { columns: SystemMenuColumn[] }) {
-  return group.columns.filter(isColumnPermissionAvailable).length
-}
-
-function tableCheckedCount(group: { columns: SystemMenuColumn[] }) {
-  const draft = activeDraft.value
-  if (!draft) return 0
-  const ids = new Set(draft.columnIds)
-  return group.columns.filter((item) => isColumnPermissionAvailable(item) && ids.has(item.id)).length
-}
-
-function tableEditableCount(group: { columns: SystemMenuColumn[] }) {
-  const draft = activeDraft.value
-  if (!draft) return 0
-  const ids = new Set(draft.editableColumnIds)
-  return group.columns.filter((item) => isColumnPermissionAvailable(item) && ids.has(item.id)).length
-}
-
-function isDirectoryNode(data: GrantedMenuTreeNode | undefined) {
-  return Boolean(data) && !data?.menuName
-}
-
-function restoreMenuTreeCurrent() {
-  const key = activeMenuKey.value
-  menuTreeCurrentKey.value = undefined
-  nextTick(() => {
-    menuTreeCurrentKey.value = key
-  })
-}
-
-function onSelectMenu(name: string) {
-  if (activeMenuName.value === name) return
-  activeMenuName.value = name
-  deptKeyword.value = ''
-  treeKey.value += 1
-}
-
-function onMenuLabelClick(event: MouseEvent, data: GrantedMenuTreeNode) {
-  if (!isDirectoryNode(data)) return
-  event.stopPropagation()
-  restoreMenuTreeCurrent()
-}
-
-function onMenuTreeClick(data: GrantedMenuTreeNode) {
-  if (isDirectoryNode(data)) {
-    restoreMenuTreeCurrent()
-    return
-  }
-  if (data?.menuName) onSelectMenu(data.menuName)
-}
-
-function onEditScopeChange(value: EditScope) {
-  const current = activeDraft.value
-  if (!current) return
-  current.editScope = value
-  if (value === 'all') current.viewOther = 'none'
-  if (value === 'specified' && !current.filters.length) {
-    current.filters = [emptyFilterCondition()]
-  }
-}
-
-function onViewOtherChange(value: ViewOtherScope) {
-  const current = activeDraft.value
-  if (!current) return
-  current.viewOther = value
-  if (value === 'specified' && !current.viewFilters.length) {
-    current.viewFilters = [emptyFilterCondition()]
-  }
-}
-
-function onCheck(arg1: unknown, arg2?: unknown) {
-  const current = activeDraft.value
-  if (!current) return
-  current.deptIds = pickCheckedKeys(arg1, arg2)
-}
-
-function onToggleColumnVisible(id: string, checked: boolean) {
-  const current = activeDraft.value
-  if (!current) return
-  const visible = new Set(current.columnIds)
-  if (checked) visible.add(id)
-  else {
-    visible.delete(id)
-    current.editableColumnIds = current.editableColumnIds.filter((item) => item !== id)
-  }
-  current.columnIds = [...visible]
-}
-
-function onToggleColumnEditable(id: string, checked: boolean) {
-  const current = activeDraft.value
-  if (!current) return
-  const visible = new Set(current.columnIds)
-  const editable = new Set(current.editableColumnIds)
-  if (checked) {
-    visible.add(id)
-    editable.add(id)
-  } else {
-    editable.delete(id)
-  }
-  current.columnIds = [...visible]
-  current.editableColumnIds = [...editable]
-}
-
-function selectAllColumns() {
-  const current = activeDraft.value
-  if (!current) return
-  const ids = enabledColumns.value.map((item) => item.id)
-  current.columnIds = [...new Set([...current.columnIds, ...ids])]
-  current.editableColumnIds = [...new Set([...current.editableColumnIds, ...ids])]
-}
-
-function clearColumns() {
-  const current = activeDraft.value
-  if (!current) return
-  const drop = new Set(enabledColumns.value.map((item) => item.id))
-  current.columnIds = current.columnIds.filter((id) => !drop.has(id))
-  current.editableColumnIds = current.editableColumnIds.filter((id) => !drop.has(id))
-}
-
-function selectTableColumns(tableCode: string) {
-  const current = activeDraft.value
-  if (!current) return
-  const ids = new Set(current.columnIds)
-  const editableIds = new Set(current.editableColumnIds)
-  for (const col of permissionColumns.value) {
-    if (col.tableCode === tableCode && isColumnPermissionAvailable(col)) {
-      ids.add(col.id)
-      editableIds.add(col.id)
-    }
-  }
-  current.columnIds = [...ids]
-  current.editableColumnIds = [...editableIds]
-}
-
-function clearTableColumns(tableCode: string) {
-  const current = activeDraft.value
-  if (!current) return
-  const drop = new Set(
-    permissionColumns.value
-      .filter((item) => item.tableCode === tableCode && isColumnPermissionAvailable(item))
-      .map((item) => item.id),
-  )
-  current.columnIds = current.columnIds.filter((id) => !drop.has(id))
-  current.editableColumnIds = current.editableColumnIds.filter((id) => !drop.has(id))
-}
-
-function selectAllDepts() {
-  const current = activeDraft.value
-  if (!current) return
-  current.deptIds = collectDeptIds(deptTree.value)
-  treeKey.value += 1
-}
-
-function clearDepts() {
-  const current = activeDraft.value
-  if (!current) return
-  current.deptIds = []
-  treeKey.value += 1
-}
-
-function cloneSelfRelated(config?: SelfRelatedConfig): SelfRelatedConfig {
+function emptyDraft(menuName: string, columnIds: string[], editableColumnIds: string[]): SystemRoleDataPermItem {
   return {
-    createdBySelf: config?.createdBySelf !== false,
-    fieldContainsSelf: Boolean(config?.fieldContainsSelf),
-    columnIds: [...(config?.columnIds || [])],
+    menuName, editScope: 'all', viewOther: 'none', deptIds: [],
+    selfRelated: selfRelated(false), viewSelfRelated: selfRelated(false), filters: [], viewFilters: [],
+    columnIds, editableColumnIds,
   }
 }
 
-function emptyDraft(): Draft {
-  return {
-    editScope: 'self',
-    viewOther: 'none',
-    deptIds: [],
-    selfRelated: emptySelfRelated(),
-    viewSelfRelated: emptySelfRelated(),
-    filters: [],
-    viewFilters: [],
-    columnIds: [],
-    editableColumnIds: [],
-  }
+function selectEditScope(scope: EditScope) {
+  const draft = activeDraft.value
+  if (!draft || draft.editScope === scope) return
+  draft.editScope = scope
+  draft.deptIds = []
+  draft.selfRelated = selfRelated(scope === 'self')
+  draft.filters = []
+  if (scope === 'all') draft.viewOther = 'none'
+  if (draft.viewOther !== 'self') draft.viewSelfRelated = selfRelated(false)
+  if (draft.viewOther !== 'specified') draft.viewFilters = []
 }
 
-function toSavedDraft(saved: SystemRoleDataPermItem, fallback: Draft): Draft {
-  const editScope = isEditScope(saved.editScope) ? saved.editScope : fallback.editScope
-  const columnIds = (saved.columnIds || []).filter((id) => {
-    const column = columns.value.find((item) => item.id === id)
-    return column?.columnPermission !== false
-  })
-  const visibleIds = new Set(columnIds)
-  return {
-    editScope,
-    viewOther: editScope === 'all'
-      ? 'none'
-      : (isViewOther(saved.viewOther) ? saved.viewOther : fallback.viewOther),
-    deptIds: [...(saved.deptIds || [])],
-    selfRelated: cloneSelfRelated(saved.selfRelated),
-    viewSelfRelated: cloneSelfRelated(saved.viewSelfRelated),
-    filters: Array.isArray(saved.filters)
-      ? saved.filters.map((item) => ({
-          ...item,
-          value: Array.isArray(item.value) ? [...item.value] : [],
-        }))
-      : [],
-    viewFilters: Array.isArray(saved.viewFilters)
-      ? saved.viewFilters.map((item) => ({
-          ...item,
-          value: Array.isArray(item.value) ? [...item.value] : [],
-        }))
-      : [],
-    columnIds,
-    editableColumnIds: (saved.editableColumnIds || []).filter((id) => {
-      const column = columns.value.find((item) => item.id === id)
-      return visibleIds.has(id) && column?.columnPermission !== false
-    }),
-  }
+function selectViewOther(permission: ViewOtherScope) {
+  const draft = activeDraft.value
+  if (!draft || draft.viewOther === permission) return
+  draft.viewOther = permission
+  draft.viewSelfRelated = selfRelated(permission === 'self')
+  draft.viewFilters = []
 }
 
-function validateDraft(draft: Draft, title: string) {
-  if (draft.editScope === 'custom' && !draft.deptIds.length) {
-    return `请为「${title}」勾选自定义部门`
-  }
-  if (draft.editScope === 'self') {
-    if (!draft.selfRelated.createdBySelf && !draft.selfRelated.fieldContainsSelf) {
-      return `请为「${title}」至少选择一种与成员相关的记录`
+function validateFilters(items: RowFilterCondition[], title: string) {
+  if (!items.length || items.some((item) => !item.columnId || !item.value.length)) return `请补全「${title}」筛选条件`
+  return ''
+}
+
+function validate(draft: SystemRoleDataPermItem, title: string) {
+  if (draft.editScope === 'custom' && !draft.deptIds.length) return `请为「${title}」选择部门`
+  for (const related of [
+    draft.editScope === 'self' ? draft.selfRelated : null,
+    draft.editScope !== 'all' && draft.viewOther === 'self' ? draft.viewSelfRelated : null,
+  ]) {
+    if (related && !related.createdBySelf && (!related.fieldContainsSelf || !related.columnIds.length)) {
+      return `请为「${title}」选择与当前用户相关的条件`
     }
-    if (draft.selfRelated.fieldContainsSelf && !draft.selfRelated.columnIds.length) {
-      return `请为「${title}」勾选包含成员本人的字段`
-    }
+    if (related?.fieldContainsSelf && !related.columnIds.length) return `请为「${title}」选择包含当前用户的字段`
   }
   if (draft.editScope === 'specified') {
-    if (!draft.filters.length) return `请为「${title}」添加筛选条件`
-    if (draft.filters.some((item) => !item.columnId || !item.value.length)) {
-      return `请为「${title}」补全筛选条件`
-    }
+    const error = validateFilters(draft.filters, title)
+    if (error) return error
   }
-  if (draft.editScope === 'all') return ''
-  if (draft.viewOther === 'self') {
-    if (!draft.viewSelfRelated.createdBySelf && !draft.viewSelfRelated.fieldContainsSelf) {
-      return `请为「${title}」至少选择一种其它记录的成员相关条件`
-    }
-    if (draft.viewSelfRelated.fieldContainsSelf && !draft.viewSelfRelated.columnIds.length) {
-      return `请为「${title}」勾选其它记录中包含成员本人的字段`
-    }
-  }
-  if (draft.viewOther === 'specified') {
-    if (!draft.viewFilters.length) return `请为「${title}」添加其它记录的筛选条件`
-    if (draft.viewFilters.some((item) => !item.columnId || !item.value.length)) {
-      return `请为「${title}」补全其它记录的筛选条件`
-    }
-  }
+  if (draft.editScope !== 'all' && draft.viewOther === 'specified') return validateFilters(draft.viewFilters, title)
   return ''
 }
 
 async function open(row: SystemRoleListItem) {
   role.value = row
   menus.value = []
-  menuTree.value = []
   activeMenuName.value = ''
-  menuKeyword.value = ''
-  deptKeyword.value = ''
   drafts.value = {}
+  loading.value = true
   visible.value = true
   try {
-    const [detail, tree, rawMenus, cols] = await Promise.all([
-      getSystemRoleDetail(row.id),
-      fetchSystemDeptTree(),
-      fetchSystemMenuTree(),
-      fetchAllSystemMenuColumns(),
+    const [detail, tree, allColumns, departments] = await Promise.all([
+      getSystemRoleDetail(row.id), fetchSystemMenuTree(), fetchAllSystemMenuColumns(), fetchSystemDeptTree(),
     ])
-    deptTree.value = Array.isArray(tree) ? tree : []
-    columns.value = Array.isArray(cols) ? cols : []
-    const menuList = Array.isArray(rawMenus) ? rawMenus : []
-    menuTree.value = buildGrantedMenuTree(menuList, detail.menuNames || [])
-    menus.value = flattenGrantedMenuTree(menuTree.value)
+    columns.value = Array.isArray(allColumns) ? allColumns : []
+    deptTree.value = Array.isArray(departments) ? departments : []
+    queryIds.value = detail.queryPermissionIds || []
+    const menuTree = Array.isArray(tree) ? tree : []
+    menus.value = detail.menuNames.map((name) => ({ name, title: findMenuTitle(menuTree, name) }))
     const existing = new Map((detail.dataPerms || []).map((item) => [item.menuName, item]))
-    const next: Record<string, Draft> = {}
-    for (const item of menus.value) {
-      const saved = existing.get(item.name)
-      next[item.name] = saved ? toSavedDraft(saved, emptyDraft()) : emptyDraft()
-    }
-    drafts.value = next
+    drafts.value = Object.fromEntries(menus.value.map((menu) => {
+      const saved = existing.get(menu.name)
+      const columnIds = (detail.columnPermissionIds || []).filter((id) => columns.value.some((item) => item.menuName === menu.name && item.id === id))
+      const editableColumnIds = (detail.editPermissionIds || []).filter((id) => columnIds.includes(id))
+      return [menu.name, saved ? structuredClone(saved) : emptyDraft(menu.name, columnIds, editableColumnIds)]
+    }))
     activeMenuName.value = menus.value[0]?.name || ''
-    treeKey.value += 1
   } catch (error) {
-    message.error(toMessage(error, '加载失败'))
+    message.error(toMessage(error, '加载数据权限失败'))
+    visible.value = false
+  } finally {
+    loading.value = false
   }
 }
 
@@ -784,11 +239,10 @@ async function submit() {
   const items: SystemRoleDataPermItem[] = []
   for (const menu of menus.value) {
     const draft = drafts.value[menu.name]
-    if (!draft) continue
-    const error = validateDraft(draft, menu.title)
+    const error = validate(draft, menu.title)
     if (error) {
-      message.warning(error)
       activeMenuName.value = menu.name
+      message.warning(error)
       return
     }
     items.push({
@@ -796,14 +250,10 @@ async function submit() {
       editScope: draft.editScope,
       viewOther: draft.editScope === 'all' ? 'none' : draft.viewOther,
       deptIds: draft.editScope === 'custom' ? draft.deptIds : [],
-      selfRelated: draft.editScope === 'self' ? draft.selfRelated : emptySelfRelated(),
-      viewSelfRelated: draft.editScope !== 'all' && draft.viewOther === 'self'
-        ? draft.viewSelfRelated
-        : emptySelfRelated(),
+      selfRelated: draft.editScope === 'self' ? draft.selfRelated : selfRelated(false),
+      viewSelfRelated: draft.editScope !== 'all' && draft.viewOther === 'self' ? draft.viewSelfRelated : selfRelated(false),
       filters: draft.editScope === 'specified' ? draft.filters : [],
-      viewFilters: draft.editScope !== 'all' && draft.viewOther === 'specified'
-        ? draft.viewFilters
-        : [],
+      viewFilters: draft.editScope !== 'all' && draft.viewOther === 'specified' ? draft.viewFilters : [],
       columnIds: draft.columnIds,
       editableColumnIds: draft.editableColumnIds,
     })
@@ -811,11 +261,11 @@ async function submit() {
   saving.value = true
   try {
     await saveSystemRoleDataPerm(id, items)
-    message.success('保存成功')
+    message.success('数据权限已保存')
     visible.value = false
     emit('success')
   } catch (error) {
-    message.error(toMessage(error, '保存失败'))
+    message.error(toMessage(error, '保存数据权限失败'))
   } finally {
     saving.value = false
   }
@@ -825,399 +275,131 @@ defineExpose({ open })
 </script>
 
 <style scoped>
-.role-drawer__footer {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.role-data-perm {
-  display: flex;
+.role-data {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
   min-height: 0;
-  overflow: hidden;
-}
-
-.role-data-perm__aside {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  box-sizing: border-box;
-  width: 280px;
-  min-height: 0;
-  padding: 16px 12px 16px 16px;
-  border-right: 1px solid var(--layout-border-color);
-}
-
-.role-data-perm__aside-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.role-data-perm__aside-title {
-  color: var(--text-color);
   font-size: 13px;
-  font-weight: 600;
-}
-
-.role-data-perm__aside-count {
-  color: var(--text-color-secondary);
-  font-size: 12px;
-}
-
-.role-data-perm__aside :deep(.el-input),
-.role-data-perm__custom-bar :deep(.el-input),
-.role-data-perm__aside :deep(.n-input) {
-  width: 100%;
-}
-
-.role-data-perm__menu-scroll {
-  flex: 1;
-  min-height: 0;
-}
-
-.role-data-perm__menu-tree {
-  background: transparent;
-}
-
-.role-data-perm__aside :deep(.el-tree-node__content) {
-  height: auto;
-  min-height: 32px;
-  align-items: flex-start;
-  padding: 6px 8px;
-}
-
-.role-data-perm__aside :deep(.el-tree-node.is-current > .el-tree-node__content) {
-  background: var(--color-primary-a08, var(--layout-color));
-}
-
-.role-data-perm__aside :deep(.el-tree-node.is-disabled > .el-tree-node__content) {
-  cursor: default;
-  opacity: 1;
-  background: transparent;
-}
-
-.role-data-perm__menu-label {
-  display: block;
-  flex: 1;
-  min-width: 0;
-  line-height: 20px;
-}
-
-.role-data-perm__menu-label.is-dir {
-  color: var(--text-color-secondary);
-  font-weight: 600;
-  cursor: default;
-}
-
-.role-data-perm__main {
-  flex: 1;
-  min-width: 0;
-  min-height: 0;
-}
-
-.role-data-perm__panel {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 16px 20px 24px;
-}
-
-.role-data-perm__header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.role-data-perm__header-title {
-  color: var(--text-color);
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-.role-data-perm__header-sub {
-  margin-top: 4px;
-  color: var(--text-color-secondary);
-  font-size: 12px;
-}
-
-.role-data-perm__card {
-  padding: 16px;
-  border: 1px solid var(--layout-border-color);
-  border-radius: 10px;
-  background: var(--component-background-color);
-}
-
-.role-data-perm__card-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.role-data-perm__title {
-  margin: 0;
-  color: var(--text-color);
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.role-data-perm__card-extra {
-  display: block;
-  margin-top: 4px;
-  color: var(--text-color-secondary);
-  font-size: 12px;
   line-height: 1.5;
 }
 
-.role-data-perm__block > .role-data-perm__title {
-  margin-bottom: 12px;
-}
-
-.role-data-perm__block + .role-data-perm__block {
-  margin-top: 20px;
-  padding-top: 16px;
-  border-top: 1px solid var(--layout-border-color);
-}
-
-.role-data-perm__block-title {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 12px;
-}
-
-.role-data-perm__block-title .role-data-perm__title {
-  margin: 0;
-}
-
-.role-data-perm__help-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-  line-height: 1;
-}
-
-.role-data-perm__help-icon :deep(.grow-iconify) {
-  display: flex !important;
-}
-
-.role-data-perm__radios {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.role-data-perm__radio-wrap {
-  display: flex;
-  flex-direction: column;
-}
-
-.role-data-perm__radio {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  margin: 0;
-  padding: 6px 0;
-  border: 0;
-  background: transparent;
-  color: var(--text-color);
-  font-size: 13px;
-  text-align: left;
-  cursor: pointer;
-}
-
-.role-data-perm__radio-dot {
-  box-sizing: border-box;
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-  border: 1px solid var(--layout-border-color);
-  border-radius: 50%;
-  background: var(--component-background-color);
-}
-
-.role-data-perm__radio.is-active .role-data-perm__radio-dot {
-  border-color: var(--primary-color);
-  box-shadow: inset 0 0 0 4px var(--primary-color);
-}
-
-.role-data-perm__custom {
+.role-data__aside {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 8px 0 8px 28px;
+  padding: 16px 10px;
+  border-right: 1px solid var(--el-border-color-lighter, var(--layout-border-color));
+  background: var(--el-fill-color-lighter, var(--layout-color));
+  min-height: 0;
 }
 
-.role-data-perm__custom-bar {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.role-data-perm__custom-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 10px;
-  color: var(--text-color-secondary);
+.role-data__aside strong {
+  padding: 0 10px;
   font-size: 12px;
+  color: var(--text-color-secondary);
 }
 
-.role-data-perm__tree-scroll {
-  border: 1px solid var(--layout-border-color);
-  border-radius: 8px;
-  background: var(--layout-color);
+.role-data__aside-scroll {
+  flex: 1;
+  min-height: 0;
 }
 
-.role-data-perm__tree {
-  padding: 8px;
-}
-
-.role-data-perm__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.role-data-perm__columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-.role-data-perm__table-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.role-data-perm__table {
-  padding: 12px;
-  border: 1px solid var(--layout-border-color);
-  border-radius: 8px;
-  background: var(--layout-color);
-}
-
-.role-data-perm__table-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-
-.role-data-perm__table-title {
+.role-data__menu {
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  text-align: left;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
   color: var(--text-color);
   font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.role-data__menu:hover {
+  background: var(--el-fill-color-light, var(--layout-color));
+}
+
+.role-data__menu.is-active {
+  background: var(--el-color-primary-light-9, var(--color-primary-a08));
+  color: var(--el-color-primary);
   font-weight: 600;
 }
 
-.role-data-perm__table-code {
-  margin-top: 2px;
-  color: var(--text-color-secondary);
-  font-size: 12px;
+.role-data__menu:focus-visible {
+  outline: 2px solid var(--el-color-primary);
+  outline-offset: -2px;
 }
 
-.role-data-perm__column {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  margin: 0;
-  padding: 10px 12px;
-  border: 1px solid var(--layout-border-color);
-  border-radius: 8px;
-  background: var(--layout-color);
-  color: var(--text-color);
-  cursor: pointer;
-}
-
-.role-data-perm__column.is-checked {
-  border-color: var(--primary-color);
-  background: var(--color-primary-a08, var(--layout-color));
-}
-
-.role-data-perm__column.is-disabled {
-  cursor: not-allowed;
-  opacity: 0.65;
-}
-
-.role-data-perm__column-text {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.role-data__main {
   min-width: 0;
-  flex: 1;
+  overflow: hidden;
 }
 
-.role-data-perm__column-permissions,
-.role-data-perm__column-permissions label {
-  display: inline-flex;
+.role-data__form {
+  padding: 16px 24px 28px;
+}
+
+.role-data__form h3 {
+  margin: 0 0 16px;
+  font-size: 15px;
+}
+
+.role-data__form h4 {
+  margin: 0 0 10px;
+  font-size: 13px;
+}
+
+.role-data__form section {
+  padding: 0 0 16px;
+  margin-bottom: 18px;
+}
+
+.role-data__form section + section {
+  padding-top: 18px;
+  border-top: 1px solid var(--el-border-color-lighter, var(--layout-border-color));
+}
+
+.role-data__option {
+  padding: 8px 10px;
+  margin-top: 2px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.role-data__option.is-selected {
+  background: var(--el-color-primary-light-9, var(--color-primary-a08));
+}
+
+.role-data__option > label {
+  display: flex;
   align-items: center;
-}
-
-.role-data-perm__column-permissions {
-  flex: 0 0 auto;
-  gap: 12px;
-}
-
-.role-data-perm__column-permissions label {
-  gap: 5px;
-  font-size: 12px;
+  gap: 8px;
   cursor: pointer;
 }
 
-.role-data-perm__column-title {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  line-height: 1.4;
+.role-data__option input {
+  accent-color: var(--el-color-primary);
 }
 
-.role-data-perm__column-code {
+.role-data__sub {
+  padding: 10px 0 8px 28px;
+}
+
+.role-data__dept-select {
+  width: 100%;
+  max-width: 360px;
+}
+
+.role-data__hint {
+  padding: 12px;
   color: var(--text-color-secondary);
-  font-size: 12px;
-}
-
-.role-data-perm__hint,
-.role-data-perm__empty,
-.role-data-perm__warn {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-.role-data-perm__hint {
-  color: var(--text-color-secondary);
-}
-
-.role-data-perm__hint--pad {
-  padding: 24px 8px;
-  text-align: center;
-}
-
-.role-data-perm__warn {
-  color: var(--error-color, #d03050);
-}
-
-.role-data-perm__empty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 24px;
-  color: var(--text-color-secondary);
-  text-align: center;
 }
 </style>
 
 <style>
-/* Drawer 挂到 body，需非 scoped 才能锁住 body 高度 */
 .role-drawer.el-drawer,
 .role-drawer.n-drawer {
   display: flex;

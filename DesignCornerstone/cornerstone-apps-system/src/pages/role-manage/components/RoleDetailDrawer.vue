@@ -99,7 +99,7 @@
             </section>
 
             <section class="role-detail__section">
-              <h4 class="role-detail__title">菜单和功能</h4>
+              <h4 class="role-detail__title">角色授权</h4>
               <div v-if="!menuGroups.length" class="role-detail__hint">未配置菜单权限</div>
               <div v-else class="role-detail__menus">
                 <div v-for="group in menuGroups" :key="group.name" class="role-detail__menu">

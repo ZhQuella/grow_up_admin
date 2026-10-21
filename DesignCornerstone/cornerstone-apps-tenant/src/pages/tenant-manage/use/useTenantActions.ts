@@ -1,5 +1,6 @@
 import { computed, reactive, ref } from 'vue'
 import { useMsg } from '@grow-admin-rock/components'
+import { fetchAllApplicationFunctionColumns, fetchAllApplicationFunctionTables } from '../../../api/applicationFunctionColumn'
 import {
   activateSystemTenant,
   clearSystemTenantData,
@@ -18,6 +19,7 @@ import type {
   SystemTenantGrantMenu,
   SystemTenantListItem,
 } from '../../../types/systemTenant'
+import type { ApplicationFunctionColumn, ApplicationFunctionNamedTable } from '../../../types/applicationFunctionColumn'
 import { todayDate, toMessage, validateGrowForm } from './helpers'
 
 type UseTenantActionsOptions = {
@@ -144,14 +146,25 @@ export function useTenantActions(options: UseTenantActionsOptions) {
   const grantApplications = ref<SystemTenantGrantMenu[]>([])
   const grantMenuIds = ref<string[]>([])
   const grantFunctionIds = ref<string[]>([])
+  const grantTables = ref<ApplicationFunctionNamedTable[]>([])
+  const grantColumns = ref<ApplicationFunctionColumn[]>([])
+  const grantColumnPermissionIds = ref<string[]>([])
   const grantActiveMenuId = ref('')
-  const grantFunctionsWithMenu = ref(true)
+  const grantActiveTab = ref('functions')
+  const grantAllWithMenu = ref(true)
 
   const grantActiveMenu = computed(() => {
     if (!grantActiveMenuId.value) return null
     return grantApplications.value.find((item) => item.id === grantActiveMenuId.value) || null
   })
   const grantActiveFunctions = computed(() => grantActiveMenu.value?.functions || [])
+  const grantActiveColumnTables = computed(() => {
+    return grantTables.value.filter((item) => item.menuName === grantActiveMenuId.value).map((table) => ({
+      ...table,
+      id: `${table.menuName}::${table.code}`,
+      columns: grantColumns.value.filter((item) => item.menuName === table.menuName && item.tableCode === table.code && item.enabled),
+    }))
+  })
   const grantAllActiveFunctionsChecked = computed(() => {
     return grantActiveFunctions.value.length > 0
       && grantActiveFunctions.value.every((item) => grantFunctionIds.value.includes(item.id))
@@ -159,6 +172,14 @@ export function useTenantActions(options: UseTenantActionsOptions) {
   const grantSomeActiveFunctionsChecked = computed(() => {
     return !grantAllActiveFunctionsChecked.value
       && grantActiveFunctions.value.some((item) => grantFunctionIds.value.includes(item.id))
+  })
+  const grantAllActiveFieldsChecked = computed(() => {
+    const columns = grantActiveColumnTables.value.flatMap((table) => table.columns)
+    return columns.length > 0 && columns.every((column) => grantColumnPermissionIds.value.includes(column.id))
+  })
+  const grantSomeActiveFieldsChecked = computed(() => {
+    return !grantAllActiveFieldsChecked.value
+      && grantActiveColumnTables.value.some((table) => table.columns.some((column) => grantColumnPermissionIds.value.includes(column.id)))
   })
 
   function functionIdsForMenus(menuIds: string[]) {
@@ -355,14 +376,20 @@ export function useTenantActions(options: UseTenantActionsOptions) {
     grantApplications.value = []
     grantMenuIds.value = []
     grantFunctionIds.value = []
+    grantTables.value = []
+    grantColumns.value = []
+    grantColumnPermissionIds.value = []
     grantActiveMenuId.value = ''
-    grantFunctionsWithMenu.value = true
+    grantActiveTab.value = 'functions'
+    grantAllWithMenu.value = true
     grantVisible.value = true
     grantLoading.value = true
     try {
-      const [detail, applicationFunctions] = await Promise.all([
+      const [detail, applicationFunctions, columns, tables] = await Promise.all([
         fetchSystemTenantGrantDetail(row.id),
         fetchSystemTenantApplicationFunctions(),
+        fetchAllApplicationFunctionColumns(),
+        fetchAllApplicationFunctionTables(),
       ])
       const detailMenus = flattenGrantMenus(detail.tree)
       const applications = (Array.isArray(applicationFunctions) ? applicationFunctions : []).map((item) => {
@@ -379,6 +406,9 @@ export function useTenantActions(options: UseTenantActionsOptions) {
       grantApplications.value = applications
       grantMenuIds.value = detail.menuIds.filter((id) => applicationIds.has(id))
       grantFunctionIds.value = [...detail.functionIds]
+      grantTables.value = Array.isArray(tables) ? tables : []
+      grantColumns.value = Array.isArray(columns) ? columns : []
+      grantColumnPermissionIds.value = [...(detail.columnPermissionIds || [])]
       grantActiveMenuId.value = applications[0]?.id || ''
     } catch (error) {
       message.error(toMessage(error, '加载授权失败'))
@@ -397,12 +427,17 @@ export function useTenantActions(options: UseTenantActionsOptions) {
 
     const nextFunctionIds = new Set(grantFunctionIds.value)
     const functionIds = functionIdsForMenus([menuId])
-    if (checked && grantFunctionsWithMenu.value) {
+    if (checked && grantAllWithMenu.value) {
       functionIds.forEach((id) => nextFunctionIds.add(id))
     } else if (!checked) {
       functionIds.forEach((id) => nextFunctionIds.delete(id))
     }
     grantFunctionIds.value = [...nextFunctionIds]
+    if (checked && grantAllWithMenu.value) {
+      grantAllFieldsForMenus([menuId])
+    } else if (!checked) {
+      clearGrantFieldsForMenu(menuId)
+    }
   }
 
   function onGrantApplicationClick(data: SystemTenantGrantMenu) {
@@ -416,12 +451,48 @@ export function useTenantActions(options: UseTenantActionsOptions) {
     grantFunctionIds.value = [...set]
   }
 
-  function toggleGrantFunctionsWithMenu(checked: boolean) {
-    grantFunctionsWithMenu.value = checked
+  function toggleGrantColumn(columnId: string, checked: boolean) {
+    const next = new Set(grantColumnPermissionIds.value)
+    if (checked) next.add(columnId)
+    else next.delete(columnId)
+    grantColumnPermissionIds.value = [...next]
+  }
+
+  function toggleGrantTable(tableId: string, checked: boolean) {
+    const columnIds = grantColumns.value.filter((item) => item.enabled && `${item.menuName}::${item.tableCode}` === tableId).map((item) => item.id)
+    if (checked) {
+      grantColumnPermissionIds.value = [...new Set([...grantColumnPermissionIds.value, ...columnIds])]
+    } else {
+      const ids = new Set(columnIds)
+      grantColumnPermissionIds.value = grantColumnPermissionIds.value.filter((id) => !ids.has(id))
+    }
+  }
+
+  function grantAllFieldsForMenus(menuIds: string[]) {
+    const names = new Set(menuIds)
+    const columnIds = grantColumns.value.filter((item) => names.has(item.menuName) && item.enabled).map((item) => item.id)
+    grantColumnPermissionIds.value = [...new Set([...grantColumnPermissionIds.value, ...columnIds])]
+  }
+
+  function clearGrantFieldsForMenu(menuId: string) {
+    const columnIds = new Set(grantColumns.value.filter((item) => item.menuName === menuId).map((item) => item.id))
+    grantColumnPermissionIds.value = grantColumnPermissionIds.value.filter((id) => !columnIds.has(id))
+  }
+
+  function toggleAllGrantActiveFields(checked: boolean) {
+    const menuId = grantActiveMenuId.value
+    if (!menuId) return
+    if (checked) grantAllFieldsForMenus([menuId])
+    else clearGrantFieldsForMenu(menuId)
+  }
+
+  function toggleGrantAllWithMenu(checked: boolean) {
+    grantAllWithMenu.value = checked
     if (!checked) return
     const set = new Set(grantFunctionIds.value)
     functionIdsForMenus(grantMenuIds.value).forEach((id) => set.add(id))
     grantFunctionIds.value = [...set]
+    grantAllFieldsForMenus(grantMenuIds.value)
   }
 
   function toggleAllGrantActiveFunctions(checked: boolean) {
@@ -442,6 +513,7 @@ export function useTenantActions(options: UseTenantActionsOptions) {
         tenantId: target.id,
         menuIds: grantMenuIds.value,
         functionIds: grantFunctionIds.value,
+        columnPermissionIds: grantColumnPermissionIds.value,
       })
       message.success('授权已保存')
       grantVisible.value = false
@@ -506,18 +578,26 @@ export function useTenantActions(options: UseTenantActionsOptions) {
     grantApplications,
     grantMenuIds,
     grantFunctionIds,
+    grantColumnPermissionIds,
     grantActiveMenuId,
+    grantActiveTab,
     grantActiveMenu,
     grantActiveFunctions,
-    grantFunctionsWithMenu,
+    grantActiveColumnTables,
+    grantAllWithMenu,
     grantAllActiveFunctionsChecked,
     grantSomeActiveFunctionsChecked,
+    grantAllActiveFieldsChecked,
+    grantSomeActiveFieldsChecked,
     openGrant,
     toggleGrantApplication,
     onGrantApplicationClick,
     toggleGrantFunction,
-    toggleGrantFunctionsWithMenu,
+    toggleGrantColumn,
+    toggleGrantTable,
+    toggleGrantAllWithMenu,
     toggleAllGrantActiveFunctions,
+    toggleAllGrantActiveFields,
     submitGrant,
   }
 }

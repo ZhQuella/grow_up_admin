@@ -55,6 +55,9 @@ type RoleRecord = {
   builtIn?: boolean
   menuNames: string[]
   functionIds: string[]
+  queryPermissionIds?: string[]
+  columnPermissionIds?: string[]
+  editPermissionIds?: string[]
   userIds: string[]
   memberBoundAt: Record<string, string>
   dataPerms: DataPermRecord[]
@@ -217,6 +220,12 @@ function getRoleStore() {
 
 const roleStore = getRoleStore()
 
+for (const role of roleStore) {
+  role.queryPermissionIds ??= [...new Set(role.dataPerms.flatMap((item) => item.columnIds))]
+  role.columnPermissionIds ??= [...role.queryPermissionIds]
+  role.editPermissionIds ??= [...new Set(role.dataPerms.flatMap((item) => item.editableColumnIds))]
+}
+
 function findRole(id: string) {
   return roleStore.find((item) => item.id === id)
 }
@@ -244,6 +253,9 @@ function toDetail(role: RoleRecord) {
     menuNames: [...role.menuNames],
     menus: role.menuNames.map((name) => ({ name, title: name })),
     functionIds: [...role.functionIds],
+    queryPermissionIds: [...(role.queryPermissionIds || [])],
+    columnPermissionIds: [...(role.columnPermissionIds || [])],
+    editPermissionIds: [...(role.editPermissionIds || [])],
     functions: role.functionIds.map((id) => ({
       id,
       title: id,
@@ -382,6 +394,9 @@ export function removeRoleFunctionReferences(functionIds: string[]) {
 export function removeRoleColumnReferences(columnIds: string[]) {
   const ids = new Set(columnIds)
   for (const role of roleStore) {
+    role.queryPermissionIds = (role.queryPermissionIds || []).filter((id) => !ids.has(id))
+    role.columnPermissionIds = (role.columnPermissionIds || []).filter((id) => !ids.has(id))
+    role.editPermissionIds = (role.editPermissionIds || []).filter((id) => !ids.has(id))
     for (const item of role.dataPerms) {
       item.columnIds = item.columnIds.filter((id) => !ids.has(id))
       item.editableColumnIds = item.editableColumnIds.filter((id) => !ids.has(id))
@@ -560,6 +575,9 @@ const mocks: MockMethod[] = [
         remark: fields.remark,
         menuNames: [],
         functionIds: [],
+        queryPermissionIds: [],
+        columnPermissionIds: [],
+        editPermissionIds: [],
         userIds: [],
         memberBoundAt: {},
         dataPerms: [],
@@ -693,6 +711,18 @@ const mocks: MockMethod[] = [
       const payload = (body || {}) as Recordable<any>
       const role = findRole(String(payload.id || '').trim())
       if (!role) return resultError('角色不存在')
+      if (Array.isArray(payload.queryPermissionIds) && Array.isArray(payload.columnPermissionIds) && Array.isArray(payload.editPermissionIds)) {
+        const queryPermissionIds = pickIds(payload.queryPermissionIds)
+        const columnPermissionIds = pickIds(payload.columnPermissionIds)
+        const editPermissionIds = pickIds(payload.editPermissionIds)
+        const queried = new Set(queryPermissionIds)
+        if ([...columnPermissionIds, ...editPermissionIds].some((id) => !queried.has(id))) {
+          return resultError('列权限和编辑权限需要先授权查询权限')
+        }
+        role.queryPermissionIds = queryPermissionIds
+        role.columnPermissionIds = columnPermissionIds
+        role.editPermissionIds = editPermissionIds
+      }
       role.menuNames = pickIds(payload.menuNames)
       role.functionIds = pickIds(payload.functionIds)
       pruneDataPerms(role)

@@ -71,6 +71,11 @@
                 </template>
                 <template v-else-if="col.field === 'actions'">
                   <div class="role-manage__actions">
+                    <GrowTooltip content="详情" placement="top">
+                      <GrowButton class="role-manage__icon-btn" link type="primary" @click="openDetail(row)">
+                        <GrowIconify icon="ant-design:profile-outlined" :size="16" />
+                      </GrowButton>
+                    </GrowTooltip>
                     <GrowTooltip content="编辑" placement="top">
                       <GrowButton class="role-manage__icon-btn" link type="primary" @click="openEdit(row)">
                         <GrowIconify icon="ant-design:edit-outlined" :size="16" />
@@ -86,14 +91,9 @@
                         <GrowIconify icon="ant-design:safety-outlined" :size="16" />
                       </GrowButton>
                     </GrowTooltip>
-                    <GrowTooltip content="菜单和功能" placement="top">
+                    <GrowTooltip content="角色授权" placement="top">
                       <GrowButton class="role-manage__icon-btn" link type="primary" @click="openMenuPerm(row)">
-                        <GrowIconify icon="ant-design:apartment-outlined" :size="16" />
-                      </GrowButton>
-                    </GrowTooltip>
-                    <GrowTooltip content="详情" placement="top">
-                      <GrowButton class="role-manage__icon-btn" link type="primary" @click="openDetail(row)">
-                        <GrowIconify icon="ant-design:profile-outlined" :size="16" />
+                        <GrowIconify icon="ant-design:safety-certificate-outlined" :size="16" />
                       </GrowButton>
                     </GrowTooltip>
                     <GrowTooltip content="删除" placement="top">

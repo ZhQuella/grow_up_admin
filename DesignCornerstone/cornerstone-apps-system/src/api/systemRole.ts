@@ -81,7 +81,13 @@ export function saveSystemRoleDataPerm(id: string, items: SystemRoleDataPermItem
 
 export function saveSystemRoleMenuPerm(
   id: string,
-  data: { menuNames: string[]; functionIds: string[] },
+  data: {
+    menuNames: string[]
+    functionIds: string[]
+    queryPermissionIds: string[]
+    columnPermissionIds: string[]
+    editPermissionIds: string[]
+  },
 ) {
   return useRequest().put<SystemRoleDetail>({
     url: '/system/role/menu-perm',

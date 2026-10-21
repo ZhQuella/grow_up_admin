@@ -3,10 +3,7 @@ import type { SearchBarField } from '@grow-admin-rock/components/search-bar'
 import type { ColumnBarItem } from '@grow-admin-rock/components/column-bar'
 import { useMsg } from '@grow-admin-rock/components'
 import { MenuTypeEnum } from '@grow-admin-rock/constants'
-import {
-  fetchApplicationFunctionList,
-  fetchSystemMenuTree,
-} from '../../../api/systemMenu'
+import { fetchSystemMenuTree } from '../../../api/systemMenu'
 import type { SystemMenuNode } from '../../../types/systemMenu'
 import { filterMenuTree, sortMenuTree } from './helpers'
 
@@ -29,11 +26,7 @@ function collectLeafColumns(list: ManageTableColumn[]): ManageTableColumn[] {
   return result
 }
 
-type UseMenuTableOptions = {
-  allowHierarchy: boolean
-}
-
-export function useMenuTable(options: UseMenuTableOptions) {
+export function useMenuTable() {
   const message = useMsg()
 
   const loading = ref(false)
@@ -44,7 +37,7 @@ export function useMenuTable(options: UseMenuTableOptions) {
   const searchList: SearchBarField[] = [
     {
       labelText: '关键字',
-      placeholder: options.allowHierarchy ? '标题 / 标识 / 访问路径' : '标题 / 访问路径',
+      placeholder: '标题 / 标识 / 访问路径',
       elType: 'GrowInput',
       isDefault: true,
       model: 'keyword',
@@ -96,9 +89,7 @@ export function useMenuTable(options: UseMenuTableOptions) {
 
   const tableColumns = ref<ManageTableColumn[]>([
     { title: '标题', field: 'title', visible: true, width: 280 },
-    ...(options.allowHierarchy
-      ? [{ title: '标识', field: 'name', visible: true, minWidth: 140 }]
-      : []),
+    { title: '标识', field: 'name', visible: true, minWidth: 140 },
     { title: '类型', field: 'menuType', visible: true, minWidth: 90 },
     { title: '访问路径', field: 'path', visible: true, minWidth: 140 },
     { title: '图标', field: 'icon', visible: true, minWidth: 180 },
@@ -121,9 +112,7 @@ export function useMenuTable(options: UseMenuTableOptions) {
   async function loadList() {
     loading.value = true
     try {
-      const data = await (options.allowHierarchy
-        ? fetchSystemMenuTree()
-        : fetchApplicationFunctionList())
+      const data = await fetchSystemMenuTree()
       sourceTree.value = sortMenuTree(Array.isArray(data) ? data : [])
       tableKey.value += 1
     } catch (error) {

@@ -30,7 +30,7 @@
               :width="col.width"
               :min-width="col.minWidth || (col.width ? undefined : 120)"
               :fixed="col.fixed"
-              :show-overflow-tooltip="col.field !== 'actions' && col.field !== 'tenantStatus' && col.field !== 'name'"
+              :show-overflow-tooltip="col.field !== 'actions' && col.field !== 'enabled' && col.field !== 'tenantStatus' && col.field !== 'name'"
             >
               <template #default="{ row }">
                 <template v-if="col.field === 'name'">
@@ -45,14 +45,51 @@
                   </GrowTag>
                 </template>
                 <template v-else-if="col.field === 'memberCount'">
-                  <GrowButton link type="primary" @click="openView(row)">{{ row.memberCount }}</GrowButton>
+                  <GrowButton link type="primary" @click="openMembers(row, true)">{{ row.memberCount }}</GrowButton>
+                </template>
+                <template v-else-if="col.field === 'enabled'">
+                  <GrowTooltip :content="row.builtIn ? '内置角色不能停用' : (row.enabled ? '停用' : '启用')" placement="top">
+                    <span class="tenant-admin-role__switch">
+                      <GrowSwitch
+                        :model-value="row.enabled"
+                        size="small"
+                        :disabled="row.builtIn"
+                        @update:model-value="(value) => onToggleEnabled(row, Boolean(value))"
+                      />
+                    </span>
+                  </GrowTooltip>
                 </template>
                 <template v-else-if="col.field === 'grantedAt'">{{ formatTime(row.grantedAt) }}</template>
                 <template v-else-if="col.field === 'actions'">
                   <div class="tenant-admin-role__actions">
-                    <GrowTooltip content="查看" placement="top">
+                    <GrowTooltip content="详情" placement="top">
                       <GrowButton class="tenant-admin-role__icon-btn" link type="primary" @click="openView(row)">
                         <GrowIconify icon="ant-design:profile-outlined" :size="16" />
+                      </GrowButton>
+                    </GrowTooltip>
+                    <GrowTooltip content="编辑" placement="top">
+                      <GrowButton class="tenant-admin-role__icon-btn" link type="primary" :disabled="row.builtIn" @click="openEdit(row)">
+                        <GrowIconify icon="ant-design:edit-outlined" :size="16" />
+                      </GrowButton>
+                    </GrowTooltip>
+                    <GrowTooltip :content="row.builtIn ? '查看管理员账号' : '绑定账号'" placement="top">
+                      <GrowButton class="tenant-admin-role__icon-btn" link type="primary" @click="openMembers(row)">
+                        <GrowIconify :icon="row.builtIn ? 'ant-design:team-outlined' : 'ant-design:user-add-outlined'" :size="16" />
+                      </GrowButton>
+                    </GrowTooltip>
+                    <GrowTooltip content="数据权限" placement="top">
+                      <GrowButton class="tenant-admin-role__icon-btn" link type="primary" :disabled="row.builtIn" @click="openDataPerm(row)">
+                        <GrowIconify icon="ant-design:safety-outlined" :size="16" />
+                      </GrowButton>
+                    </GrowTooltip>
+                    <GrowTooltip content="菜单和功能" placement="top">
+                      <GrowButton class="tenant-admin-role__icon-btn" link type="primary" :disabled="row.builtIn" @click="openGrant(row)">
+                        <GrowIconify icon="ant-design:safety-certificate-outlined" :size="16" />
+                      </GrowButton>
+                    </GrowTooltip>
+                    <GrowTooltip content="删除" placement="top">
+                      <GrowButton class="tenant-admin-role__icon-btn" link type="danger" :disabled="row.builtIn || row.enabled" :loading="deleteLoading && deleteTarget?.id === row.id" @click="onDelete(row)">
+                        <GrowIconify icon="ant-design:delete-outlined" :size="16" />
                       </GrowButton>
                     </GrowTooltip>
                   </div>
@@ -78,77 +115,87 @@
       />
     </div>
 
-    <GrowDialog
+    <GrowDrawer
       v-model="detailVisible"
       title="查看租户角色"
-      width="760px"
+      size="680px"
       append-to-body
       destroy-on-close
     >
-      <div v-if="detailLoading" class="tenant-admin-role__empty">加载中…</div>
-      <template v-else-if="detail">
-        <p class="tenant-admin-role__hint">
-          {{ detail.tenantName }}（{{ detail.tenantCode }}）
-          ·
-          {{
-            detail.builtIn
-              ? '内置角色，权限与租户授权同步，不可改名、改编码、停用或删除。'
-              : '普通角色。成员与授权由租户侧维护，平台仅查看。'
-          }}
-        </p>
-        <dl class="tenant-admin-role__meta">
-          <div><dt>角色名称</dt><dd>{{ detail.name }}</dd></div>
-          <div><dt>角色编码</dt><dd>{{ detail.code }}</dd></div>
-          <div><dt>授权菜单</dt><dd>{{ detail.menuCount }}</dd></div>
-          <div><dt>功能权限</dt><dd>{{ detail.functionCount }}</dd></div>
-        </dl>
-        <div class="tenant-admin-role__section-title">成员账号</div>
-        <GrowTable :data="detail.members" row-key="accountId" border max-height="180">
-          <GrowTableColumn prop="username" label="登录名" min-width="120" />
-          <GrowTableColumn prop="nickname" label="昵称" min-width="120" />
-          <GrowTableColumn prop="enabled" label="状态" width="90">
-            <template #default="{ row }">
-              <GrowTag :type="row.enabled ? 'success' : 'info'" size="small">
-                {{ row.enabled ? '启用' : '停用' }}
-              </GrowTag>
-            </template>
-          </GrowTableColumn>
-        </GrowTable>
-        <div v-if="!detail.members.length" class="tenant-admin-role__empty">
-          {{ detail.builtIn ? '尚未分配租户管理员账号' : '暂无成员' }}
-        </div>
-        <div class="tenant-admin-role__section-title">授权权限</div>
-        <div class="tenant-admin-role__grant">
-          <aside class="tenant-admin-role__grant-tree">
-            <GrowScrollbar height="280px">
-              <GrowTree
-                :key="detail.tenantId"
-                :data="detail.tree"
-                node-key="id"
-                show-checkbox
-                check-strictly
-                :expand-on-click-node="false"
-                :default-checked-keys="detail.menuIds"
-                :default-expand-all="true"
-                :props="{ label: 'title', children: 'children', disabled: 'disabled' }"
-              />
-            </GrowScrollbar>
-          </aside>
-          <main class="tenant-admin-role__grant-main">
-            <div class="tenant-admin-role__empty">
-              {{ detail.builtIn ? '勾选结果来自租户授权上限，只读。' : '尚未授权，只读。' }}
+      <GrowWatchBox class="tenant-admin-role__detail-watch">
+        <template #default="{ height }">
+          <GrowScrollbar v-if="height > 0" :height="`${height}px`">
+            <div class="tenant-admin-role__detail-content">
+              <div v-if="detailLoading" class="tenant-admin-role__empty">加载中…</div>
+              <template v-else-if="detail">
+                <dl class="tenant-admin-role__meta">
+                  <div><dt>角色名称</dt><dd>{{ detail.name }}</dd></div>
+                  <div><dt>角色编码</dt><dd>{{ detail.code }}</dd></div>
+                  <div><dt>授权菜单</dt><dd>{{ detail.menuCount }}</dd></div>
+                  <div><dt>功能权限</dt><dd>{{ detail.functionCount }}</dd></div>
+                </dl>
+                <section>
+                  <div class="tenant-admin-role__section-title">成员账号</div>
+                  <div class="tenant-admin-role__members">
+                    <div v-if="!detail.members.length" class="tenant-admin-role__empty">
+                      {{ detail.builtIn ? '尚未分配租户管理员账号' : '暂无成员' }}
+                    </div>
+                    <div v-for="member in detail.members" :key="member.accountId" class="tenant-admin-role__member">
+                      <div class="tenant-admin-role__member-info">
+                        <strong>{{ member.username }}</strong>
+                        <span v-if="member.personName">人员：{{ member.personName }}</span>
+                      </div>
+                      <GrowTag :type="member.enabled ? 'success' : 'info'" size="small">
+                        {{ member.enabled ? '启用' : '停用' }}
+                      </GrowTag>
+                    </div>
+                  </div>
+                </section>
+                <section>
+                  <div class="tenant-admin-role__section-title">授权权限</div>
+                  <div class="tenant-admin-role__grant">
+                    <GrowTree
+                      v-if="detailTree.length"
+                      :key="detail.id"
+                      :data="detailTree"
+                      node-key="id"
+                      :expand-on-click-node="false"
+                      :default-expand-all="true"
+                      :props="{ label: 'title', children: 'children' }"
+                    >
+                      <template #default="{ data }">
+                        <span
+                          class="tenant-admin-role__tree-node"
+                          :class="{
+                            'tenant-admin-role__tree-node--nested': data.kind === 'function' || data.kind === 'table',
+                            'tenant-admin-role__tree-node--field': data.kind === 'field',
+                          }"
+                        >
+                          <span>{{ data.title }}</span>
+                          <span v-if="data.kind === 'field'" class="tenant-admin-role__field-permissions">
+                            <GrowTag v-for="permission in data.permissions" :key="permission" size="small" type="info">
+                              {{ permission }}
+                            </GrowTag>
+                          </span>
+                        </span>
+                      </template>
+                    </GrowTree>
+                    <div v-else class="tenant-admin-role__empty">暂无授权权限</div>
+                  </div>
+                </section>
+              </template>
             </div>
-          </main>
-        </div>
-      </template>
+          </GrowScrollbar>
+        </template>
+      </GrowWatchBox>
       <template #footer>
         <GrowButton @click="detailVisible = false">关闭</GrowButton>
       </template>
-    </GrowDialog>
+    </GrowDrawer>
 
     <GrowDialog
       v-model="formVisible"
-      title="新增租户角色"
+      :title="formMode === 'create' ? '新增租户角色' : '编辑租户角色'"
       width="520px"
       append-to-body
       destroy-on-close
@@ -164,6 +211,7 @@
           <GrowSelect
             v-model="formModel.tenantId"
             :options="tenantSelectOptions"
+            :disabled="formMode === 'edit'"
             filterable
             placeholder="请选择租户"
           />
@@ -201,15 +249,87 @@
         </GrowSpace>
       </template>
     </GrowDialog>
+
+    <GrowDialog
+      :model-value="Boolean(disableTarget)"
+      title="停用确认"
+      width="420px"
+      append-to-body
+      @update:model-value="(value) => { if (!value) disableTarget = null }"
+    >
+      确认停用角色「{{ disableTarget?.name }}」？角色停用后，绑定账号将立即失去该角色下的权限。
+      <template #footer>
+        <GrowSpace>
+          <GrowButton @click="disableTarget = null">取消</GrowButton>
+          <GrowButton type="danger" :loading="disabling" @click="confirmDisable">停用</GrowButton>
+        </GrowSpace>
+      </template>
+    </GrowDialog>
+
+    <GrowDialog
+      :model-value="Boolean(deleteTarget)"
+      title="删除确认"
+      width="420px"
+      append-to-body
+      @update:model-value="(value) => { if (!value) deleteTarget = null }"
+    >
+      <p>确认删除角色「{{ deleteTarget?.name }}」？删除后不可恢复。</p>
+      <dl v-if="deleteImpact" class="tenant-admin-role__delete-impact">
+        <div><dt>绑定账号</dt><dd>{{ deleteImpact.memberCount }} 个</dd></div>
+        <div><dt>菜单权限</dt><dd>{{ deleteImpact.menuCount }} 项</dd></div>
+        <div><dt>功能权限</dt><dd>{{ deleteImpact.functionCount }} 项</dd></div>
+        <div><dt>数据权限</dt><dd>{{ deleteImpact.dataPermCount }} 项</dd></div>
+      </dl>
+      <template #footer>
+        <GrowSpace>
+          <GrowButton @click="deleteTarget = null">取消</GrowButton>
+          <GrowButton type="danger" :disabled="!deleteImpact" :loading="deleteSubmitting" @click="confirmDelete">删除</GrowButton>
+        </GrowSpace>
+      </template>
+    </GrowDialog>
+
+    <TenantAdminRoleMemberDialog v-model="memberVisible" :role="memberTarget" :readonly="memberReadonly" @saved="loadList" />
+    <TenantAdminRoleGrantDialog v-model="grantVisible" :role="grantTarget" @saved="loadList" />
+    <TenantAdminRoleDataPermDrawer v-model="dataPermVisible" :role="dataPermTarget" @saved="loadList" />
   </div>
 </template>
 
 <script lang="ts" setup>
+import { computed, ref } from 'vue'
+import type { SystemTenantGrantMenu } from '../../types/systemTenant'
+import type { TenantAdminRoleListItem } from '../../types/systemTenantAdminRole'
+import TenantAdminRoleGrantDialog from './TenantAdminRoleGrantDialog.vue'
+import TenantAdminRoleDataPermDrawer from './TenantAdminRoleDataPermDrawer.vue'
+import TenantAdminRoleMemberDialog from './TenantAdminRoleMemberDialog.vue'
 import { useTenantAdminRole } from './use/useTenantAdminRole'
 
 defineOptions({
   name: 'TenantAdminRolePage',
 })
+
+const grantVisible = ref(false)
+const grantTarget = ref<TenantAdminRoleListItem | null>(null)
+const dataPermVisible = ref(false)
+const dataPermTarget = ref<TenantAdminRoleListItem | null>(null)
+const memberVisible = ref(false)
+const memberTarget = ref<TenantAdminRoleListItem | null>(null)
+const memberReadonly = ref(false)
+
+function openMembers(row: TenantAdminRoleListItem, readonly = false) {
+  memberTarget.value = row
+  memberReadonly.value = readonly || row.builtIn
+  memberVisible.value = true
+}
+
+function openDataPerm(row: TenantAdminRoleListItem) {
+  dataPermTarget.value = row
+  dataPermVisible.value = true
+}
+
+function openGrant(row: TenantAdminRoleListItem) {
+  grantTarget.value = row
+  grantVisible.value = true
+}
 
 const {
   tableData,
@@ -226,19 +346,90 @@ const {
   detailVisible,
   detailLoading,
   detail,
+  detailColumns,
+  detailTables,
   openView,
   formVisible,
+  formMode,
   formSubmitting,
   formRef,
   formModel,
   formRules,
   tenantSelectOptions,
   openCreate,
+  openEdit,
   submitForm,
+  disableTarget,
+  disabling,
+  onToggleEnabled,
+  confirmDisable,
+  deleteTarget,
+  deleteImpact,
+  deleteLoading,
+  deleteSubmitting,
+  onDelete,
+  confirmDelete,
   formatTime,
   tenantStatusLabel,
   tenantStatusTagType,
 } = useTenantAdminRole()
+
+type GrantNode = {
+  id: string
+  title: string
+  kind: 'menu' | 'group' | 'function' | 'table' | 'field'
+  permissions?: string[]
+  children?: GrantNode[]
+}
+
+const detailTree = computed<GrantNode[]>(() => {
+  if (!detail.value) return []
+  const menuIds = new Set(detail.value.menuIds)
+  const functionIds = new Set(detail.value.functionIds)
+  const queryIds = new Set(detail.value.queryPermissionIds)
+  const columnIds = new Set(detail.value.columnPermissionIds)
+  const editIds = new Set(detail.value.editPermissionIds)
+
+  function buildMenu(menu: SystemTenantGrantMenu): GrantNode | null {
+    const children = (menu.children || []).map(buildMenu).filter((node): node is GrantNode => node !== null)
+    const functions = menu.functions.filter((item) => functionIds.has(item.id))
+    if (functions.length) {
+      children.push(
+        { id: `functions:${menu.id}`, title: '功能授权', kind: 'group' },
+        ...functions.map((item) => ({
+          id: `function:${menu.id}:${item.id}`,
+          title: item.title,
+          kind: 'function' as const,
+        })),
+      )
+    }
+    const tables = detailTables.value.filter((table) => table.menuName === menu.id).map((table) => ({
+      table,
+      fields: detailColumns.value
+        .filter((column) => column.menuName === menu.id && column.tableCode === table.code)
+        .map((column) => ({
+          id: `field:${column.id}`,
+          title: column.title,
+          kind: 'field' as const,
+          permissions: [
+            queryIds.has(column.id) && '查询权限',
+            columnIds.has(column.id) && '列权限',
+            editIds.has(column.id) && '编辑权限',
+          ].filter((permission): permission is string => Boolean(permission)),
+        })).filter((column) => column.permissions.length),
+    })).filter((item) => item.fields.length)
+    if (tables.length) {
+      children.push({ id: `fields:${menu.id}`, title: '字段授权', kind: 'group' })
+      tables.forEach(({ table, fields }) => {
+        children.push({ id: `table:${menu.id}:${table.code}`, title: table.title, kind: 'table' }, ...fields)
+      })
+    }
+    if (!menuIds.has(menu.id) && !children.length) return null
+    return { id: `menu:${menu.id}`, title: menu.title, kind: 'menu', children }
+  }
+
+  return detail.value.tree.map(buildMenu).filter((node): node is GrantNode => node !== null)
+})
 </script>
 
 <style scoped>
@@ -310,12 +501,10 @@ const {
   display: flex !important;
 }
 
-.tenant-admin-role__hint {
-  margin: 0 0 14px;
-  color: var(--text-color-secondary);
-  font-size: 13px;
-  line-height: 1.6;
-}
+.tenant-admin-role__switch { display: inline-flex; align-items: center; }
+.tenant-admin-role__delete-impact { margin: 16px 0 0; }
+.tenant-admin-role__delete-impact div { display: flex; justify-content: space-between; padding: 5px 0; }
+.tenant-admin-role__delete-impact dt, .tenant-admin-role__delete-impact dd { margin: 0; }
 
 .tenant-admin-role__meta {
   display: grid;
@@ -351,22 +540,70 @@ const {
   text-align: center;
 }
 
+.tenant-admin-role__detail-watch {
+  height: 100%;
+  min-height: 240px;
+}
+
+.tenant-admin-role__detail-content {
+  padding: 16px;
+}
+
+.tenant-admin-role__members {
+  padding: 0 12px;
+  border: 1px solid var(--layout-border-color);
+  border-radius: 6px;
+}
+
+.tenant-admin-role__member {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+}
+
+.tenant-admin-role__member + .tenant-admin-role__member {
+  border-top: 1px solid var(--layout-border-color);
+}
+
+.tenant-admin-role__member-info {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.tenant-admin-role__member-info span {
+  color: var(--text-color-secondary);
+}
+
 .tenant-admin-role__grant {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  min-height: 280px;
+  padding: 8px;
   border: 1px solid var(--layout-border-color);
   border-radius: 6px;
   overflow: hidden;
 }
 
-.tenant-admin-role__grant-tree {
-  border-right: 1px solid var(--layout-border-color);
-  padding: 8px;
+.tenant-admin-role__tree-node,
+.tenant-admin-role__field-permissions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
 }
 
-.tenant-admin-role__grant-main {
-  padding: 12px 16px;
+.tenant-admin-role__field-permissions {
+  margin-left: 12px;
+}
+
+.tenant-admin-role__tree-node--nested {
+  padding-left: 16px;
+}
+
+.tenant-admin-role__tree-node--field {
+  padding-left: 32px;
 }
 
 .tenant-admin-role__form {

@@ -6,7 +6,6 @@ import {
   updateSystemTenant,
 } from '../../../api/systemTenant'
 import {
-  TENANT_TYPE_OPTIONS,
   type SystemTenantDetail,
   type SystemTenantListItem,
   type TenantType,
@@ -50,7 +49,6 @@ function emptyForm(): TenantFormModel {
 }
 
 const TENANT_CODE_PATTERN = /^[A-Za-z0-9_-]+$/
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 type UseTenantFormOptions = {
   onSuccess: () => void | Promise<void>
@@ -65,11 +63,10 @@ export function useTenantForm(options: UseTenantFormOptions) {
   const formLoading = ref(false)
   const formRef = ref()
   const formModel = reactive<TenantFormModel>(emptyForm())
-  const formDetail = ref<SystemTenantDetail | null>(null)
 
   const formRules = {
     tenantCode: [
-      { required: true, message: '请填写租户编码', trigger: 'blur' },
+      { required: true, message: '请填写登录代码', trigger: 'blur' },
       {
         validator: (_: unknown, value: string, callback: (error?: Error) => void) => {
           const text = String(value || '').trim()
@@ -78,7 +75,7 @@ export function useTenantForm(options: UseTenantFormOptions) {
             return
           }
           if (text.length < 2 || text.length > 64) {
-            callback(new Error('租户编码为 2-64 位'))
+            callback(new Error('登录代码为 2-64 位'))
             return
           }
           if (!TENANT_CODE_PATTERN.test(text)) {
@@ -99,19 +96,8 @@ export function useTenantForm(options: UseTenantFormOptions) {
         trigger: 'blur',
       },
     ],
-    contactEmail: [
-      {
-        validator: (_: unknown, value: string, callback: (error?: Error) => void) => {
-          const text = String(value || '').trim()
-          if (text && !EMAIL_PATTERN.test(text)) {
-            callback(new Error('邮箱格式不正确'))
-            return
-          }
-          callback()
-        },
-        trigger: 'blur',
-      },
-    ],
+    contactName: [{ required: true, message: '请填写联系人', trigger: 'blur' }],
+    contactMobile: [{ required: true, message: '请填写联系人手机号', trigger: 'blur' }],
   }
 
   function assignForm(detail: Partial<SystemTenantDetail> & Partial<TenantFormModel>) {
@@ -134,20 +120,17 @@ export function useTenantForm(options: UseTenantFormOptions) {
 
   function openCreate() {
     formMode.value = 'create'
-    formDetail.value = null
     Object.assign(formModel, emptyForm())
     formVisible.value = true
   }
 
   async function openForm(row: SystemTenantListItem, mode: 'edit' | 'view') {
     formMode.value = mode
-    formDetail.value = null
     assignForm(row)
     formVisible.value = true
     formLoading.value = true
     try {
       const detail = await getSystemTenantDetail(row.id)
-      formDetail.value = detail
       assignForm(detail)
     } catch (error) {
       message.error(toMessage(error, '加载详情失败'))
@@ -217,12 +200,10 @@ export function useTenantForm(options: UseTenantFormOptions) {
     formLoading,
     formRef,
     formModel,
-    formDetail,
     formRules,
     openCreate,
     openEdit,
     openView,
     submitForm,
-    typeOptions: TENANT_TYPE_OPTIONS,
   }
 }
