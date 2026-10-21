@@ -30,12 +30,12 @@
               :width="col.width"
               :min-width="col.minWidth || (col.width ? undefined : 120)"
               :fixed="col.fixed"
-              :show-overflow-tooltip="col.field !== 'actions' && col.field !== 'status'"
+              :show-overflow-tooltip="col.field !== 'actions' && col.field !== 'status' && col.field !== 'contactName'"
             >
               <template #default="{ row }">
-                <template v-if="col.field === 'tenantCode'">
-                  <span class="tenant-manage__code">
-                    {{ row.tenantCode }}
+                <template v-if="col.field === 'tenantName'">
+                  <span class="tenant-manage__name">
+                    {{ row.tenantName }}
                     <GrowTag v-if="row.builtIn" size="small" type="info">内置</GrowTag>
                   </span>
                 </template>
@@ -45,11 +45,14 @@
                   </GrowTag>
                 </template>
                 <template v-else-if="col.field === 'shortName'">{{ row.shortName || '-' }}</template>
-                <template v-else-if="col.field === 'contactName'">{{ row.contactName || '-' }}</template>
-                <template v-else-if="col.field === 'contactMobile'">{{ row.contactMobile || '-' }}</template>
+                <template v-else-if="col.field === 'tenantCode'">{{ row.tenantCode }}</template>
+                <template v-else-if="col.field === 'contactName'">
+                  <GrowTooltip :content="row.contactMobile || '-'" placement="top">
+                    <span>{{ row.contactName || '-' }}</span>
+                  </GrowTooltip>
+                </template>
+                <template v-else-if="col.field === 'accountCount'">{{ row.accountCount }}</template>
                 <template v-else-if="col.field === 'servicePeriod'">{{ formatServicePeriod(row) }}</template>
-                <template v-else-if="col.field === 'lastLoginAt'">{{ formatTime(row.lastLoginAt) }}</template>
-                <template v-else-if="col.field === 'createdAt'">{{ formatTime(row.createdAt) }}</template>
                 <template v-else-if="col.field === 'actions'">
                   <div class="tenant-manage__actions">
                     <GrowTooltip v-if="hasAction(row, 'view')" content="查看" placement="top">
@@ -127,17 +130,30 @@
       append-to-body
       destroy-on-close
     >
+      <dl v-if="formMode === 'view'" class="tenant-manage__detail">
+        <div><dt>租户名称</dt><dd>{{ formModel.tenantName || '-' }}</dd></div>
+        <div><dt>登录代码</dt><dd>{{ formModel.tenantCode || '-' }}</dd></div>
+        <div><dt>租户简称</dt><dd>{{ formModel.shortName || '-' }}</dd></div>
+        <div><dt>联系人</dt><dd>{{ formModel.contactName || '-' }}</dd></div>
+        <div><dt>联系人手机号</dt><dd>{{ formModel.contactMobile || '-' }}</dd></div>
+      </dl>
       <GrowForm
+        v-else
         ref="formRef"
         class="tenant-manage__form"
         :model="formModel"
         :rules="formRules"
         label-width="120px"
       >
-        <GrowFormItem v-if="formMode === 'view'" label="租户ID">
-          <GrowInput :model-value="formModel.id" disabled />
+        <GrowFormItem label="租户名称" prop="tenantName">
+          <GrowInput
+            v-model="formModel.tenantName"
+            maxlength="128"
+            clearable
+            placeholder="2-128 位"
+          />
         </GrowFormItem>
-        <GrowFormItem label="租户编码" prop="tenantCode">
+        <GrowFormItem label="登录代码" prop="tenantCode">
           <GrowInput
             v-model="formModel.tenantCode"
             maxlength="64"
@@ -146,81 +162,18 @@
             :disabled="formMode !== 'create'"
           />
         </GrowFormItem>
-        <GrowFormItem label="租户名称" prop="tenantName">
-          <GrowInput
-            v-model="formModel.tenantName"
-            maxlength="128"
-            clearable
-            placeholder="2-128 位"
-            :disabled="formMode === 'view'"
-          />
-        </GrowFormItem>
         <GrowFormItem label="租户简称" prop="shortName">
           <GrowInput
             v-model="formModel.shortName"
             maxlength="64"
             clearable
-            :disabled="formMode === 'view'"
           />
-        </GrowFormItem>
-        <GrowFormItem label="租户类型" prop="tenantType">
-          <GrowSelect
-            v-model="formModel.tenantType"
-            :options="[...typeOptions]"
-            :disabled="formMode === 'view'"
-          />
-        </GrowFormItem>
-        <GrowFormItem v-if="formMode === 'view'" label="状态">
-          <GrowTag v-if="formDetail" :type="tenantStatusTagType(formDetail.status)" size="small">
-            {{ tenantStatusLabel(formDetail.status) }}
-          </GrowTag>
-        </GrowFormItem>
-        <GrowFormItem v-if="formMode === 'view'" label="服务期限">
-          {{ formDetail ? formatServicePeriod(formDetail) : '-' }}
         </GrowFormItem>
         <GrowFormItem label="联系人" prop="contactName">
-          <GrowInput v-model="formModel.contactName" maxlength="64" clearable :disabled="formMode === 'view'" />
+          <GrowInput v-model="formModel.contactName" maxlength="64" clearable />
         </GrowFormItem>
-        <GrowFormItem label="联系人手机" prop="contactMobile">
-          <GrowInput v-model="formModel.contactMobile" maxlength="32" clearable :disabled="formMode === 'view'" />
-        </GrowFormItem>
-        <GrowFormItem label="联系人邮箱" prop="contactEmail">
-          <GrowInput v-model="formModel.contactEmail" maxlength="128" clearable :disabled="formMode === 'view'" />
-        </GrowFormItem>
-        <GrowFormItem label="信用代码" prop="creditCode">
-          <GrowInput v-model="formModel.creditCode" maxlength="64" clearable :disabled="formMode === 'view'" />
-        </GrowFormItem>
-        <GrowFormItem label="行业" prop="industry">
-          <GrowInput v-model="formModel.industry" maxlength="64" clearable :disabled="formMode === 'view'" />
-        </GrowFormItem>
-        <GrowFormItem label="地区编码" prop="regionCode">
-          <GrowInput
-            v-model="formModel.regionCode"
-            maxlength="32"
-            clearable
-            placeholder="省市区编码"
-            :disabled="formMode === 'view'"
-          />
-        </GrowFormItem>
-        <GrowFormItem label="地址" prop="address">
-          <GrowInput
-            v-model="formModel.address"
-            type="textarea"
-            :rows="2"
-            maxlength="255"
-            show-word-limit
-            :disabled="formMode === 'view'"
-          />
-        </GrowFormItem>
-        <GrowFormItem label="备注" prop="remark">
-          <GrowInput
-            v-model="formModel.remark"
-            type="textarea"
-            :rows="3"
-            maxlength="500"
-            show-word-limit
-            :disabled="formMode === 'view'"
-          />
+        <GrowFormItem label="联系人手机号" prop="contactMobile">
+          <GrowInput v-model="formModel.contactMobile" maxlength="32" clearable />
         </GrowFormItem>
       </GrowForm>
       <template #footer>
@@ -373,10 +326,10 @@
         {{ grantDetail?.grantedBy ? ` · ${grantDetail.grantedBy}` : '' }}
       </p>
       <div class="tenant-manage__grant-options">
-        <span>勾选菜单时同时授权所有功能</span>
+        <span>勾选菜单时同时授权所有功能和字段授权</span>
         <GrowSwitch
-          :model-value="grantFunctionsWithMenu"
-          @update:model-value="(value) => toggleGrantFunctionsWithMenu(Boolean(value))"
+          :model-value="grantAllWithMenu"
+          @update:model-value="(value) => toggleGrantAllWithMenu(Boolean(value))"
         />
       </div>
       <div v-if="grantLoading" class="tenant-manage__loading">加载应用功能…</div>
@@ -402,34 +355,76 @@
           </GrowScrollbar>
         </aside>
         <main class="tenant-manage__grant-main">
-          <div class="tenant-manage__grant-header">
-            <span class="tenant-manage__grant-panel-title">功能管理</span>
-            <GrowCheckbox
-              :model-value="grantAllActiveFunctionsChecked"
-              :indeterminate="grantSomeActiveFunctionsChecked"
-              :disabled="!grantActiveFunctions.length"
-              @update:model-value="(value) => toggleAllGrantActiveFunctions(Boolean(value))"
-            >
-              全选
-            </GrowCheckbox>
-          </div>
-          <template v-if="grantActiveMenu">
-            <div class="tenant-manage__grant-title">{{ grantActiveMenu.title }}</div>
-            <label
-              v-for="item in grantActiveFunctions"
-              :key="item.id"
-              class="tenant-manage__function"
-            >
+          <GrowTabs v-model="grantActiveTab">
+            <GrowTabPane label="功能授权" name="functions" />
+            <GrowTabPane label="字段授权" name="columns" />
+          </GrowTabs>
+          <GrowScrollbar v-if="grantActiveTab === 'functions'" height="300px">
+            <div class="tenant-manage__grant-header">
+              <span class="tenant-manage__grant-panel-title">功能授权</span>
               <GrowCheckbox
-                :model-value="grantFunctionIds.includes(item.id)"
-                @update:model-value="(value) => toggleGrantFunction(item.id, Boolean(value))"
-              />
-              <span>{{ item.title }}</span>
-              <span class="tenant-manage__function-code">{{ item.code }}</span>
-            </label>
-            <div v-if="!grantActiveFunctions.length" class="tenant-manage__empty">该应用功能暂无功能权限</div>
-          </template>
-          <div v-else class="tenant-manage__empty">请选择应用功能查看功能权限</div>
+                :model-value="grantAllActiveFunctionsChecked"
+                :indeterminate="grantSomeActiveFunctionsChecked"
+                :disabled="!grantActiveFunctions.length"
+                @update:model-value="(value) => toggleAllGrantActiveFunctions(Boolean(value))"
+              >
+                全选
+              </GrowCheckbox>
+            </div>
+            <template v-if="grantActiveMenu">
+              <label
+                v-for="item in grantActiveFunctions"
+                :key="item.id"
+                class="tenant-manage__function"
+              >
+                <GrowCheckbox
+                  :model-value="grantFunctionIds.includes(item.id)"
+                  @update:model-value="(value) => toggleGrantFunction(item.id, Boolean(value))"
+                />
+                <span>{{ item.title }}</span>
+                <span class="tenant-manage__function-code">{{ item.code }}</span>
+              </label>
+              <div v-if="!grantActiveFunctions.length" class="tenant-manage__empty">该应用功能暂无功能权限</div>
+            </template>
+            <div v-else class="tenant-manage__empty">请选择应用功能查看功能权限</div>
+          </GrowScrollbar>
+          <GrowScrollbar v-else-if="grantActiveMenu" height="300px">
+            <div class="tenant-manage__grant-header">
+              <span class="tenant-manage__grant-panel-title">字段授权</span>
+              <GrowCheckbox
+                :model-value="grantAllActiveFieldsChecked"
+                :indeterminate="grantSomeActiveFieldsChecked"
+                :disabled="!grantActiveColumnTables.some((table) => table.columns.length)"
+                @update:model-value="(value) => toggleAllGrantActiveFields(Boolean(value))"
+              >
+                全选
+              </GrowCheckbox>
+            </div>
+            <div v-for="table in grantActiveColumnTables" :key="table.id" class="tenant-manage__column-table">
+              <label class="tenant-manage__column-table-title">
+                <GrowCheckbox
+                  :model-value="table.columns.length > 0 && table.columns.every((column) => grantColumnPermissionIds.includes(column.id))"
+                  :indeterminate="table.columns.some((column) => grantColumnPermissionIds.includes(column.id)) && !table.columns.every((column) => grantColumnPermissionIds.includes(column.id))"
+                  :disabled="!table.columns.length"
+                  @update:model-value="(value) => toggleGrantTable(table.id, Boolean(value))"
+                />
+                <span>{{ table.title }}（全选字段）</span>
+              </label>
+              <div class="tenant-manage__column-row tenant-manage__column-row--head">
+                <span>字段</span><span>可见</span>
+              </div>
+              <div v-for="column in table.columns" :key="column.id" class="tenant-manage__column-row">
+                <span>{{ column.title }}</span>
+                <GrowCheckbox
+                  :model-value="grantColumnPermissionIds.includes(column.id)"
+                  @update:model-value="(value) => toggleGrantColumn(column.id, Boolean(value))"
+                />
+              </div>
+              <div v-if="!table.columns.length" class="tenant-manage__empty">该表暂无字段</div>
+            </div>
+            <div v-if="!grantActiveColumnTables.length" class="tenant-manage__empty">该应用功能暂无字段定义</div>
+          </GrowScrollbar>
+          <div v-else class="tenant-manage__empty">请选择应用功能查看字段权限</div>
         </main>
       </div>
       <template #footer>
@@ -471,9 +466,7 @@ const {
   formSubmitting,
   formRef,
   formModel,
-  formDetail,
   formRules,
-  typeOptions,
   openCreate,
   openEdit,
   openView,
@@ -527,17 +520,25 @@ const {
   grantApplications,
   grantMenuIds,
   grantFunctionIds,
+  grantColumnPermissionIds,
+  grantActiveTab,
   grantActiveMenu,
   grantActiveFunctions,
-  grantFunctionsWithMenu,
+  grantActiveColumnTables,
+  grantAllWithMenu,
   grantAllActiveFunctionsChecked,
   grantSomeActiveFunctionsChecked,
+  grantAllActiveFieldsChecked,
+  grantSomeActiveFieldsChecked,
   openGrant,
   toggleGrantApplication,
   onGrantApplicationClick,
   toggleGrantFunction,
-  toggleGrantFunctionsWithMenu,
+  toggleGrantColumn,
+  toggleGrantTable,
+  toggleGrantAllWithMenu,
   toggleAllGrantActiveFunctions,
+  toggleAllGrantActiveFields,
   submitGrant,
   availableTenantActions,
   formatServicePeriod,
@@ -583,6 +584,7 @@ function hasAction(row: SystemTenantListItem, action: TenantActionKey) {
 }
 
 .tenant-manage__table {
+  position: relative;
   flex: 1;
   min-height: 0;
   margin-top: 10px;
@@ -592,6 +594,8 @@ function hasAction(row: SystemTenantListItem, action: TenantActionKey) {
 }
 
 .tenant-manage__watch {
+  position: absolute;
+  inset: 0;
   height: 100%;
   min-height: 0;
 }
@@ -603,13 +607,35 @@ function hasAction(row: SystemTenantListItem, action: TenantActionKey) {
   background: var(--component-background-color);
 }
 
-.tenant-manage__code,
+.tenant-manage__detail {
+  margin: 0;
+}
+
+.tenant-manage__detail div {
+  display: flex;
+  gap: 16px;
+  padding: 8px 0;
+  line-height: 24px;
+}
+
+.tenant-manage__detail dt {
+  flex: 0 0 104px;
+  color: var(--text-color-secondary);
+}
+
+.tenant-manage__detail dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.tenant-manage__name,
 .tenant-manage__actions {
   display: inline-flex;
   align-items: center;
 }
 
-.tenant-manage__code {
+.tenant-manage__name {
   gap: 6px;
 }
 
@@ -731,11 +757,6 @@ function hasAction(row: SystemTenantListItem, action: TenantActionKey) {
   margin-bottom: 12px;
 }
 
-.tenant-manage__grant-title {
-  margin-bottom: 8px;
-  color: var(--text-color-secondary);
-}
-
 .tenant-manage__function {
   display: flex;
   align-items: center;
@@ -745,6 +766,31 @@ function hasAction(row: SystemTenantListItem, action: TenantActionKey) {
 }
 
 .tenant-manage__function-code {
+  color: var(--text-color-secondary);
+  font-size: 12px;
+}
+
+.tenant-manage__column-table {
+  margin-bottom: 12px;
+}
+
+.tenant-manage__column-table-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tenant-manage__column-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 72px;
+  align-items: center;
+  min-height: 32px;
+  gap: 4px;
+}
+
+.tenant-manage__column-row--head {
   color: var(--text-color-secondary);
   font-size: 12px;
 }

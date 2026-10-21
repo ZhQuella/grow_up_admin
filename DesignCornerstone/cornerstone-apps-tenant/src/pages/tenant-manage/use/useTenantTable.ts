@@ -92,17 +92,13 @@ export function useTenantTable() {
   ]
 
   const tableColumns = ref<ManageTableColumn[]>([
-    { title: '租户编码', field: 'tenantCode', visible: true, minWidth: 120 },
     { title: '租户名称', field: 'tenantName', visible: true, minWidth: 160 },
-    { title: '租户简称', field: 'shortName', visible: true, minWidth: 100 },
+    { title: '租户简称', field: 'shortName', visible: false, minWidth: 100 },
+    { title: '登录代码', field: 'tenantCode', visible: true, minWidth: 120 },
     { title: '状态', field: 'status', visible: true, minWidth: 100 },
     { title: '联系人', field: 'contactName', visible: true, minWidth: 100 },
-    { title: '联系人手机', field: 'contactMobile', visible: true, minWidth: 120 },
-    { title: '账号数', field: 'accountCount', visible: true, minWidth: 80 },
-    { title: '人员数', field: 'personCount', visible: true, minWidth: 80 },
-    { title: '服务期限', field: 'servicePeriod', visible: true, minWidth: 200 },
-    { title: '最后登录时间', field: 'lastLoginAt', visible: true, minWidth: 170 },
-    { title: '创建时间', field: 'createdAt', visible: true, minWidth: 170 },
+    { title: '账号数量', field: 'accountCount', visible: true, minWidth: 90 },
+    { title: '服务期限', field: 'servicePeriod', visible: true, minWidth: 260 },
     { title: '操作', field: 'actions', visible: true, minWidth: 260, fixed: 'right' },
   ])
 

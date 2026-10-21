@@ -480,7 +480,7 @@ function columnReferenceImpact(columnIds: string[]) {
   }
 }
 
-function listAllColumns() {
+export function listAllColumns() {
   return [...columnStore.values()]
     .map(withTableMeta)
     .sort((a, b) => (
@@ -871,6 +871,12 @@ const mocks: MockMethod[] = [
     method: 'post',
     timeout: 80,
     response: () => resultSuccess(listAllColumns()),
+  },
+  {
+    url: mockUrl('/system/menu-tables/all'),
+    method: 'post',
+    timeout: 80,
+    response: () => resultSuccess([...tableStore.values()]),
   },
   {
     url: mockUrl('/system/menu/column-impact'),

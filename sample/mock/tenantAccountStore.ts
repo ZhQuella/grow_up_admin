@@ -7,13 +7,20 @@ export type TenantAccountRecord = {
   email: string
   enabled: boolean
   tenantAdmin: boolean
+  roleIds?: string[]
+  personId?: string
+  personName?: string
   lastLoginAt: string
   remark: string
   createdAt: string
   updatedAt: string
 }
 
-const TENANT_ACCOUNT_STORE_VERSION = 2
+const TENANT_ACCOUNT_STORE_VERSION = 3
+
+export function tenantAdminRoleId(tenantId: string) {
+  return `tenant_admin_${tenantId}`
+}
 
 export function nextTenantAccountId() {
   return `ta_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`
@@ -30,6 +37,7 @@ function createTenantAccountStore(): TenantAccountRecord[] {
     email: 'admin@platform.local',
     enabled: true,
     tenantAdmin: true,
+    roleIds: ['tenant_admin_1'],
     lastLoginAt: '2026-09-07T08:00:00.000Z',
     remark: '内置平台账号',
     createdAt: '2026-01-01T00:00:00.000Z',
@@ -44,6 +52,7 @@ function createTenantAccountStore(): TenantAccountRecord[] {
     email: 'admin@acme.test',
     enabled: true,
     tenantAdmin: true,
+    roleIds: ['tenant_admin_2'],
     lastLoginAt: '2026-09-06T10:12:00.000Z',
     remark: '',
     createdAt: '2026-08-20T04:00:00.000Z',
@@ -58,6 +67,9 @@ function createTenantAccountStore(): TenantAccountRecord[] {
     email: '',
     enabled: true,
     tenantAdmin: false,
+    roleIds: ['tr_acme_ops'],
+    personId: 'tp_acme_ops',
+    personName: '王珊',
     lastLoginAt: '2026-09-05T03:00:00.000Z',
     remark: '',
     createdAt: '2026-08-22T04:00:00.000Z',
@@ -86,6 +98,9 @@ function createTenantAccountStore(): TenantAccountRecord[] {
     email: '',
     enabled: true,
     tenantAdmin: true,
+    roleIds: ['tenant_admin_4'],
+    personId: 'tp_gov_admin',
+    personName: '刘敏',
     lastLoginAt: '2026-08-30T02:00:00.000Z',
     remark: '',
     createdAt: '2026-05-21T08:00:00.000Z',
@@ -100,6 +115,7 @@ function createTenantAccountStore(): TenantAccountRecord[] {
     email: '',
     enabled: true,
     tenantAdmin: false,
+    roleIds: ['tr_gov_clerk'],
     lastLoginAt: '2026-08-28T06:00:00.000Z',
     remark: '',
     createdAt: '2026-06-01T08:00:00.000Z',
@@ -114,6 +130,7 @@ function createTenantAccountStore(): TenantAccountRecord[] {
     email: '',
     enabled: true,
     tenantAdmin: false,
+    roleIds: ['tr_gov_auditor'],
     lastLoginAt: '',
     remark: '',
     createdAt: '2026-06-02T08:00:00.000Z',
@@ -128,6 +145,7 @@ function createTenantAccountStore(): TenantAccountRecord[] {
     email: 'zhao@org.test',
     enabled: true,
     tenantAdmin: true,
+    roleIds: ['tenant_admin_5'],
     lastLoginAt: '2026-08-01T09:00:00.000Z',
     remark: '',
     createdAt: '2026-06-18T05:00:00.000Z',
@@ -142,6 +160,7 @@ function createTenantAccountStore(): TenantAccountRecord[] {
     email: '',
     enabled: false,
     tenantAdmin: false,
+    roleIds: ['tr_north_member'],
     lastLoginAt: '',
     remark: '',
     createdAt: '2026-07-01T05:00:00.000Z',
@@ -175,7 +194,7 @@ export function listTenantAccounts(tenantId?: string) {
 }
 
 export function countTenantAdminMembers(tenantId: string) {
-  return getTenantAccountStore().filter((item) => item.tenantId === tenantId && item.tenantAdmin).length
+  return getTenantAccountStore().filter((item) => item.tenantId === tenantId && item.roleIds?.includes(tenantAdminRoleId(tenantId))).length
 }
 
 export function clearTenantAccounts(tenantId: string) {

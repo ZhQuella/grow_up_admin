@@ -42,6 +42,7 @@
         </GrowFormItem>
       </GrowCol>
       <GrowCol
+        v-if="state.isAutomationMenu || state.isExternalMenu"
         :span="24"
         class="application-function-form-panel__required-extension"
       >

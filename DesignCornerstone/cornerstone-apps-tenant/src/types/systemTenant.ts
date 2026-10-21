@@ -157,12 +157,14 @@ export type SystemTenantGrantDetail = {
   tree: SystemTenantGrantMenu[]
   menuIds: string[]
   functionIds: string[]
+  columnPermissionIds: string[]
 }
 
 export type SystemTenantGrantPayload = {
   tenantId: string
   menuIds: string[]
   functionIds: string[]
+  columnPermissionIds: string[]
 }
 
 export type TenantActionKey =

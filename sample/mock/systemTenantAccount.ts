@@ -6,6 +6,7 @@ import {
   findTenantAccount,
   getTenantAccountStore,
   nextTenantAccountId,
+  tenantAdminRoleId,
   type TenantAccountRecord,
 } from './tenantAccountStore'
 
@@ -128,6 +129,7 @@ export default [
         email,
         enabled: true,
         tenantAdmin: Boolean(payload.tenantAdmin),
+        roleIds: payload.tenantAdmin ? [tenantAdminRoleId(tenantId)] : [],
         lastLoginAt: '',
         remark: text(payload.remark),
         createdAt: now(),
@@ -173,6 +175,9 @@ export default [
       if (!tenant) return resultError('租户不存在')
       if (tenant.status === 'deleted') return resultError('已删除租户不可分配租户管理员')
       account.tenantAdmin = payload.assigned !== false
+      account.roleIds = account.tenantAdmin
+        ? [...new Set([...(account.roleIds || []), tenantAdminRoleId(account.tenantId)])]
+        : (account.roleIds || []).filter((id) => id !== tenantAdminRoleId(account.tenantId))
       account.updatedAt = now()
       return resultSuccess(toDetail(account), {
         message: account.tenantAdmin ? '已分配租户管理员' : '已取消租户管理员',

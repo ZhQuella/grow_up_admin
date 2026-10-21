@@ -42,6 +42,7 @@ type TenantRecord = {
   processCount: number
   menuIds: string[]
   functionIds: string[]
+  columnPermissionIds?: string[]
   grantedAt: string | null
   grantedBy: string
 }
@@ -178,6 +179,7 @@ function createTenantStore(): TenantRecord[] {
     processCount: 0,
     menuIds: [...ALL_GRANT_MENU_IDS],
     functionIds: [...ALL_GRANT_FUNCTION_IDS],
+    columnPermissionIds: ['mc_title', 'mc_name', 'rc_name', 'rc_code', 'ac_username', 'ac_person', 'pc_name', 'pc_dept', 'dc_name'],
     grantedAt: '2026-01-01T00:00:00.000Z',
     grantedBy: 'system',
   },
@@ -217,6 +219,7 @@ function createTenantStore(): TenantRecord[] {
     processCount: 0,
     menuIds: ['SystemCatalog', 'AccountManage', 'PersonManage', 'DeptManage'],
     functionIds: ['af_query', 'af_create', 'pf_query', 'df_query'],
+    columnPermissionIds: ['ac_username', 'ac_person', 'ac_dept', 'pc_name', 'pc_dept', 'pc_mobile', 'dc_name', 'dc_code'],
     grantedAt: '2026-08-21T04:00:00.000Z',
     grantedBy: 'admin',
   },
@@ -295,6 +298,7 @@ function createTenantStore(): TenantRecord[] {
     processCount: 1,
     menuIds: [...ALL_GRANT_MENU_IDS],
     functionIds: [...ALL_GRANT_FUNCTION_IDS],
+    columnPermissionIds: ['mc_title', 'mc_name', 'rc_name', 'rc_code', 'rm_name', 'ac_username', 'ac_person', 'pc_name', 'pc_dept', 'dc_name', 'dc_code', 'postc_name'],
     grantedAt: '2026-05-21T01:00:00.000Z',
     grantedBy: 'admin',
   },
@@ -334,13 +338,14 @@ function createTenantStore(): TenantRecord[] {
     processCount: 0,
     menuIds: ['SystemCatalog', 'AccountManage'],
     functionIds: ['af_query'],
+    columnPermissionIds: ['ac_username', 'ac_person', 'ac_enabled'],
     grantedAt: '2026-06-19T02:00:00.000Z',
     grantedBy: 'admin',
   },
   ]
 }
 
-const TENANT_STORE_VERSION = 2
+const TENANT_STORE_VERSION = 3
 
 export function getTenantStore() {
   const g = globalThis as typeof globalThis & {
@@ -741,8 +746,6 @@ export default [
     response: ({ body }) => {
       const item = findTenant(text((body as Recordable<any>)?.tenantId))
       if (!item) return resultError('租户不存在')
-      const builtInError = rejectBuiltIn(item, '授权')
-      if (builtInError) return builtInError
       return resultSuccess({
         tenantId: item.id,
         tenantName: item.tenantName,
@@ -752,6 +755,7 @@ export default [
         tree: GRANT_TREE,
         menuIds: [...item.menuIds],
         functionIds: [...item.functionIds],
+        columnPermissionIds: [...(item.columnPermissionIds || [])],
       })
     },
   },
@@ -767,6 +771,7 @@ export default [
       if (builtInError) return builtInError
       item.menuIds = Array.isArray(payload.menuIds) ? payload.menuIds.map(String) : []
       item.functionIds = Array.isArray(payload.functionIds) ? payload.functionIds.map(String) : []
+      item.columnPermissionIds = Array.isArray(payload.columnPermissionIds) ? payload.columnPermissionIds.map(String) : []
       item.grantedAt = now()
       item.grantedBy = 'admin'
       item.updatedAt = now()
@@ -779,6 +784,7 @@ export default [
         tree: GRANT_TREE,
         menuIds: [...item.menuIds],
         functionIds: [...item.functionIds],
+        columnPermissionIds: [...item.columnPermissionIds],
       }, { message: '授权已保存' })
     },
   },

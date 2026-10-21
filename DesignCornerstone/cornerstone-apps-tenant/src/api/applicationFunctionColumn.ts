@@ -4,6 +4,7 @@ import type {
   ApplicationFunctionColumn,
   ApplicationFunctionColumnBundle,
   ApplicationFunctionColumnSavePayload,
+  ApplicationFunctionNamedTable,
   ApplicationFunctionReferenceImpact,
   ApplicationFunctionTableDeleteImpact,
 } from '../types/applicationFunctionColumn'
@@ -27,6 +28,12 @@ export function saveApplicationFunctionColumns(data: ApplicationFunctionColumnSa
 export function fetchAllApplicationFunctionColumns() {
   return useRequest().post<ApplicationFunctionColumn[]>({
     url: '/system/menu-columns/all',
+  })
+}
+
+export function fetchAllApplicationFunctionTables() {
+  return useRequest().post<ApplicationFunctionNamedTable[]>({
+    url: '/system/menu-tables/all',
   })
 }
 

@@ -106,18 +106,6 @@
                       @update:model-value="(value) => state.onToggleEnabled(row, Boolean(value))"
                     />
                   </label>
-                  <label class="column-list-panel__switch">
-                    <span>列权限</span>
-                    <GrowSwitch v-model="row.columnPermission" size="small" />
-                  </label>
-                  <label class="column-list-panel__switch">
-                    <span>表单填写</span>
-                    <GrowSwitch v-model="row.formFill" size="small" />
-                  </label>
-                  <label class="column-list-panel__switch">
-                    <span>查询条件</span>
-                    <GrowSwitch v-model="row.queryFilter" size="small" />
-                  </label>
                   <GrowTooltip content="删除" placement="top">
                     <GrowButton class="column-list-panel__icon-btn" link type="danger" @click="state.onDelete(row)">
                       <GrowIconify icon="ant-design:delete-outlined" :size="16" />

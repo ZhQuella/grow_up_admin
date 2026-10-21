@@ -30,6 +30,8 @@ export type ApplicationFunctionTable = {
   sort: number
 }
 
+export type ApplicationFunctionNamedTable = ApplicationFunctionTable & { menuName: string }
+
 export type ApplicationFunctionColumn = {
   id: string
   menuName: string

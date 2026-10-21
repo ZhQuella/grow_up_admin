@@ -2,7 +2,8 @@ import { computed, onMounted, reactive, ref } from 'vue'
 import type { SearchBarField } from '@grow-admin-rock/components/search-bar'
 import type { ColumnBarItem } from '@grow-admin-rock/components/column-bar'
 import { driverRef, useMsg } from '@grow-admin-rock/components'
-import { fetchSystemTenantOptions } from '../../../api/systemTenant'
+import { fetchAllApplicationFunctionColumns, fetchAllApplicationFunctionTables } from '../../../api/applicationFunctionColumn'
+import { fetchSystemTenantGrantDetail, fetchSystemTenantOptions } from '../../../api/systemTenant'
 import {
   createTenantAdminRole,
   fetchTenantAdminRolePage,
@@ -20,6 +21,7 @@ import {
   type TenantAdminRoleDetail,
   type TenantAdminRoleListItem,
 } from '../../../types/systemTenantAdminRole'
+import type { ApplicationFunctionColumn, ApplicationFunctionNamedTable } from '../../../types/applicationFunctionColumn'
 
 export type ManageTableColumn = ColumnBarItem & {
   width?: number
@@ -103,6 +105,8 @@ export function useTenantAdminRole() {
   const detailVisible = ref(false)
   const detailLoading = ref(false)
   const detail = ref<TenantAdminRoleDetail | null>(null)
+  const detailColumns = ref<ApplicationFunctionColumn[]>([])
+  const detailTables = ref<ApplicationFunctionNamedTable[]>([])
 
   const formVisible = ref(false)
   const formSubmitting = ref(false)
@@ -169,7 +173,7 @@ export function useTenantAdminRole() {
     { title: '成员数', field: 'memberCount', visible: true, minWidth: 90 },
     { title: '授权菜单', field: 'menuCount', visible: true, minWidth: 90 },
     { title: '最近授权', field: 'grantedAt', visible: true, minWidth: 170 },
-    { title: '操作', field: 'actions', visible: true, minWidth: 60, fixed: 'right' },
+    { title: '操作', field: 'actions', visible: true, minWidth: 120, fixed: 'right' },
   ])
 
   const leafColumns = computed(() => collectLeafColumns(tableColumns.value))
@@ -269,7 +273,16 @@ export function useTenantAdminRole() {
     detailLoading.value = true
     detail.value = null
     try {
-      detail.value = await getTenantAdminRoleDetail(row.id)
+      const [role, tenantGrant, columns, tables] = await Promise.all([
+        getTenantAdminRoleDetail(row.id),
+        fetchSystemTenantGrantDetail(row.tenantId),
+        fetchAllApplicationFunctionColumns(),
+        fetchAllApplicationFunctionTables(),
+      ])
+      const allowedColumns = new Set(tenantGrant.columnPermissionIds)
+      detailColumns.value = columns.filter((column) => column.enabled && allowedColumns.has(column.id))
+      detailTables.value = tables
+      detail.value = role
     } catch (error) {
       message.error(toMessage(error, '加载详情失败'))
       detailVisible.value = false
@@ -299,6 +312,8 @@ export function useTenantAdminRole() {
     detailVisible,
     detailLoading,
     detail,
+    detailColumns,
+    detailTables,
     openView,
     formVisible,
     formSubmitting,

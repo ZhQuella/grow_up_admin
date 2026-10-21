@@ -28,7 +28,7 @@ export type TenantAdminRoleListItem = {
 export type TenantAdminRoleMember = {
   accountId: string
   username: string
-  nickname: string
+  personName?: string
   enabled: boolean
 }
 
@@ -37,6 +37,49 @@ export type TenantAdminRoleDetail = TenantAdminRoleListItem & {
   tree: SystemTenantGrantMenu[]
   menuIds: string[]
   functionIds: string[]
+  queryPermissionIds: string[]
+  columnPermissionIds: string[]
+  editPermissionIds: string[]
+  dataPerms: TenantAdminRoleDataPerm[]
+}
+
+export type TenantRoleEditScope = 'all' | 'dept' | 'dept_and_sub' | 'custom' | 'self' | 'specified'
+export type TenantRoleViewOther = 'all' | 'self' | 'specified' | 'none'
+export type TenantRoleFilterOperator = 'eq' | 'neq' | 'contains' | 'not_contains' | 'gt' | 'gte' | 'lt' | 'lte'
+
+export type TenantRoleSelfRelated = {
+  createdBySelf: boolean
+  fieldContainsSelf: boolean
+  columnIds: string[]
+}
+
+export type TenantRoleFilter = {
+  id: string
+  columnId: string
+  operator: TenantRoleFilterOperator
+  value: string[]
+}
+
+export type TenantAdminRoleDataPerm = {
+  menuName: string
+  editScope: TenantRoleEditScope
+  viewOther: TenantRoleViewOther
+  deptIds: string[]
+  selfRelated: TenantRoleSelfRelated
+  viewSelfRelated: TenantRoleSelfRelated
+  filters: TenantRoleFilter[]
+  viewFilters: TenantRoleFilter[]
+}
+
+export type TenantRoleDeptOption = { id: string; title: string }
+
+export type TenantAdminRoleGrantPayload = {
+  roleId: string
+  menuIds: string[]
+  functionIds: string[]
+  queryPermissionIds: string[]
+  columnPermissionIds: string[]
+  editPermissionIds: string[]
 }
 
 export type TenantAdminRoleQuery = {
