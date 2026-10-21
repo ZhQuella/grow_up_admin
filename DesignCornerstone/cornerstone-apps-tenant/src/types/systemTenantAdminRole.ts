@@ -87,6 +87,7 @@ export type TenantAdminRoleQuery = {
   tenantId?: string
   tenantStatus?: TenantStatus | ''
   builtIn?: string | boolean
+  enabled?: string | boolean
   page?: number
   pageSize?: number
 }
@@ -102,4 +103,20 @@ export type TenantAdminRoleCreatePayload = {
   code: string
   sort?: number
   remark?: string
+}
+
+export type TenantAdminRoleUpdatePayload = Omit<TenantAdminRoleCreatePayload, 'tenantId'>
+
+export type TenantAdminRoleDeleteImpact = {
+  memberCount: number
+  menuCount: number
+  functionCount: number
+  dataPermCount: number
+}
+
+export type TenantAdminRoleAccount = {
+  accountId: string
+  username: string
+  personName?: string
+  enabled: boolean
 }

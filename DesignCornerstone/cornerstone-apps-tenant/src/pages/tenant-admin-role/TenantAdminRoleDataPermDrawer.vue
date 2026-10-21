@@ -1,5 +1,5 @@
 <template>
-  <GrowDrawer v-model="visible" :title="role ? `数据权限 · ${role.name}` : '数据权限'" size="920px" append-to-body destroy-on-close>
+  <GrowDrawer v-model="visible" :title="role ? `数据权限 · ${role.name}` : '数据权限'" size="700px" append-to-body destroy-on-close>
     <GrowWatchBox class="tenant-role-data__watch">
       <template #default="{ height }">
         <div v-if="height > 0" class="tenant-role-data" :style="{ height: `${height}px` }">

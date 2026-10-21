@@ -8,6 +8,9 @@ import type {
   TenantAdminRolePageResult,
   TenantAdminRoleQuery,
   TenantRoleDeptOption,
+  TenantAdminRoleUpdatePayload,
+  TenantAdminRoleDeleteImpact,
+  TenantAdminRoleAccount,
 } from '../types/systemTenantAdminRole'
 
 const useRequest = () => diKT(infrastructureLib.types.InfrastructureAxios)
@@ -30,6 +33,48 @@ export function createTenantAdminRole(data: TenantAdminRoleCreatePayload) {
   return useRequest().post<TenantAdminRoleDetail>({
     url: '/platform/tenant-admin-role/create',
     data,
+  })
+}
+
+export function updateTenantAdminRole(roleId: string, data: TenantAdminRoleUpdatePayload) {
+  return useRequest().put<TenantAdminRoleDetail>({
+    url: '/platform/tenant-admin-role/update',
+    data: { roleId, ...data },
+  })
+}
+
+export function fetchTenantAdminRoleAccounts(tenantId: string) {
+  return useRequest().post<TenantAdminRoleAccount[]>({
+    url: '/platform/tenant-admin-role/accounts',
+    data: { tenantId },
+  })
+}
+
+export function saveTenantAdminRoleMembers(roleId: string, accountIds: string[]) {
+  return useRequest().put<TenantAdminRoleDetail>({
+    url: '/platform/tenant-admin-role/members',
+    data: { roleId, accountIds },
+  })
+}
+
+export function setTenantAdminRoleEnabled(roleId: string, enabled: boolean) {
+  return useRequest().put<TenantAdminRoleDetail>({
+    url: '/platform/tenant-admin-role/enabled',
+    data: { roleId, enabled },
+  })
+}
+
+export function fetchTenantAdminRoleDeleteImpact(roleId: string) {
+  return useRequest().post<TenantAdminRoleDeleteImpact>({
+    url: '/platform/tenant-admin-role/delete-impact',
+    data: { roleId },
+  })
+}
+
+export function deleteTenantAdminRole(roleId: string) {
+  return useRequest().post<void>({
+    url: '/platform/tenant-admin-role/delete',
+    data: { roleId },
   })
 }
 

@@ -343,12 +343,14 @@ export default [
       const tenantId = text(payload.tenantId)
       const tenantStatus = text(payload.tenantStatus)
       const builtIn = parseBoolean(payload.builtIn)
+      const enabled = parseBoolean(payload.enabled)
       const page = Math.max(1, Number(payload.page || 1))
       const pageSize = Math.max(1, Number(payload.pageSize || 10))
       const filtered = listAllRoles().filter((item) => {
         if (tenantId && item.tenantId !== tenantId) return false
         if (tenantStatus && item.tenantStatus !== tenantStatus) return false
         if (builtIn != null && item.builtIn !== builtIn) return false
+        if (enabled != null && item.enabled !== enabled) return false
         if (!keyword) return true
         const haystack = [item.tenantCode, item.tenantName, item.name, item.code]
           .join(' ')
@@ -443,6 +445,111 @@ export default [
         editPermissionIds: [],
         dataPerms: [],
       }, { message: '创建成功' })
+    },
+  },
+  {
+    url: mockUrl('/platform/tenant-admin-role/update'),
+    method: 'put',
+    response: ({ body }) => {
+      const payload = (body || {}) as Recordable<any>
+      const role = getCustomRoleStore().find((item) => item.id === text(payload.roleId))
+      if (!role) return resultError('内置角色不能编辑或角色不存在')
+      const name = text(payload.name)
+      const code = text(payload.code)
+      if (!name) return resultError('请填写角色名称')
+      if (!CODE_PATTERN.test(code) || code.toUpperCase() === ROLE_CODE) return resultError('角色编码无效')
+      if (getCustomRoleStore().some((item) => item.id !== role.id && item.tenantId === role.tenantId && item.code.toLowerCase() === code.toLowerCase())) {
+        return resultError('该租户下角色编码已存在')
+      }
+      role.name = name
+      role.code = code
+      role.sort = Number(payload.sort ?? 10)
+      role.remark = text(payload.remark)
+      return resultSuccess(toCustomItem(role, findTenant(role.tenantId)!), { message: '保存成功' })
+    },
+  },
+  {
+    url: mockUrl('/platform/tenant-admin-role/accounts'),
+    method: 'post',
+    response: ({ body }) => {
+      const tenantId = text((body as Recordable<any>)?.tenantId)
+      if (!findTenant(tenantId)) return resultError('租户不存在')
+      return resultSuccess(listTenantAccounts(tenantId).map((account) => ({
+        accountId: account.accountId,
+        username: account.username,
+        personName: account.personId ? account.personName : undefined,
+        enabled: account.enabled,
+      })))
+    },
+  },
+  {
+    url: mockUrl('/platform/tenant-admin-role/members'),
+    method: 'put',
+    response: ({ body }) => {
+      const payload = (body || {}) as Recordable<any>
+      const role = getCustomRoleStore().find((item) => item.id === text(payload.roleId))
+      if (!role) return resultError('内置角色不能绑定账号或角色不存在')
+      if (!Array.isArray(payload.accountIds)) return resultError('请选择账号')
+      const selected = new Set(payload.accountIds.map(String))
+      const accounts = listTenantAccounts(role.tenantId)
+      if ([...selected].some((id) => !accounts.some((account) => account.accountId === id))) return resultError('账号不属于当前租户')
+      accounts.forEach((account) => {
+        const previous = account.roleIds || []
+        const next = previous.filter((id) => id !== role.id)
+        if (selected.has(account.accountId)) next.push(role.id)
+        if (previous.length !== next.length || previous.some((id, index) => id !== next[index])) {
+          account.roleIds = next
+          account.updatedAt = now()
+        }
+      })
+      return resultSuccess(toCustomItem(role, findTenant(role.tenantId)!), { message: '绑定成功' })
+    },
+  },
+  {
+    url: mockUrl('/platform/tenant-admin-role/enabled'),
+    method: 'put',
+    response: ({ body }) => {
+      const payload = (body || {}) as Recordable<any>
+      const role = getCustomRoleStore().find((item) => item.id === text(payload.roleId))
+      if (!role) return resultError('内置角色不能停用或角色不存在')
+      if (typeof payload.enabled !== 'boolean') return resultError('状态无效')
+      role.enabled = payload.enabled
+      return resultSuccess(toCustomItem(role, findTenant(role.tenantId)!))
+    },
+  },
+  {
+    url: mockUrl('/platform/tenant-admin-role/delete-impact'),
+    method: 'post',
+    response: ({ body }) => {
+      const role = getCustomRoleStore().find((item) => item.id === text((body as Recordable<any>)?.roleId))
+      if (!role) return resultError('内置角色不能删除或角色不存在')
+      return resultSuccess({
+        memberCount: listRoleMembers(role.tenantId, role.id).length,
+        menuCount: role.menuIds?.length || 0,
+        functionCount: role.functionIds?.length || 0,
+        dataPermCount: role.dataPerms?.length || 0,
+      })
+    },
+  },
+  {
+    url: mockUrl('/platform/tenant-admin-role/delete'),
+    method: 'post',
+    response: ({ body }) => {
+      const store = getCustomRoleStore()
+      const index = store.findIndex((item) => item.id === text((body as Recordable<any>)?.roleId))
+      if (index < 0) return resultError('内置角色不能删除或角色不存在')
+      const role = store[index]
+      if (role.enabled) return resultError('启用中的角色不能删除，请先停用')
+      listTenantAccounts(role.tenantId).forEach((account) => {
+        if (account.roleIds?.includes(role.id)) {
+          account.roleIds = account.roleIds.filter((id) => id !== role.id)
+          account.updatedAt = now()
+        }
+      })
+      store.splice(index, 1)
+      const tenant = findTenant(role.tenantId)
+      if (tenant) tenant.roleCount = Math.max(1, tenant.roleCount - 1)
+      return resultSuccess(null, { message: '删除成功' })
     },
   },
   {

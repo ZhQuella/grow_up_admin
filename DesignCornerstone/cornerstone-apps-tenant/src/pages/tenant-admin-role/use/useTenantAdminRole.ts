@@ -6,6 +6,10 @@ import { fetchAllApplicationFunctionColumns, fetchAllApplicationFunctionTables }
 import { fetchSystemTenantGrantDetail, fetchSystemTenantOptions } from '../../../api/systemTenant'
 import {
   createTenantAdminRole,
+  updateTenantAdminRole,
+  setTenantAdminRoleEnabled,
+  fetchTenantAdminRoleDeleteImpact,
+  deleteTenantAdminRole,
   fetchTenantAdminRolePage,
   getTenantAdminRoleDetail,
 } from '../../../api/systemTenantAdminRole'
@@ -20,6 +24,7 @@ import {
   ROLE_CODE_PATTERN,
   type TenantAdminRoleDetail,
   type TenantAdminRoleListItem,
+  type TenantAdminRoleDeleteImpact,
 } from '../../../types/systemTenantAdminRole'
 import type { ApplicationFunctionColumn, ApplicationFunctionNamedTable } from '../../../types/applicationFunctionColumn'
 
@@ -109,9 +114,17 @@ export function useTenantAdminRole() {
   const detailTables = ref<ApplicationFunctionNamedTable[]>([])
 
   const formVisible = ref(false)
+  const formMode = ref<'create' | 'edit'>('create')
+  const editRoleId = ref('')
   const formSubmitting = ref(false)
   const formRef = ref()
   const formModel = reactive<FormModel>(emptyForm())
+  const disableTarget = ref<TenantAdminRoleListItem | null>(null)
+  const disabling = ref(false)
+  const deleteTarget = ref<TenantAdminRoleListItem | null>(null)
+  const deleteImpact = ref<TenantAdminRoleDeleteImpact | null>(null)
+  const deleteLoading = ref(false)
+  const deleteSubmitting = ref(false)
 
   const searchList = reactive<SearchBarField[]>([
     {
@@ -162,6 +175,16 @@ export function useTenantAdminRole() {
         value,
       })),
     },
+    {
+      labelText: '启用状态',
+      elType: 'GrowSelect',
+      model: 'enabled',
+      label: 'label',
+      value: 'value',
+      placeholder: '全部',
+      clearable: true,
+      options: [{ label: '启用', value: 'true' }, { label: '停用', value: 'false' }],
+    },
   ])
 
   const tableColumns = ref<ManageTableColumn[]>([
@@ -172,8 +195,9 @@ export function useTenantAdminRole() {
     { title: '角色编码', field: 'code', visible: true, minWidth: 140 },
     { title: '成员数', field: 'memberCount', visible: true, minWidth: 90 },
     { title: '授权菜单', field: 'menuCount', visible: true, minWidth: 90 },
+    { title: '启用', field: 'enabled', visible: true, minWidth: 90 },
     { title: '最近授权', field: 'grantedAt', visible: true, minWidth: 170 },
-    { title: '操作', field: 'actions', visible: true, minWidth: 120, fixed: 'right' },
+    { title: '操作', field: 'actions', visible: true, minWidth: 210, fixed: 'right' },
   ])
 
   const leafColumns = computed(() => collectLeafColumns(tableColumns.value))
@@ -210,6 +234,7 @@ export function useTenantAdminRole() {
         tenantId: query.value.tenantId,
         tenantStatus: query.value.tenantStatus,
         builtIn: query.value.builtIn,
+        enabled: query.value.enabled,
         page: page.value,
         pageSize: pageSize.value,
       })
@@ -238,9 +263,28 @@ export function useTenantAdminRole() {
   }
 
   function openCreate() {
+    formMode.value = 'create'
+    editRoleId.value = ''
     Object.assign(formModel, emptyForm())
     formVisible.value = true
     void loadTenantOptions()
+  }
+
+  function openEdit(row: TenantAdminRoleListItem) {
+    if (row.builtIn) {
+      message.warning('内置角色不能编辑')
+      return
+    }
+    formMode.value = 'edit'
+    editRoleId.value = row.id
+    Object.assign(formModel, {
+      tenantId: row.tenantId,
+      name: row.name,
+      code: row.code,
+      sort: row.sort ?? 10,
+      remark: row.remark || '',
+    })
+    formVisible.value = true
   }
 
   async function submitForm() {
@@ -251,20 +295,84 @@ export function useTenantAdminRole() {
     }
     formSubmitting.value = true
     try {
-      await createTenantAdminRole({
-        tenantId: formModel.tenantId,
+      const values = {
         name: formModel.name.trim(),
         code: formModel.code.trim(),
         sort: Number(formModel.sort ?? 10),
         remark: formModel.remark.trim(),
-      })
-      message.success('创建成功')
+      }
+      if (formMode.value === 'edit') {
+        await updateTenantAdminRole(editRoleId.value, values)
+      } else {
+        await createTenantAdminRole({ tenantId: formModel.tenantId, ...values })
+      }
+      message.success(formMode.value === 'edit' ? '保存成功' : '创建成功')
       formVisible.value = false
       await loadList()
     } catch (error) {
-      message.error(toMessage(error, '创建失败'))
+      message.error(toMessage(error, '保存失败'))
     } finally {
       formSubmitting.value = false
+    }
+  }
+
+  async function onToggleEnabled(row: TenantAdminRoleListItem, enabled: boolean) {
+    if (row.builtIn || row.enabled === enabled) return
+    if (!enabled) {
+      disableTarget.value = row
+      return
+    }
+    try {
+      await setTenantAdminRoleEnabled(row.id, true)
+      message.success('已启用')
+      await loadList()
+    } catch (error) {
+      message.error(toMessage(error, '启用失败'))
+    }
+  }
+
+  async function confirmDisable() {
+    if (!disableTarget.value) return
+    disabling.value = true
+    try {
+      await setTenantAdminRoleEnabled(disableTarget.value.id, false)
+      disableTarget.value = null
+      message.success('已停用')
+      await loadList()
+    } catch (error) {
+      message.error(toMessage(error, '停用失败'))
+    } finally {
+      disabling.value = false
+    }
+  }
+
+  async function onDelete(row: TenantAdminRoleListItem) {
+    if (row.builtIn || row.enabled) return
+    deleteTarget.value = row
+    deleteImpact.value = null
+    deleteLoading.value = true
+    try {
+      deleteImpact.value = await fetchTenantAdminRoleDeleteImpact(row.id)
+    } catch (error) {
+      deleteTarget.value = null
+      message.error(toMessage(error, '加载影响范围失败'))
+    } finally {
+      deleteLoading.value = false
+    }
+  }
+
+  async function confirmDelete() {
+    if (!deleteTarget.value || !deleteImpact.value) return
+    deleteSubmitting.value = true
+    try {
+      await deleteTenantAdminRole(deleteTarget.value.id)
+      deleteTarget.value = null
+      message.success('删除成功')
+      await loadList()
+    } catch (error) {
+      message.error(toMessage(error, '删除失败'))
+    } finally {
+      deleteSubmitting.value = false
     }
   }
 
@@ -316,13 +424,25 @@ export function useTenantAdminRole() {
     detailTables,
     openView,
     formVisible,
+    formMode,
     formSubmitting,
     formRef,
     formModel,
     formRules,
     tenantSelectOptions,
     openCreate,
+    openEdit,
     submitForm,
+    disableTarget,
+    disabling,
+    onToggleEnabled,
+    confirmDisable,
+    deleteTarget,
+    deleteImpact,
+    deleteLoading,
+    deleteSubmitting,
+    onDelete,
+    confirmDelete,
     formatTime,
     tenantStatusLabel,
     tenantStatusTagType,

@@ -30,7 +30,7 @@
               :width="col.width"
               :min-width="col.minWidth || (col.width ? undefined : 120)"
               :fixed="col.fixed"
-              :show-overflow-tooltip="col.field !== 'actions' && col.field !== 'tenantStatus' && col.field !== 'name'"
+              :show-overflow-tooltip="col.field !== 'actions' && col.field !== 'enabled' && col.field !== 'tenantStatus' && col.field !== 'name'"
             >
               <template #default="{ row }">
                 <template v-if="col.field === 'name'">
@@ -45,24 +45,51 @@
                   </GrowTag>
                 </template>
                 <template v-else-if="col.field === 'memberCount'">
-                  <GrowButton link type="primary" @click="openView(row)">{{ row.memberCount }}</GrowButton>
+                  <GrowButton link type="primary" @click="openMembers(row, true)">{{ row.memberCount }}</GrowButton>
+                </template>
+                <template v-else-if="col.field === 'enabled'">
+                  <GrowTooltip :content="row.builtIn ? '内置角色不能停用' : (row.enabled ? '停用' : '启用')" placement="top">
+                    <span class="tenant-admin-role__switch">
+                      <GrowSwitch
+                        :model-value="row.enabled"
+                        size="small"
+                        :disabled="row.builtIn"
+                        @update:model-value="(value) => onToggleEnabled(row, Boolean(value))"
+                      />
+                    </span>
+                  </GrowTooltip>
                 </template>
                 <template v-else-if="col.field === 'grantedAt'">{{ formatTime(row.grantedAt) }}</template>
                 <template v-else-if="col.field === 'actions'">
                   <div class="tenant-admin-role__actions">
-                    <GrowTooltip content="查看" placement="top">
+                    <GrowTooltip content="详情" placement="top">
                       <GrowButton class="tenant-admin-role__icon-btn" link type="primary" @click="openView(row)">
                         <GrowIconify icon="ant-design:profile-outlined" :size="16" />
                       </GrowButton>
                     </GrowTooltip>
-                    <GrowTooltip v-if="!row.builtIn" content="授权" placement="top">
-                      <GrowButton class="tenant-admin-role__icon-btn" link type="primary" @click="openGrant(row)">
+                    <GrowTooltip content="编辑" placement="top">
+                      <GrowButton class="tenant-admin-role__icon-btn" link type="primary" :disabled="row.builtIn" @click="openEdit(row)">
+                        <GrowIconify icon="ant-design:edit-outlined" :size="16" />
+                      </GrowButton>
+                    </GrowTooltip>
+                    <GrowTooltip :content="row.builtIn ? '查看管理员账号' : '绑定账号'" placement="top">
+                      <GrowButton class="tenant-admin-role__icon-btn" link type="primary" @click="openMembers(row)">
+                        <GrowIconify :icon="row.builtIn ? 'ant-design:team-outlined' : 'ant-design:user-add-outlined'" :size="16" />
+                      </GrowButton>
+                    </GrowTooltip>
+                    <GrowTooltip content="数据权限" placement="top">
+                      <GrowButton class="tenant-admin-role__icon-btn" link type="primary" :disabled="row.builtIn" @click="openDataPerm(row)">
+                        <GrowIconify icon="ant-design:safety-outlined" :size="16" />
+                      </GrowButton>
+                    </GrowTooltip>
+                    <GrowTooltip content="菜单和功能" placement="top">
+                      <GrowButton class="tenant-admin-role__icon-btn" link type="primary" :disabled="row.builtIn" @click="openGrant(row)">
                         <GrowIconify icon="ant-design:safety-certificate-outlined" :size="16" />
                       </GrowButton>
                     </GrowTooltip>
-                    <GrowTooltip v-if="!row.builtIn" content="数据权限" placement="top">
-                      <GrowButton class="tenant-admin-role__icon-btn" link type="primary" @click="openDataPerm(row)">
-                        <GrowIconify icon="ant-design:database-outlined" :size="16" />
+                    <GrowTooltip content="删除" placement="top">
+                      <GrowButton class="tenant-admin-role__icon-btn" link type="danger" :disabled="row.builtIn || row.enabled" :loading="deleteLoading && deleteTarget?.id === row.id" @click="onDelete(row)">
+                        <GrowIconify icon="ant-design:delete-outlined" :size="16" />
                       </GrowButton>
                     </GrowTooltip>
                   </div>
@@ -168,7 +195,7 @@
 
     <GrowDialog
       v-model="formVisible"
-      title="新增租户角色"
+      :title="formMode === 'create' ? '新增租户角色' : '编辑租户角色'"
       width="520px"
       append-to-body
       destroy-on-close
@@ -184,6 +211,7 @@
           <GrowSelect
             v-model="formModel.tenantId"
             :options="tenantSelectOptions"
+            :disabled="formMode === 'edit'"
             filterable
             placeholder="请选择租户"
           />
@@ -222,6 +250,45 @@
       </template>
     </GrowDialog>
 
+    <GrowDialog
+      :model-value="Boolean(disableTarget)"
+      title="停用确认"
+      width="420px"
+      append-to-body
+      @update:model-value="(value) => { if (!value) disableTarget = null }"
+    >
+      确认停用角色「{{ disableTarget?.name }}」？角色停用后，绑定账号将立即失去该角色下的权限。
+      <template #footer>
+        <GrowSpace>
+          <GrowButton @click="disableTarget = null">取消</GrowButton>
+          <GrowButton type="danger" :loading="disabling" @click="confirmDisable">停用</GrowButton>
+        </GrowSpace>
+      </template>
+    </GrowDialog>
+
+    <GrowDialog
+      :model-value="Boolean(deleteTarget)"
+      title="删除确认"
+      width="420px"
+      append-to-body
+      @update:model-value="(value) => { if (!value) deleteTarget = null }"
+    >
+      <p>确认删除角色「{{ deleteTarget?.name }}」？删除后不可恢复。</p>
+      <dl v-if="deleteImpact" class="tenant-admin-role__delete-impact">
+        <div><dt>绑定账号</dt><dd>{{ deleteImpact.memberCount }} 个</dd></div>
+        <div><dt>菜单权限</dt><dd>{{ deleteImpact.menuCount }} 项</dd></div>
+        <div><dt>功能权限</dt><dd>{{ deleteImpact.functionCount }} 项</dd></div>
+        <div><dt>数据权限</dt><dd>{{ deleteImpact.dataPermCount }} 项</dd></div>
+      </dl>
+      <template #footer>
+        <GrowSpace>
+          <GrowButton @click="deleteTarget = null">取消</GrowButton>
+          <GrowButton type="danger" :disabled="!deleteImpact" :loading="deleteSubmitting" @click="confirmDelete">删除</GrowButton>
+        </GrowSpace>
+      </template>
+    </GrowDialog>
+
+    <TenantAdminRoleMemberDialog v-model="memberVisible" :role="memberTarget" :readonly="memberReadonly" @saved="loadList" />
     <TenantAdminRoleGrantDialog v-model="grantVisible" :role="grantTarget" @saved="loadList" />
     <TenantAdminRoleDataPermDrawer v-model="dataPermVisible" :role="dataPermTarget" @saved="loadList" />
   </div>
@@ -233,6 +300,7 @@ import type { SystemTenantGrantMenu } from '../../types/systemTenant'
 import type { TenantAdminRoleListItem } from '../../types/systemTenantAdminRole'
 import TenantAdminRoleGrantDialog from './TenantAdminRoleGrantDialog.vue'
 import TenantAdminRoleDataPermDrawer from './TenantAdminRoleDataPermDrawer.vue'
+import TenantAdminRoleMemberDialog from './TenantAdminRoleMemberDialog.vue'
 import { useTenantAdminRole } from './use/useTenantAdminRole'
 
 defineOptions({
@@ -243,6 +311,15 @@ const grantVisible = ref(false)
 const grantTarget = ref<TenantAdminRoleListItem | null>(null)
 const dataPermVisible = ref(false)
 const dataPermTarget = ref<TenantAdminRoleListItem | null>(null)
+const memberVisible = ref(false)
+const memberTarget = ref<TenantAdminRoleListItem | null>(null)
+const memberReadonly = ref(false)
+
+function openMembers(row: TenantAdminRoleListItem, readonly = false) {
+  memberTarget.value = row
+  memberReadonly.value = readonly || row.builtIn
+  memberVisible.value = true
+}
 
 function openDataPerm(row: TenantAdminRoleListItem) {
   dataPermTarget.value = row
@@ -273,13 +350,25 @@ const {
   detailTables,
   openView,
   formVisible,
+  formMode,
   formSubmitting,
   formRef,
   formModel,
   formRules,
   tenantSelectOptions,
   openCreate,
+  openEdit,
   submitForm,
+  disableTarget,
+  disabling,
+  onToggleEnabled,
+  confirmDisable,
+  deleteTarget,
+  deleteImpact,
+  deleteLoading,
+  deleteSubmitting,
+  onDelete,
+  confirmDelete,
   formatTime,
   tenantStatusLabel,
   tenantStatusTagType,
@@ -411,6 +500,11 @@ const detailTree = computed<GrantNode[]>(() => {
 .tenant-admin-role__icon-btn :deep(.grow-iconify) {
   display: flex !important;
 }
+
+.tenant-admin-role__switch { display: inline-flex; align-items: center; }
+.tenant-admin-role__delete-impact { margin: 16px 0 0; }
+.tenant-admin-role__delete-impact div { display: flex; justify-content: space-between; padding: 5px 0; }
+.tenant-admin-role__delete-impact dt, .tenant-admin-role__delete-impact dd { margin: 0; }
 
 .tenant-admin-role__meta {
   display: grid;
